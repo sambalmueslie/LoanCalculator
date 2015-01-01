@@ -11,10 +11,16 @@ import java.util.List;
  * @author sambalmueslie 2015
  */
 public interface Loan {
+
 	/**
 	 * @return the amount of the loan (kredit).
 	 */
 	double getAmount();
+
+	/**
+	 * @return the id.
+	 */
+	long getId();
 
 	/**
 	 * @return the monthly payments.

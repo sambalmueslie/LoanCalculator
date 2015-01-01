@@ -3,6 +3,7 @@
  */
 package de.sambalmueslie.loan_calculator.model;
 
+import java.util.UUID;
 
 /**
  * @author sambalmueslie 2015
@@ -20,6 +21,7 @@ abstract class BaseLoan implements Loan {
 	BaseLoan(final String title, final double amount) {
 		this.title = title;
 		this.amount = amount;
+		id = UUID.randomUUID().getLeastSignificantBits();
 	}
 
 	/**
@@ -28,6 +30,14 @@ abstract class BaseLoan implements Loan {
 	@Override
 	public final double getAmount() {
 		return amount;
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.model.Loan#getId()
+	 */
+	@Override
+	public long getId() {
+		return id;
 	}
 
 	/**
@@ -40,6 +50,8 @@ abstract class BaseLoan implements Loan {
 
 	/** the amount. */
 	private final double amount;
+	/** the id. */
+	private final long id;
 	/** the title. */
 	private final String title;
 

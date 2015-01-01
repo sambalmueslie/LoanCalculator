@@ -101,6 +101,38 @@ public class AnnuityLoan extends BaseLoan {
 	}
 
 	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("AnnuityLoan [getId()=");
+		builder.append(getId());
+		builder.append(", getTitle()=");
+		builder.append(getTitle());
+		builder.append(", getAmount()=");
+		builder.append(getAmount());
+		builder.append(", estimatedDebitInterest=");
+		builder.append(estimatedDebitInterest);
+		builder.append(", fixedDebitInterest=");
+		builder.append(fixedDebitInterest);
+		builder.append(", fixedInterestPeriod=");
+		builder.append(fixedInterestPeriod);
+		builder.append(", monthlyPayment=");
+		builder.append(monthlyPayment);
+		builder.append(", paymentRate=");
+		builder.append(paymentRate);
+		builder.append(", term=");
+		builder.append(term);
+		builder.append(", totalInterest=");
+		builder.append(totalInterest);
+		builder.append(", totalPayment=");
+		builder.append(totalPayment);
+		builder.append("]");
+		return builder.toString();
+	}
+
+	/**
 	 * Update the values.
 	 */
 	private void update() {
@@ -135,6 +167,7 @@ public class AnnuityLoan extends BaseLoan {
 	private final double paymentRate;
 	/** the term (Laufzeit). */
 	private int term;
+
 	/** the total interest (Zins). */
 	private double totalInterest;
 	/** the total payment (Zins + Finanzmittel). */
