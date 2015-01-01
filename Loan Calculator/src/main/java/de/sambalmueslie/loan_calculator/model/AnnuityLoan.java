@@ -1,0 +1,143 @@
+/**
+ *
+ */
+package de.sambalmueslie.loan_calculator.model;
+
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+
+/**
+ * A annuity loan.
+ *
+ * @author sambalmueslie 2015
+ */
+public class AnnuityLoan extends BaseLoan {
+
+	/**
+	 * Constructor.
+	 *
+	 * @param title
+	 *            {@link BaseLoan#getTitle()}
+	 * @param amount
+	 *            {@link BaseLoan#getAmount()}
+	 * @param paymentRate
+	 *            {@link #paymentRate}
+	 * @param fixedDebitInterest
+	 *            {@link #fixedDebitInterest}
+	 * @param fixedInterestPeriod
+	 *            {@link #fixedInterestPeriod}
+	 * @param estimatedDebitInterest
+	 *            {@link #estimatedDebitInterest}
+	 */
+	AnnuityLoan(final String title, final double amount, final double paymentRate, final double fixedDebitInterest, final int fixedInterestPeriod,
+			final double estimatedDebitInterest) {
+		super(title, amount);
+		this.paymentRate = paymentRate;
+		this.fixedDebitInterest = fixedDebitInterest;
+		this.fixedInterestPeriod = fixedInterestPeriod;
+		this.estimatedDebitInterest = estimatedDebitInterest;
+		update();
+	}
+
+	/**
+	 * @return the {@link #estimatedDebitInterest}
+	 */
+	public double getEstimatedDebitInterest() {
+		return estimatedDebitInterest;
+	}
+
+	/**
+	 * @return the {@link #fixedDebitInterest}
+	 */
+	public double getFixedDebitInterest() {
+		return fixedDebitInterest;
+	}
+
+	/**
+	 * @return the {@link #fixedInterestPeriod}
+	 */
+	public double getFixedInterestPeriod() {
+		return fixedInterestPeriod;
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.model.Loan#getMonthlyPayment()
+	 */
+	@Override
+	public List<Double> getMonthlyPayment() {
+		return Collections.unmodifiableList(monthlyPayment);
+	}
+
+	/**
+	 * @return the {@link #paymentRate}
+	 */
+	public double getPaymentRate() {
+		return paymentRate;
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.model.Loan#getTerm()
+	 */
+	@Override
+	public int getTerm() {
+		return term;
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.model.Loan#getTotalInterest()
+	 */
+	@Override
+	public double getTotalInterest() {
+		return totalInterest;
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.model.Loan#getTotalPayment()
+	 */
+	@Override
+	public double getTotalPayment() {
+		return totalPayment;
+	}
+
+	/**
+	 * Update the values.
+	 */
+	private void update() {
+		monthlyPayment = new LinkedList<>();
+		double remainingCapital = getAmount();
+		double totalInterest = 0;
+		double redemption = getAmount() * paymentRate / 100;
+		for (int i = 0; i < 100 && remainingCapital > 0; i++) {
+			remainingCapital = remainingCapital - redemption;
+			if (remainingCapital <= 0) {
+				remainingCapital = 0;
+				monthlyPayment.add(remainingCapital);
+				break;
+			}
+			double interest = (i < fixedInterestPeriod ? fixedDebitInterest : estimatedDebitInterest);
+			double debit = remainingCapital * interest / 100;
+			totalInterest += debit;
+			monthlyPayment.add(remainingCapital);
+		}
+		totalPayment = totalInterest + getAmount();
+	}
+
+	/** the estimated debit interest (geschätzter Sollzins nach Bindungsende). */
+	private final double estimatedDebitInterest;
+	/** the fixed debit interest (Gebundener Sollzins). */
+	private final double fixedDebitInterest;
+	/** the fixed debit interest period (Sollzinsbindung). */
+	private final double fixedInterestPeriod;
+	/** the monthly payment. */
+	private List<Double> monthlyPayment;
+	/** the payment rate (Tilgung in Prozent). */
+	private final double paymentRate;
+	/** the term (Laufzeit). */
+	private int term;
+	/** the total interest (Zins). */
+	private double totalInterest;
+	/** the total payment (Zins + Finanzmittel). */
+	private double totalPayment;
+
+}
