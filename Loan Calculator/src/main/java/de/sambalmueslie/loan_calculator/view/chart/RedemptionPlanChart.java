@@ -7,7 +7,7 @@ import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Side;
-import javafx.scene.chart.LineChart;
+import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.NumberAxis;
 import de.sambalmueslie.loan_calculator.model.Loan;
 
@@ -16,7 +16,7 @@ import de.sambalmueslie.loan_calculator.model.Loan;
  *
  * @author sambalmueslie 2015
  */
-public class RedemptionPlanChart extends LineChart<Number, Number> {
+public class RedemptionPlanChart extends AreaChart<Number, Number> {
 
 	/**
 	 * Constructor.
