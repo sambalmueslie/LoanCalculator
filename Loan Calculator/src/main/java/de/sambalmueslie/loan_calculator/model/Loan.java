@@ -30,7 +30,7 @@ public interface Loan {
 	/**
 	 * @return the redemption plan.
 	 */
-	List<Double> getRedemptionPlan();
+	List<Redemption> getRedemptionPlan();
 
 	/**
 	 * @return the term in months.

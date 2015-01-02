@@ -78,7 +78,7 @@ public class AnnuityLoan extends BaseLoan {
 	 * @see de.sambalmueslie.loan_calculator.model.Loan#getRedemptionPlan()
 	 */
 	@Override
-	public List<Double> getRedemptionPlan() {
+	public List<Redemption> getRedemptionPlan() {
 		return Collections.unmodifiableList(redemptionPlan);
 	}
 
@@ -124,8 +124,6 @@ public class AnnuityLoan extends BaseLoan {
 		builder.append(fixedDebitInterest);
 		builder.append(", fixedInterestPeriod=");
 		builder.append(fixedInterestPeriod);
-		builder.append(", monthlyPayment=");
-		builder.append(redemptionPlan);
 		builder.append(", paymentRate=");
 		builder.append(paymentRate);
 		builder.append(", term=");
@@ -150,7 +148,7 @@ public class AnnuityLoan extends BaseLoan {
 		double totalInterest = 0;
 		// anuität
 		final double annuity = getAmount() * (paymentRate + fixedDebitInterest) / 100;
-		redemptionPlan.add(residualDebt);
+		redemptionPlan.add(new Redemption(residualDebt));
 
 		for (int i = 0; residualDebt > 0; i++) {
 			// zins
@@ -164,7 +162,7 @@ public class AnnuityLoan extends BaseLoan {
 			} else {
 				residualDebt -= redemption;
 			}
-			redemptionPlan.add(residualDebt);
+			redemptionPlan.add(new Redemption(residualDebt, interest, redemption));
 
 		}
 
@@ -180,7 +178,7 @@ public class AnnuityLoan extends BaseLoan {
 	/** the payment rate (Tilgung in Prozent). */
 	private final double paymentRate;
 	/** the redemption plan. */
-	private List<Double> redemptionPlan;
+	private List<Redemption> redemptionPlan;
 	/** the term (Laufzeit). */
 	private int term;
 	/** the total interest (Zins). */
