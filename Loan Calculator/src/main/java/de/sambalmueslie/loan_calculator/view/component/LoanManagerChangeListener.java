@@ -10,12 +10,12 @@ package de.sambalmueslie.loan_calculator.view.component;
  */
 public interface LoanManagerChangeListener {
 
-	void requestAddLoan(LoanManager manager, final String title, final double amount, final double paymentRate, final double fixedDebitInterest,
+	void requestAddLoan(LoanManager manager, final String name, final double amount, final double paymentRate, final double fixedDebitInterest,
 			final int fixedInterestPeriod, final double estimatedDebitInterest);
 
 	void requestRemoveLoan(LoanManager manager, long loanId);
 
-	void requestUpdateLoan(LoanManager manager, long loanId, final String title, final double amount, final double paymentRate,
-			final double fixedDebitInterest, final int fixedInterestPeriod, final double estimatedDebitInterest);
+	void requestUpdateLoan(LoanManager manager, long loanId, final String name, final double amount, final double paymentRate, final double fixedDebitInterest,
+			final int fixedInterestPeriod, final double estimatedDebitInterest);
 
 }

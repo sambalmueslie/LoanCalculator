@@ -28,14 +28,14 @@ public interface Loan {
 	List<Double> getMonthlyPayment();
 
 	/**
+	 * @return the name.
+	 */
+	String getName();
+
+	/**
 	 * @return the term in months.
 	 */
 	int getTerm();
-
-	/**
-	 * @return the title.
-	 */
-	String getTitle();
 
 	/**
 	 * @return the total interest to pay.

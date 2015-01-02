@@ -13,6 +13,7 @@ import de.sambalmueslie.loan_calculator.model.Loan;
 import de.sambalmueslie.loan_calculator.model.Model;
 import de.sambalmueslie.loan_calculator.view.chart.LoanProcessChart;
 import de.sambalmueslie.loan_calculator.view.component.LoanManager;
+import de.sambalmueslie.loan_calculator.view.component.LoanManagerChangeListener;
 
 /**
  * The view.
@@ -29,9 +30,40 @@ public class View extends BorderPane {
 	public View(final Model model) {
 		this.model = model;
 
-		modelChangeHandler = new ModelChangeHandler();
+		modelChangeHandler = new ModelChangeHandler(this);
 		loanProcessChart = new LoanProcessChart();
 		loanManager = new LoanManager();
+		loanManager.register(new LoanManagerChangeListener() {
+
+			/**
+			 * @see de.sambalmueslie.loan_calculator.view.component.LoanManagerChangeListener#requestAddLoan(de.sambalmueslie.loan_calculator.view.component.LoanManager,
+			 *      java.lang.String, double, double, double, int, double)
+			 */
+			@Override
+			public void requestAddLoan(final LoanManager manager, final String name, final double amount, final double paymentRate,
+					final double fixedDebitInterest, final int fixedInterestPeriod, final double estimatedDebitInterest) {
+				listeners.forEach(l -> l.requestAddLoan(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest));
+			}
+
+			/**
+			 * @see de.sambalmueslie.loan_calculator.view.component.LoanManagerChangeListener#requestRemoveLoan(de.sambalmueslie.loan_calculator.view.component.LoanManager,
+			 *      long)
+			 */
+			@Override
+			public void requestRemoveLoan(final LoanManager manager, final long loanId) {
+				listeners.forEach(l -> l.requestRemoveLoan(loanId));
+			}
+
+			/**
+			 * @see de.sambalmueslie.loan_calculator.view.component.LoanManagerChangeListener#requestUpdateLoan(de.sambalmueslie.loan_calculator.view.component.LoanManager,
+			 *      long, java.lang.String, double, double, double, int, double)
+			 */
+			@Override
+			public void requestUpdateLoan(final LoanManager manager, final long loanId, final String name, final double amount, final double paymentRate,
+					final double fixedDebitInterest, final int fixedInterestPeriod, final double estimatedDebitInterest) {
+				listeners.forEach(l -> l.requestUpdateLoan(loanId, name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest));
+			}
+		});
 	}
 
 	/**

@@ -13,13 +13,13 @@ abstract class BaseLoan implements Loan {
 	/**
 	 * Constructor.
 	 *
-	 * @param title
-	 *            {@link #title}
+	 * @param name
+	 *            {@link #name}
 	 * @param amount
 	 *            {@link #amount}
 	 */
-	BaseLoan(final String title, final double amount) {
-		this.title = title;
+	BaseLoan(final String name, final double amount) {
+		this.name = name;
 		this.amount = amount;
 		id = UUID.randomUUID().getLeastSignificantBits();
 	}
@@ -41,11 +41,11 @@ abstract class BaseLoan implements Loan {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.model.Loan#getTitle()
+	 * @see de.sambalmueslie.loan_calculator.model.Loan#getName()
 	 */
 	@Override
-	public final String getTitle() {
-		return title;
+	public final String getName() {
+		return name;
 	}
 
 	/** the amount. */
@@ -53,6 +53,6 @@ abstract class BaseLoan implements Loan {
 	/** the id. */
 	private final long id;
 	/** the title. */
-	private final String title;
+	private final String name;
 
 }

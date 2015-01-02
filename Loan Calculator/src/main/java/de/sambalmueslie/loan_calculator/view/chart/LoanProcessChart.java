@@ -39,7 +39,7 @@ public class LoanProcessChart extends LineChart<Number, Number> {
 			values.add(new Data<Number, Number>(i, redemptionPlan.get(i)));
 		}
 		Series<Number, Number> series = new Series<>(values);
-		String name = loan.getTitle();
+		String name = loan.getName();
 		series.setName(name);
 		data.put(loan, series);
 		getData().add(series);

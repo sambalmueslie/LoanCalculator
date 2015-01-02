@@ -13,8 +13,8 @@ public final class LoanFactory {
 	/**
 	 * Create a annuity {@link Loan}.
 	 *
-	 * @param title
-	 *            a unique title
+	 * @param name
+	 *            a unique name
 	 * @param amount
 	 *            the total amount (Finanzmittel)
 	 * @param paymentRate
@@ -27,9 +27,9 @@ public final class LoanFactory {
 	 *            the estimated debit interest (geschätzter Sollzins nach Bindungsende)
 	 * @return the {@link Loan}
 	 */
-	public static Loan createAnnuityLoan(final String title, final double amount, final double paymentRate, final double fixedDebitInterest,
+	public static Loan createAnnuityLoan(final String name, final double amount, final double paymentRate, final double fixedDebitInterest,
 			final int fixedInterestPeriod, final double estimatedDebitInterest) {
-		return new AnnuityLoan(title, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
+		return new AnnuityLoan(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
 	}
 
 	/**

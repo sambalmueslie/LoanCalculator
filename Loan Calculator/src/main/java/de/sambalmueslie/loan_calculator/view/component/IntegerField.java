@@ -49,7 +49,7 @@ public class IntegerField extends TextField {
 	 */
 	private void validateInput() {
 		try {
-			String text = getText().replace(".", "").replace(",", ".");
+			String text = getText();
 			logger.info("Validate input '" + text + "'");
 			property.set(Integer.parseInt(text));
 		} catch (NullPointerException | NumberFormatException e) {
@@ -59,7 +59,7 @@ public class IntegerField extends TextField {
 	}
 
 	/** the format. */
-	private final String format = "%,.2f ";
+	private final String format = "%d";
 	/** the {@link SimpleIntegerProperty}. */
 	private final SimpleIntegerProperty property;
 

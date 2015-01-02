@@ -17,8 +17,8 @@ public class AnnuityLoan extends BaseLoan {
 	/**
 	 * Constructor.
 	 *
-	 * @param title
-	 *            {@link BaseLoan#getTitle()}
+	 * @param name
+	 *            {@link BaseLoan#getName()}
 	 * @param amount
 	 *            {@link BaseLoan#getAmount()}
 	 * @param paymentRate
@@ -30,9 +30,9 @@ public class AnnuityLoan extends BaseLoan {
 	 * @param estimatedDebitInterest
 	 *            {@link #estimatedDebitInterest}
 	 */
-	AnnuityLoan(final String title, final double amount, final double paymentRate, final double fixedDebitInterest, final int fixedInterestPeriod,
+	AnnuityLoan(final String name, final double amount, final double paymentRate, final double fixedDebitInterest, final int fixedInterestPeriod,
 			final double estimatedDebitInterest) {
-		super(title, amount);
+		super(name, amount);
 		this.paymentRate = paymentRate;
 		this.fixedDebitInterest = fixedDebitInterest;
 		this.fixedInterestPeriod = fixedInterestPeriod;
@@ -109,7 +109,7 @@ public class AnnuityLoan extends BaseLoan {
 		builder.append("AnnuityLoan [getId()=");
 		builder.append(getId());
 		builder.append(", getTitle()=");
-		builder.append(getTitle());
+		builder.append(getName());
 		builder.append(", getAmount()=");
 		builder.append(getAmount());
 		builder.append(", estimatedDebitInterest=");

@@ -10,14 +10,13 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import de.sambalmueslie.loan_calculator.model.AnnuityLoan;
-import de.sambalmueslie.loan_calculator.model.Loan;
 
 /**
  * {@link Dialog} to add or update a {@link AnnuityLoan}.
  *
  * @author sambalmueslie 2015
  */
-public class ModifyAnnuityLoanDialog extends Dialog<Loan> {
+public class ModifyAnnuityLoanDialog extends Dialog<ButtonType> {
 
 	/**
 	 * Constructor.
@@ -34,11 +33,9 @@ public class ModifyAnnuityLoanDialog extends Dialog<Loan> {
 		content.setMaxWidth(Double.MAX_VALUE);
 		content.setAlignment(Pos.CENTER_LEFT);
 
-		/** the fixed interest period {@link TextField}. */
-
 		content.add(new Label("Name"), 0, 0);
 		final TextField textFieldName = new TextField();
-		textFieldName.textProperty().bind(name);
+		textFieldName.textProperty().bindBidirectional(name);
 		content.add(textFieldName, 1, 0);
 
 		content.add(new Label("Amount"), 0, 1);
@@ -67,6 +64,7 @@ public class ModifyAnnuityLoanDialog extends Dialog<Loan> {
 		dialogPane.getStyleClass().add("choice-dialog");
 		dialogPane.getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
 
+		setResultConverter(dialogButton -> dialogButton);
 	}
 
 	/**

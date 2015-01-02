@@ -9,10 +9,19 @@ import de.sambalmueslie.loan_calculator.model.ModelChangeListener;
 
 /**
  * The handler for the {@link ModelChangeListener}.
- * 
+ *
  * @author sambalmueslie 2015
  */
 public class ModelChangeHandler implements ModelChangeListener {
+
+	/**
+	 * Constructor.
+	 *
+	 * @param view
+	 */
+	ModelChangeHandler(final View view) {
+		this.view = view;
+	}
 
 	/**
 	 * @see de.sambalmueslie.loan_calculator.model.ModelChangeListener#loanAdded(de.sambalmueslie.loan_calculator.model.Loan)
@@ -51,6 +60,6 @@ public class ModelChangeHandler implements ModelChangeListener {
 	}
 
 	/** the {@link View}. */
-	private View view;
+	private final View view;
 
 }

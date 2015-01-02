@@ -8,15 +8,13 @@ import static de.sambalmueslie.loan_calculator.view.Constants.TITLE_FONT;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -41,7 +39,7 @@ public class LoanManager extends VBox {
 		public void updateItem(final Loan item, final boolean empty) {
 			super.updateItem(item, empty);
 			if (item != null) {
-				setGraphic(new Label(item.getTitle()));
+				setGraphic(new Label(item.getName()));
 			}
 		}
 	}
@@ -133,19 +131,18 @@ public class LoanManager extends VBox {
 		logger.info("Request to add a loan");
 
 		ModifyAnnuityLoanDialog dialog = new ModifyAnnuityLoanDialog(null);
-		dialog.showAndWait();
+		Optional<ButtonType> type = dialog.showAndWait();
+		if (type.isPresent() && type.get() == ButtonType.OK) {
 
-		String name = dialog.getName();
-		double amount = dialog.getAmount();
-		double paymentRate = dialog.getPaymentRate();
-		double fixedDebitInterest = dialog.getFixedDebitInterest();
-		int fixedInterestPeriod = dialog.getFixedInterestPeriod();
-		double estimatedDebitInterest = dialog.getEstimatedDebitInterest();
+			String name = dialog.getName();
+			double amount = dialog.getAmount();
+			double paymentRate = dialog.getPaymentRate();
+			double fixedDebitInterest = dialog.getFixedDebitInterest();
+			int fixedInterestPeriod = dialog.getFixedInterestPeriod();
+			double estimatedDebitInterest = dialog.getEstimatedDebitInterest();
 
-		for (LoanManagerChangeListener listener : listeners) {
-			listener.requestAddLoan(this, name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
+			listeners.forEach(l -> l.requestAddLoan(this, name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest));
 		}
-
 	}
 
 	/**
@@ -157,7 +154,7 @@ public class LoanManager extends VBox {
 			return;
 		}
 		// TODO Auto-generated method stub
-		logger.info("Request to remove loan: " + selectedLoan.getTitle());
+		logger.info("Request to remove loan: " + selectedLoan.getName());
 	}
 
 	/**
@@ -170,10 +167,10 @@ public class LoanManager extends VBox {
 			return;
 		}
 		// TODO Auto-generated method stub
-		logger.info("Request to update loan: " + selectedLoan.getTitle());
+		logger.info("Request to update loan: " + selectedLoan.getName());
 	}
 
-	/** the currend managed {@link Loan}s. */
+	/** the current managed {@link Loan}s. */
 	private final ObservableList<Loan> data;
 	/** the {@link List} of {@link LoanManagerChangeListener}. */
 	private final List<LoanManagerChangeListener> listeners = new LinkedList<>();

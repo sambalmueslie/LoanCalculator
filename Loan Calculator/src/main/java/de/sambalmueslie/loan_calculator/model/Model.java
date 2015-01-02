@@ -34,6 +34,7 @@ public class Model {
 		}
 		long id = loan.getId();
 		loans.put(id, loan);
+		listeners.forEach(l -> l.loanAdded(loan));
 	}
 
 	/**
@@ -98,6 +99,7 @@ public class Model {
 			logger.debug("Remove loan " + loan);
 		}
 		loans.remove(id);
+		listeners.forEach(l -> l.loanRemoved(loan));
 	}
 
 	/** the {@link ModelChangeListener}. */
