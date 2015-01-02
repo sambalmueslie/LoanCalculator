@@ -21,6 +21,7 @@ import javafx.scene.layout.VBox;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import de.sambalmueslie.loan_calculator.model.AnnuityLoan;
 import de.sambalmueslie.loan_calculator.model.Loan;
 
 /**
@@ -38,9 +39,7 @@ public class LoanManager extends VBox {
 		@Override
 		public void updateItem(final Loan item, final boolean empty) {
 			super.updateItem(item, empty);
-			if (item != null) {
-				setGraphic(new Label(item.getName()));
-			}
+			if (item != null) setGraphic(new Label(item.getName()));
 		}
 	}
 
@@ -97,9 +96,7 @@ public class LoanManager extends VBox {
 	 *            the listener
 	 */
 	public void register(final LoanManagerChangeListener listener) {
-		if (listener != null && !listeners.contains(listener)) {
-			listeners.add(listener);
-		}
+		if (listener != null && !listeners.contains(listener)) listeners.add(listener);
 	}
 
 	/**
@@ -119,9 +116,7 @@ public class LoanManager extends VBox {
 	 *            the listener
 	 */
 	public void unregister(final LoanManagerChangeListener listener) {
-		if (listener != null) {
-			listeners.remove(listener);
-		}
+		if (listener != null) listeners.remove(listener);
 	}
 
 	/**
@@ -141,7 +136,7 @@ public class LoanManager extends VBox {
 			final int fixedInterestPeriod = dialog.getFixedInterestPeriod();
 			final double estimatedDebitInterest = dialog.getEstimatedDebitInterest();
 
-			listeners.forEach(l -> l.requestAddLoan(this, name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest));
+			listeners.forEach(l -> l.requestAddAnnuityLoan(this, name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest));
 		}
 	}
 
@@ -150,20 +145,36 @@ public class LoanManager extends VBox {
 	 */
 	private void requestRemoveLoan() {
 		final Loan selectedLoan = view.getSelectionModel().getSelectedItem();
-		if (selectedLoan == null) { return; }
-		// TODO Auto-generated method stub
-		logger.info("Request to remove loan: " + selectedLoan.getName());
+		if (selectedLoan == null) return;
+
+		final long loanId = selectedLoan.getId();
+		listeners.forEach(l -> l.requestRemoveLoan(this, loanId));
 	}
 
 	/**
 	 * Request to update a loan.
 	 */
 	private void requestUpdateLoan() {
-		// TODO Auto-generated method stub
 		final Loan selectedLoan = view.getSelectionModel().getSelectedItem();
-		if (selectedLoan == null) { return; }
-		// TODO Auto-generated method stub
-		logger.info("Request to update loan: " + selectedLoan.getName());
+		if (selectedLoan == null) return;
+
+		if (selectedLoan instanceof AnnuityLoan) {
+			final ModifyAnnuityLoanDialog dialog = new ModifyAnnuityLoanDialog((AnnuityLoan) selectedLoan);
+			final Optional<ButtonType> type = dialog.showAndWait();
+			if (type.isPresent() && type.get() == ButtonType.OK) {
+
+				final long loanId = selectedLoan.getId();
+				final String name = dialog.getName();
+				final double amount = dialog.getAmount();
+				final double paymentRate = dialog.getPaymentRate();
+				final double fixedDebitInterest = dialog.getFixedDebitInterest();
+				final int fixedInterestPeriod = dialog.getFixedInterestPeriod();
+				final double estimatedDebitInterest = dialog.getEstimatedDebitInterest();
+
+				listeners.forEach(l -> l.requestUpdateAnnuityLoan(this, loanId, name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod,
+						estimatedDebitInterest));
+			}
+		}
 	}
 
 	/** the current managed {@link Loan}s. */

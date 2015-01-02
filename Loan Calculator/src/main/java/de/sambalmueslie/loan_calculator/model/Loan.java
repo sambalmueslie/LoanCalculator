@@ -23,14 +23,14 @@ public interface Loan {
 	long getId();
 
 	/**
-	 * @return the monthly payments.
-	 */
-	List<Double> getMonthlyPayment();
-
-	/**
 	 * @return the name.
 	 */
 	String getName();
+
+	/**
+	 * @return the redemption plan.
+	 */
+	List<Double> getRedemptionPlan();
 
 	/**
 	 * @return the term in months.

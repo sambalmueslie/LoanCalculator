@@ -36,6 +36,8 @@ public class Controller extends Application {
 		view.setup(primaryStage);
 		viewActionHandler = new ViewActionHandler(this);
 		view.listenerRegister(viewActionHandler);
+
+		setupExampleData();
 	}
 
 	/**
@@ -80,13 +82,28 @@ public class Controller extends Application {
 					+ fixedInterestPeriod + ", " + estimatedDebitInterest);
 		}
 		try {
+			final Loan oldLoan = model.get(loanId);
 			final Loan loan = LoanFactory.createAnnuityLoan(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
+			model.remove(oldLoan);
 			model.add(loan);
 		} catch (final IllegalArgumentException e) {
 			logger.error("Cannot update loan " + name + ", " + amount + ", " + paymentRate + ", " + fixedDebitInterest + ", " + fixedInterestPeriod + ", "
 					+ estimatedDebitInterest + " cause " + e.getMessage());
 			// TODO handle error
 		}
+	}
+
+	/**
+	 * Create some example data.
+	 */
+	private void setupExampleData() {
+		handleRequestAddLoan("2,5% komplett fest", 100000, 3.0, 2.5, 100, 2.5);
+		handleRequestAddLoan("2,5% 10 Jahre fest", 100000, 3.0, 2.5, 10, 5.0);
+		handleRequestAddLoan("2,5% 15 Jahre fest", 100000, 3.0, 2.5, 15, 5.0);
+
+		handleRequestAddLoan("5,0% komplett fest", 100000, 3.0, 5.0, 100, 5.0);
+		handleRequestAddLoan("5,0% 10 Jahre fest", 100000, 3.0, 5.0, 10, 7.5);
+		handleRequestAddLoan("5,0% 15 Jahre fest", 100000, 3.0, 5.0, 15, 7.5);
 	}
 
 	/** the {@link Model}. */

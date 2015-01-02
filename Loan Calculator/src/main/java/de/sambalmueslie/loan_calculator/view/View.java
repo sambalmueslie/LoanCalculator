@@ -11,7 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import de.sambalmueslie.loan_calculator.model.Loan;
 import de.sambalmueslie.loan_calculator.model.Model;
-import de.sambalmueslie.loan_calculator.view.chart.LoanProcessChart;
+import de.sambalmueslie.loan_calculator.view.chart.RedemptionPlanChart;
 import de.sambalmueslie.loan_calculator.view.component.LoanManager;
 import de.sambalmueslie.loan_calculator.view.component.LoanManagerChangeListener;
 
@@ -31,39 +31,10 @@ public class View extends BorderPane {
 		this.model = model;
 
 		modelChangeHandler = new ModelChangeHandler(this);
-		loanProcessChart = new LoanProcessChart();
+		redemptionPlanChart = new RedemptionPlanChart();
 		loanManager = new LoanManager();
-		loanManager.register(new LoanManagerChangeListener() {
-
-			/**
-			 * @see de.sambalmueslie.loan_calculator.view.component.LoanManagerChangeListener#requestAddLoan(de.sambalmueslie.loan_calculator.view.component.LoanManager,
-			 *      java.lang.String, double, double, double, int, double)
-			 */
-			@Override
-			public void requestAddLoan(final LoanManager manager, final String name, final double amount, final double paymentRate,
-					final double fixedDebitInterest, final int fixedInterestPeriod, final double estimatedDebitInterest) {
-				listeners.forEach(l -> l.requestAddLoan(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest));
-			}
-
-			/**
-			 * @see de.sambalmueslie.loan_calculator.view.component.LoanManagerChangeListener#requestRemoveLoan(de.sambalmueslie.loan_calculator.view.component.LoanManager,
-			 *      long)
-			 */
-			@Override
-			public void requestRemoveLoan(final LoanManager manager, final long loanId) {
-				listeners.forEach(l -> l.requestRemoveLoan(loanId));
-			}
-
-			/**
-			 * @see de.sambalmueslie.loan_calculator.view.component.LoanManagerChangeListener#requestUpdateLoan(de.sambalmueslie.loan_calculator.view.component.LoanManager,
-			 *      long, java.lang.String, double, double, double, int, double)
-			 */
-			@Override
-			public void requestUpdateLoan(final LoanManager manager, final long loanId, final String name, final double amount, final double paymentRate,
-					final double fixedDebitInterest, final int fixedInterestPeriod, final double estimatedDebitInterest) {
-				listeners.forEach(l -> l.requestUpdateLoan(loanId, name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest));
-			}
-		});
+		loanManagerChangeHandler = new LoanManagerChangeHandler(this);
+		loanManager.register(loanManagerChangeHandler);
 	}
 
 	/**
@@ -100,7 +71,7 @@ public class View extends BorderPane {
 		primaryStage.setTitle("Loan calculator by sambalmueslie!");
 
 		setLeft(loanManager);
-		setCenter(loanProcessChart);
+		setCenter(redemptionPlanChart);
 
 		primaryStage.setScene(new Scene(this, 1024, 768));
 		primaryStage.show();
@@ -126,7 +97,7 @@ public class View extends BorderPane {
 	 */
 	void handleLoanAdded(final Loan loan) {
 		loanManager.add(loan);
-		loanProcessChart.add(loan);
+		redemptionPlanChart.add(loan);
 	}
 
 	/**
@@ -137,18 +108,43 @@ public class View extends BorderPane {
 	 */
 	void handleLoanRemoved(final Loan loan) {
 		loanManager.remove(loan);
-		loanProcessChart.remove(loan);
+		redemptionPlanChart.remove(loan);
+	}
+
+	/**
+	 * @see LoanManagerChangeListener#requestAddAnnuityLoan(LoanManager, String, double, double, double, int, double)
+	 */
+	void notifyRequestAddAnnuityLoan(final LoanManager manager, final String name, final double amount, final double paymentRate,
+			final double fixedDebitInterest, final int fixedInterestPeriod, final double estimatedDebitInterest) {
+		listeners.forEach(l -> l.requestAddLoan(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest));
+	}
+
+	/**
+	 * @see LoanManagerChangeListener#requestRemoveLoan(LoanManager, long)
+	 */
+	void notifyRequestRemoveLoan(final LoanManager manager, final long loanId) {
+		listeners.forEach(l -> l.requestRemoveLoan(loanId));
+	}
+
+	/**
+	 * @see LoanManagerChangeListener#requestUpdateAnnuityLoan(LoanManager, long, String, double, double, double, int, double)
+	 */
+	void notifyRequestUpdateAnnuityLoan(final LoanManager manager, final long loanId, final String name, final double amount, final double paymentRate,
+			final double fixedDebitInterest, final int fixedInterestPeriod, final double estimatedDebitInterest) {
+		listeners.forEach(l -> l.requestUpdateLoan(loanId, name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest));
 	}
 
 	/** the {@link ViewActionListener}. */
 	private final List<ViewActionListener> listeners = new LinkedList<>();
 	/** the {@link LoanManager}. */
 	private final LoanManager loanManager;
-	/** the {@link LoanProcessChart}. */
-	private final LoanProcessChart loanProcessChart;
+	/** the {@link LoanManagerChangeListener}. */
+	private final LoanManagerChangeHandler loanManagerChangeHandler;
 	/** the {@link Model}. */
 	private final Model model;
 	/** the {@link ModelChangeHandler}. */
 	private final ModelChangeHandler modelChangeHandler;
+	/** the {@link RedemptionPlanChart}. */
+	private final RedemptionPlanChart redemptionPlanChart;
 
 }

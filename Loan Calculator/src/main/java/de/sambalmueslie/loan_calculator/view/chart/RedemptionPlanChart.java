@@ -11,14 +11,19 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import de.sambalmueslie.loan_calculator.model.Loan;
 
-public class LoanProcessChart extends LineChart<Number, Number> {
+/**
+ * The chart for the redemption plan.
+ *
+ * @author sambalmueslie 2015
+ */
+public class RedemptionPlanChart extends LineChart<Number, Number> {
 
 	/**
 	 * Constructor.
 	 */
-	public LoanProcessChart() {
+	public RedemptionPlanChart() {
 		super(new NumberAxis(), new NumberAxis());
-		setTitle("Loan process");
+		setTitle("Redemption plan");
 		setAnimated(false);
 		setLegendSide(Side.BOTTOM);
 	}
@@ -30,9 +35,9 @@ public class LoanProcessChart extends LineChart<Number, Number> {
 	 *            the loan
 	 */
 	public void add(final Loan loan) {
-		if (loan == null || data.containsKey(loan)) { return; }
+		if (loan == null || data.containsKey(loan)) return;
 		final ObservableList<Data<Number, Number>> values = FXCollections.observableArrayList();
-		final List<Double> redemptionPlan = loan.getMonthlyPayment();
+		final List<Double> redemptionPlan = loan.getRedemptionPlan();
 		for (int i = 0; i < redemptionPlan.size(); i++) {
 			values.add(new Data<Number, Number>(i, redemptionPlan.get(i)));
 		}

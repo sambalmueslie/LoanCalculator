@@ -25,6 +25,15 @@ public class ModifyAnnuityLoanDialog extends Dialog<ButtonType> {
 		final String dialogTitle = (loan == null) ? "Add new loan." : "Update loan";
 		setTitle(dialogTitle);
 
+		if (loan != null) {
+			name.set(loan.getName());
+			amount.set(loan.getAmount());
+			paymentRate.set(loan.getPaymentRate());
+			fixedDebitInterest.set(loan.getFixedDebitInterest());
+			fixedInterestPeriod.set(loan.getFixedInterestPeriod());
+			estimatedDebitInterest.set(loan.getEstimatedDebitInterest());
+		}
+
 		final DialogPane dialogPane = getDialogPane();
 
 		final GridPane content = new GridPane();

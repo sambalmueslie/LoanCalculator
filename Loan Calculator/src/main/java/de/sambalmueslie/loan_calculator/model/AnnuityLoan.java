@@ -33,15 +33,15 @@ public class AnnuityLoan extends BaseLoan {
 	AnnuityLoan(final String name, final double amount, final double paymentRate, final double fixedDebitInterest, final int fixedInterestPeriod,
 			final double estimatedDebitInterest) throws IllegalArgumentException {
 		super(name, amount);
-		if (paymentRate <= 0 || paymentRate >= 100) { throw new IllegalArgumentException("Payment rate '" + paymentRate + "' must 0 < X < 100."); }
+		if (paymentRate <= 0 || paymentRate >= 100) throw new IllegalArgumentException("Payment rate '" + paymentRate + "' must 0 < X < 100.");
 		this.paymentRate = paymentRate;
-		if (fixedDebitInterest < 0 || fixedDebitInterest >= 100) { throw new IllegalArgumentException("fixed debit interest '" + fixedDebitInterest
-				+ "' must 0 < X < 100."); }
+		if (fixedDebitInterest < 0 || fixedDebitInterest >= 100) throw new IllegalArgumentException("fixed debit interest '" + fixedDebitInterest
+				+ "' must 0 < X < 100.");
 		this.fixedDebitInterest = fixedDebitInterest;
-		if (fixedInterestPeriod < 0) { throw new IllegalArgumentException("fixed debit period '" + fixedDebitInterest + "' must greater equals 0."); }
+		if (fixedInterestPeriod < 0) throw new IllegalArgumentException("fixed debit period '" + fixedDebitInterest + "' must greater equals 0.");
 		this.fixedInterestPeriod = fixedInterestPeriod;
-		if (estimatedDebitInterest < 0 || estimatedDebitInterest >= 100) { throw new IllegalArgumentException("estimated debit interest '"
-				+ estimatedDebitInterest + "' must 0 < X < 100."); }
+		if (estimatedDebitInterest < 0 || estimatedDebitInterest >= 100) throw new IllegalArgumentException("estimated debit interest '"
+				+ estimatedDebitInterest + "' must 0 < X < 100.");
 		this.estimatedDebitInterest = estimatedDebitInterest;
 		update();
 	}
@@ -63,16 +63,8 @@ public class AnnuityLoan extends BaseLoan {
 	/**
 	 * @return the {@link #fixedInterestPeriod}
 	 */
-	public double getFixedInterestPeriod() {
+	public int getFixedInterestPeriod() {
 		return fixedInterestPeriod;
-	}
-
-	/**
-	 * @see de.sambalmueslie.loan_calculator.model.Loan#getMonthlyPayment()
-	 */
-	@Override
-	public List<Double> getMonthlyPayment() {
-		return Collections.unmodifiableList(monthlyPayment);
 	}
 
 	/**
@@ -80,6 +72,14 @@ public class AnnuityLoan extends BaseLoan {
 	 */
 	public double getPaymentRate() {
 		return paymentRate;
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.model.Loan#getRedemptionPlan()
+	 */
+	@Override
+	public List<Double> getRedemptionPlan() {
+		return Collections.unmodifiableList(redemptionPlan);
 	}
 
 	/**
@@ -125,7 +125,7 @@ public class AnnuityLoan extends BaseLoan {
 		builder.append(", fixedInterestPeriod=");
 		builder.append(fixedInterestPeriod);
 		builder.append(", monthlyPayment=");
-		builder.append(monthlyPayment);
+		builder.append(redemptionPlan);
 		builder.append(", paymentRate=");
 		builder.append(paymentRate);
 		builder.append(", term=");
@@ -142,22 +142,32 @@ public class AnnuityLoan extends BaseLoan {
 	 * Update the values.
 	 */
 	private void update() {
-		monthlyPayment = new LinkedList<>();
-		double remainingCapital = getAmount();
+		redemptionPlan = new LinkedList<>();
+
+		// restschuld
+		double residualDebt = getAmount();
+		// bezahlte zinsen
 		double totalInterest = 0;
-		final double redemption = getAmount() * paymentRate / 100;
-		for (int i = 0; i < 100 && remainingCapital > 0; i++) {
-			remainingCapital = remainingCapital - redemption;
-			if (remainingCapital <= 0) {
-				remainingCapital = 0;
-				monthlyPayment.add(remainingCapital);
-				break;
+		// anuität
+		final double annuity = getAmount() * (paymentRate + fixedDebitInterest) / 100;
+		redemptionPlan.add(residualDebt);
+
+		for (int i = 0; residualDebt > 0; i++) {
+			// zins
+			final double debitInterest = (i < fixedInterestPeriod ? fixedDebitInterest : estimatedDebitInterest) / 100;
+			final double interest = residualDebt * debitInterest;
+			totalInterest += interest;
+			// tilgung
+			final double redemption = annuity - interest;
+			if (redemption >= residualDebt) {
+				residualDebt = 0;
+			} else {
+				residualDebt -= redemption;
 			}
-			final double interest = (i < fixedInterestPeriod ? fixedDebitInterest : estimatedDebitInterest);
-			final double debit = remainingCapital * interest / 100;
-			totalInterest += debit;
-			monthlyPayment.add(remainingCapital);
+			redemptionPlan.add(residualDebt);
+
 		}
+
 		totalPayment = totalInterest + getAmount();
 	}
 
@@ -166,14 +176,13 @@ public class AnnuityLoan extends BaseLoan {
 	/** the fixed debit interest (Gebundener Sollzins). */
 	private final double fixedDebitInterest;
 	/** the fixed debit interest period (Sollzinsbindung). */
-	private final double fixedInterestPeriod;
-	/** the monthly payment. */
-	private List<Double> monthlyPayment;
+	private final int fixedInterestPeriod;
 	/** the payment rate (Tilgung in Prozent). */
 	private final double paymentRate;
+	/** the redemption plan. */
+	private List<Double> redemptionPlan;
 	/** the term (Laufzeit). */
 	private int term;
-
 	/** the total interest (Zins). */
 	private double totalInterest;
 	/** the total payment (Zins + Finanzmittel). */
