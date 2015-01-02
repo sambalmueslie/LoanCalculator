@@ -11,7 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import de.sambalmueslie.loan_calculator.model.Loan;
 import de.sambalmueslie.loan_calculator.model.Model;
-import de.sambalmueslie.loan_calculator.view.chart.RedemptionPlanChart;
+import de.sambalmueslie.loan_calculator.view.chart.ResidualDebtChart;
 import de.sambalmueslie.loan_calculator.view.component.LoanManager;
 import de.sambalmueslie.loan_calculator.view.component.LoanManagerChangeListener;
 
@@ -31,7 +31,7 @@ public class View extends BorderPane {
 		this.model = model;
 
 		modelChangeHandler = new ModelChangeHandler(this);
-		redemptionPlanChart = new RedemptionPlanChart();
+		residualDebtChart = new ResidualDebtChart();
 		loanManager = new LoanManager();
 		loanManagerChangeHandler = new LoanManagerChangeHandler(this);
 		loanManager.register(loanManagerChangeHandler);
@@ -71,7 +71,7 @@ public class View extends BorderPane {
 		primaryStage.setTitle("Loan calculator by sambalmueslie!");
 
 		setLeft(loanManager);
-		setCenter(redemptionPlanChart);
+		setCenter(residualDebtChart);
 
 		primaryStage.setScene(new Scene(this, 1024, 768));
 		primaryStage.show();
@@ -97,7 +97,7 @@ public class View extends BorderPane {
 	 */
 	void handleLoanAdded(final Loan loan) {
 		loanManager.add(loan);
-		redemptionPlanChart.add(loan);
+		residualDebtChart.add(loan);
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class View extends BorderPane {
 	 */
 	void handleLoanRemoved(final Loan loan) {
 		loanManager.remove(loan);
-		redemptionPlanChart.remove(loan);
+		residualDebtChart.remove(loan);
 	}
 
 	/**
@@ -144,7 +144,7 @@ public class View extends BorderPane {
 	private final Model model;
 	/** the {@link ModelChangeHandler}. */
 	private final ModelChangeHandler modelChangeHandler;
-	/** the {@link RedemptionPlanChart}. */
-	private final RedemptionPlanChart redemptionPlanChart;
+	/** the {@link ResidualDebtChart}. */
+	private final ResidualDebtChart residualDebtChart;
 
 }

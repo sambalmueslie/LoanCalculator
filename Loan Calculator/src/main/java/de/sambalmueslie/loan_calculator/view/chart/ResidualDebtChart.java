@@ -13,16 +13,16 @@ import de.sambalmueslie.loan_calculator.model.Loan;
 import de.sambalmueslie.loan_calculator.model.Redemption;
 
 /**
- * The chart for the redemption plan.
+ * The chart for the residual debt.
  *
  * @author sambalmueslie 2015
  */
-public class RedemptionPlanChart extends AreaChart<Number, Number> {
+public class ResidualDebtChart extends AreaChart<Number, Number> {
 
 	/**
 	 * Constructor.
 	 */
-	public RedemptionPlanChart() {
+	public ResidualDebtChart() {
 		super(new NumberAxis(), new NumberAxis());
 		setTitle("Redemption plan");
 		setAnimated(false);
