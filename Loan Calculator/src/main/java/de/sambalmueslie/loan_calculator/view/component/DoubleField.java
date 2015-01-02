@@ -25,7 +25,9 @@ public class DoubleField extends TextField {
 	public DoubleField(final SimpleDoubleProperty property) {
 		this.property = property;
 		focusedProperty().addListener((ChangeListener<Boolean>) (value, oldVal, newVal) -> {
-			if (newVal == false) validateInput();
+			if (newVal == false) {
+				validateInput();
+			}
 		});
 		showText();
 	}
@@ -36,7 +38,7 @@ public class DoubleField extends TextField {
 	private void showText() {
 		final String text = String.format(format, property.get());
 		logger.info("Show text '" + text + "'");
-		if (text.equals(getText())) return;
+		if (text.equals(getText())) { return; }
 		setText(text);
 	}
 

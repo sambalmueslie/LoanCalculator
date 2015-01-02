@@ -48,9 +48,9 @@ public class Controller extends Application {
 					+ ", " + estimatedDebitInterest);
 		}
 		try {
-			Loan loan = LoanFactory.createAnnuityLoan(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
+			final Loan loan = LoanFactory.createAnnuityLoan(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
 			model.add(loan);
-		} catch (IllegalArgumentException e) {
+		} catch (final IllegalArgumentException e) {
 			logger.error("Cannot add loan " + name + ", " + amount + ", " + paymentRate + ", " + fixedDebitInterest + ", " + fixedInterestPeriod + ", "
 					+ estimatedDebitInterest + " cause " + e.getMessage());
 			// TODO handle error
@@ -64,7 +64,7 @@ public class Controller extends Application {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Handle request to remove loan " + loanId);
 		}
-		Loan loan = model.get(loanId);
+		final Loan loan = model.get(loanId);
 		if (loan != null) {
 			model.remove(loan);
 		}
@@ -80,9 +80,9 @@ public class Controller extends Application {
 					+ fixedInterestPeriod + ", " + estimatedDebitInterest);
 		}
 		try {
-			Loan loan = LoanFactory.createAnnuityLoan(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
+			final Loan loan = LoanFactory.createAnnuityLoan(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
 			model.add(loan);
-		} catch (IllegalArgumentException e) {
+		} catch (final IllegalArgumentException e) {
 			logger.error("Cannot update loan " + name + ", " + amount + ", " + paymentRate + ", " + fixedDebitInterest + ", " + fixedInterestPeriod + ", "
 					+ estimatedDebitInterest + " cause " + e.getMessage());
 			// TODO handle error

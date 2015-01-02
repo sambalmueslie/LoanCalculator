@@ -31,13 +31,13 @@ public class LoanProcessChart extends LineChart<Number, Number> {
 	 */
 	public void add(final Loan loan) {
 		if (loan == null || data.containsKey(loan)) { return; }
-		ObservableList<Data<Number, Number>> values = FXCollections.observableArrayList();
-		List<Double> redemptionPlan = loan.getMonthlyPayment();
+		final ObservableList<Data<Number, Number>> values = FXCollections.observableArrayList();
+		final List<Double> redemptionPlan = loan.getMonthlyPayment();
 		for (int i = 0; i < redemptionPlan.size(); i++) {
 			values.add(new Data<Number, Number>(i, redemptionPlan.get(i)));
 		}
-		Series<Number, Number> series = new Series<>(values);
-		String name = loan.getName();
+		final Series<Number, Number> series = new Series<>(values);
+		final String name = loan.getName();
 		series.setName(name);
 		data.put(loan, series);
 		getData().add(series);
@@ -50,7 +50,7 @@ public class LoanProcessChart extends LineChart<Number, Number> {
 	 *            the loan
 	 */
 	public void remove(final Loan loan) {
-		Series<Number, Number> series = data.remove(loan);
+		final Series<Number, Number> series = data.remove(loan);
 		if (series != null) {
 			getData().remove(series);
 		}

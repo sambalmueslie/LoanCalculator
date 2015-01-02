@@ -55,21 +55,21 @@ public class LoanManager extends VBox {
 		setSpacing(DEFAULT_SPACING);
 		setAlignment(Pos.TOP_CENTER);
 
-		HBox title = new HBox(DEFAULT_SPACING);
+		final HBox title = new HBox(DEFAULT_SPACING);
 		title.setAlignment(Pos.CENTER);
-		Label overview = new Label("Overview");
+		final Label overview = new Label("Overview");
 		overview.setFont(TITLE_FONT);
 		title.getChildren().add(overview);
 
 		getChildren().add(title);
 
-		HBox ctrl = new HBox(DEFAULT_SPACING);
+		final HBox ctrl = new HBox(DEFAULT_SPACING);
 		ctrl.setAlignment(Pos.CENTER);
-		Button addBtn = new Button("Add");
+		final Button addBtn = new Button("Add");
 		addBtn.setOnAction(e -> requestAddLoan());
-		Button updBtn = new Button("Update");
+		final Button updBtn = new Button("Update");
 		updBtn.setOnAction(e -> requestUpdateLoan());
-		Button remBtn = new Button("Remove");
+		final Button remBtn = new Button("Remove");
 		remBtn.setOnAction(e -> requestRemoveLoan());
 		ctrl.getChildren().addAll(addBtn, updBtn, remBtn);
 		getChildren().add(ctrl);
@@ -130,16 +130,16 @@ public class LoanManager extends VBox {
 	private void requestAddLoan() {
 		logger.info("Request to add a loan");
 
-		ModifyAnnuityLoanDialog dialog = new ModifyAnnuityLoanDialog(null);
-		Optional<ButtonType> type = dialog.showAndWait();
+		final ModifyAnnuityLoanDialog dialog = new ModifyAnnuityLoanDialog(null);
+		final Optional<ButtonType> type = dialog.showAndWait();
 		if (type.isPresent() && type.get() == ButtonType.OK) {
 
-			String name = dialog.getName();
-			double amount = dialog.getAmount();
-			double paymentRate = dialog.getPaymentRate();
-			double fixedDebitInterest = dialog.getFixedDebitInterest();
-			int fixedInterestPeriod = dialog.getFixedInterestPeriod();
-			double estimatedDebitInterest = dialog.getEstimatedDebitInterest();
+			final String name = dialog.getName();
+			final double amount = dialog.getAmount();
+			final double paymentRate = dialog.getPaymentRate();
+			final double fixedDebitInterest = dialog.getFixedDebitInterest();
+			final int fixedInterestPeriod = dialog.getFixedInterestPeriod();
+			final double estimatedDebitInterest = dialog.getEstimatedDebitInterest();
 
 			listeners.forEach(l -> l.requestAddLoan(this, name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest));
 		}
@@ -149,7 +149,7 @@ public class LoanManager extends VBox {
 	 * Request to remove a loan.
 	 */
 	private void requestRemoveLoan() {
-		Loan selectedLoan = view.getSelectionModel().getSelectedItem();
+		final Loan selectedLoan = view.getSelectionModel().getSelectedItem();
 		if (selectedLoan == null) { return; }
 		// TODO Auto-generated method stub
 		logger.info("Request to remove loan: " + selectedLoan.getName());
@@ -160,7 +160,7 @@ public class LoanManager extends VBox {
 	 */
 	private void requestUpdateLoan() {
 		// TODO Auto-generated method stub
-		Loan selectedLoan = view.getSelectionModel().getSelectedItem();
+		final Loan selectedLoan = view.getSelectionModel().getSelectedItem();
 		if (selectedLoan == null) { return; }
 		// TODO Auto-generated method stub
 		logger.info("Request to update loan: " + selectedLoan.getName());

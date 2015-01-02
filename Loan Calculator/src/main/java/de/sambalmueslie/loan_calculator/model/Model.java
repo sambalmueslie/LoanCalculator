@@ -32,7 +32,7 @@ public class Model {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Add new loan " + loan);
 		}
-		long id = loan.getId();
+		final long id = loan.getId();
 		loans.put(id, loan);
 		listeners.forEach(l -> l.loanAdded(loan));
 	}
@@ -90,7 +90,7 @@ public class Model {
 			logger.error("Cannot remove loan null value.");
 			return;
 		}
-		long id = loan.getId();
+		final long id = loan.getId();
 		if (!loans.containsKey(id)) {
 			logger.warn("Try to remove not added loan " + loan);
 			return;

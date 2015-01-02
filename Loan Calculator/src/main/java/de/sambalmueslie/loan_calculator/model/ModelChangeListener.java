@@ -5,7 +5,7 @@ package de.sambalmueslie.loan_calculator.model;
 
 /**
  * The change listener for the model.
- * 
+ *
  * @author sambalmueslie 2015
  */
 public interface ModelChangeListener {

@@ -38,7 +38,7 @@ public interface ViewActionListener {
 
 	/**
 	 * Request to update a loan.
-	 * 
+	 *
 	 * @param loanId
 	 *            the loan id
 	 * @param name

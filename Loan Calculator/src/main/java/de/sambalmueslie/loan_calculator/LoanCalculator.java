@@ -3,6 +3,7 @@
  */
 package de.sambalmueslie.loan_calculator;
 
+import javafx.application.Application;
 import de.sambalmueslie.loan_calculator.controller.Controller;
 
 /**
@@ -11,11 +12,11 @@ import de.sambalmueslie.loan_calculator.controller.Controller;
 public class LoanCalculator {
 	/**
 	 * Main.
-	 * 
+	 *
 	 * @param args
 	 *            the args
 	 */
 	public static void main(final String[] args) {
-		Controller.launch(Controller.class, args);
+		Application.launch(Controller.class, args);
 	}
 }

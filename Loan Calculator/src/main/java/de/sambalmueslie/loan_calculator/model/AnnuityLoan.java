@@ -111,7 +111,7 @@ public class AnnuityLoan extends BaseLoan {
 	 */
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append("AnnuityLoan [getId()=");
 		builder.append(getId());
 		builder.append(", getTitle()=");
@@ -145,7 +145,7 @@ public class AnnuityLoan extends BaseLoan {
 		monthlyPayment = new LinkedList<>();
 		double remainingCapital = getAmount();
 		double totalInterest = 0;
-		double redemption = getAmount() * paymentRate / 100;
+		final double redemption = getAmount() * paymentRate / 100;
 		for (int i = 0; i < 100 && remainingCapital > 0; i++) {
 			remainingCapital = remainingCapital - redemption;
 			if (remainingCapital <= 0) {
@@ -153,8 +153,8 @@ public class AnnuityLoan extends BaseLoan {
 				monthlyPayment.add(remainingCapital);
 				break;
 			}
-			double interest = (i < fixedInterestPeriod ? fixedDebitInterest : estimatedDebitInterest);
-			double debit = remainingCapital * interest / 100;
+			final double interest = (i < fixedInterestPeriod ? fixedDebitInterest : estimatedDebitInterest);
+			final double debit = remainingCapital * interest / 100;
 			totalInterest += debit;
 			monthlyPayment.add(remainingCapital);
 		}

@@ -36,7 +36,7 @@ public class IntegerField extends TextField {
 	 * Show the text.
 	 */
 	private void showText() {
-		String text = String.format(format, property.get());
+		final String text = String.format(format, property.get());
 		logger.info("Show text '" + text + "'");
 		if (text.equals(getText())) { return; }
 		setText(text);
@@ -47,7 +47,7 @@ public class IntegerField extends TextField {
 	 */
 	private void validateInput() {
 		try {
-			String text = getText();
+			final String text = getText();
 			logger.info("Validate input '" + text + "'");
 			property.set(Integer.parseInt(text));
 		} catch (NullPointerException | NumberFormatException e) {

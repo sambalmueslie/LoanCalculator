@@ -22,7 +22,7 @@ public class ModifyAnnuityLoanDialog extends Dialog<ButtonType> {
 	 * Constructor.
 	 */
 	public ModifyAnnuityLoanDialog(final AnnuityLoan loan) {
-		String dialogTitle = (loan == null) ? "Add new loan." : "Update loan";
+		final String dialogTitle = (loan == null) ? "Add new loan." : "Update loan";
 		setTitle(dialogTitle);
 
 		final DialogPane dialogPane = getDialogPane();
