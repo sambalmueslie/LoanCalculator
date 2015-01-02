@@ -48,6 +48,7 @@ public class ResidualDebtChart extends AreaChart<Number, Number> {
 		series.setName(name);
 		data.put(loan, series);
 		getData().add(series);
+
 	}
 
 	/**

@@ -57,12 +57,18 @@ public class Redemption {
 		return residualDebt;
 	}
 
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Redemption [interest=" + interest + ", redemption=" + redemption + ", residualDebt=" + residualDebt + "]";
+	}
+
 	/** the interest. */
 	private final double interest;
-
 	/** the redemption. */
 	private final double redemption;
-
 	/** the residual debt. */
 	private final double residualDebt;
 }
