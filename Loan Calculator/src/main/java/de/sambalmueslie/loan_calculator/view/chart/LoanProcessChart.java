@@ -30,9 +30,7 @@ public class LoanProcessChart extends LineChart<Number, Number> {
 	 *            the loan
 	 */
 	public void add(final Loan loan) {
-		if (loan == null || data.containsKey(loan)) {
-			return;
-		}
+		if (loan == null || data.containsKey(loan)) { return; }
 		ObservableList<Data<Number, Number>> values = FXCollections.observableArrayList();
 		List<Double> redemptionPlan = loan.getMonthlyPayment();
 		for (int i = 0; i < redemptionPlan.size(); i++) {

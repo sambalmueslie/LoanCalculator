@@ -28,7 +28,7 @@ public final class LoanFactory {
 	 * @return the {@link Loan}
 	 */
 	public static Loan createAnnuityLoan(final String name, final double amount, final double paymentRate, final double fixedDebitInterest,
-			final int fixedInterestPeriod, final double estimatedDebitInterest) {
+			final int fixedInterestPeriod, final double estimatedDebitInterest) throws IllegalArgumentException {
 		return new AnnuityLoan(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
 	}
 

@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 /**
  * A {@link Double} {@link TextField}.
- * 
+ *
  * @author sambalmueslie 2015
  */
 public class DoubleField extends TextField {
@@ -25,9 +25,7 @@ public class DoubleField extends TextField {
 	public DoubleField(final SimpleDoubleProperty property) {
 		this.property = property;
 		focusedProperty().addListener((ChangeListener<Boolean>) (value, oldVal, newVal) -> {
-			if (newVal == false) {
-				validateInput();
-			}
+			if (newVal == false) validateInput();
 		});
 		showText();
 	}
@@ -36,11 +34,9 @@ public class DoubleField extends TextField {
 	 * Show the text.
 	 */
 	private void showText() {
-		String text = String.format(format, property.get());
+		final String text = String.format(format, property.get());
 		logger.info("Show text '" + text + "'");
-		if (text.equals(getText())) {
-			return;
-		}
+		if (text.equals(getText())) return;
 		setText(text);
 	}
 
@@ -49,7 +45,7 @@ public class DoubleField extends TextField {
 	 */
 	private void validateInput() {
 		try {
-			String text = getText().replace(".", "").replace(",", ".");
+			final String text = getText().replace(".", "").replace(",", ".");
 			logger.info("Validate input '" + text + "'");
 			property.set(Double.parseDouble(text));
 		} catch (NullPointerException | NumberFormatException e) {

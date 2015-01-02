@@ -150,9 +150,7 @@ public class LoanManager extends VBox {
 	 */
 	private void requestRemoveLoan() {
 		Loan selectedLoan = view.getSelectionModel().getSelectedItem();
-		if (selectedLoan == null) {
-			return;
-		}
+		if (selectedLoan == null) { return; }
 		// TODO Auto-generated method stub
 		logger.info("Request to remove loan: " + selectedLoan.getName());
 	}
@@ -163,9 +161,7 @@ public class LoanManager extends VBox {
 	private void requestUpdateLoan() {
 		// TODO Auto-generated method stub
 		Loan selectedLoan = view.getSelectionModel().getSelectedItem();
-		if (selectedLoan == null) {
-			return;
-		}
+		if (selectedLoan == null) { return; }
 		// TODO Auto-generated method stub
 		logger.info("Request to update loan: " + selectedLoan.getName());
 	}

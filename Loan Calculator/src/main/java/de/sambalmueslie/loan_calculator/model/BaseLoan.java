@@ -18,8 +18,10 @@ abstract class BaseLoan implements Loan {
 	 * @param amount
 	 *            {@link #amount}
 	 */
-	BaseLoan(final String name, final double amount) {
+	BaseLoan(final String name, final double amount) throws IllegalArgumentException {
+		if (name == null || name.isEmpty()) { throw new IllegalArgumentException("Name '" + name + "' for loan cannot be null or empty."); }
 		this.name = name;
+		if (amount <= 0) { throw new IllegalArgumentException("Amount '" + amount + "'  for loan cannot be lower or equals 0."); }
 		this.amount = amount;
 		id = UUID.randomUUID().getLeastSignificantBits();
 	}

@@ -31,11 +31,17 @@ public class AnnuityLoan extends BaseLoan {
 	 *            {@link #estimatedDebitInterest}
 	 */
 	AnnuityLoan(final String name, final double amount, final double paymentRate, final double fixedDebitInterest, final int fixedInterestPeriod,
-			final double estimatedDebitInterest) {
+			final double estimatedDebitInterest) throws IllegalArgumentException {
 		super(name, amount);
+		if (paymentRate <= 0 || paymentRate >= 100) { throw new IllegalArgumentException("Payment rate '" + paymentRate + "' must 0 < X < 100."); }
 		this.paymentRate = paymentRate;
+		if (fixedDebitInterest < 0 || fixedDebitInterest >= 100) { throw new IllegalArgumentException("fixed debit interest '" + fixedDebitInterest
+				+ "' must 0 < X < 100."); }
 		this.fixedDebitInterest = fixedDebitInterest;
+		if (fixedInterestPeriod < 0) { throw new IllegalArgumentException("fixed debit period '" + fixedDebitInterest + "' must greater equals 0."); }
 		this.fixedInterestPeriod = fixedInterestPeriod;
+		if (estimatedDebitInterest < 0 || estimatedDebitInterest >= 100) { throw new IllegalArgumentException("estimated debit interest '"
+				+ estimatedDebitInterest + "' must 0 < X < 100."); }
 		this.estimatedDebitInterest = estimatedDebitInterest;
 		update();
 	}
