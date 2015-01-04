@@ -27,7 +27,7 @@ public class AnnuityCart extends StackedBarChart<String, Number> {
 		setAnimated(false);
 		setLegendVisible(true);
 		setLegendSide(Side.BOTTOM);
-		setPrefWidth(250);
+		setPrefWidth(200);
 
 		interestSeries = new Series<>();
 		interestSeries.setName("interest");

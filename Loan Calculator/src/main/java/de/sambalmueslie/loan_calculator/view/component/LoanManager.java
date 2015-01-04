@@ -39,12 +39,7 @@ public class LoanManager extends VBox {
 		@Override
 		public void updateItem(final Loan item, final boolean empty) {
 			super.updateItem(item, empty);
-			if (empty) {
-				setText(null);
-				setGraphic(null);
-			} else if (item != null) {
-				setGraphic(new Label(item.getName()));
-			}
+			if (item != null) setGraphic(new Label(item.getName()));
 		}
 	}
 
@@ -101,9 +96,7 @@ public class LoanManager extends VBox {
 	 *            the listener
 	 */
 	public void register(final LoanManagerChangeListener listener) {
-		if (listener != null && !listeners.contains(listener)) {
-			listeners.add(listener);
-		}
+		if (listener != null && !listeners.contains(listener)) listeners.add(listener);
 	}
 
 	/**
@@ -123,9 +116,7 @@ public class LoanManager extends VBox {
 	 *            the listener
 	 */
 	public void unregister(final LoanManagerChangeListener listener) {
-		if (listener != null) {
-			listeners.remove(listener);
-		}
+		if (listener != null) listeners.remove(listener);
 	}
 
 	/**

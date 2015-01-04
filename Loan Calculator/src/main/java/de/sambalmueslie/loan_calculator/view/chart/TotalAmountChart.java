@@ -25,7 +25,7 @@ public class TotalAmountChart extends StackedBarChart<String, Number> {
 		setAnimated(false);
 		setLegendVisible(true);
 		setLegendSide(Side.BOTTOM);
-		setPrefWidth(250);
+		setPrefWidth(200);
 
 		amountSeries = new Series<>();
 		amountSeries.setName("amount");

@@ -83,7 +83,7 @@ public class View extends BorderPane {
 		box.getChildren().addAll(totalAmountChart, annuityCart);
 		setRight(box);
 
-		primaryStage.setScene(new Scene(this, 1024, 768));
+		primaryStage.setScene(new Scene(this, 1200, 768));
 		primaryStage.show();
 
 		model.getAll().forEach(loan -> handleLoanAdded(loan));
