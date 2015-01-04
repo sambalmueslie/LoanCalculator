@@ -3,8 +3,8 @@
  */
 package de.sambalmueslie.loan_calculator.view;
 
-import de.sambalmueslie.loan_calculator.view.component.LoanManager;
-import de.sambalmueslie.loan_calculator.view.component.LoanManagerChangeListener;
+import de.sambalmueslie.loan_calculator.view.loan_mgr.LoanManager;
+import de.sambalmueslie.loan_calculator.view.loan_mgr.LoanManagerChangeListener;
 
 /**
  * The handler for the {@link LoanManagerChangeListener}.
@@ -24,7 +24,7 @@ public class LoanManagerChangeHandler implements LoanManagerChangeListener {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.view.component.LoanManagerChangeListener#requestAddAnnuityLoan(de.sambalmueslie.loan_calculator.view.component.LoanManager,
+	 * @see de.sambalmueslie.loan_calculator.view.loan_mgr.LoanManagerChangeListener#requestAddAnnuityLoan(de.sambalmueslie.loan_calculator.view.loan_mgr.LoanManager,
 	 *      java.lang.String, double, double, double, int, double)
 	 */
 	@Override
@@ -34,7 +34,7 @@ public class LoanManagerChangeHandler implements LoanManagerChangeListener {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.view.component.LoanManagerChangeListener#requestRemoveLoan(de.sambalmueslie.loan_calculator.view.component.LoanManager,
+	 * @see de.sambalmueslie.loan_calculator.view.loan_mgr.LoanManagerChangeListener#requestRemoveLoan(de.sambalmueslie.loan_calculator.view.loan_mgr.LoanManager,
 	 *      long)
 	 */
 	@Override
@@ -43,7 +43,7 @@ public class LoanManagerChangeHandler implements LoanManagerChangeListener {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.view.component.LoanManagerChangeListener#requestUpdateAnnuityLoan(de.sambalmueslie.loan_calculator.view.component.LoanManager,
+	 * @see de.sambalmueslie.loan_calculator.view.loan_mgr.LoanManagerChangeListener#requestUpdateAnnuityLoan(de.sambalmueslie.loan_calculator.view.loan_mgr.LoanManager,
 	 *      long, java.lang.String, double, double, double, int, double)
 	 */
 	@Override

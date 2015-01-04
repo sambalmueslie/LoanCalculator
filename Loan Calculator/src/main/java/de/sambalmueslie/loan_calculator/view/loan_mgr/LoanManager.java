@@ -1,7 +1,7 @@
 /**
  *
  */
-package de.sambalmueslie.loan_calculator.view.component;
+package de.sambalmueslie.loan_calculator.view.loan_mgr;
 
 import static de.sambalmueslie.loan_calculator.view.Constants.DEFAULT_SPACING;
 import static de.sambalmueslie.loan_calculator.view.Constants.TITLE_FONT;
@@ -23,6 +23,7 @@ import org.apache.logging.log4j.Logger;
 
 import de.sambalmueslie.loan_calculator.model.AnnuityLoan;
 import de.sambalmueslie.loan_calculator.model.Loan;
+import de.sambalmueslie.loan_calculator.view.dialog.ModifyAnnuityLoanDialog;
 
 /**
  * A list for the overview of all {@link Loan}s.

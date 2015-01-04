@@ -1,9 +1,9 @@
 /**
  *
  */
-package de.sambalmueslie.loan_calculator.view.component;
+package de.sambalmueslie.loan_calculator.view.dialog;
 
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.control.TextField;
 
@@ -11,18 +11,18 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * A integer {@link TextField}.
+ * A {@link Double} {@link TextField}.
  *
  * @author sambalmueslie 2015
  */
-public class IntegerField extends TextField {
+public class DoubleField extends TextField {
 	/** the logger. */
-	private static final Logger logger = LogManager.getLogger(IntegerField.class);
+	private static final Logger logger = LogManager.getLogger(DoubleField.class);
 
 	/**
 	 * Constructor.
 	 */
-	public IntegerField(final SimpleIntegerProperty property) {
+	public DoubleField(final SimpleDoubleProperty property) {
 		this.property = property;
 		focusedProperty().addListener((ChangeListener<Boolean>) (value, oldVal, newVal) -> {
 			if (newVal == false) {
@@ -47,9 +47,9 @@ public class IntegerField extends TextField {
 	 */
 	private void validateInput() {
 		try {
-			final String text = getText();
+			final String text = getText().replace(".", "").replace(",", ".");
 			logger.info("Validate input '" + text + "'");
-			property.set(Integer.parseInt(text));
+			property.set(Double.parseDouble(text));
 		} catch (NullPointerException | NumberFormatException e) {
 			// intentionally left empty
 		}
@@ -57,8 +57,8 @@ public class IntegerField extends TextField {
 	}
 
 	/** the format. */
-	private final String format = "%d";
-	/** the {@link SimpleIntegerProperty}. */
-	private final SimpleIntegerProperty property;
+	private final String format = "%,.2f ";
+	/** the {@link SimpleDoubleProperty}. */
+	private final SimpleDoubleProperty property;
 
 }

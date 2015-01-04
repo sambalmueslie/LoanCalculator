@@ -1,7 +1,7 @@
 /**
  *
  */
-package de.sambalmueslie.loan_calculator.view.component;
+package de.sambalmueslie.loan_calculator.view.loan_mgr;
 
 import de.sambalmueslie.loan_calculator.model.Loan;
 

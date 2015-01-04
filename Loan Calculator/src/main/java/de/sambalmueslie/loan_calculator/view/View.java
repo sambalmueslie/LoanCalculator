@@ -15,8 +15,8 @@ import javafx.stage.Stage;
 import de.sambalmueslie.loan_calculator.model.AnnuityLoan;
 import de.sambalmueslie.loan_calculator.model.Loan;
 import de.sambalmueslie.loan_calculator.model.Model;
-import de.sambalmueslie.loan_calculator.view.component.LoanManager;
-import de.sambalmueslie.loan_calculator.view.component.LoanManagerChangeListener;
+import de.sambalmueslie.loan_calculator.view.loan_mgr.LoanManager;
+import de.sambalmueslie.loan_calculator.view.loan_mgr.LoanManagerChangeListener;
 import de.sambalmueslie.loan_calculator.view.panel.AnnuityLoanPanel;
 
 /**
