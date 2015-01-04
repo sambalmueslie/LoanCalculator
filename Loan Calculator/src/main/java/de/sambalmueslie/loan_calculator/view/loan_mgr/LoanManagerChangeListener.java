@@ -3,6 +3,8 @@
  */
 package de.sambalmueslie.loan_calculator.view.loan_mgr;
 
+import java.util.List;
+
 import de.sambalmueslie.loan_calculator.model.Loan;
 
 /**
@@ -32,6 +34,16 @@ public interface LoanManagerChangeListener {
 	 */
 	void requestAddAnnuityLoan(LoanManager manager, final String name, final double amount, final double paymentRate, final double fixedDebitInterest,
 			final int fixedInterestPeriod, final double estimatedDebitInterest);
+
+	/**
+	 * Request to compare the selected loans.
+	 *
+	 * @param manager
+	 *            the {@link LoanManager}
+	 * @param loans
+	 *            the {@link Loan}s to compare
+	 */
+	void requestCompareLoans(LoanManager manager, List<Loan> loans);
 
 	/**
 	 * Request to remove a existing {@link Loan}.

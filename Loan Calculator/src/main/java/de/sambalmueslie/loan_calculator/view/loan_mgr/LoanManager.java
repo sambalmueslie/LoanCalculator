@@ -77,11 +77,14 @@ public class LoanManager extends VBox {
 		updBtn.setOnAction(e -> requestUpdateLoan());
 		final Button remBtn = new Button("Remove");
 		remBtn.setOnAction(e -> requestRemoveLoan());
-		ctrl.getChildren().addAll(addBtn, updBtn, remBtn);
+		final Button compBtn = new Button("Compare");
+		compBtn.setOnAction(e -> requestCompareSelectedLoan());
+		ctrl.getChildren().addAll(addBtn, updBtn, remBtn, compBtn);
 		getChildren().add(ctrl);
 
 		data = FXCollections.observableArrayList();
 		view = new ListView<>(data);
+		view.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		view.setCellFactory(list -> new LoanCell());
 		getChildren().add(view);
 	}
@@ -149,6 +152,15 @@ public class LoanManager extends VBox {
 
 			listeners.forEach(l -> l.requestAddAnnuityLoan(this, name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest));
 		}
+	}
+
+	/**
+	 * Request to compare the selected loans.
+	 */
+	private void requestCompareSelectedLoan() {
+		final ObservableList<Loan> selectedLoans = view.getSelectionModel().getSelectedItems();
+		if (selectedLoans == null || selectedLoans.isEmpty()) return;
+		listeners.forEach(l -> l.requestCompareLoans(this, new LinkedList<Loan>(selectedLoans)));
 	}
 
 	/**

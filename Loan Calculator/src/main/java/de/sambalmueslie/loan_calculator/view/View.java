@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import de.sambalmueslie.loan_calculator.model.AnnuityLoan;
 import de.sambalmueslie.loan_calculator.model.Loan;
 import de.sambalmueslie.loan_calculator.model.Model;
+import de.sambalmueslie.loan_calculator.view.compare.CompareLoanPanel;
 import de.sambalmueslie.loan_calculator.view.loan_mgr.LoanManager;
 import de.sambalmueslie.loan_calculator.view.loan_mgr.LoanManagerChangeListener;
 import de.sambalmueslie.loan_calculator.view.panel.AnnuityLoanPanel;
@@ -79,7 +80,7 @@ public class View extends BorderPane {
 		setLeft(loanManager);
 		setCenter(tabPane);
 
-		primaryStage.setScene(new Scene(this, 1024, 768));
+		primaryStage.setScene(new Scene(this, 1024, 475));
 		primaryStage.show();
 
 		model.getAll().forEach(loan -> handleLoanAdded(loan));
@@ -142,6 +143,22 @@ public class View extends BorderPane {
 	void notifyRequestUpdateAnnuityLoan(final LoanManager manager, final long loanId, final String name, final double amount, final double paymentRate,
 			final double fixedDebitInterest, final int fixedInterestPeriod, final double estimatedDebitInterest) {
 		listeners.forEach(l -> l.requestUpdateLoan(loanId, name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest));
+	}
+
+	/**
+	 * Request to compare a {@link List} of loans.
+	 *
+	 * @param manager
+	 *            the {@link LoanManager}
+	 * @param loans
+	 *            the {@link Loan}s to compare
+	 */
+	void requestCompareLoans(final LoanManager manager, final List<Loan> loans) {
+		final String tabName = "Compare" + loans.stream().map(l -> l.getName()).toString();
+		final Tab tab = new Tab(tabName);
+		tab.setContent(new CompareLoanPanel(loans));
+		tabPane.getTabs().add(tab);
+
 	}
 
 	/**

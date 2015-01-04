@@ -3,6 +3,9 @@
  */
 package de.sambalmueslie.loan_calculator.view;
 
+import java.util.List;
+
+import de.sambalmueslie.loan_calculator.model.Loan;
 import de.sambalmueslie.loan_calculator.view.loan_mgr.LoanManager;
 import de.sambalmueslie.loan_calculator.view.loan_mgr.LoanManagerChangeListener;
 
@@ -31,6 +34,15 @@ public class LoanManagerChangeHandler implements LoanManagerChangeListener {
 	public void requestAddAnnuityLoan(final LoanManager manager, final String name, final double amount, final double paymentRate,
 			final double fixedDebitInterest, final int fixedInterestPeriod, final double estimatedDebitInterest) {
 		view.notifyRequestAddAnnuityLoan(manager, name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.view.loan_mgr.LoanManagerChangeListener#requestCompareLoans(de.sambalmueslie.loan_calculator.view.loan_mgr.LoanManager,
+	 *      java.util.List)
+	 */
+	@Override
+	public void requestCompareLoans(final LoanManager manager, final List<Loan> loans) {
+		view.requestCompareLoans(manager, loans);
 	}
 
 	/**
