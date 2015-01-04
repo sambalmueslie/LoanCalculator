@@ -6,17 +6,18 @@ package de.sambalmueslie.loan_calculator.view;
 import java.util.LinkedList;
 import java.util.List;
 
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import de.sambalmueslie.loan_calculator.model.AnnuityLoan;
 import de.sambalmueslie.loan_calculator.model.Loan;
 import de.sambalmueslie.loan_calculator.model.Model;
-import de.sambalmueslie.loan_calculator.view.chart.AnnuityCart;
-import de.sambalmueslie.loan_calculator.view.chart.ResidualDebtChart;
-import de.sambalmueslie.loan_calculator.view.chart.TotalAmountChart;
 import de.sambalmueslie.loan_calculator.view.component.LoanManager;
 import de.sambalmueslie.loan_calculator.view.component.LoanManagerChangeListener;
+import de.sambalmueslie.loan_calculator.view.panel.AnnuityLoanPanel;
 
 /**
  * The view.
@@ -34,9 +35,6 @@ public class View extends BorderPane {
 		this.model = model;
 
 		modelChangeHandler = new ModelChangeHandler(this);
-		residualDebtChart = new ResidualDebtChart();
-		totalAmountChart = new TotalAmountChart();
-		annuityCart = new AnnuityCart();
 
 		loanManager = new LoanManager();
 		loanManagerChangeHandler = new LoanManagerChangeHandler(this);
@@ -76,14 +74,12 @@ public class View extends BorderPane {
 	public void setup(final Stage primaryStage) {
 		primaryStage.setTitle("Loan calculator by sambalmueslie!");
 
+		tabPane = new TabPane();
+
 		setLeft(loanManager);
-		setCenter(residualDebtChart);
+		setCenter(tabPane);
 
-		final HBox box = new HBox(Constants.DEFAULT_SPACING);
-		box.getChildren().addAll(totalAmountChart, annuityCart);
-		setRight(box);
-
-		primaryStage.setScene(new Scene(this, 1200, 768));
+		primaryStage.setScene(new Scene(this, 1024, 768));
 		primaryStage.show();
 
 		model.getAll().forEach(loan -> handleLoanAdded(loan));
@@ -107,9 +103,11 @@ public class View extends BorderPane {
 	 */
 	void handleLoanAdded(final Loan loan) {
 		loanManager.add(loan);
-		residualDebtChart.add(loan);
-		totalAmountChart.add(loan);
-		annuityCart.add(loan);
+
+		final Tab tab = new Tab(loan.getName());
+		tab.setClosable(false);
+		tab.setContent(createLoanPanel(loan));
+		tabPane.getTabs().add(tab);
 	}
 
 	/**
@@ -120,9 +118,7 @@ public class View extends BorderPane {
 	 */
 	void handleLoanRemoved(final Loan loan) {
 		loanManager.remove(loan);
-		residualDebtChart.remove(loan);
-		totalAmountChart.remove(loan);
-		annuityCart.remove(loan);
+		tabPane.getTabs().removeIf(t -> t.getText().equals(loan.getName()));
 	}
 
 	/**
@@ -148,8 +144,16 @@ public class View extends BorderPane {
 		listeners.forEach(l -> l.requestUpdateLoan(loanId, name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest));
 	}
 
-	/** the {@link AnnuityCart}. */
-	private final AnnuityCart annuityCart;
+	/**
+	 * @param loan
+	 * @return
+	 */
+	private Node createLoanPanel(final Loan loan) {
+		if (loan instanceof AnnuityLoan) return new AnnuityLoanPanel((AnnuityLoan) loan);
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	/** the {@link ViewActionListener}. */
 	private final List<ViewActionListener> listeners = new LinkedList<>();
 	/** the {@link LoanManager}. */
@@ -160,9 +164,7 @@ public class View extends BorderPane {
 	private final Model model;
 	/** the {@link ModelChangeHandler}. */
 	private final ModelChangeHandler modelChangeHandler;
-	/** the {@link ResidualDebtChart}. */
-	private final ResidualDebtChart residualDebtChart;
-	/** the {@link TotalAmountChart}. */
-	private final TotalAmountChart totalAmountChart;
+	/** the {@link TabPane}. */
+	private TabPane tabPane;
 
 }
