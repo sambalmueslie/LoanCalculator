@@ -7,8 +7,9 @@ import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Side;
-import javafx.scene.chart.AreaChart;
+import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart.Series;
 import de.sambalmueslie.loan_calculator.model.Loan;
 import de.sambalmueslie.loan_calculator.model.Redemption;
 
@@ -17,7 +18,7 @@ import de.sambalmueslie.loan_calculator.model.Redemption;
  *
  * @author sambalmueslie 2015
  */
-public class ResidualDebtChart extends AreaChart<Number, Number> {
+public class ResidualDebtChart extends LineChart<Number, Number> {
 
 	/**
 	 * Constructor.

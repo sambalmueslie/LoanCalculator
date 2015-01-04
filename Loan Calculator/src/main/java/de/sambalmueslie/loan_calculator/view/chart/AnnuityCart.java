@@ -50,7 +50,7 @@ public class AnnuityCart extends StackedBarChart<String, Number> {
 		final String name = loan.getName();
 		final Redemption redemption = loan.getRedemptionPlan().get(1);
 		interestSeries.getData().add(new Data<String, Number>(name, redemption.getInterest()));
-		redemptionSeries.getData().add(new Data<String, Number>(name, redemption.getInterest()));
+		redemptionSeries.getData().add(new Data<String, Number>(name, redemption.getRedemption()));
 
 	}
 

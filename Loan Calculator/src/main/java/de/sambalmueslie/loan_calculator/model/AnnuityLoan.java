@@ -142,11 +142,8 @@ public class AnnuityLoan extends BaseLoan {
 	private void update() {
 		redemptionPlan = new LinkedList<>();
 
-		// restschuld
 		double residualDebt = getAmount();
-		// bezahlte zinsen
 		totalInterest = 0;
-		// anuität
 		final double annuity = getAmount() * (paymentRate + fixedDebitInterest) / 100;
 		redemptionPlan.add(new Redemption(residualDebt));
 
