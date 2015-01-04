@@ -109,6 +109,7 @@ public class View extends BorderPane {
 		tab.setClosable(false);
 		tab.setContent(createLoanPanel(loan));
 		tabPane.getTabs().add(tab);
+		tabPane.getSelectionModel().select(tab);
 	}
 
 	/**
@@ -158,7 +159,7 @@ public class View extends BorderPane {
 		final Tab tab = new Tab(tabName);
 		tab.setContent(new CompareLoanPanel(loans));
 		tabPane.getTabs().add(tab);
-
+		tabPane.getSelectionModel().select(tab);
 	}
 
 	/**
