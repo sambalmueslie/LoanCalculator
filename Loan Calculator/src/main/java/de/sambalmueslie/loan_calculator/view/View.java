@@ -8,9 +8,11 @@ import java.util.List;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import de.sambalmueslie.loan_calculator.model.Loan;
 import de.sambalmueslie.loan_calculator.model.Model;
+import de.sambalmueslie.loan_calculator.view.chart.AnnuityCart;
 import de.sambalmueslie.loan_calculator.view.chart.ResidualDebtChart;
 import de.sambalmueslie.loan_calculator.view.chart.TotalAmountChart;
 import de.sambalmueslie.loan_calculator.view.component.LoanManager;
@@ -34,6 +36,7 @@ public class View extends BorderPane {
 		modelChangeHandler = new ModelChangeHandler(this);
 		residualDebtChart = new ResidualDebtChart();
 		totalAmountChart = new TotalAmountChart();
+		annuityCart = new AnnuityCart();
 
 		loanManager = new LoanManager();
 		loanManagerChangeHandler = new LoanManagerChangeHandler(this);
@@ -75,7 +78,10 @@ public class View extends BorderPane {
 
 		setLeft(loanManager);
 		setCenter(residualDebtChart);
-		setRight(totalAmountChart);
+
+		final HBox box = new HBox(Constants.DEFAULT_SPACING);
+		box.getChildren().addAll(totalAmountChart, annuityCart);
+		setRight(box);
 
 		primaryStage.setScene(new Scene(this, 1024, 768));
 		primaryStage.show();
@@ -103,6 +109,7 @@ public class View extends BorderPane {
 		loanManager.add(loan);
 		residualDebtChart.add(loan);
 		totalAmountChart.add(loan);
+		annuityCart.add(loan);
 	}
 
 	/**
@@ -115,6 +122,7 @@ public class View extends BorderPane {
 		loanManager.remove(loan);
 		residualDebtChart.remove(loan);
 		totalAmountChart.remove(loan);
+		annuityCart.remove(loan);
 	}
 
 	/**
@@ -140,6 +148,8 @@ public class View extends BorderPane {
 		listeners.forEach(l -> l.requestUpdateLoan(loanId, name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest));
 	}
 
+	/** the {@link AnnuityCart}. */
+	private final AnnuityCart annuityCart;
 	/** the {@link ViewActionListener}. */
 	private final List<ViewActionListener> listeners = new LinkedList<>();
 	/** the {@link LoanManager}. */
