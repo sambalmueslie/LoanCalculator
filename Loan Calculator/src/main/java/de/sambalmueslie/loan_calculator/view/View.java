@@ -145,12 +145,14 @@ public class View extends BorderPane {
 	}
 
 	/**
+	 * Create a panel for a {@link Loan}.
+	 *
 	 * @param loan
-	 * @return
+	 *            the loan
+	 * @return the panel {@link Node}
 	 */
 	private Node createLoanPanel(final Loan loan) {
 		if (loan instanceof AnnuityLoan) return new AnnuityLoanPanel((AnnuityLoan) loan);
-		// TODO Auto-generated method stub
 		return null;
 	}
 
