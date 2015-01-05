@@ -5,6 +5,7 @@ package de.sambalmueslie.loan_calculator.view.panel;
 
 import de.sambalmueslie.loan_calculator.model.AnnuityLoan;
 import de.sambalmueslie.loan_calculator.model.Redemption;
+import de.sambalmueslie.loan_calculator.view.chart.AnnuityPlanChart;
 import de.sambalmueslie.loan_calculator.view.chart.ResidualDebtChart;
 
 /**
@@ -38,7 +39,10 @@ public class AnnuityLoanPanel extends LoanPanel<AnnuityLoan> {
 
 		final ResidualDebtChart residualDebtChart = new ResidualDebtChart();
 		residualDebtChart.add(loan);
-		addChart(residualDebtChart, 0, 0, 2, 1);
+		addChart(residualDebtChart, 0, 0);
 
+		final AnnuityPlanChart annuityPlanChart = new AnnuityPlanChart();
+		annuityPlanChart.show(getLoan());
+		addChart(annuityPlanChart, 0, 1);
 	}
 }

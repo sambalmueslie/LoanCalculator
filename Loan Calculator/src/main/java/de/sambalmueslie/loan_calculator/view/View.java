@@ -6,8 +6,10 @@ package de.sambalmueslie.loan_calculator.view;
 import java.util.LinkedList;
 import java.util.List;
 
+import javafx.beans.value.ChangeListener;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
@@ -74,14 +76,25 @@ public class View extends BorderPane {
 	 */
 	public void setup(final Stage primaryStage) {
 		primaryStage.setTitle("Loan calculator by sambalmueslie!");
+		final Label statusbar = new Label();
 
 		tabPane = new TabPane();
 
 		setLeft(loanManager);
 		setCenter(tabPane);
+		setBottom(statusbar);
 
-		primaryStage.setScene(new Scene(this, 1024, 475));
+		primaryStage.setScene(new Scene(this, 1024, 870));
 		primaryStage.show();
+
+		statusbar.setText(primaryStage.getScene().getWidth() + " " + primaryStage.getScene().getHeight());
+
+		primaryStage.widthProperty().addListener((ChangeListener<Number>) (observableValue, oldSceneWidth, newSceneWidth) -> {
+			statusbar.setText(primaryStage.getScene().getWidth() + " " + primaryStage.getScene().getHeight());
+		});
+		primaryStage.heightProperty().addListener((ChangeListener<Number>) (observableValue, oldSceneWidth, newSceneWidth) -> {
+			statusbar.setText(primaryStage.getScene().getWidth() + " " + primaryStage.getScene().getHeight());
+		});
 
 		model.getAll().forEach(loan -> handleLoanAdded(loan));
 
