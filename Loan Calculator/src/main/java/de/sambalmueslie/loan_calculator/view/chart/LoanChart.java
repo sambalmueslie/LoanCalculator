@@ -4,7 +4,7 @@
 package de.sambalmueslie.loan_calculator.view.chart;
 
 import javafx.scene.Node;
-import de.sambalmueslie.loan_calculator.model.Loan;
+import de.sambalmueslie.loan_calculator.model.loan.Loan;
 
 /**
  * A chart to display {@link Loan}s.

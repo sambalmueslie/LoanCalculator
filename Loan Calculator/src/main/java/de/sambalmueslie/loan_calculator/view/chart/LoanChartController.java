@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javafx.scene.Node;
-import de.sambalmueslie.loan_calculator.model.Loan;
+import de.sambalmueslie.loan_calculator.model.loan.Loan;
 
 /**
  * The controller for the {@link LoanChart}.
@@ -27,7 +27,7 @@ public class LoanChartController implements LoanChart {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.view.chart.LoanChart#add(de.sambalmueslie.loan_calculator.model.Loan)
+	 * @see de.sambalmueslie.loan_calculator.view.chart.LoanChart#add(de.sambalmueslie.loan_calculator.model.loan.Loan)
 	 */
 	@Override
 	public void add(final Loan loan) {
@@ -46,7 +46,7 @@ public class LoanChartController implements LoanChart {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.view.chart.LoanChart#remove(de.sambalmueslie.loan_calculator.model.Loan)
+	 * @see de.sambalmueslie.loan_calculator.view.chart.LoanChart#remove(de.sambalmueslie.loan_calculator.model.loan.Loan)
 	 */
 	@Override
 	public void remove(final Loan loan) {

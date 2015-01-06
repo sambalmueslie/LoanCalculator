@@ -3,9 +3,10 @@
  */
 package de.sambalmueslie.loan_calculator.view;
 
-import de.sambalmueslie.loan_calculator.model.Loan;
 import de.sambalmueslie.loan_calculator.model.Model;
 import de.sambalmueslie.loan_calculator.model.ModelChangeListener;
+import de.sambalmueslie.loan_calculator.model.founding.Founding;
+import de.sambalmueslie.loan_calculator.model.loan.Loan;
 
 /**
  * The handler for the {@link ModelChangeListener}.
@@ -24,7 +25,23 @@ public class ModelChangeHandler implements ModelChangeListener {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.model.ModelChangeListener#loanAdded(de.sambalmueslie.loan_calculator.model.Loan)
+	 * @see de.sambalmueslie.loan_calculator.model.ModelChangeListener#foundingAdded(de.sambalmueslie.loan_calculator.model.founding.Founding)
+	 */
+	@Override
+	public void foundingAdded(final Founding founding) {
+		view.handleFoundingAdded(founding);
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.model.ModelChangeListener#foundingRemoved(de.sambalmueslie.loan_calculator.model.founding.Founding)
+	 */
+	@Override
+	public void foundingRemoved(final Founding founding) {
+		view.handleFoundingRemoved(founding);
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.model.ModelChangeListener#loanAdded(de.sambalmueslie.loan_calculator.model.loan.Loan)
 	 */
 	@Override
 	public void loanAdded(final Loan loan) {
@@ -32,7 +49,7 @@ public class ModelChangeHandler implements ModelChangeListener {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.model.ModelChangeListener#loanRemoved(de.sambalmueslie.loan_calculator.model.Loan)
+	 * @see de.sambalmueslie.loan_calculator.model.ModelChangeListener#loanRemoved(de.sambalmueslie.loan_calculator.model.loan.Loan)
 	 */
 	@Override
 	public void loanRemoved(final Loan loan) {

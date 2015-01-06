@@ -9,8 +9,10 @@ import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import de.sambalmueslie.loan_calculator.model.Loan;
 import de.sambalmueslie.loan_calculator.model.Model;
+import de.sambalmueslie.loan_calculator.model.loan.AnnuityLoan;
+import de.sambalmueslie.loan_calculator.model.loan.BaseAnnuityLoan;
+import de.sambalmueslie.loan_calculator.model.loan.Loan;
 import de.sambalmueslie.loan_calculator.view.View;
 import de.sambalmueslie.loan_calculator.view.ViewActionListener;
 
@@ -49,7 +51,8 @@ public class Controller extends Application {
 					+ ", " + estimatedDebitInterest);
 		}
 		try {
-			model.addAnnuityLoan(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
+			final AnnuityLoan annuityLoan = new BaseAnnuityLoan(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
+			model.add(annuityLoan);
 		} catch (final IllegalArgumentException e) {
 			logger.error("Cannot add loan " + name + ", " + amount + ", " + paymentRate + ", " + fixedDebitInterest + ", " + fixedInterestPeriod + ", "
 					+ estimatedDebitInterest + " cause " + e.getMessage());
@@ -64,7 +67,7 @@ public class Controller extends Application {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Handle request to remove loan " + loanId);
 		}
-		final Loan loan = model.get(loanId);
+		final Loan loan = model.getLoan(loanId);
 		if (loan != null) {
 			model.remove(loan);
 		}
@@ -80,7 +83,10 @@ public class Controller extends Application {
 					+ fixedInterestPeriod + ", " + estimatedDebitInterest);
 		}
 		try {
-			model.updateAnnuityLoan(loanId, name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
+			final Loan loan = model.getLoan(loanId);
+			if (loan == null || !(loan instanceof BaseAnnuityLoan)) return;
+			final BaseAnnuityLoan annuityLoan = (BaseAnnuityLoan) loan;
+			annuityLoan.update(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
 		} catch (final IllegalArgumentException e) {
 			logger.error("Cannot update loan " + name + ", " + amount + ", " + paymentRate + ", " + fixedDebitInterest + ", " + fixedInterestPeriod + ", "
 					+ estimatedDebitInterest + " cause " + e.getMessage());

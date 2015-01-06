@@ -1,14 +1,14 @@
 /**
  *
  */
-package de.sambalmueslie.loan_calculator.model;
+package de.sambalmueslie.loan_calculator.model.loan;
 
 /**
  * The redemption.
  *
  * @author sambalmueslie 2015
  */
-public class Redemption {
+public class BaseRedemptionPlanEntry implements RedemptionPlanEntry {
 
 	/**
 	 * Constructor.
@@ -16,7 +16,7 @@ public class Redemption {
 	 * @param residualDebt
 	 *            {@link #residualDebt}
 	 */
-	Redemption(final double residualDebt) {
+	public BaseRedemptionPlanEntry(final double residualDebt) {
 		this(residualDebt, 0, 0);
 	}
 
@@ -30,29 +30,23 @@ public class Redemption {
 	 * @param redemption
 	 *            {@link #redemption}
 	 */
-	Redemption(final double residualDebt, final double interest, final double redemption) {
+	public BaseRedemptionPlanEntry(final double residualDebt, final double interest, final double redemption) {
 		this.residualDebt = residualDebt;
 		this.interest = interest;
 		this.redemption = redemption;
 	}
 
-	/**
-	 * @return the {@link #interest}
-	 */
+	@Override
 	public double getInterest() {
 		return interest;
 	}
 
-	/**
-	 * @return the {@link #redemption}
-	 */
+	@Override
 	public double getRedemption() {
 		return redemption;
 	}
 
-	/**
-	 * @return the {@link #residualDebt}
-	 */
+	@Override
 	public double getResidualDebt() {
 		return residualDebt;
 	}

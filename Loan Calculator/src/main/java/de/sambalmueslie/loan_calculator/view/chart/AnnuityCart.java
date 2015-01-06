@@ -5,8 +5,8 @@ package de.sambalmueslie.loan_calculator.view.chart;
 
 import javafx.geometry.Side;
 import javafx.scene.chart.*;
-import de.sambalmueslie.loan_calculator.model.Loan;
-import de.sambalmueslie.loan_calculator.model.Redemption;
+import de.sambalmueslie.loan_calculator.model.loan.Loan;
+import de.sambalmueslie.loan_calculator.model.loan.RedemptionPlanEntry;
 
 /**
  * The annuity {@link BarChart}.
@@ -40,7 +40,7 @@ public class AnnuityCart extends StackedBarChart<String, Number> implements Loan
 		if (loan == null) return;
 
 		final String name = loan.getName();
-		final Redemption redemption = loan.getRedemptionPlan().get(1);
+		final RedemptionPlanEntry redemption = loan.getRedemptionPlan().get(1);
 		interestSeries.getData().add(new Data<String, Number>(name, redemption.getInterest()));
 		redemptionSeries.getData().add(new Data<String, Number>(name, redemption.getRedemption()));
 

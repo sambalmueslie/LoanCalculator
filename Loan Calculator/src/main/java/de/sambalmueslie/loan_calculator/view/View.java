@@ -15,9 +15,10 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import de.sambalmueslie.loan_calculator.model.AnnuityLoan;
-import de.sambalmueslie.loan_calculator.model.Loan;
 import de.sambalmueslie.loan_calculator.model.Model;
+import de.sambalmueslie.loan_calculator.model.founding.Founding;
+import de.sambalmueslie.loan_calculator.model.loan.AnnuityLoan;
+import de.sambalmueslie.loan_calculator.model.loan.Loan;
 import de.sambalmueslie.loan_calculator.view.compare.CompareLoanPanel;
 import de.sambalmueslie.loan_calculator.view.loan_mgr.LoanManager;
 import de.sambalmueslie.loan_calculator.view.loan_mgr.LoanManagerChangeListener;
@@ -97,7 +98,7 @@ public class View extends BorderPane {
 			statusbar.setText(primaryStage.getScene().getWidth() + " " + primaryStage.getScene().getHeight());
 		});
 
-		model.getAll().forEach(loan -> handleLoanAdded(loan));
+		model.getAllLoans().forEach(loan -> handleLoanAdded(loan));
 
 		modelChangeHandler.register(model);
 
@@ -108,6 +109,28 @@ public class View extends BorderPane {
 	 */
 	public void teardown() {
 		modelChangeHandler.unregister(model);
+	}
+
+	/**
+	 * Handle the addition of a {@link Founding}.
+	 *
+	 * @param founding
+	 *            the founding
+	 */
+	void handleFoundingAdded(final Founding founding) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 * Handle the removal of a {@link Founding}.
+	 *
+	 * @param founding
+	 *            the founding
+	 */
+	void handleFoundingRemoved(final Founding founding) {
+		// TODO Auto-generated method stub
+
 	}
 
 	/**

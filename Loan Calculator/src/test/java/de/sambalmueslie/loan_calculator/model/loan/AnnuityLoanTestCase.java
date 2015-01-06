@@ -1,7 +1,7 @@
 /**
  *
  */
-package de.sambalmueslie.loan_calculator.model;
+package de.sambalmueslie.loan_calculator.model.loan;
 
 import static org.junit.Assert.assertEquals;
 
@@ -23,7 +23,7 @@ public class AnnuityLoanTestCase {
 		final double fixedDebitInterest = 2.00;
 		final int fixedInterestPeriod = 10;
 		final double estimatedDebitInterest = 5.00;
-		final AnnuityLoan loan = new AnnuityLoan(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
+		final AnnuityLoan loan = new BaseAnnuityLoan(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
 		assertEquals(name, loan.getName());
 		assertEquals(amount, loan.getAmount(), 0.01);
 		assertEquals(paymentRate, loan.getPaymentRate(), 0.01);
@@ -32,14 +32,14 @@ public class AnnuityLoanTestCase {
 		assertEquals(estimatedDebitInterest, loan.getEstimatedDebitInterest(), 0.01);
 
 		// check first redemption
-		final Redemption redemption = loan.getRedemptionPlan().get(1);
+		final RedemptionPlanEntry redemption = loan.getRedemptionPlan().get(1);
 		assertEquals(amount * paymentRate / 100, redemption.getRedemption(), 0.01);
 		assertEquals(amount * fixedDebitInterest / 100, redemption.getInterest(), 0.01);
 
 		// check annuity
 		final double annuity = amount * (paymentRate + fixedDebitInterest) / 100;
 		for (int i = 1; i < loan.getRedemptionPlan().size(); i++) {
-			final Redemption r = loan.getRedemptionPlan().get(i);
+			final RedemptionPlanEntry r = loan.getRedemptionPlan().get(i);
 			assertEquals(annuity, r.getInterest() + r.getRedemption(), 0.01);
 		}
 
@@ -56,7 +56,7 @@ public class AnnuityLoanTestCase {
 		double fixedDebitInterest = 2.00;
 		int fixedInterestPeriod = 10;
 		double estimatedDebitInterest = 5.00;
-		final AnnuityLoan loan = new AnnuityLoan(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
+		final BaseAnnuityLoan loan = new BaseAnnuityLoan(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
 		name = "New-Name";
 		amount = 50000;
 		paymentRate = 4.00;

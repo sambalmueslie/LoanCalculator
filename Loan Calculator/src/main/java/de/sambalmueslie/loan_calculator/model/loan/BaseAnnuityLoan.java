@@ -1,7 +1,7 @@
 /**
  *
  */
-package de.sambalmueslie.loan_calculator.model;
+package de.sambalmueslie.loan_calculator.model.loan;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author sambalmueslie 2015
  */
-public class AnnuityLoan extends BaseLoan {
+public class BaseAnnuityLoan extends BaseLoan implements AnnuityLoan {
 
 	/**
 	 * Constructor.
@@ -30,50 +30,54 @@ public class AnnuityLoan extends BaseLoan {
 	 * @param estimatedDebitInterest
 	 *            {@link #estimatedDebitInterest}
 	 */
-	AnnuityLoan(final String name, final double amount, final double paymentRate, final double fixedDebitInterest, final int fixedInterestPeriod,
+	public BaseAnnuityLoan(final String name, final double amount, final double paymentRate, final double fixedDebitInterest, final int fixedInterestPeriod,
 			final double estimatedDebitInterest) throws IllegalArgumentException {
 		super(name, amount);
 		update(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
 	}
 
 	/**
-	 * @return the {@link #estimatedDebitInterest}
+	 * @see de.sambalmueslie.loan_calculator.model.loan.AnnuityLoan#getEstimatedDebitInterest()
 	 */
+	@Override
 	public double getEstimatedDebitInterest() {
 		return estimatedDebitInterest;
 	}
 
 	/**
-	 * @return the {@link #fixedDebitInterest}
+	 * @see de.sambalmueslie.loan_calculator.model.loan.AnnuityLoan#getFixedDebitInterest()
 	 */
+	@Override
 	public double getFixedDebitInterest() {
 		return fixedDebitInterest;
 	}
 
 	/**
-	 * @return the {@link #fixedInterestPeriod}
+	 * @see de.sambalmueslie.loan_calculator.model.loan.AnnuityLoan#getFixedInterestPeriod()
 	 */
+	@Override
 	public int getFixedInterestPeriod() {
 		return fixedInterestPeriod;
 	}
 
 	/**
-	 * @return the {@link #paymentRate}
+	 * @see de.sambalmueslie.loan_calculator.model.loan.AnnuityLoan#getPaymentRate()
 	 */
+	@Override
 	public double getPaymentRate() {
 		return paymentRate;
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.model.Loan#getRedemptionPlan()
+	 * @see de.sambalmueslie.loan_calculator.model.loan.Loan#getRedemptionPlan()
 	 */
 	@Override
-	public List<Redemption> getRedemptionPlan() {
+	public List<RedemptionPlanEntry> getRedemptionPlan() {
 		return Collections.unmodifiableList(redemptionPlan);
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.model.Loan#getTerm()
+	 * @see de.sambalmueslie.loan_calculator.model.loan.Loan#getTerm()
 	 */
 	@Override
 	public int getTerm() {
@@ -81,7 +85,7 @@ public class AnnuityLoan extends BaseLoan {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.model.Loan#getTotalInterest()
+	 * @see de.sambalmueslie.loan_calculator.model.loan.Loan#getTotalInterest()
 	 */
 	@Override
 	public double getTotalInterest() {
@@ -89,7 +93,7 @@ public class AnnuityLoan extends BaseLoan {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.model.Loan#getTotalPayment()
+	 * @see de.sambalmueslie.loan_calculator.model.loan.Loan#getTotalPayment()
 	 */
 	@Override
 	public double getTotalPayment() {
@@ -142,7 +146,7 @@ public class AnnuityLoan extends BaseLoan {
 	 * @param estimatedDebitInterest
 	 *            {@link #estimatedDebitInterest}
 	 */
-	void update(final String name, final double amount, final double paymentRate, final double fixedDebitInterest, final int fixedInterestPeriod,
+	public void update(final String name, final double amount, final double paymentRate, final double fixedDebitInterest, final int fixedInterestPeriod,
 			final double estimatedDebitInterest) {
 		super.update(name, amount);
 		if (paymentRate <= 0 || paymentRate >= 100) throw new IllegalArgumentException("Payment rate '" + paymentRate + "' must 0 < X < 100.");
@@ -167,7 +171,7 @@ public class AnnuityLoan extends BaseLoan {
 		double residualDebt = getAmount();
 		totalInterest = 0;
 		final double annuity = getAmount() * (paymentRate + fixedDebitInterest) / 100;
-		redemptionPlan.add(new Redemption(residualDebt));
+		redemptionPlan.add(new BaseRedemptionPlanEntry(residualDebt));
 
 		for (int i = 0; residualDebt > 0; i++) {
 
@@ -181,7 +185,7 @@ public class AnnuityLoan extends BaseLoan {
 			} else {
 				residualDebt -= redemption;
 			}
-			redemptionPlan.add(new Redemption(residualDebt, interest, redemption));
+			redemptionPlan.add(new BaseRedemptionPlanEntry(residualDebt, interest, redemption));
 
 		}
 
@@ -199,7 +203,7 @@ public class AnnuityLoan extends BaseLoan {
 	/** the payment rate (Tilgung in Prozent). */
 	private double paymentRate;
 	/** the redemption plan. */
-	private List<Redemption> redemptionPlan;
+	private List<RedemptionPlanEntry> redemptionPlan;
 	/** the term (Laufzeit). */
 	private int term;
 	/** the total interest (Zins). */

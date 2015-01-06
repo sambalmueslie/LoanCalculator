@@ -21,8 +21,8 @@ import javafx.scene.layout.VBox;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import de.sambalmueslie.loan_calculator.model.AnnuityLoan;
-import de.sambalmueslie.loan_calculator.model.Loan;
+import de.sambalmueslie.loan_calculator.model.loan.AnnuityLoan;
+import de.sambalmueslie.loan_calculator.model.loan.Loan;
 import de.sambalmueslie.loan_calculator.view.dialog.ModifyAnnuityLoanDialog;
 
 /**

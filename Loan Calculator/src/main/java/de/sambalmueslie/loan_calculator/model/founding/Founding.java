@@ -1,21 +1,27 @@
 /**
  *
  */
-package de.sambalmueslie.loan_calculator.model;
+package de.sambalmueslie.loan_calculator.model.founding;
 
 import java.util.List;
 
+import de.sambalmueslie.loan_calculator.model.loan.RedemptionPlanEntry;
+
 /**
- * A loan.
+ * A founding, group several loans together.
  *
  * @author sambalmueslie 2015
  */
-public interface Loan {
-
+public interface Founding {
 	/**
-	 * @return the amount of the loan (kredit).
+	 * @return the amount of the loan.
 	 */
 	double getAmount();
+
+	/**
+	 * @return the bank name.
+	 */
+	String getBankName();
 
 	/**
 	 * @return the id.
@@ -30,7 +36,7 @@ public interface Loan {
 	/**
 	 * @return the redemption plan.
 	 */
-	List<Redemption> getRedemptionPlan();
+	List<RedemptionPlanEntry> getRedemptionPlan();
 
 	/**
 	 * @return the term in months.
@@ -48,18 +54,19 @@ public interface Loan {
 	double getTotalPayment();
 
 	/**
-	 * Register the {@link LoanChangeListener}.
+	 * Register a {@link FoundingChangeListener}.
 	 * 
 	 * @param listener
 	 *            the listener
 	 */
-	void register(LoanChangeListener listener);
+	void register(FoundingChangeListener listener);
 
 	/**
-	 * Unregister the {@link LoanChangeListener}.
+	 * Unregister a {@link FoundingChangeListener}.
 	 * 
 	 * @param listener
 	 *            the listener
 	 */
-	void unregister(LoanChangeListener listener);
+	void unregister(FoundingChangeListener listener);
+
 }

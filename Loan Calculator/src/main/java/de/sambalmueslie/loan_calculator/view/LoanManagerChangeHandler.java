@@ -5,7 +5,7 @@ package de.sambalmueslie.loan_calculator.view;
 
 import java.util.List;
 
-import de.sambalmueslie.loan_calculator.model.Loan;
+import de.sambalmueslie.loan_calculator.model.loan.Loan;
 import de.sambalmueslie.loan_calculator.view.loan_mgr.LoanManager;
 import de.sambalmueslie.loan_calculator.view.loan_mgr.LoanManagerChangeListener;
 

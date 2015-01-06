@@ -9,7 +9,7 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import de.sambalmueslie.loan_calculator.model.AnnuityLoan;
+import de.sambalmueslie.loan_calculator.model.loan.AnnuityLoan;
 import de.sambalmueslie.loan_calculator.view.component.CurrencyTextField;
 import de.sambalmueslie.loan_calculator.view.component.NumberTextField;
 import de.sambalmueslie.loan_calculator.view.component.PercentageTextField;

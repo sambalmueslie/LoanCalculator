@@ -8,6 +8,9 @@ import java.util.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import de.sambalmueslie.loan_calculator.model.founding.Founding;
+import de.sambalmueslie.loan_calculator.model.loan.Loan;
+
 /**
  * The model.
  *
@@ -19,25 +22,66 @@ public class Model {
 	private static final Logger logger = LogManager.getLogger(Model.class);
 
 	/**
-	 * Add a new annuity loan.
+	 * Add a {@link Founding}.
 	 *
-	 * @param name
-	 *            the name
-	 * @param amount
-	 *            the amount
-	 * @param paymentRate
-	 *            the payment rate
-	 * @param fixedDebitInterest
-	 *            the fixed debit interest
-	 * @param fixedInterestPeriod
-	 *            the fixed interest period
-	 * @param estimatedDebitInterest
-	 *            the estimated debit interest
+	 * @param founding
+	 *            the founding.
 	 */
-	public void addAnnuityLoan(final String name, final double amount, final double paymentRate, final double fixedDebitInterest,
-			final int fixedInterestPeriod, final double estimatedDebitInterest) {
-		final AnnuityLoan annuityLoan = new AnnuityLoan(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
-		add(annuityLoan);
+	public void add(final Founding founding) {
+		if (founding == null) {
+			logger.error("Cannot add founding null value.");
+			return;
+		}
+		if (logger.isDebugEnabled()) {
+			logger.debug("Add new founding " + founding);
+		}
+		final long id = founding.getId();
+		foundings.put(id, founding);
+		listeners.forEach(l -> l.foundingAdded(founding));
+	}
+
+	/**
+	 * Add a {@link Loan}.
+	 *
+	 * @param loan
+	 *            the loan to add
+	 */
+	public void add(final Loan loan) {
+		if (loan == null) {
+			logger.error("Cannot add loan null value.");
+			return;
+		}
+		if (logger.isDebugEnabled()) {
+			logger.debug("Add new loan " + loan);
+		}
+		final long id = loan.getId();
+		loans.put(id, loan);
+		listeners.forEach(l -> l.loanAdded(loan));
+	}
+
+	/**
+	 * @return a {@link Collection} of all currently stored {@link Founding}s.
+	 */
+	public Collection<Founding> getAllFoundings() {
+		return Collections.unmodifiableCollection(foundings.values());
+	}
+
+	/**
+	 * @return a {@link Collection} of all currently stored {@link Loan}s.
+	 */
+	public Collection<Loan> getAllLoans() {
+		return Collections.unmodifiableCollection(loans.values());
+	}
+
+	/**
+	 * Get a {@link Founding} by id.
+	 *
+	 * @param id
+	 *            the id
+	 * @return the founding or <code>null</code> if not found
+	 */
+	public Founding getFounding(final long id) {
+		return foundings.get(id);
 	}
 
 	/**
@@ -47,15 +91,8 @@ public class Model {
 	 *            the id
 	 * @return the loan or <code>null</code> if not found
 	 */
-	public Loan get(final long id) {
+	public Loan getLoan(final long id) {
 		return loans.get(id);
-	}
-
-	/**
-	 * @return a {@link Collection} of all currently stored {@link Loan}s.
-	 */
-	public Collection<Loan> getAll() {
-		return Collections.unmodifiableCollection(loans.values());
 	}
 
 	/**
@@ -83,6 +120,29 @@ public class Model {
 	}
 
 	/**
+	 * Remove a {@link Founding}.
+	 *
+	 * @param founding
+	 *            the loan
+	 */
+	public void remove(final Founding founding) {
+		if (founding == null) {
+			logger.error("Cannot remove founding null value.");
+			return;
+		}
+		final long id = founding.getId();
+		if (!loans.containsKey(id)) {
+			logger.warn("Try to remove not added founding " + founding);
+			return;
+		}
+		if (logger.isDebugEnabled()) {
+			logger.debug("Remove founding " + founding);
+		}
+		foundings.remove(id);
+		listeners.forEach(l -> l.foundingRemoved(founding));
+	}
+
+	/**
 	 * Remove a {@link Loan}.
 	 *
 	 * @param loan
@@ -105,50 +165,8 @@ public class Model {
 		listeners.forEach(l -> l.loanRemoved(loan));
 	}
 
-	/**
-	 * Update a annuity loan.
-	 *
-	 * @param loanId
-	 *            the loan id
-	 * @param name
-	 *            the name
-	 * @param amount
-	 *            the amount
-	 * @param paymentRate
-	 *            the payment rate
-	 * @param fixedDebitInterest
-	 *            the fixed debit interest
-	 * @param fixedInterestPeriod
-	 *            the fixed interest period
-	 * @param estimatedDebitInterest
-	 *            the estimated debit interest
-	 */
-	public void updateAnnuityLoan(final long loanId, final String name, final double amount, final double paymentRate, final double fixedDebitInterest,
-			final int fixedInterestPeriod, final double estimatedDebitInterest) {
-		final Loan loan = loans.get(loanId);
-		if (loan == null || !(loan instanceof AnnuityLoan)) return;
-		final AnnuityLoan annuityLoan = (AnnuityLoan) loan;
-		annuityLoan.update(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
-	}
-
-	/**
-	 * Add a {@link Loan}.
-	 *
-	 * @param loan
-	 *            the loan to add
-	 */
-	private void add(final Loan loan) {
-		if (loan == null) {
-			logger.error("Cannot add loan null value.");
-			return;
-		}
-		if (logger.isDebugEnabled()) {
-			logger.debug("Add new loan " + loan);
-		}
-		final long id = loan.getId();
-		loans.put(id, loan);
-		listeners.forEach(l -> l.loanAdded(loan));
-	}
+	/** the {@link Founding} by id. */
+	private final Map<Long, Founding> foundings = new HashMap<>();
 
 	/** the {@link ModelChangeListener}. */
 	private final List<ModelChangeListener> listeners = new LinkedList<>();

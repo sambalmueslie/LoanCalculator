@@ -1,7 +1,7 @@
 /**
  *
  */
-package de.sambalmueslie.loan_calculator.model;
+package de.sambalmueslie.loan_calculator.model.loan;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -26,7 +26,7 @@ abstract class BaseLoan implements Loan {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.model.Loan#getAmount()
+	 * @see de.sambalmueslie.loan_calculator.model.loan.Loan#getAmount()
 	 */
 	@Override
 	public final double getAmount() {
@@ -34,7 +34,7 @@ abstract class BaseLoan implements Loan {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.model.Loan#getId()
+	 * @see de.sambalmueslie.loan_calculator.model.loan.Loan#getId()
 	 */
 	@Override
 	public long getId() {
@@ -42,7 +42,7 @@ abstract class BaseLoan implements Loan {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.model.Loan#getName()
+	 * @see de.sambalmueslie.loan_calculator.model.loan.Loan#getName()
 	 */
 	@Override
 	public final String getName() {
@@ -50,7 +50,7 @@ abstract class BaseLoan implements Loan {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.model.Loan#register(de.sambalmueslie.loan_calculator.model.LoanChangeListener)
+	 * @see de.sambalmueslie.loan_calculator.model.loan.Loan#register(de.sambalmueslie.loan_calculator.model.loan.LoanChangeListener)
 	 */
 	@Override
 	public final void register(final LoanChangeListener listener) {
@@ -59,7 +59,7 @@ abstract class BaseLoan implements Loan {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.model.Loan#unregister(de.sambalmueslie.loan_calculator.model.LoanChangeListener)
+	 * @see de.sambalmueslie.loan_calculator.model.loan.Loan#unregister(de.sambalmueslie.loan_calculator.model.loan.LoanChangeListener)
 	 */
 	@Override
 	public final void unregister(final LoanChangeListener listener) {

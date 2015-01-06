@@ -3,8 +3,8 @@
  */
 package de.sambalmueslie.loan_calculator.view.panel;
 
-import de.sambalmueslie.loan_calculator.model.AnnuityLoan;
-import de.sambalmueslie.loan_calculator.model.Redemption;
+import de.sambalmueslie.loan_calculator.model.loan.AnnuityLoan;
+import de.sambalmueslie.loan_calculator.model.loan.RedemptionPlanEntry;
 import de.sambalmueslie.loan_calculator.view.chart.LoanChart;
 import de.sambalmueslie.loan_calculator.view.chart.LoanChartFactory;
 import de.sambalmueslie.loan_calculator.view.component.TextFieldType;
@@ -27,7 +27,7 @@ public class AnnuityLoanPanel extends LoanPanel<AnnuityLoan> {
 		addInfo("Fixed interest period", String.format("%d", loan.getFixedInterestPeriod()), TextFieldType.TEXT);
 		addInfo("Estimated debit interest", loan.getEstimatedDebitInterest(), TextFieldType.PERCENTAGE);
 
-		final Redemption redemption = loan.getRedemptionPlan().get(1);
+		final RedemptionPlanEntry redemption = loan.getRedemptionPlan().get(1);
 		addInfo("Annuity interest", redemption.getInterest(), TextFieldType.CURRENCY);
 		addInfo("Annuity redemption", redemption.getRedemption(), TextFieldType.CURRENCY);
 		addInfo("Annuity total", redemption.getInterest() + redemption.getRedemption(), TextFieldType.CURRENCY);
@@ -55,7 +55,7 @@ public class AnnuityLoanPanel extends LoanPanel<AnnuityLoan> {
 		updateInfo("Fixed interest period", String.format("%d", loan.getFixedInterestPeriod()));
 		updateInfo("Estimated debit interest", loan.getEstimatedDebitInterest());
 
-		final Redemption redemption = loan.getRedemptionPlan().get(1);
+		final RedemptionPlanEntry redemption = loan.getRedemptionPlan().get(1);
 		updateInfo("Annuity interest", redemption.getInterest());
 		updateInfo("Annuity redemption", redemption.getRedemption());
 		updateInfo("Annuity total", redemption.getInterest() + redemption.getRedemption());

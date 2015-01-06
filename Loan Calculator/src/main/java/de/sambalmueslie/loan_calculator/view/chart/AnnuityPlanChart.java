@@ -11,8 +11,8 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.StackedBarChart;
 import javafx.scene.layout.TilePane;
-import de.sambalmueslie.loan_calculator.model.Loan;
-import de.sambalmueslie.loan_calculator.model.Redemption;
+import de.sambalmueslie.loan_calculator.model.loan.Loan;
+import de.sambalmueslie.loan_calculator.model.loan.RedemptionPlanEntry;
 import de.sambalmueslie.loan_calculator.view.Constants;
 
 /**
@@ -44,10 +44,10 @@ public class AnnuityPlanChart extends TilePane implements LoanChart {
 			final Series<String, Number> redemptionSeries = new Series<>();
 			redemptionSeries.setName("redemption");
 
-			final List<Redemption> redemptionPlan = loan.getRedemptionPlan();
+			final List<RedemptionPlanEntry> redemptionPlan = loan.getRedemptionPlan();
 			for (int i = 1; i < redemptionPlan.size(); i++) {
 				final String name = i + "";
-				final Redemption redemption = redemptionPlan.get(i);
+				final RedemptionPlanEntry redemption = redemptionPlan.get(i);
 				interestSeries.getData().add(new Data<String, Number>(name, redemption.getInterest()));
 				redemptionSeries.getData().add(new Data<String, Number>(name, redemption.getRedemption()));
 			}
@@ -73,7 +73,7 @@ public class AnnuityPlanChart extends TilePane implements LoanChart {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.view.chart.LoanChart#add(de.sambalmueslie.loan_calculator.model.Loan)
+	 * @see de.sambalmueslie.loan_calculator.view.chart.LoanChart#add(de.sambalmueslie.loan_calculator.model.loan.Loan)
 	 */
 	@Override
 	public void add(final Loan loan) {
@@ -89,7 +89,7 @@ public class AnnuityPlanChart extends TilePane implements LoanChart {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.view.chart.LoanChart#remove(de.sambalmueslie.loan_calculator.model.Loan)
+	 * @see de.sambalmueslie.loan_calculator.view.chart.LoanChart#remove(de.sambalmueslie.loan_calculator.model.loan.Loan)
 	 */
 	@Override
 	public void remove(final Loan loan) {

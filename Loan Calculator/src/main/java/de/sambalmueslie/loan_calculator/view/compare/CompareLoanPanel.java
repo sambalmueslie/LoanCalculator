@@ -6,7 +6,7 @@ package de.sambalmueslie.loan_calculator.view.compare;
 import java.util.List;
 
 import javafx.scene.layout.BorderPane;
-import de.sambalmueslie.loan_calculator.model.Loan;
+import de.sambalmueslie.loan_calculator.model.loan.Loan;
 import de.sambalmueslie.loan_calculator.view.chart.LoanChart;
 import de.sambalmueslie.loan_calculator.view.chart.LoanChartFactory;
 
