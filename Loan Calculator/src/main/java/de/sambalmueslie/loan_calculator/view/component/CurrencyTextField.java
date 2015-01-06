@@ -30,6 +30,23 @@ public class CurrencyTextField extends BaseTextField<Double> {
 	}
 
 	/**
+	 * Constructor.
+	 */
+	public CurrencyTextField() {
+		setValue(0.0);
+	}
+
+	/**
+	 * Constructor.
+	 *
+	 * @param value
+	 *            the value
+	 */
+	public CurrencyTextField(final Double value) {
+		setValue(value);
+	}
+
+	/**
 	 * @see de.sambalmueslie.loan_calculator.view.component.BaseTextField#getType()
 	 */
 	@Override

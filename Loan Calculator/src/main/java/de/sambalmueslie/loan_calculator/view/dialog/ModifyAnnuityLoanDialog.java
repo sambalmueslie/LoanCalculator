@@ -3,13 +3,17 @@
  */
 package de.sambalmueslie.loan_calculator.view.dialog;
 
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import de.sambalmueslie.loan_calculator.model.AnnuityLoan;
+import de.sambalmueslie.loan_calculator.view.component.CurrencyTextField;
+import de.sambalmueslie.loan_calculator.view.component.NumberTextField;
+import de.sambalmueslie.loan_calculator.view.component.PercentageTextField;
+import de.sambalmueslie.loan_calculator.view.component.SimpleTextField;
 
 /**
  * {@link Dialog} to add or update a {@link AnnuityLoan}.
@@ -26,12 +30,12 @@ public class ModifyAnnuityLoanDialog extends Dialog<ButtonType> {
 		setTitle(dialogTitle);
 
 		if (loan != null) {
-			name.set(loan.getName());
-			amount.set(loan.getAmount());
-			paymentRate.set(loan.getPaymentRate());
-			fixedDebitInterest.set(loan.getFixedDebitInterest());
-			fixedInterestPeriod.set(loan.getFixedInterestPeriod());
-			estimatedDebitInterest.set(loan.getEstimatedDebitInterest());
+			name.setValue(loan.getName());
+			amount.setValue(loan.getAmount());
+			paymentRate.setValue(loan.getPaymentRate());
+			fixedDebitInterest.setValue(loan.getFixedDebitInterest());
+			fixedInterestPeriod.setValue(loan.getFixedInterestPeriod());
+			estimatedDebitInterest.setValue(loan.getEstimatedDebitInterest());
 		}
 
 		final DialogPane dialogPane = getDialogPane();
@@ -43,29 +47,22 @@ public class ModifyAnnuityLoanDialog extends Dialog<ButtonType> {
 		content.setAlignment(Pos.CENTER_LEFT);
 
 		content.add(new Label("Name"), 0, 0);
-		final TextField textFieldName = new TextField();
-		textFieldName.textProperty().bindBidirectional(name);
-		content.add(textFieldName, 1, 0);
+		content.add(name, 1, 0);
 
 		content.add(new Label("Amount"), 0, 1);
-		final DoubleField amountTextField = new DoubleField(amount);
-		content.add(amountTextField, 1, 1);
+		content.add(amount, 1, 1);
 
 		content.add(new Label("Payment rate"), 0, 2);
-		final DoubleField paymentRateTextField = new DoubleField(paymentRate);
-		content.add(paymentRateTextField, 1, 2);
+		content.add(paymentRate, 1, 2);
 
 		content.add(new Label("Fixed debit interest"), 0, 3);
-		final DoubleField fixedDebitInterestTextField = new DoubleField(fixedDebitInterest);
-		content.add(fixedDebitInterestTextField, 1, 3);
+		content.add(fixedDebitInterest, 1, 3);
 
 		content.add(new Label("Fixed interest period"), 0, 4);
-		final IntegerField fixedInterestPeriodTextField = new IntegerField(fixedInterestPeriod);
-		content.add(fixedInterestPeriodTextField, 1, 4);
+		content.add(fixedInterestPeriod, 1, 4);
 
 		content.add(new Label("Estimated debit interest"), 0, 5);
-		final DoubleField estimatedDebitInterestTextField = new DoubleField(estimatedDebitInterest);
-		content.add(estimatedDebitInterestTextField, 1, 5);
+		content.add(estimatedDebitInterest, 1, 5);
 
 		getDialogPane().setContent(content);
 
@@ -80,55 +77,55 @@ public class ModifyAnnuityLoanDialog extends Dialog<ButtonType> {
 	 * @return the amount.
 	 */
 	public double getAmount() {
-		return amount.get();
+		return amount.getValue();
 	}
 
 	/**
 	 * @return the estimated debit interest.
 	 */
 	public double getEstimatedDebitInterest() {
-		return estimatedDebitInterest.get();
+		return estimatedDebitInterest.getValue();
 	}
 
 	/**
 	 * @return the fixed debit interest.
 	 */
 	public double getFixedDebitInterest() {
-		return fixedDebitInterest.get();
+		return fixedDebitInterest.getValue();
 	}
 
 	/**
 	 * @return the fixed interest period.
 	 */
 	public int getFixedInterestPeriod() {
-		return fixedInterestPeriod.get();
+		return fixedInterestPeriod.getValue();
 	}
 
 	/**
 	 * @return the name.
 	 */
 	public String getName() {
-		return name.get();
+		return name.getValue();
 	}
 
 	/**
 	 * @return the payment rate.
 	 */
 	public double getPaymentRate() {
-		return paymentRate.get();
+		return paymentRate.getValue();
 	}
 
-	/** the amount {@link SimpleDoubleProperty}. */
-	private final SimpleDoubleProperty amount = new SimpleDoubleProperty(50000);
-	/** the estimated debit interest {@link SimpleDoubleProperty}. */
-	private final SimpleDoubleProperty estimatedDebitInterest = new SimpleDoubleProperty(5.00);
-	/** the fixed debit interest {@link SimpleDoubleProperty}. */
-	private final SimpleDoubleProperty fixedDebitInterest = new SimpleDoubleProperty(2.00);
-	/** the fixed interest {@link SimpleIntegerProperty}. */
-	private final SimpleIntegerProperty fixedInterestPeriod = new SimpleIntegerProperty(50000);
-	/** the name {@link SimpleStringProperty}. */
-	private final SimpleStringProperty name = new SimpleStringProperty();
-	/** the payment rate {@link SimpleDoubleProperty}. */
-	private final SimpleDoubleProperty paymentRate = new SimpleDoubleProperty(3.00);
+	/** the amount {@link CurrencyTextField}. */
+	private final CurrencyTextField amount = new CurrencyTextField(50000.0);
+	/** the estimated debit interest {@link PercentageTextField}. */
+	private final PercentageTextField estimatedDebitInterest = new PercentageTextField(5.00);
+	/** the fixed debit interest {@link PercentageTextField}. */
+	private final PercentageTextField fixedDebitInterest = new PercentageTextField(2.00);
+	/** the fixed interest {@link NumberTextField}. */
+	private final NumberTextField fixedInterestPeriod = new NumberTextField(100);
+	/** the name {@link SimpleTextField}. */
+	private final SimpleTextField name = new SimpleTextField();
+	/** the payment rate {@link PercentageTextField}. */
+	private final PercentageTextField paymentRate = new PercentageTextField(3.00);
 
 }

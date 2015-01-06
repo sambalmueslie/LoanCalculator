@@ -3,6 +3,7 @@
  */
 package de.sambalmueslie.loan_calculator.view.component;
 
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
 
@@ -18,6 +19,11 @@ public abstract class BaseTextField<T> extends TextField {
 	 */
 	public BaseTextField() {
 		setAlignment(Pos.CENTER);
+		focusedProperty().addListener((ChangeListener<Boolean>) (value, oldVal, newVal) -> {
+			if (newVal == false) {
+				validate(getText());
+			}
+		});
 	}
 
 	/**
@@ -37,4 +43,17 @@ public abstract class BaseTextField<T> extends TextField {
 	 *            the value to set
 	 */
 	public abstract void setValue(final T value);
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.view.component.BaseTextField#validate(java.lang.String)
+	 */
+	protected void validate(final String input) {
+		try {
+			final T value = getValue();
+			setValue(value);
+		} catch (NullPointerException | NumberFormatException e) {
+			// intentionally left empty
+		}
+	}
+
 }

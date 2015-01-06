@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 /**
  * The percentage text field.
- * 
+ *
  * @author sambalmueslie 2015
  */
 public class PercentageTextField extends BaseTextField<Double> {
@@ -24,6 +24,23 @@ public class PercentageTextField extends BaseTextField<Double> {
 
 	static {
 		pattern = Pattern.compile(REGEX);
+	}
+
+	/**
+	 * Constructor.
+	 */
+	public PercentageTextField() {
+		setValue(0.0);
+	}
+
+	/**
+	 * Constructor.
+	 *
+	 * @param value
+	 *            the value
+	 */
+	public PercentageTextField(final Double value) {
+		setValue(value);
 	}
 
 	/**

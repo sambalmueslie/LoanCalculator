@@ -5,7 +5,7 @@ package de.sambalmueslie.loan_calculator.view.component;
 
 /**
  * A simple text field.
- * 
+ *
  * @author sambalmueslie 2015
  */
 public class SimpleTextField extends BaseTextField<String> {
@@ -32,6 +32,14 @@ public class SimpleTextField extends BaseTextField<String> {
 	@Override
 	public void setValue(final String value) {
 		setText(value);
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.view.component.BaseTextField#validate(java.lang.String)
+	 */
+	@Override
+	protected void validate(final String input) {
+		// intentionally left empty
 	}
 
 }
