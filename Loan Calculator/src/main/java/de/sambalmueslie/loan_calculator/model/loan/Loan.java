@@ -5,22 +5,19 @@ package de.sambalmueslie.loan_calculator.model.loan;
 
 import java.util.List;
 
+import de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry;
+
 /**
  * A loan.
  *
  * @author sambalmueslie 2015
  */
-public interface Loan {
+public interface Loan extends GenericModelEntry {
 
 	/**
 	 * @return the amount of the loan (kredit).
 	 */
 	double getAmount();
-
-	/**
-	 * @return the id.
-	 */
-	long getId();
 
 	/**
 	 * @return the name.
@@ -49,7 +46,7 @@ public interface Loan {
 
 	/**
 	 * Register the {@link LoanChangeListener}.
-	 * 
+	 *
 	 * @param listener
 	 *            the listener
 	 */
@@ -57,7 +54,7 @@ public interface Loan {
 
 	/**
 	 * Unregister the {@link LoanChangeListener}.
-	 * 
+	 *
 	 * @param listener
 	 *            the listener
 	 */

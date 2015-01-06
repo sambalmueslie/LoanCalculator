@@ -3,12 +3,16 @@
  */
 package de.sambalmueslie.loan_calculator.model;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import de.sambalmueslie.loan_calculator.model.founding.Founding;
+import de.sambalmueslie.loan_calculator.model.generic.GenericModel;
+import de.sambalmueslie.loan_calculator.model.generic.GenericModelListener;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
 
 /**
@@ -22,22 +26,45 @@ public class Model {
 	private static final Logger logger = LogManager.getLogger(Model.class);
 
 	/**
+	 * Constructor.
+	 */
+	public Model() {
+		foundingModel = new GenericModel<>();
+		foundingModel.register(new GenericModelListener<Founding>() {
+
+			@Override
+			public void entryAdded(final GenericModel<Founding> model, final Founding entry) {
+				listeners.forEach(l -> l.foundingAdded(entry));
+			}
+
+			@Override
+			public void entryRemoved(final GenericModel<Founding> model, final Founding entry) {
+				listeners.forEach(l -> l.foundingRemoved(entry));
+			}
+		});
+		loanModel = new GenericModel<>();
+		loanModel.register(new GenericModelListener<Loan>() {
+
+			@Override
+			public void entryAdded(final GenericModel<Loan> model, final Loan entry) {
+				listeners.forEach(l -> l.loanRemoved(entry));
+			}
+
+			@Override
+			public void entryRemoved(final GenericModel<Loan> model, final Loan entry) {
+				listeners.forEach(l -> l.loanAdded(entry));
+			}
+		});
+	}
+
+	/**
 	 * Add a {@link Founding}.
 	 *
 	 * @param founding
 	 *            the founding.
 	 */
 	public void add(final Founding founding) {
-		if (founding == null) {
-			logger.error("Cannot add founding null value.");
-			return;
-		}
-		if (logger.isDebugEnabled()) {
-			logger.debug("Add new founding " + founding);
-		}
-		final long id = founding.getId();
-		foundings.put(id, founding);
-		listeners.forEach(l -> l.foundingAdded(founding));
+		foundingModel.add(founding);
 	}
 
 	/**
@@ -47,30 +74,21 @@ public class Model {
 	 *            the loan to add
 	 */
 	public void add(final Loan loan) {
-		if (loan == null) {
-			logger.error("Cannot add loan null value.");
-			return;
-		}
-		if (logger.isDebugEnabled()) {
-			logger.debug("Add new loan " + loan);
-		}
-		final long id = loan.getId();
-		loans.put(id, loan);
-		listeners.forEach(l -> l.loanAdded(loan));
+		loanModel.add(loan);
 	}
 
 	/**
 	 * @return a {@link Collection} of all currently stored {@link Founding}s.
 	 */
 	public Collection<Founding> getAllFoundings() {
-		return Collections.unmodifiableCollection(foundings.values());
+		return foundingModel.getAll();
 	}
 
 	/**
 	 * @return a {@link Collection} of all currently stored {@link Loan}s.
 	 */
 	public Collection<Loan> getAllLoans() {
-		return Collections.unmodifiableCollection(loans.values());
+		return loanModel.getAll();
 	}
 
 	/**
@@ -81,7 +99,7 @@ public class Model {
 	 * @return the founding or <code>null</code> if not found
 	 */
 	public Founding getFounding(final long id) {
-		return foundings.get(id);
+		return foundingModel.get(id);
 	}
 
 	/**
@@ -92,7 +110,7 @@ public class Model {
 	 * @return the loan or <code>null</code> if not found
 	 */
 	public Loan getLoan(final long id) {
-		return loans.get(id);
+		return loanModel.get(id);
 	}
 
 	/**
@@ -123,23 +141,10 @@ public class Model {
 	 * Remove a {@link Founding}.
 	 *
 	 * @param founding
-	 *            the loan
+	 *            the founding
 	 */
 	public void remove(final Founding founding) {
-		if (founding == null) {
-			logger.error("Cannot remove founding null value.");
-			return;
-		}
-		final long id = founding.getId();
-		if (!loans.containsKey(id)) {
-			logger.warn("Try to remove not added founding " + founding);
-			return;
-		}
-		if (logger.isDebugEnabled()) {
-			logger.debug("Remove founding " + founding);
-		}
-		foundings.remove(id);
-		listeners.forEach(l -> l.foundingRemoved(founding));
+		foundingModel.remove(founding);
 	}
 
 	/**
@@ -149,28 +154,13 @@ public class Model {
 	 *            the loan
 	 */
 	public void remove(final Loan loan) {
-		if (loan == null) {
-			logger.error("Cannot remove loan null value.");
-			return;
-		}
-		final long id = loan.getId();
-		if (!loans.containsKey(id)) {
-			logger.warn("Try to remove not added loan " + loan);
-			return;
-		}
-		if (logger.isDebugEnabled()) {
-			logger.debug("Remove loan " + loan);
-		}
-		loans.remove(id);
-		listeners.forEach(l -> l.loanRemoved(loan));
+		loanModel.remove(loan);
 	}
 
-	/** the {@link Founding} by id. */
-	private final Map<Long, Founding> foundings = new HashMap<>();
-
+	/** the {@link GenericModel} for the {@link Founding}s. */
+	private final GenericModel<Founding> foundingModel;
 	/** the {@link ModelChangeListener}. */
 	private final List<ModelChangeListener> listeners = new LinkedList<>();
-
-	/** the {@link Loan} by id. */
-	private final Map<Long, Loan> loans = new HashMap<>();
+	/** the {@link GenericModel} for the {@link Loan}s. */
+	private final GenericModel<Loan> loanModel;
 }
