@@ -7,9 +7,6 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import de.sambalmueslie.loan_calculator.model.founding.Founding;
 import de.sambalmueslie.loan_calculator.model.generic.GenericModel;
 import de.sambalmueslie.loan_calculator.model.generic.GenericModelListener;
@@ -21,9 +18,6 @@ import de.sambalmueslie.loan_calculator.model.loan.Loan;
  * @author sambalmueslie 2015
  */
 public class BaseModel implements Model {
-
-	/** the logger. */
-	private static final Logger logger = LogManager.getLogger(BaseModel.class);
 
 	/**
 	 * Constructor.
