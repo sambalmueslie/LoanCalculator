@@ -5,7 +5,7 @@ package de.sambalmueslie.loan_calculator.view.component;
 
 /**
  * A number text field.
- * 
+ *
  * @author sambalmueslie 2015
  */
 public class NumberTextField extends BaseTextField<Integer> {
@@ -39,20 +39,19 @@ public class NumberTextField extends BaseTextField<Integer> {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.view.component.BaseTextField#getValue()
+	 * @see de.sambalmueslie.loan_calculator.view.component.BaseTextField#format(java.lang.Object)
 	 */
 	@Override
-	public Integer getValue() {
-		return Integer.parseInt(getText());
+	protected String format(final Integer value) {
+		return String.format(FORMAT, value);
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.view.component.BaseTextField#setValue(java.lang.Object)
+	 * @see de.sambalmueslie.loan_calculator.view.component.BaseTextField#parse(java.lang.String)
 	 */
 	@Override
-	public void setValue(final Integer value) {
-		final String strVal = String.format(FORMAT, value);
-		setText(strVal);
+	protected Integer parse(final String value) {
+		return Integer.parseInt(value);
 	}
 
 }

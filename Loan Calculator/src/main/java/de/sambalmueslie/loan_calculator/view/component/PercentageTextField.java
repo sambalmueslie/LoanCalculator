@@ -52,24 +52,23 @@ public class PercentageTextField extends BaseTextField<Double> {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.view.component.BaseTextField#getValue()
+	 * @see de.sambalmueslie.loan_calculator.view.component.BaseTextField#format(java.lang.Object)
 	 */
 	@Override
-	public Double getValue() {
-		final Matcher m = pattern.matcher(getText());
+	protected String format(final Double value) {
+		return String.format(FORMAT, value);
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.view.component.BaseTextField#parse(java.lang.String)
+	 */
+	@Override
+	protected Double parse(final String value) {
+		final Matcher m = pattern.matcher(value);
 		if (!m.find()) return new Double(-1);
 		final String rawValue = m.group(1);
 		final String text = rawValue.replace(".", "").replace(",", ".");
 		return Double.parseDouble(text);
-	}
-
-	/**
-	 * @see de.sambalmueslie.loan_calculator.view.component.BaseTextField#setValue(java.lang.Object)
-	 */
-	@Override
-	public void setValue(final Double value) {
-		final String text = String.format(FORMAT, value);
-		setText(text);
 	}
 
 }

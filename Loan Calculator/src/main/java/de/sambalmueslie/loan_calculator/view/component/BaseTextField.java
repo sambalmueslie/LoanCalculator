@@ -34,7 +34,10 @@ public abstract class BaseTextField<T> extends TextField {
 	/**
 	 * @return the value.
 	 */
-	public abstract T getValue();
+	public final T getValue() {
+		final T result = parse(getText());
+		return result;
+	}
 
 	/**
 	 * Set the value.
@@ -42,18 +45,43 @@ public abstract class BaseTextField<T> extends TextField {
 	 * @param value
 	 *            the value to set
 	 */
-	public abstract void setValue(final T value);
+	public final void setValue(final T value) {
+		this.value = value;
+		final String text = format(value);
+		if (text.equals(getText())) return;
+		setText(text);
+	}
+
+	/**
+	 * Format the value.
+	 *
+	 * @param value
+	 *            the value
+	 * @return the formated value.
+	 */
+	protected abstract String format(T value);
+
+	/**
+	 * Parse the value.
+	 *
+	 * @param value
+	 *            the value
+	 * @return the parsed result
+	 */
+	protected abstract T parse(String value);
 
 	/**
 	 * @see de.sambalmueslie.loan_calculator.view.component.BaseTextField#validate(java.lang.String)
 	 */
-	protected void validate(final String input) {
+	protected final void validate(final String input) {
 		try {
-			final T value = getValue();
-			setValue(value);
+			final T tmp = getValue();
+			setValue(tmp);
 		} catch (NullPointerException | NumberFormatException e) {
-			// intentionally left empty
+			setValue(value);
 		}
 	}
 
+	/** the value. */
+	private T value;
 }

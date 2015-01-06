@@ -19,27 +19,19 @@ public class SimpleTextField extends BaseTextField<String> {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.view.component.BaseTextField#getValue()
+	 * @see de.sambalmueslie.loan_calculator.view.component.BaseTextField#format(java.lang.Object)
 	 */
 	@Override
-	public String getValue() {
-		return getText();
+	protected String format(final String value) {
+		return value;
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.view.component.BaseTextField#setValue(java.lang.Object)
+	 * @see de.sambalmueslie.loan_calculator.view.component.BaseTextField#parse(java.lang.String)
 	 */
 	@Override
-	public void setValue(final String value) {
-		setText(value);
-	}
-
-	/**
-	 * @see de.sambalmueslie.loan_calculator.view.component.BaseTextField#validate(java.lang.String)
-	 */
-	@Override
-	protected void validate(final String input) {
-		// intentionally left empty
+	protected String parse(final String value) {
+		return value;
 	}
 
 }
