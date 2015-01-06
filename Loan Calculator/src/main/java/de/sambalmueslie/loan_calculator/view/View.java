@@ -10,6 +10,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
@@ -84,7 +85,7 @@ public class View extends BorderPane {
 		setCenter(tabPane);
 		setBottom(statusbar);
 
-		primaryStage.setScene(new Scene(this, 1024, 870));
+		primaryStage.setScene(new Scene(this, 1270, 870));
 		primaryStage.show();
 
 		statusbar.setText(primaryStage.getScene().getWidth() + " " + primaryStage.getScene().getHeight());
@@ -118,11 +119,9 @@ public class View extends BorderPane {
 	void handleLoanAdded(final Loan loan) {
 		loanManager.add(loan);
 
-		final Tab tab = new Tab(loan.getName());
-		tab.setClosable(false);
-		tab.setContent(createLoanPanel(loan));
-		tabPane.getTabs().add(tab);
-		tabPane.getSelectionModel().select(tab);
+		final Node content = createLoanPanel(loan);
+		final String name = loan.getName();
+		addTab(content, name, false);
 	}
 
 	/**
@@ -168,9 +167,28 @@ public class View extends BorderPane {
 	 *            the {@link Loan}s to compare
 	 */
 	void requestCompareLoans(final LoanManager manager, final List<Loan> loans) {
-		final String tabName = "Compare" + loans.stream().map(l -> l.getName()).toString();
-		final Tab tab = new Tab(tabName);
-		tab.setContent(new CompareLoanPanel(loans));
+		final Node tabContent = new CompareLoanPanel(loans);
+		final String tabName = "Compare";
+		addTab(tabContent, tabName, true);
+	}
+
+	/**
+	 * Add a new {@link Tab}.
+	 *
+	 * @param content
+	 *            the content
+	 * @param name
+	 *            the name
+	 * @param closeable
+	 *            the closeable flag @see {@link Tab#setClosable(boolean)}
+	 */
+	private void addTab(final Node content, final String name, final boolean closeable) {
+		final Tab tab = new Tab(name);
+		tab.setClosable(closeable);
+		final ScrollPane scrollPane = new ScrollPane(content);
+		scrollPane.setFitToWidth(true);
+		scrollPane.setFitToHeight(true);
+		tab.setContent(scrollPane);
 		tabPane.getTabs().add(tab);
 		tabPane.getSelectionModel().select(tab);
 	}

@@ -41,8 +41,7 @@ public class AnnuityLoanPanel extends LoanPanel<AnnuityLoan> {
 		residualDebtChart.add(loan);
 		addChart(residualDebtChart, 0, 0);
 
-		final AnnuityPlanChart annuityPlanChart = new AnnuityPlanChart();
-		annuityPlanChart.show(getLoan());
+		final AnnuityPlanChart annuityPlanChart = new AnnuityPlanChart(loan);
 		addChart(annuityPlanChart, 0, 1);
 	}
 }
