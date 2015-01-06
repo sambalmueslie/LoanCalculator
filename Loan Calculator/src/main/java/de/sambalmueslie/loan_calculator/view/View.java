@@ -85,7 +85,7 @@ public class View extends BorderPane {
 		setCenter(tabPane);
 		setBottom(statusbar);
 
-		primaryStage.setScene(new Scene(this, 1270, 870));
+		primaryStage.setScene(new Scene(this, 1280, 880));
 		primaryStage.show();
 
 		statusbar.setText(primaryStage.getScene().getWidth() + " " + primaryStage.getScene().getHeight());
@@ -186,8 +186,6 @@ public class View extends BorderPane {
 		final Tab tab = new Tab(name);
 		tab.setClosable(closeable);
 		final ScrollPane scrollPane = new ScrollPane(content);
-		scrollPane.setFitToWidth(true);
-		scrollPane.setFitToHeight(true);
 		tab.setContent(scrollPane);
 		tabPane.getTabs().add(tab);
 		tabPane.getSelectionModel().select(tab);

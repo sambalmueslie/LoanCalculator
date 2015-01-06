@@ -3,19 +3,17 @@
  */
 package de.sambalmueslie.loan_calculator.view.panel;
 
-import java.util.Optional;
-
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.chart.Chart;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import de.sambalmueslie.loan_calculator.model.Loan;
 import de.sambalmueslie.loan_calculator.view.Constants;
+import de.sambalmueslie.loan_calculator.view.component.TextFieldType;
 
 /**
  * A abstract {@link Loan} panel.
@@ -83,16 +81,11 @@ public abstract class LoanPanel<T extends Loan> extends Pane {
 	 *            the name
 	 * @param value
 	 *            the value
-	 * @param format
-	 *            the format string @see {@link String#format(String, Object...)}
+	 * @param type
+	 *            the {@link TextFieldType}
 	 */
-	protected void addInfo(final String name, final Object value, final String format) {
-		final int row = infoPane.getChildren().size() / 2;
-		infoPane.add(new Label(name), 0, row);
-		final String strVal = String.format(format, value);
-		final TextField textField = new TextField(strVal);
-		textField.setEditable(false);
-		infoPane.add(textField, 1, row);
+	protected void addInfo(final String name, final Object value, final TextFieldType type) {
+		loanInfoPanel.add(name, value, type);
 	}
 
 	/**
@@ -109,7 +102,7 @@ public abstract class LoanPanel<T extends Loan> extends Pane {
 	 *            the {@link Loan}.
 	 */
 	protected void update(final T loan) {
-		updateInfo("Amount", loan.getAmount(), "%,.2f €");
+		updateInfo("Amount", loan.getAmount());
 	}
 
 	/**
@@ -119,19 +112,9 @@ public abstract class LoanPanel<T extends Loan> extends Pane {
 	 *            the name
 	 * @param value
 	 *            the value
-	 * @param format
-	 *            the format string @see {@link String#format(String, Object...)}
 	 */
-	protected void updateInfo(final String name, final Object value, final String format) {
-		final Optional<Node> label = infoPane.getChildren().stream().filter(n -> (n instanceof Label) ? ((Label) n).getText().equals(name) : false).findFirst();
-		if (!label.isPresent()) return;
-		final int index = infoPane.getChildren().indexOf(label.get());
-		final Node text = infoPane.getChildren().get(index + 1);
-		if (text instanceof TextField) {
-			final TextField textField = (TextField) text;
-			final String strVal = String.format(format, value);
-			textField.setText(strVal);
-		}
+	protected void updateInfo(final String name, final Object value) {
+		loanInfoPanel.update(name, value);
 	}
 
 	/**
@@ -141,6 +124,7 @@ public abstract class LoanPanel<T extends Loan> extends Pane {
 		chartPane = new GridPane();
 		chartPane.setVgap(Constants.DEFAULT_SPACING);
 		chartPane.setHgap(Constants.DEFAULT_SPACING);
+		chartPane.setPrefWidth(800);
 		borderPane.setCenter(chartPane);
 	}
 
@@ -159,20 +143,18 @@ public abstract class LoanPanel<T extends Loan> extends Pane {
 	 * Setup the info.
 	 */
 	private void setupInfo() {
-		infoPane = new GridPane();
-		infoPane.setVgap(Constants.DEFAULT_SPACING);
-		infoPane.setHgap(Constants.DEFAULT_SPACING);
-		addInfo("Amount", loan.getAmount(), "%,.2f €");
-		borderPane.setLeft(infoPane);
+		loanInfoPanel = new LoanInfoPanel();
+		loanInfoPanel.add("Amount", loan.getAmount(), TextFieldType.CURRENCY);
+		borderPane.setLeft(loanInfoPanel);
 	}
 
 	/** the {@link BorderPane}. */
 	private final BorderPane borderPane;
 	/** the chart {@link TilePane}. */
 	private GridPane chartPane;
-	/** the info {@link GridPane}. */
-	private GridPane infoPane;
 	/** the loan. */
 	private final T loan;
+	/** the {@link LoanInfoPanel}. */
+	private LoanInfoPanel loanInfoPanel;
 
 }

@@ -7,6 +7,7 @@ import de.sambalmueslie.loan_calculator.model.AnnuityLoan;
 import de.sambalmueslie.loan_calculator.model.Redemption;
 import de.sambalmueslie.loan_calculator.view.chart.LoanChart;
 import de.sambalmueslie.loan_calculator.view.chart.LoanChartFactory;
+import de.sambalmueslie.loan_calculator.view.component.TextFieldType;
 
 /**
  * The {@link LoanPanel} for an {@link AnnuityLoan}.
@@ -21,21 +22,21 @@ public class AnnuityLoanPanel extends LoanPanel<AnnuityLoan> {
 	public AnnuityLoanPanel(final AnnuityLoan loan) {
 		super(loan);
 
-		addInfo("Payment rate", loan.getPaymentRate(), "%.2f %%");
-		addInfo("Fixed debit interest", loan.getFixedDebitInterest(), "%.2f %%");
-		addInfo("Fixed interest period", loan.getFixedInterestPeriod(), "%d");
-		addInfo("Estimated debit interest", loan.getEstimatedDebitInterest(), "%.2f %%");
+		addInfo("Payment rate", loan.getPaymentRate(), TextFieldType.PERCENTAGE);
+		addInfo("Fixed debit interest", loan.getFixedDebitInterest(), TextFieldType.PERCENTAGE);
+		addInfo("Fixed interest period", String.format("%d", loan.getFixedInterestPeriod()), TextFieldType.TEXT);
+		addInfo("Estimated debit interest", loan.getEstimatedDebitInterest(), TextFieldType.PERCENTAGE);
 
 		final Redemption redemption = loan.getRedemptionPlan().get(1);
-		addInfo("Annuity interest", redemption.getInterest(), "%,.2f €");
-		addInfo("Annuity redemption", redemption.getRedemption(), "%,.2f €");
-		addInfo("Annuity total", redemption.getInterest() + redemption.getRedemption(), "%,.2f €");
+		addInfo("Annuity interest", redemption.getInterest(), TextFieldType.CURRENCY);
+		addInfo("Annuity redemption", redemption.getRedemption(), TextFieldType.CURRENCY);
+		addInfo("Annuity total", redemption.getInterest() + redemption.getRedemption(), TextFieldType.CURRENCY);
 
-		addInfo("Duration", loan.getRedemptionPlan().size() - 1, "%d");
+		addInfo("Duration", String.format("%d", loan.getRedemptionPlan().size() - 1), TextFieldType.TEXT);
 
-		addInfo("Total amount", loan.getAmount(), "%,.2f €");
-		addInfo("Total interest", loan.getTotalInterest(), "%,.2f €");
-		addInfo("Total payment", loan.getTotalPayment(), "%,.2f €");
+		addInfo("Total amount", loan.getAmount(), TextFieldType.CURRENCY);
+		addInfo("Total interest", loan.getTotalInterest(), TextFieldType.CURRENCY);
+		addInfo("Total payment", loan.getTotalPayment(), TextFieldType.CURRENCY);
 
 		final LoanChart residualDebtChart = LoanChartFactory.createResidualDebtChart();
 		residualDebtChart.add(loan);
@@ -49,20 +50,20 @@ public class AnnuityLoanPanel extends LoanPanel<AnnuityLoan> {
 	@Override
 	protected void update(final AnnuityLoan loan) {
 		super.update(loan);
-		updateInfo("Payment rate", loan.getPaymentRate(), "%.2f %%");
-		updateInfo("Fixed debit interest", loan.getFixedDebitInterest(), "%.2f %%");
-		updateInfo("Fixed interest period", loan.getFixedInterestPeriod(), "%d");
-		updateInfo("Estimated debit interest", loan.getEstimatedDebitInterest(), "%.2f %%");
+		updateInfo("Payment rate", loan.getPaymentRate());
+		updateInfo("Fixed debit interest", loan.getFixedDebitInterest());
+		updateInfo("Fixed interest period", String.format("%d", loan.getFixedInterestPeriod()));
+		updateInfo("Estimated debit interest", loan.getEstimatedDebitInterest());
 
 		final Redemption redemption = loan.getRedemptionPlan().get(1);
-		updateInfo("Annuity interest", redemption.getInterest(), "%,.2f €");
-		updateInfo("Annuity redemption", redemption.getRedemption(), "%,.2f €");
-		updateInfo("Annuity total", redemption.getInterest() + redemption.getRedemption(), "%,.2f €");
+		updateInfo("Annuity interest", redemption.getInterest());
+		updateInfo("Annuity redemption", redemption.getRedemption());
+		updateInfo("Annuity total", redemption.getInterest() + redemption.getRedemption());
 
-		updateInfo("Duration", loan.getRedemptionPlan().size() - 1, "%d");
+		updateInfo("Duration", String.format("%d", loan.getRedemptionPlan().size() - 1));
 
-		updateInfo("Total amount", loan.getAmount(), "%,.2f €");
-		updateInfo("Total interest", loan.getTotalInterest(), "%,.2f €");
-		updateInfo("Total payment", loan.getTotalPayment(), "%,.2f €");
+		updateInfo("Total amount", loan.getAmount());
+		updateInfo("Total interest", loan.getTotalInterest());
+		updateInfo("Total payment", loan.getTotalPayment());
 	}
 }
