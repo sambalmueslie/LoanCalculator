@@ -7,9 +7,9 @@ import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Side;
+import javafx.scene.chart.Chart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart.Series;
 import de.sambalmueslie.loan_calculator.model.Loan;
 import de.sambalmueslie.loan_calculator.model.Redemption;
 
@@ -18,24 +18,19 @@ import de.sambalmueslie.loan_calculator.model.Redemption;
  *
  * @author sambalmueslie 2015
  */
-public class ResidualDebtChart extends LineChart<Number, Number> {
+public class ResidualDebtChart extends LineChart<Number, Number> implements LoanChart {
 
 	/**
 	 * Constructor.
 	 */
-	public ResidualDebtChart() {
+	ResidualDebtChart() {
 		super(new NumberAxis(), new NumberAxis());
 		setTitle("Redemption plan");
 		setAnimated(false);
 		setLegendSide(Side.BOTTOM);
 	}
 
-	/**
-	 * Add a {@link Loan}.
-	 *
-	 * @param loan
-	 *            the loan
-	 */
+	@Override
 	public void add(final Loan loan) {
 		if (loan == null || data.containsKey(loan)) return;
 		final ObservableList<Data<Number, Number>> values = FXCollections.observableArrayList();
@@ -52,12 +47,12 @@ public class ResidualDebtChart extends LineChart<Number, Number> {
 
 	}
 
-	/**
-	 * Remove a {@link Loan}.
-	 *
-	 * @param loan
-	 *            the loan
-	 */
+	@Override
+	public Chart getChart() {
+		return this;
+	}
+
+	@Override
 	public void remove(final Loan loan) {
 		final Series<Number, Number> series = data.remove(loan);
 		if (series != null) {

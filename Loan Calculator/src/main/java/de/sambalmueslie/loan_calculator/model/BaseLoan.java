@@ -3,6 +3,8 @@
  */
 package de.sambalmueslie.loan_calculator.model;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -19,11 +21,8 @@ abstract class BaseLoan implements Loan {
 	 *            {@link #amount}
 	 */
 	BaseLoan(final String name, final double amount) throws IllegalArgumentException {
-		if (name == null || name.isEmpty()) { throw new IllegalArgumentException("Name '" + name + "' for loan cannot be null or empty."); }
-		this.name = name;
-		if (amount <= 0) { throw new IllegalArgumentException("Amount '" + amount + "'  for loan cannot be lower or equals 0."); }
-		this.amount = amount;
 		id = UUID.randomUUID().getLeastSignificantBits();
+		update(name, amount);
 	}
 
 	/**
@@ -50,11 +49,53 @@ abstract class BaseLoan implements Loan {
 		return name;
 	}
 
+	/**
+	 * @see de.sambalmueslie.loan_calculator.model.Loan#register(de.sambalmueslie.loan_calculator.model.LoanChangeListener)
+	 */
+	@Override
+	public final void register(final LoanChangeListener listener) {
+		if (listener == null || listeners.contains(listener)) return;
+		listeners.add(listener);
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.model.Loan#unregister(de.sambalmueslie.loan_calculator.model.LoanChangeListener)
+	 */
+	@Override
+	public final void unregister(final LoanChangeListener listener) {
+		if (listener == null || !listeners.contains(listener)) return;
+		listeners.remove(listener);
+	}
+
+	/**
+	 * Notify that the {@link Loan} has changed.
+	 */
+	protected void notifyChanged() {
+		listeners.forEach(l -> l.loanChanged(this));
+	}
+
+	/**
+	 * Update.
+	 *
+	 * @param name
+	 *            {@link #name}
+	 * @param amount
+	 *            {@link #amount}
+	 */
+	protected void update(final String name, final double amount) {
+		if (name == null || name.isEmpty()) throw new IllegalArgumentException("Name '" + name + "' for loan cannot be null or empty.");
+		this.name = name;
+		if (amount <= 0) throw new IllegalArgumentException("Amount '" + amount + "'  for loan cannot be lower or equals 0.");
+		this.amount = amount;
+	}
+
 	/** the amount. */
-	private final double amount;
+	private double amount;
 	/** the id. */
 	private final long id;
+	/** the {@link LoanChangeListener}. */
+	private final List<LoanChangeListener> listeners = new LinkedList<>();
 	/** the title. */
-	private final String name;
+	private String name;
 
 }

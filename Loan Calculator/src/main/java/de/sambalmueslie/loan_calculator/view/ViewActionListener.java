@@ -25,8 +25,8 @@ public interface ViewActionListener {
 	 * @param estimatedDebitInterest
 	 *            the estimated debit interest
 	 */
-	void requestAddLoan(final String name, final double amount, final double paymentRate, final double fixedDebitInterest, final int fixedInterestPeriod,
-			final double estimatedDebitInterest);
+	void requestAddAnnuityLoan(final String name, final double amount, final double paymentRate, final double fixedDebitInterest,
+			final int fixedInterestPeriod, final double estimatedDebitInterest);
 
 	/**
 	 * Request to remove a loan.
@@ -54,6 +54,7 @@ public interface ViewActionListener {
 	 * @param estimatedDebitInterest
 	 *            the estimated debit interest
 	 */
-	void requestUpdateLoan(long loanId, final String name, final double amount, final double paymentRate, final double fixedDebitInterest,
+	void requestUpdateAnnuityLoan(long loanId, final String name, final double amount, final double paymentRate, final double fixedDebitInterest,
 			final int fixedInterestPeriod, final double estimatedDebitInterest);
+
 }

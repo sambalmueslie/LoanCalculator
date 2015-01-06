@@ -19,22 +19,25 @@ public class Model {
 	private static final Logger logger = LogManager.getLogger(Model.class);
 
 	/**
-	 * Add a {@link Loan}.
+	 * Add a new annuity loan.
 	 *
-	 * @param loan
-	 *            the loan to add
+	 * @param name
+	 *            the name
+	 * @param amount
+	 *            the amount
+	 * @param paymentRate
+	 *            the payment rate
+	 * @param fixedDebitInterest
+	 *            the fixed debit interest
+	 * @param fixedInterestPeriod
+	 *            the fixed interest period
+	 * @param estimatedDebitInterest
+	 *            the estimated debit interest
 	 */
-	public void add(final Loan loan) {
-		if (loan == null) {
-			logger.error("Cannot add loan null value.");
-			return;
-		}
-		if (logger.isDebugEnabled()) {
-			logger.debug("Add new loan " + loan);
-		}
-		final long id = loan.getId();
-		loans.put(id, loan);
-		listeners.forEach(l -> l.loanAdded(loan));
+	public void addAnnuityLoan(final String name, final double amount, final double paymentRate, final double fixedDebitInterest,
+			final int fixedInterestPeriod, final double estimatedDebitInterest) {
+		final AnnuityLoan annuityLoan = new AnnuityLoan(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
+		add(annuityLoan);
 	}
 
 	/**
@@ -102,8 +105,54 @@ public class Model {
 		listeners.forEach(l -> l.loanRemoved(loan));
 	}
 
+	/**
+	 * Update a annuity loan.
+	 *
+	 * @param loanId
+	 *            the loan id
+	 * @param name
+	 *            the name
+	 * @param amount
+	 *            the amount
+	 * @param paymentRate
+	 *            the payment rate
+	 * @param fixedDebitInterest
+	 *            the fixed debit interest
+	 * @param fixedInterestPeriod
+	 *            the fixed interest period
+	 * @param estimatedDebitInterest
+	 *            the estimated debit interest
+	 */
+	public void updateAnnuityLoan(final long loanId, final String name, final double amount, final double paymentRate, final double fixedDebitInterest,
+			final int fixedInterestPeriod, final double estimatedDebitInterest) {
+		final Loan loan = loans.get(loanId);
+		if (loan == null || !(loan instanceof AnnuityLoan)) return;
+		final AnnuityLoan annuityLoan = (AnnuityLoan) loan;
+		annuityLoan.update(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
+	}
+
+	/**
+	 * Add a {@link Loan}.
+	 *
+	 * @param loan
+	 *            the loan to add
+	 */
+	private void add(final Loan loan) {
+		if (loan == null) {
+			logger.error("Cannot add loan null value.");
+			return;
+		}
+		if (logger.isDebugEnabled()) {
+			logger.debug("Add new loan " + loan);
+		}
+		final long id = loan.getId();
+		loans.put(id, loan);
+		listeners.forEach(l -> l.loanAdded(loan));
+	}
+
 	/** the {@link ModelChangeListener}. */
 	private final List<ModelChangeListener> listeners = new LinkedList<>();
+
 	/** the {@link Loan} by id. */
 	private final Map<Long, Loan> loans = new HashMap<>();
 }

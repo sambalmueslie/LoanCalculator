@@ -140,7 +140,7 @@ public class View extends BorderPane {
 	 */
 	void notifyRequestAddAnnuityLoan(final LoanManager manager, final String name, final double amount, final double paymentRate,
 			final double fixedDebitInterest, final int fixedInterestPeriod, final double estimatedDebitInterest) {
-		listeners.forEach(l -> l.requestAddLoan(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest));
+		listeners.forEach(l -> l.requestAddAnnuityLoan(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest));
 	}
 
 	/**
@@ -155,7 +155,7 @@ public class View extends BorderPane {
 	 */
 	void notifyRequestUpdateAnnuityLoan(final LoanManager manager, final long loanId, final String name, final double amount, final double paymentRate,
 			final double fixedDebitInterest, final int fixedInterestPeriod, final double estimatedDebitInterest) {
-		listeners.forEach(l -> l.requestUpdateLoan(loanId, name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest));
+		listeners.forEach(l -> l.requestUpdateAnnuityLoan(loanId, name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest));
 	}
 
 	/**

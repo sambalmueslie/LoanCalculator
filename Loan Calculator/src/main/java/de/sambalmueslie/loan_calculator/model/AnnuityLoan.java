@@ -33,17 +33,7 @@ public class AnnuityLoan extends BaseLoan {
 	AnnuityLoan(final String name, final double amount, final double paymentRate, final double fixedDebitInterest, final int fixedInterestPeriod,
 			final double estimatedDebitInterest) throws IllegalArgumentException {
 		super(name, amount);
-		if (paymentRate <= 0 || paymentRate >= 100) throw new IllegalArgumentException("Payment rate '" + paymentRate + "' must 0 < X < 100.");
-		this.paymentRate = paymentRate;
-		if (fixedDebitInterest < 0 || fixedDebitInterest >= 100) throw new IllegalArgumentException("fixed debit interest '" + fixedDebitInterest
-				+ "' must 0 < X < 100.");
-		this.fixedDebitInterest = fixedDebitInterest;
-		if (fixedInterestPeriod < 0) throw new IllegalArgumentException("fixed debit period '" + fixedDebitInterest + "' must greater equals 0.");
-		this.fixedInterestPeriod = fixedInterestPeriod;
-		if (estimatedDebitInterest < 0 || estimatedDebitInterest >= 100) throw new IllegalArgumentException("estimated debit interest '"
-				+ estimatedDebitInterest + "' must 0 < X < 100.");
-		this.estimatedDebitInterest = estimatedDebitInterest;
-		update();
+		update(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
 	}
 
 	/**
@@ -137,9 +127,41 @@ public class AnnuityLoan extends BaseLoan {
 	}
 
 	/**
-	 * Update the values.
+	 * Update.
+	 *
+	 * @param name
+	 *            {@link BaseLoan#getName()}
+	 * @param amount
+	 *            {@link BaseLoan#getAmount()}
+	 * @param paymentRate
+	 *            {@link #paymentRate}
+	 * @param fixedDebitInterest
+	 *            {@link #fixedDebitInterest}
+	 * @param fixedInterestPeriod
+	 *            {@link #fixedInterestPeriod}
+	 * @param estimatedDebitInterest
+	 *            {@link #estimatedDebitInterest}
 	 */
-	private void update() {
+	void update(final String name, final double amount, final double paymentRate, final double fixedDebitInterest, final int fixedInterestPeriod,
+			final double estimatedDebitInterest) {
+		super.update(name, amount);
+		if (paymentRate <= 0 || paymentRate >= 100) throw new IllegalArgumentException("Payment rate '" + paymentRate + "' must 0 < X < 100.");
+		this.paymentRate = paymentRate;
+		if (fixedDebitInterest < 0 || fixedDebitInterest >= 100) throw new IllegalArgumentException("fixed debit interest '" + fixedDebitInterest
+				+ "' must 0 < X < 100.");
+		this.fixedDebitInterest = fixedDebitInterest;
+		if (fixedInterestPeriod < 0) throw new IllegalArgumentException("fixed debit period '" + fixedDebitInterest + "' must greater equals 0.");
+		this.fixedInterestPeriod = fixedInterestPeriod;
+		if (estimatedDebitInterest < 0 || estimatedDebitInterest >= 100) throw new IllegalArgumentException("estimated debit interest '"
+				+ estimatedDebitInterest + "' must 0 < X < 100.");
+		this.estimatedDebitInterest = estimatedDebitInterest;
+		calculateValues();
+	}
+
+	/**
+	 * Calculate the values.
+	 */
+	private void calculateValues() {
 		redemptionPlan = new LinkedList<>();
 
 		double residualDebt = getAmount();
@@ -148,11 +170,11 @@ public class AnnuityLoan extends BaseLoan {
 		redemptionPlan.add(new Redemption(residualDebt));
 
 		for (int i = 0; residualDebt > 0; i++) {
-			// zins
+
 			final double debitInterest = (i < fixedInterestPeriod ? fixedDebitInterest : estimatedDebitInterest) / 100;
 			final double interest = residualDebt * debitInterest;
 			totalInterest += interest;
-			// tilgung
+
 			final double redemption = annuity - interest;
 			if (redemption >= residualDebt) {
 				residualDebt = 0;
@@ -164,16 +186,17 @@ public class AnnuityLoan extends BaseLoan {
 		}
 
 		totalPayment = totalInterest + getAmount();
+		notifyChanged();
 	}
 
 	/** the estimated debit interest (geschätzter Sollzins nach Bindungsende). */
-	private final double estimatedDebitInterest;
+	private double estimatedDebitInterest;
 	/** the fixed debit interest (Gebundener Sollzins). */
-	private final double fixedDebitInterest;
+	private double fixedDebitInterest;
 	/** the fixed debit interest period (Sollzinsbindung). */
-	private final int fixedInterestPeriod;
+	private int fixedInterestPeriod;
 	/** the payment rate (Tilgung in Prozent). */
-	private final double paymentRate;
+	private double paymentRate;
 	/** the redemption plan. */
 	private List<Redemption> redemptionPlan;
 	/** the term (Laufzeit). */

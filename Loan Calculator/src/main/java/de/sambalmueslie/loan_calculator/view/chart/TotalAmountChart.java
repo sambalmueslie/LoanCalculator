@@ -5,6 +5,7 @@ package de.sambalmueslie.loan_calculator.view.chart;
 
 import javafx.geometry.Side;
 import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.Chart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.StackedBarChart;
 import de.sambalmueslie.loan_calculator.model.Loan;
@@ -14,12 +15,12 @@ import de.sambalmueslie.loan_calculator.model.Loan;
  *
  * @author sambalmueslie 2015
  */
-public class TotalAmountChart extends StackedBarChart<String, Number> {
+public class TotalAmountChart extends StackedBarChart<String, Number> implements LoanChart {
 
 	/**
 	 * Constructor.
 	 */
-	public TotalAmountChart() {
+	TotalAmountChart() {
 		super(new CategoryAxis(), new NumberAxis());
 		setTitle("Total Amount");
 		setAnimated(false);
@@ -36,12 +37,7 @@ public class TotalAmountChart extends StackedBarChart<String, Number> {
 		getData().add(interestSeries);
 	}
 
-	/**
-	 * Add a {@link Loan}.
-	 *
-	 * @param loan
-	 *            the loan
-	 */
+	@Override
 	public void add(final Loan loan) {
 		if (loan == null) return;
 
@@ -50,12 +46,12 @@ public class TotalAmountChart extends StackedBarChart<String, Number> {
 		interestSeries.getData().add(new Data<String, Number>(name, loan.getTotalInterest()));
 	}
 
-	/**
-	 * Remove a {@link Loan}.
-	 *
-	 * @param loan
-	 *            the loan
-	 */
+	@Override
+	public Chart getChart() {
+		return this;
+	}
+
+	@Override
 	public void remove(final Loan loan) {
 		if (loan == null) return;
 		amountSeries.getData().removeIf(d -> d.getXValue().equals(loan.getName()));

@@ -23,12 +23,12 @@ public class ViewActionHandler implements ViewActionListener {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestAddLoan(java.lang.String, double, double, double, int, double)
+	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestAddAnnuityLoan(java.lang.String, double, double, double, int, double)
 	 */
 	@Override
-	public void requestAddLoan(final String name, final double amount, final double paymentRate, final double fixedDebitInterest,
+	public void requestAddAnnuityLoan(final String name, final double amount, final double paymentRate, final double fixedDebitInterest,
 			final int fixedInterestPeriod, final double estimatedDebitInterest) {
-		controller.handleRequestAddLoan(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
+		controller.handleRequestAddAnnuityLoan(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
 	}
 
 	/**
@@ -40,13 +40,13 @@ public class ViewActionHandler implements ViewActionListener {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestUpdateLoan(long, java.lang.String, double, double, double, int,
+	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestUpdateAnnuityLoan(long, java.lang.String, double, double, double, int,
 	 *      double)
 	 */
 	@Override
-	public void requestUpdateLoan(final long loanId, final String name, final double amount, final double paymentRate, final double fixedDebitInterest,
+	public void requestUpdateAnnuityLoan(final long loanId, final String name, final double amount, final double paymentRate, final double fixedDebitInterest,
 			final int fixedInterestPeriod, final double estimatedDebitInterest) {
-		controller.handleRequestUpdateLoan(loanId, name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
+		controller.handleRequestUpdateAnnuityLoan(loanId, name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
 	}
 
 	/** the {@link Controller}. */

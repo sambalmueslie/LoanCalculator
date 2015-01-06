@@ -46,4 +46,20 @@ public interface Loan {
 	 * @return the total payment (interest and amount).
 	 */
 	double getTotalPayment();
+
+	/**
+	 * Register the {@link LoanChangeListener}.
+	 * 
+	 * @param listener
+	 *            the listener
+	 */
+	void register(LoanChangeListener listener);
+
+	/**
+	 * Unregister the {@link LoanChangeListener}.
+	 * 
+	 * @param listener
+	 *            the listener
+	 */
+	void unregister(LoanChangeListener listener);
 }
