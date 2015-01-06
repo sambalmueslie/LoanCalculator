@@ -39,8 +39,6 @@ public class AnnuityPlanChart extends StackedBarChart<String, Number> implements
 		redemptionSeries = new Series<>();
 		redemptionSeries.setName("redemption");
 
-		getData().add(interestSeries);
-		getData().add(redemptionSeries);
 	}
 
 	/**
@@ -51,6 +49,7 @@ public class AnnuityPlanChart extends StackedBarChart<String, Number> implements
 		setTitle("Annuity " + loan.getName());
 		final ObservableList<Data<String, Number>> interestData = FXCollections.observableArrayList();
 		final ObservableList<Data<String, Number>> redemptionData = FXCollections.observableArrayList();
+
 		final List<Redemption> redemptionPlan = loan.getRedemptionPlan();
 		for (int i = 1; i < redemptionPlan.size(); i++) {
 			final String name = i + "";
@@ -62,8 +61,8 @@ public class AnnuityPlanChart extends StackedBarChart<String, Number> implements
 		interestSeries.setData(interestData);
 		redemptionSeries.setData(redemptionData);
 
-		getData().set(0, interestSeries);
-		getData().set(1, redemptionSeries);
+		getData().add(interestSeries);
+		getData().add(redemptionSeries);
 	}
 
 	/**
@@ -79,8 +78,8 @@ public class AnnuityPlanChart extends StackedBarChart<String, Number> implements
 	 */
 	@Override
 	public void remove(final Loan loan) {
-		interestSeries.setData(FXCollections.emptyObservableList());
-		redemptionSeries.setData(FXCollections.emptyObservableList());
+		getData().remove(0);
+		getData().remove(0);
 	}
 
 	/** the interest {@link Series}. */
