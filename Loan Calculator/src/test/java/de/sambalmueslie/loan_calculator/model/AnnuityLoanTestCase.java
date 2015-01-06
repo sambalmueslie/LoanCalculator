@@ -45,4 +45,31 @@ public class AnnuityLoanTestCase {
 
 	}
 
+	/**
+	 * Test the update of a {@link AnnuityLoan}.
+	 */
+	@Test
+	public void testAnnuityLoanUpdate() {
+		String name = "Name";
+		double amount = 100000;
+		double paymentRate = 3.00;
+		double fixedDebitInterest = 2.00;
+		int fixedInterestPeriod = 10;
+		double estimatedDebitInterest = 5.00;
+		final AnnuityLoan loan = new AnnuityLoan(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
+		name = "New-Name";
+		amount = 50000;
+		paymentRate = 4.00;
+		fixedDebitInterest = 3.00;
+		fixedInterestPeriod = 15;
+		estimatedDebitInterest = 6.00;
+		loan.update(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
+		assertEquals(name, loan.getName());
+		assertEquals(amount, loan.getAmount(), 0.01);
+		assertEquals(paymentRate, loan.getPaymentRate(), 0.01);
+		assertEquals(fixedDebitInterest, loan.getFixedDebitInterest(), 0.01);
+		assertEquals(fixedInterestPeriod, loan.getFixedInterestPeriod());
+		assertEquals(estimatedDebitInterest, loan.getEstimatedDebitInterest(), 0.01);
+	}
+
 }
