@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import de.sambalmueslie.loan_calculator.model.Model;
+import de.sambalmueslie.loan_calculator.model.BaseModel;
 import de.sambalmueslie.loan_calculator.model.loan.AnnuityLoan;
 import de.sambalmueslie.loan_calculator.model.loan.BaseAnnuityLoan;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
@@ -31,7 +31,7 @@ public class Controller extends Application {
 	 */
 	@Override
 	public void start(final Stage primaryStage) throws Exception {
-		model = new Model();
+		model = new BaseModel();
 		view = new View(model);
 
 		view.setup(primaryStage);
@@ -107,8 +107,8 @@ public class Controller extends Application {
 		handleRequestAddAnnuityLoan("5,0% 15 Jahre fest", 100000, 3.0, 5.0, 15, 7.5);
 	}
 
-	/** the {@link Model}. */
-	private Model model;
+	/** the {@link BaseModel}. */
+	private BaseModel model;
 	/** the {@link View}. */
 	private View view;
 	/** the {@link ViewActionHandler}. */
