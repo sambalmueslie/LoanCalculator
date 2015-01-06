@@ -3,7 +3,7 @@
  */
 package de.sambalmueslie.loan_calculator.view.chart;
 
-import javafx.scene.chart.Chart;
+import javafx.scene.Node;
 import de.sambalmueslie.loan_calculator.model.Loan;
 
 /**
@@ -21,9 +21,9 @@ public interface LoanChart {
 	void add(Loan loan);
 
 	/**
-	 * @return the {@link Chart}.
+	 * @return the {@link Node}.
 	 */
-	Chart getChart();
+	Node getChart();
 
 	/**
 	 * Remove a {@link Loan}.

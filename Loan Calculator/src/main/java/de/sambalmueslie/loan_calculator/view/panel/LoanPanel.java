@@ -4,6 +4,7 @@
 package de.sambalmueslie.loan_calculator.view.panel;
 
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.chart.Chart;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -49,7 +50,7 @@ public abstract class LoanPanel<T extends Loan> extends Pane {
 	 * @param row
 	 *            the row index position for the child within the gridpane
 	 */
-	protected void addChart(final Chart chart, final int col, final int row) {
+	protected void addChart(final Node chart, final int col, final int row) {
 		chartPane.add(chart, col, row);
 	}
 
@@ -67,7 +68,7 @@ public abstract class LoanPanel<T extends Loan> extends Pane {
 	 * @param rowspan
 	 *            the number of rows the child's layout area should span
 	 */
-	protected void addChart(final Chart chart, final int col, final int row, final int colspan, final int rowspan) {
+	protected void addChart(final Node chart, final int col, final int row, final int colspan, final int rowspan) {
 		chartPane.add(chart, col, row, colspan, rowspan);
 	}
 

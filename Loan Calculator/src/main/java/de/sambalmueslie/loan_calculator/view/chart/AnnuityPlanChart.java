@@ -5,22 +5,61 @@ package de.sambalmueslie.loan_calculator.view.chart;
 
 import java.util.List;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Side;
+import javafx.scene.Node;
 import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.Chart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.StackedBarChart;
+import javafx.scene.layout.TilePane;
 import de.sambalmueslie.loan_calculator.model.Loan;
 import de.sambalmueslie.loan_calculator.model.Redemption;
+import de.sambalmueslie.loan_calculator.view.Constants;
 
 /**
  * The annuity plan chart.
  *
  * @author sambalmueslie 2015
  */
-public class AnnuityPlanChart extends StackedBarChart<String, Number> implements LoanChart {
+public class AnnuityPlanChart extends TilePane implements LoanChart {
+
+	/**
+	 * The chart for a single {@link Loan}.
+	 *
+	 * @author sambalmueslie 2015
+	 */
+	private class Chart extends StackedBarChart<String, Number> {
+		/**
+		 * Constructor.
+		 */
+		public Chart(final Loan loan) {
+			super(new CategoryAxis(), new NumberAxis());
+			this.loan = loan;
+			setTitle("Annuity " + loan.getName());
+			setAnimated(false);
+			setLegendVisible(true);
+			setLegendSide(Side.BOTTOM);
+
+			final Series<String, Number> interestSeries = new Series<>();
+			interestSeries.setName("interest");
+			final Series<String, Number> redemptionSeries = new Series<>();
+			redemptionSeries.setName("redemption");
+
+			final List<Redemption> redemptionPlan = loan.getRedemptionPlan();
+			for (int i = 1; i < redemptionPlan.size(); i++) {
+				final String name = i + "";
+				final Redemption redemption = redemptionPlan.get(i);
+				interestSeries.getData().add(new Data<String, Number>(name, redemption.getInterest()));
+				redemptionSeries.getData().add(new Data<String, Number>(name, redemption.getRedemption()));
+			}
+
+			getData().add(interestSeries);
+			getData().add(redemptionSeries);
+		}
+
+		/** the {@link Loan}. */
+		private final Loan loan;
+	}
+
 	/**
 	 * Constructor.
 	 *
@@ -28,17 +67,9 @@ public class AnnuityPlanChart extends StackedBarChart<String, Number> implements
 	 *            the {@link Loan} to show
 	 */
 	AnnuityPlanChart() {
-		super(new CategoryAxis(), new NumberAxis());
-		setTitle("Annuity");
-		setAnimated(false);
-		setLegendVisible(true);
-		setLegendSide(Side.BOTTOM);
-
-		interestSeries = new Series<>();
-		interestSeries.setName("interest");
-		redemptionSeries = new Series<>();
-		redemptionSeries.setName("redemption");
-
+		setHgap(Constants.DEFAULT_SPACING);
+		setVgap(Constants.DEFAULT_SPACING);
+		setPrefColumns(2);
 	}
 
 	/**
@@ -46,30 +77,14 @@ public class AnnuityPlanChart extends StackedBarChart<String, Number> implements
 	 */
 	@Override
 	public void add(final Loan loan) {
-		setTitle("Annuity " + loan.getName());
-		final ObservableList<Data<String, Number>> interestData = FXCollections.observableArrayList();
-		final ObservableList<Data<String, Number>> redemptionData = FXCollections.observableArrayList();
-
-		final List<Redemption> redemptionPlan = loan.getRedemptionPlan();
-		for (int i = 1; i < redemptionPlan.size(); i++) {
-			final String name = i + "";
-			final Redemption redemption = redemptionPlan.get(i);
-			interestData.add(new Data<String, Number>(name, redemption.getInterest()));
-			redemptionData.add(new Data<String, Number>(name, redemption.getRedemption()));
-		}
-
-		interestSeries.setData(interestData);
-		redemptionSeries.setData(redemptionData);
-
-		getData().add(interestSeries);
-		getData().add(redemptionSeries);
+		getChildren().add(new Chart(loan));
 	}
 
 	/**
 	 * @see de.sambalmueslie.loan_calculator.view.chart.LoanChart#getChart()
 	 */
 	@Override
-	public Chart getChart() {
+	public Node getChart() {
 		return this;
 	}
 
@@ -78,13 +93,7 @@ public class AnnuityPlanChart extends StackedBarChart<String, Number> implements
 	 */
 	@Override
 	public void remove(final Loan loan) {
-		getData().remove(0);
-		getData().remove(0);
+		getChildren().removeIf(c -> ((Chart) c).loan.getId() == loan.getId());
 	}
-
-	/** the interest {@link Series}. */
-	private final Series<String, Number> interestSeries;
-	/** the redemption {@link Series}. */
-	private final Series<String, Number> redemptionSeries;
 
 }

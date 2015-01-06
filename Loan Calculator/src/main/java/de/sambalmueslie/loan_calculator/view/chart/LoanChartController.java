@@ -6,7 +6,7 @@ package de.sambalmueslie.loan_calculator.view.chart;
 import java.util.HashMap;
 import java.util.Map;
 
-import javafx.scene.chart.Chart;
+import javafx.scene.Node;
 import de.sambalmueslie.loan_calculator.model.Loan;
 
 /**
@@ -41,7 +41,7 @@ public class LoanChartController implements LoanChart {
 	 * @see de.sambalmueslie.loan_calculator.view.chart.LoanChart#getChart()
 	 */
 	@Override
-	public Chart getChart() {
+	public Node getChart() {
 		return loanChart.getChart();
 	}
 
