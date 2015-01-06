@@ -185,6 +185,7 @@ public class AnnuityLoan extends BaseLoan {
 
 		}
 
+		term = redemptionPlan.size() - 1;
 		totalPayment = totalInterest + getAmount();
 		notifyChanged();
 	}
