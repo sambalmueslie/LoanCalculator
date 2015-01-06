@@ -45,4 +45,24 @@ public class AnnuityLoanPanel extends LoanPanel<AnnuityLoan> {
 		annuityPlanChart.add(loan);
 		addChart(annuityPlanChart.getChart(), 0, 1);
 	}
+
+	@Override
+	protected void update(final AnnuityLoan loan) {
+		super.update(loan);
+		updateInfo("Payment rate", loan.getPaymentRate(), "%.2f %%");
+		updateInfo("Fixed debit interest", loan.getFixedDebitInterest(), "%.2f %%");
+		updateInfo("Fixed interest period", loan.getFixedInterestPeriod(), "%d");
+		updateInfo("Estimated debit interest", loan.getEstimatedDebitInterest(), "%.2f %%");
+
+		final Redemption redemption = loan.getRedemptionPlan().get(1);
+		updateInfo("Annuity interest", redemption.getInterest(), "%,.2f €");
+		updateInfo("Annuity redemption", redemption.getRedemption(), "%,.2f €");
+		updateInfo("Annuity total", redemption.getInterest() + redemption.getRedemption(), "%,.2f €");
+
+		updateInfo("Duration", loan.getRedemptionPlan().size() - 1, "%d");
+
+		updateInfo("Total amount", loan.getAmount(), "%,.2f €");
+		updateInfo("Total interest", loan.getTotalInterest(), "%,.2f €");
+		updateInfo("Total payment", loan.getTotalPayment(), "%,.2f €");
+	}
 }

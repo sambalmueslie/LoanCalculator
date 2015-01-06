@@ -97,6 +97,7 @@ public class LoanManager extends VBox {
 	 */
 	public void add(final Loan loan) {
 		data.add(loan);
+		loan.register(this::update);
 	}
 
 	/**
@@ -119,6 +120,7 @@ public class LoanManager extends VBox {
 	 */
 	public void remove(final Loan loan) {
 		data.remove(loan);
+		loan.unregister(this::update);
 	}
 
 	/**
@@ -198,6 +200,17 @@ public class LoanManager extends VBox {
 						estimatedDebitInterest));
 			}
 		}
+	}
+
+	/**
+	 * Update.
+	 *
+	 * @param loan
+	 *            the {@link Loan}
+	 */
+	private void update(final Loan loan) {
+		final int index = data.indexOf(loan);
+		data.set(index, loan);
 	}
 
 	/** the current managed {@link Loan}s. */

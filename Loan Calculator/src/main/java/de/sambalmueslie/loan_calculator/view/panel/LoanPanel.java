@@ -3,6 +3,8 @@
  */
 package de.sambalmueslie.loan_calculator.view.panel;
 
+import java.util.Optional;
+
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.chart.Chart;
@@ -30,8 +32,10 @@ public abstract class LoanPanel<T extends Loan> extends Pane {
 	 * @param loan
 	 *            {@link #loan}
 	 */
+	@SuppressWarnings("unchecked")
 	protected LoanPanel(final T loan) {
 		this.loan = loan;
+		this.loan.register(l -> update((T) l));
 		borderPane = new BorderPane();
 		getChildren().add(borderPane);
 
@@ -96,6 +100,38 @@ public abstract class LoanPanel<T extends Loan> extends Pane {
 	 */
 	protected T getLoan() {
 		return loan;
+	}
+
+	/**
+	 * Update.
+	 *
+	 * @param loan
+	 *            the {@link Loan}.
+	 */
+	protected void update(final T loan) {
+		updateInfo("Amount", loan.getAmount(), "%,.2f €");
+	}
+
+	/**
+	 * Update a info.
+	 *
+	 * @param name
+	 *            the name
+	 * @param value
+	 *            the value
+	 * @param format
+	 *            the format string @see {@link String#format(String, Object...)}
+	 */
+	protected void updateInfo(final String name, final Object value, final String format) {
+		final Optional<Node> label = infoPane.getChildren().stream().filter(n -> (n instanceof Label) ? ((Label) n).getText().equals(name) : false).findFirst();
+		if (!label.isPresent()) return;
+		final int index = infoPane.getChildren().indexOf(label.get());
+		final Node text = infoPane.getChildren().get(index + 1);
+		if (text instanceof TextField) {
+			final TextField textField = (TextField) text;
+			final String strVal = String.format(format, value);
+			textField.setText(strVal);
+		}
 	}
 
 	/**
