@@ -98,9 +98,9 @@ public class EntryList extends GridPane {
 		entries = FXCollections.observableArrayList();
 		entryList = new ListView<>(entries);
 
-		final EntryListCellContentFactory<?> foundingFactory = new EntryListCellContentFactory<Founding>(Founding.class, FoundingEntryListCell.class);
+		final EntryListCellContentFactory<?> foundingFactory = new EntryListCellContentFactory<Founding>(Founding.class, EntryListCellFounding.class);
 		foundingFactory.setListener(actionForwarder);
-		final EntryListCellContentFactory<?> loanFactory = new EntryListCellContentFactory<Loan>(Loan.class, LoanEntryListCell.class);
+		final EntryListCellContentFactory<?> loanFactory = new EntryListCellContentFactory<Loan>(Loan.class, EntryListCellLoan.class);
 		loanFactory.setListener(actionForwarder);
 
 		entryList.setCellFactory(entry -> new EntryListCell(foundingFactory, loanFactory));

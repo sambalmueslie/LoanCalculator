@@ -17,12 +17,12 @@ import de.sambalmueslie.loan_calculator.view.ViewActionListener;
  *
  * @author sambalmueslie 2015
  */
-public class FoundingEntryListCell extends GridPane implements EntryListCellContent<Founding> {
+public class EntryListCellFounding extends GridPane implements EntryListCellContent<Founding> {
 
 	/**
 	 * Constructor.
 	 */
-	public FoundingEntryListCell() {
+	public EntryListCellFounding() {
 		setHgap(Constants.DEFAULT_SPACING);
 		setVgap(Constants.DEFAULT_SPACING);
 
@@ -34,7 +34,7 @@ public class FoundingEntryListCell extends GridPane implements EntryListCellCont
 	 */
 	@Override
 	public ContextMenu getContextMenu(final Founding entry) {
-		// TODO Auto-generated method stub
+		contextMenu.set(entry);
 		return contextMenu;
 	}
 
@@ -52,12 +52,11 @@ public class FoundingEntryListCell extends GridPane implements EntryListCellCont
 	 */
 	@Override
 	public void set(final ViewActionListener listener) {
-		// TODO Auto-generated method stub
-
+		contextMenu.setListener(listener);
 	}
 
 	/** the {@link ContextMenu}. */
-	private final ContextMenu contextMenu = new ContextMenu();
+	private final FoundingContextMenu contextMenu = new FoundingContextMenu();
 	/** the name {@link Label}. */
 	private final Label name = new Label();
 

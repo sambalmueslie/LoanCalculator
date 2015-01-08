@@ -6,7 +6,6 @@ package de.sambalmueslie.loan_calculator.view;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.SplitPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import de.sambalmueslie.loan_calculator.model.Model;
@@ -60,9 +59,9 @@ public class View extends BorderPane {
 		primaryStage.setTitle("Loan calculator by sambalmueslie!");
 		final Label statusbar = new Label();
 
-		final SplitPane content = new SplitPane();
-		content.getItems().addAll(entryList, entryTabPane);
-		content.setDividerPosition(0, 0.3f);
+		final BorderPane content = new BorderPane();
+		content.setLeft(entryList);
+		content.setCenter(entryTabPane);
 
 		setCenter(content);
 		setBottom(statusbar);

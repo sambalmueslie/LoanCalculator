@@ -5,69 +5,60 @@ package de.sambalmueslie.loan_calculator.view.entry_mgr;
 
 import java.util.Optional;
 
-import javafx.scene.Node;
-import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import de.sambalmueslie.loan_calculator.controller.Controller;
 import de.sambalmueslie.loan_calculator.model.loan.AnnuityLoan;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
-import de.sambalmueslie.loan_calculator.view.Constants;
 import de.sambalmueslie.loan_calculator.view.ViewActionListener;
 import de.sambalmueslie.loan_calculator.view.dialog.ModifyAnnuityLoanDialog;
 
 /**
- * The {@link Loan} entry {@link ListCell}.
+ * The context menu for a loan list cell entry.
  *
  * @author sambalmueslie 2015
  */
-public class LoanEntryListCell extends GridPane implements EntryListCellContent<Loan> {
+public class LoanContextMenu extends ContextMenu {
 	/** the logger. */
-	private static final Logger logger = LogManager.getLogger(Controller.class);
+	private static final Logger logger = LogManager.getLogger(LoanContextMenu.class);
 
 	/**
 	 * Constructor.
 	 */
-	public LoanEntryListCell() {
-		setHgap(Constants.DEFAULT_SPACING);
-		setVgap(Constants.DEFAULT_SPACING);
-
-		add(name, 0, 0);
-
+	LoanContextMenu() {
 		addAnnuitiyLoanMenuItem = new MenuItem("Add annuity loan");
-		addAnnuitiyLoanMenuItem.setOnAction(e -> addAnnuitiyLoan());
 		updateMenuItem = new MenuItem("Update");
 		removeMenuItem = new MenuItem("Remove");
-		contextMenu.getItems().addAll(addAnnuitiyLoanMenuItem, updateMenuItem, removeMenuItem);
+		getItems().addAll(addAnnuitiyLoanMenuItem, updateMenuItem, removeMenuItem);
+		set(null);
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.view.entry_mgr.EntryListCellContent#getContextMenu(de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry)
+	 * Set the {@link Loan}.
+	 *
+	 * @param loan
+	 *            the loan
 	 */
-	@Override
-	public ContextMenu getContextMenu(final Loan entry) {
-		updateMenuItem.setOnAction(e -> update(entry));
-		removeMenuItem.setOnAction(e -> remove(entry));
-		return contextMenu;
+	void set(final Loan loan) {
+		addAnnuitiyLoanMenuItem.setOnAction(e -> addAnnuitiyLoan());
+		if (loan == null) {
+			updateMenuItem.setOnAction(null);
+			removeMenuItem.setOnAction(null);
+		} else {
+			updateMenuItem.setOnAction(e -> update(loan));
+			removeMenuItem.setOnAction(e -> remove(loan));
+		}
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.view.entry_mgr.EntryListCellContent#getGrapic(de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry)
+	 * @param listener
+	 *            the listener to set
 	 */
-	@Override
-	public Node getGrapic(final Loan entry) {
-		name.setText(entry.getName());
-		return this;
-	}
-
-	/**
-	 * @see de.sambalmueslie.loan_calculator.view.entry_mgr.EntryListCellContent#set(de.sambalmueslie.loan_calculator.view.ViewActionListener)
-	 */
-	@Override
-	public void set(final ViewActionListener listener) {
+	void setListener(final ViewActionListener listener) {
 		this.listener = listener;
 	}
 
@@ -137,15 +128,10 @@ public class LoanEntryListCell extends GridPane implements EntryListCellContent<
 
 	/** the add {@link MenuItem}. */
 	private final MenuItem addAnnuitiyLoanMenuItem;
-	/** the {@link ContextMenu}. */
-	private final ContextMenu contextMenu = new ContextMenu();
 	/** the {@link ViewActionListener}. */
 	private ViewActionListener listener;
-	/** the name {@link Label}. */
-	private final Label name = new Label();
 	/** the remove {@link MenuItem}. */
 	private final MenuItem removeMenuItem;
 	/** the update {@link MenuItem}. */
 	private final MenuItem updateMenuItem;
-
 }
