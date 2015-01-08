@@ -6,6 +6,7 @@ package de.sambalmueslie.loan_calculator.model.founding;
 import java.util.List;
 
 import de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry;
+import de.sambalmueslie.loan_calculator.model.loan.Loan;
 import de.sambalmueslie.loan_calculator.model.loan.RedemptionPlanEntry;
 
 /**
@@ -13,7 +14,7 @@ import de.sambalmueslie.loan_calculator.model.loan.RedemptionPlanEntry;
  *
  * @author sambalmueslie 2015
  */
-public interface Founding extends GenericModelEntry {
+public interface Founding extends GenericModelEntry<Founding> {
 	/**
 	 * @return the amount of the loan.
 	 */
@@ -23,6 +24,11 @@ public interface Founding extends GenericModelEntry {
 	 * @return the bank name.
 	 */
 	String getBankName();
+
+	/**
+	 * @return the {@link Loan}s of the founding.
+	 */
+	List<Loan> getLoans();
 
 	/**
 	 * @return the name.
@@ -48,21 +54,5 @@ public interface Founding extends GenericModelEntry {
 	 * @return the total payment (interest and amount).
 	 */
 	double getTotalPayment();
-
-	/**
-	 * Register a {@link FoundingChangeListener}.
-	 *
-	 * @param listener
-	 *            the listener
-	 */
-	void register(FoundingChangeListener listener);
-
-	/**
-	 * Unregister a {@link FoundingChangeListener}.
-	 *
-	 * @param listener
-	 *            the listener
-	 */
-	void unregister(FoundingChangeListener listener);
 
 }

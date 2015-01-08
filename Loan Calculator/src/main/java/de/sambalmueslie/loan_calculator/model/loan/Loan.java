@@ -12,7 +12,7 @@ import de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry;
  *
  * @author sambalmueslie 2015
  */
-public interface Loan extends GenericModelEntry {
+public interface Loan extends GenericModelEntry<Loan> {
 
 	/**
 	 * @return the amount of the loan (kredit).
@@ -44,19 +44,4 @@ public interface Loan extends GenericModelEntry {
 	 */
 	double getTotalPayment();
 
-	/**
-	 * Register the {@link LoanChangeListener}.
-	 *
-	 * @param listener
-	 *            the listener
-	 */
-	void register(LoanChangeListener listener);
-
-	/**
-	 * Unregister the {@link LoanChangeListener}.
-	 *
-	 * @param listener
-	 *            the listener
-	 */
-	void unregister(LoanChangeListener listener);
 }

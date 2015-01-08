@@ -1,19 +1,24 @@
 /**
  *
  */
-package de.sambalmueslie.loan_calculator.view.chart;
+package de.sambalmueslie.loan_calculator.view.chart.loan;
 
 import javafx.geometry.Side;
-import javafx.scene.chart.*;
+import javafx.scene.Node;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.StackedBarChart;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
 import de.sambalmueslie.loan_calculator.model.loan.RedemptionPlanEntry;
+import de.sambalmueslie.loan_calculator.view.chart.Chart;
 
 /**
  * The annuity {@link BarChart}.
  *
  * @author sambalmueslie 2015
  */
-public class AnnuityCart extends StackedBarChart<String, Number> implements LoanChart {
+public class AnnuityCart extends StackedBarChart<String, Number> implements Chart<Loan> {
 
 	/**
 	 * Constructor.
@@ -47,7 +52,7 @@ public class AnnuityCart extends StackedBarChart<String, Number> implements Loan
 	}
 
 	@Override
-	public Chart getChart() {
+	public Node getChart() {
 		return this;
 	}
 

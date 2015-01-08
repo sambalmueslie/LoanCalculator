@@ -41,12 +41,12 @@ public class BaseModel implements Model {
 
 			@Override
 			public void entryAdded(final GenericModel<Loan> model, final Loan entry) {
-				listeners.forEach(l -> l.loanRemoved(entry));
+				listeners.forEach(l -> l.loanAdded(entry));
 			}
 
 			@Override
 			public void entryRemoved(final GenericModel<Loan> model, final Loan entry) {
-				listeners.forEach(l -> l.loanAdded(entry));
+				listeners.forEach(l -> l.loanRemoved(entry));
 			}
 		});
 	}

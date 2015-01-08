@@ -7,8 +7,8 @@ import java.util.List;
 
 import javafx.scene.layout.BorderPane;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
-import de.sambalmueslie.loan_calculator.view.chart.LoanChart;
-import de.sambalmueslie.loan_calculator.view.chart.LoanChartFactory;
+import de.sambalmueslie.loan_calculator.view.chart.Chart;
+import de.sambalmueslie.loan_calculator.view.chart.loan.LoanChartFactory;
 
 /**
  * The compare {@link Loan} panel.
@@ -22,10 +22,10 @@ public class CompareLoanPanel extends BorderPane {
 	 */
 	public CompareLoanPanel(final List<Loan> loans) {
 
-		final LoanChart residualDebtChart = LoanChartFactory.createResidualDebtChart();
+		final Chart<Loan> residualDebtChart = LoanChartFactory.createResidualDebtChart();
 		loans.forEach(l -> residualDebtChart.add(l));
 
-		final LoanChart anuityPlanChart = LoanChartFactory.createAnnuityPlanChart();
+		final Chart<Loan> anuityPlanChart = LoanChartFactory.createAnnuityPlanChart();
 		loans.forEach(l -> anuityPlanChart.add(l));
 
 		setCenter(residualDebtChart.getChart());

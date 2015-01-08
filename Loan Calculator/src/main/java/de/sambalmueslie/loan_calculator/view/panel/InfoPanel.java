@@ -17,12 +17,12 @@ import de.sambalmueslie.loan_calculator.view.component.*;
  *
  * @author sambalmueslie 2015
  */
-class LoanInfoPanel extends TilePane {
+class InfoPanel extends TilePane {
 
 	/**
 	 * Constructor.
 	 */
-	LoanInfoPanel() {
+	InfoPanel() {
 		setVgap(Constants.DEFAULT_SPACING);
 		setHgap(Constants.DEFAULT_SPACING);
 		setPrefColumns(1);

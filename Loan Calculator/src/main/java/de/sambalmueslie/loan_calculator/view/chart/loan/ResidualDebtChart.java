@@ -1,4 +1,4 @@
-package de.sambalmueslie.loan_calculator.view.chart;
+package de.sambalmueslie.loan_calculator.view.chart.loan;
 
 import java.util.HashMap;
 import java.util.List;
@@ -7,18 +7,19 @@ import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Side;
-import javafx.scene.chart.Chart;
+import javafx.scene.Node;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
 import de.sambalmueslie.loan_calculator.model.loan.RedemptionPlanEntry;
+import de.sambalmueslie.loan_calculator.view.chart.Chart;
 
 /**
  * The chart for the residual debt.
  *
  * @author sambalmueslie 2015
  */
-public class ResidualDebtChart extends LineChart<Number, Number> implements LoanChart {
+public class ResidualDebtChart extends LineChart<Number, Number> implements Chart<Loan> {
 
 	/**
 	 * Constructor.
@@ -48,7 +49,7 @@ public class ResidualDebtChart extends LineChart<Number, Number> implements Loan
 	}
 
 	@Override
-	public Chart getChart() {
+	public Node getChart() {
 		return this;
 	}
 

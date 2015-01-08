@@ -85,7 +85,7 @@ public abstract class LoanPanel<T extends Loan> extends Pane {
 	 *            the {@link TextFieldType}
 	 */
 	protected void addInfo(final String name, final Object value, final TextFieldType type) {
-		loanInfoPanel.add(name, value, type);
+		infoPanel.add(name, value, type);
 	}
 
 	/**
@@ -114,7 +114,7 @@ public abstract class LoanPanel<T extends Loan> extends Pane {
 	 *            the value
 	 */
 	protected void updateInfo(final String name, final Object value) {
-		loanInfoPanel.update(name, value);
+		infoPanel.update(name, value);
 	}
 
 	/**
@@ -143,18 +143,18 @@ public abstract class LoanPanel<T extends Loan> extends Pane {
 	 * Setup the info.
 	 */
 	private void setupInfo() {
-		loanInfoPanel = new LoanInfoPanel();
-		loanInfoPanel.add("Amount", loan.getAmount(), TextFieldType.CURRENCY);
-		borderPane.setLeft(loanInfoPanel);
+		infoPanel = new InfoPanel();
+		infoPanel.add("Amount", loan.getAmount(), TextFieldType.CURRENCY);
+		borderPane.setLeft(infoPanel);
 	}
 
 	/** the {@link BorderPane}. */
 	private final BorderPane borderPane;
 	/** the chart {@link TilePane}. */
 	private GridPane chartPane;
+	/** the {@link InfoPanel}. */
+	private InfoPanel infoPanel;
 	/** the loan. */
 	private final T loan;
-	/** the {@link LoanInfoPanel}. */
-	private LoanInfoPanel loanInfoPanel;
 
 }

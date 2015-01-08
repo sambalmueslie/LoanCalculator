@@ -10,6 +10,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import de.sambalmueslie.loan_calculator.model.BaseModel;
+import de.sambalmueslie.loan_calculator.model.founding.BaseFounding;
+import de.sambalmueslie.loan_calculator.model.founding.Founding;
 import de.sambalmueslie.loan_calculator.model.loan.AnnuityLoan;
 import de.sambalmueslie.loan_calculator.model.loan.BaseAnnuityLoan;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
@@ -61,6 +63,61 @@ public class Controller extends Application {
 	}
 
 	/**
+	 * @see ViewActionListener#requestAddFounding(String, String)
+	 */
+	void handleRequestAddFounding(final String name, final String bankName) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("Handle request to add founding " + name + ", " + bankName);
+		}
+		try {
+			final BaseFounding founding = new BaseFounding(name, bankName);
+			model.add(founding);
+		} catch (final IllegalArgumentException e) {
+			logger.error("Cannot add founding " + name + ", " + bankName + " cause " + e.getMessage());
+			// TODO handle error
+		}
+	}
+
+	/**
+	 * @see ViewActionListener#requestFoundingAddLoan(long, long)
+	 */
+	void handleRequestFoundingAddLoan(final long foundingId, final long loanId) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("Handle request to founding add loan " + foundingId + ", " + loanId);
+		}
+		final BaseFounding founding = (BaseFounding) model.getFounding(foundingId);
+		final Loan loan = model.getLoan(loanId);
+		if (founding == null || loan == null) return;
+		founding.add(loan);
+	}
+
+	/**
+	 * @see ViewActionListener#requestFoundingRemoveLoan(long, long)
+	 */
+	void handleRequestFoundingRemoveLoan(final long foundingId, final long loanId) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("Handle request to founding remove loan " + foundingId + ", " + loanId);
+		}
+		final BaseFounding founding = (BaseFounding) model.getFounding(foundingId);
+		final Loan loan = model.getLoan(loanId);
+		if (founding == null || loan == null) return;
+		founding.remove(loan);
+	}
+
+	/**
+	 * @see ViewActionListener#requestRemoveFounding(long)
+	 */
+	void handleRequestRemoveFounding(final long foundingId) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("Handle request to remove founding " + foundingId);
+		}
+		final Founding founding = model.getFounding(foundingId);
+		if (founding != null) {
+			model.remove(founding);
+		}
+	}
+
+	/**
 	 * @see ViewActionListener#requestRemoveLoan(long)
 	 */
 	void handleRequestRemoveLoan(final long loanId) {
@@ -95,6 +152,23 @@ public class Controller extends Application {
 	}
 
 	/**
+	 * @see ViewActionListener#requestUpdateFounding(long, String, String)
+	 */
+	void handleRequestUpdateFounding(final long foundingId, final String name, final String bankName) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("Handle request to update founding " + foundingId + ", " + name + ", " + bankName);
+		}
+		try {
+			final BaseFounding founding = (BaseFounding) model.getFounding(foundingId);
+			if (founding == null) return;
+			founding.update(name, bankName);
+		} catch (final IllegalArgumentException e) {
+			logger.error("Cannot update fouding " + name + ", " + bankName + " cause " + e.getMessage());
+			// TODO handle error
+		}
+	}
+
+	/**
 	 * Create some example data.
 	 */
 	private void setupExampleData() {
@@ -109,8 +183,10 @@ public class Controller extends Application {
 
 	/** the {@link BaseModel}. */
 	private BaseModel model;
+
 	/** the {@link View}. */
 	private View view;
+
 	/** the {@link ViewActionHandler}. */
 	private ViewActionHandler viewActionHandler;
 

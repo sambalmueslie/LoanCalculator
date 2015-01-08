@@ -7,6 +7,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
+import de.sambalmueslie.loan_calculator.model.generic.GenericModelEntryChangeListener;
+
 /**
  * @author sambalmueslie 2015
  */
@@ -50,19 +52,19 @@ abstract class BaseLoan implements Loan {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.model.loan.Loan#register(de.sambalmueslie.loan_calculator.model.loan.LoanChangeListener)
+	 * @see de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry#register(de.sambalmueslie.loan_calculator.model.generic.GenericModelEntryChangeListener)
 	 */
 	@Override
-	public final void register(final LoanChangeListener listener) {
+	public final void register(final GenericModelEntryChangeListener<Loan> listener) {
 		if (listener == null || listeners.contains(listener)) return;
 		listeners.add(listener);
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.model.loan.Loan#unregister(de.sambalmueslie.loan_calculator.model.loan.LoanChangeListener)
+	 * @see de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry#unregister(de.sambalmueslie.loan_calculator.model.generic.GenericModelEntryChangeListener)
 	 */
 	@Override
-	public final void unregister(final LoanChangeListener listener) {
+	public final void unregister(final GenericModelEntryChangeListener<Loan> listener) {
 		if (listener == null || !listeners.contains(listener)) return;
 		listeners.remove(listener);
 	}
@@ -71,7 +73,7 @@ abstract class BaseLoan implements Loan {
 	 * Notify that the {@link Loan} has changed.
 	 */
 	protected void notifyChanged() {
-		listeners.forEach(l -> l.loanChanged(this));
+		listeners.forEach(l -> l.entryChanged(this));
 	}
 
 	/**
@@ -93,8 +95,8 @@ abstract class BaseLoan implements Loan {
 	private double amount;
 	/** the id. */
 	private final long id;
-	/** the {@link LoanChangeListener}. */
-	private final List<LoanChangeListener> listeners = new LinkedList<>();
+	/** the {@link GenericModelEntryChangeListener}. */
+	private final List<GenericModelEntryChangeListener<Loan>> listeners = new LinkedList<>();
 	/** the title. */
 	private String name;
 

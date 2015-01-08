@@ -99,6 +99,7 @@ public class View extends BorderPane {
 		});
 
 		model.getAllLoans().forEach(loan -> handleLoanAdded(loan));
+		model.getAllFoundings().forEach(founding -> handleFoundingAdded(founding));
 
 		modelChangeHandler.register(model);
 

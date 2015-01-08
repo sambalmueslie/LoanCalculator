@@ -5,6 +5,7 @@ package de.sambalmueslie.loan_calculator.model.founding;
 
 import java.util.*;
 
+import de.sambalmueslie.loan_calculator.model.generic.GenericModelEntryChangeListener;
 import de.sambalmueslie.loan_calculator.model.loan.BaseRedemptionPlanEntry;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
 import de.sambalmueslie.loan_calculator.model.loan.RedemptionPlanEntry;
@@ -15,6 +16,21 @@ import de.sambalmueslie.loan_calculator.model.loan.RedemptionPlanEntry;
  * @author sambalmueslie 2015
  */
 public class BaseFounding implements Founding {
+
+	/**
+	 * Constructor.
+	 *
+	 * @param name
+	 *            {@link #name}
+	 * @param bankName
+	 *            {@link #bankName}
+	 * @throws on
+	 *             illegal argument
+	 */
+	public BaseFounding(final String name, final String bankName) throws IllegalArgumentException {
+		id = UUID.randomUUID().getLeastSignificantBits();
+		update(name, bankName);
+	}
 
 	/**
 	 * Add a {@link Loan} to the {@link Founding}.
@@ -51,6 +67,14 @@ public class BaseFounding implements Founding {
 	@Override
 	public long getId() {
 		return id;
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.model.founding.Founding#getLoans()
+	 */
+	@Override
+	public List<Loan> getLoans() {
+		return Collections.unmodifiableList(new LinkedList<Loan>(loans.values()));
 	}
 
 	/**
@@ -94,10 +118,10 @@ public class BaseFounding implements Founding {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.model.founding.Founding#register(de.sambalmueslie.loan_calculator.model.founding.FoundingChangeListener)
+	 * @see de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry#register(de.sambalmueslie.loan_calculator.model.generic.GenericModelEntryChangeListener)
 	 */
 	@Override
-	public void register(final FoundingChangeListener listener) {
+	public void register(final GenericModelEntryChangeListener<Founding> listener) {
 		if (listener == null || listeners.contains(listener)) return;
 		listeners.add(listener);
 	}
@@ -116,19 +140,36 @@ public class BaseFounding implements Founding {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.model.founding.Founding#unregister(de.sambalmueslie.loan_calculator.model.founding.FoundingChangeListener)
+	 * @see de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry#unregister(de.sambalmueslie.loan_calculator.model.generic.GenericModelEntryChangeListener)
 	 */
 	@Override
-	public void unregister(final FoundingChangeListener listener) {
+	public void unregister(final GenericModelEntryChangeListener<Founding> listener) {
 		if (listener == null) return;
 		listeners.remove(listener);
+	}
+
+	/**
+	 * Update.
+	 *
+	 * @param name
+	 *            {@link #name}
+	 * @param bankName
+	 *            {@link #bankName}
+	 * @throws IllegalArgumentException
+	 *             on invalid argument
+	 */
+	public void update(final String name, final String bankName) throws IllegalArgumentException {
+		if (name == null || name.isEmpty()) throw new IllegalArgumentException("Name '" + name + "' for founding cannot be null or empty.");
+		this.name = name;
+		if (bankName == null || bankName.isEmpty()) throw new IllegalArgumentException("Bank name '" + bankName + "' for founding cannot be null or empty.");
+		this.bankName = bankName;
 	}
 
 	/**
 	 * Notify that the founding has changed.
 	 */
 	private void notifyChanged() {
-		listeners.forEach(l -> l.foundingChanged(this));
+		listeners.forEach(l -> l.entryChanged(this));
 	}
 
 	/**
@@ -183,9 +224,9 @@ public class BaseFounding implements Founding {
 	/** the name of the bank. */
 	private String bankName;
 	/** the id. */
-	private long id;
-	/** the {@link FoundingChangeListener}s. */
-	private final List<FoundingChangeListener> listeners = new LinkedList<>();
+	private final long id;
+	/** the {@link GenericModelEntryChangeListener}s. */
+	private final List<GenericModelEntryChangeListener<Founding>> listeners = new LinkedList<>();
 	/** the {@link Loan} by id. */
 	private final Map<Long, Loan> loans = new HashMap<>();
 	/** the name. */
@@ -196,6 +237,7 @@ public class BaseFounding implements Founding {
 	private int term;
 	/** the total interest. */
 	private double totalInterest;
+
 	/** the total payment. */
 	private double totalPayment;
 }

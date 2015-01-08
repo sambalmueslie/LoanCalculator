@@ -1,7 +1,7 @@
 /**
  *
  */
-package de.sambalmueslie.loan_calculator.view.chart;
+package de.sambalmueslie.loan_calculator.view.chart.loan;
 
 import java.util.List;
 
@@ -14,13 +14,14 @@ import javafx.scene.layout.TilePane;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
 import de.sambalmueslie.loan_calculator.model.loan.RedemptionPlanEntry;
 import de.sambalmueslie.loan_calculator.view.Constants;
+import de.sambalmueslie.loan_calculator.view.chart.Chart;
 
 /**
  * The annuity plan chart.
  *
  * @author sambalmueslie 2015
  */
-public class AnnuityPlanChart extends TilePane implements LoanChart {
+public class AnnuityPlanChart extends TilePane implements Chart<Loan> {
 
 	/**
 	 * The chart for a single {@link Loan}.
