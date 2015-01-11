@@ -10,13 +10,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ * Helper to create the constants from the files in the img directory.
+ *
  * @author sambalmueslie 2015
  */
 public class CreateIconConstants {
 
 	/**
+	 * Main.
+	 * 
 	 * @param args
+	 *            the args
 	 * @throws IOException
+	 *             on error
 	 */
 	public static void main(final String[] args) throws IOException {
 		final String directory = "./src/main/resources/de/sambalmueslie/loan_calculator/view/entry_mgr/tree";
