@@ -118,6 +118,7 @@ public class Controller extends Application {
 		final Founding founding = model.getFounding(foundingId);
 		if (founding != null) {
 			model.remove(founding);
+			founding.getLoans().forEach(model::remove);
 		}
 	}
 
