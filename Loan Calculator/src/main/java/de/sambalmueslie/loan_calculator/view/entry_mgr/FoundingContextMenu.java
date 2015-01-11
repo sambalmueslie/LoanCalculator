@@ -3,10 +3,18 @@
  */
 package de.sambalmueslie.loan_calculator.view.entry_mgr;
 
+import java.util.Optional;
+
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import de.sambalmueslie.loan_calculator.model.founding.Founding;
 import de.sambalmueslie.loan_calculator.view.ViewActionListener;
+import de.sambalmueslie.loan_calculator.view.dialog.ModifyFoundingDialog;
 
 /**
  * The {@link ContextMenu} for a {@link Founding}.
@@ -14,6 +22,10 @@ import de.sambalmueslie.loan_calculator.view.ViewActionListener;
  * @author sambalmueslie 2015
  */
 public class FoundingContextMenu extends ContextMenu {
+
+	/** the logger. */
+	private static final Logger logger = LogManager.getLogger(FoundingContextMenu.class);
+
 	/**
 	 * Constructor.
 	 */
@@ -50,10 +62,21 @@ public class FoundingContextMenu extends ContextMenu {
 	}
 
 	/**
-	 * Add a new founding.
+	 * Add a new {@link Founding}.
 	 */
 	private void add() {
-		// TODO Auto-generated method stub
+		if (logger.isDebugEnabled()) {
+			logger.debug("Request add new founding");
+		}
+
+		final ModifyFoundingDialog dialog = new ModifyFoundingDialog(null);
+		final Optional<ButtonType> type = dialog.showAndWait();
+		if (type.isPresent() && type.get() == ButtonType.OK) {
+			final String name = dialog.getName();
+			final String bankName = dialog.getBankName();
+
+			listener.requestAddFounding(name, bankName);
+		}
 	}
 
 	/**
@@ -63,7 +86,11 @@ public class FoundingContextMenu extends ContextMenu {
 	 *            the {@link Founding}
 	 */
 	private void remove(final Founding founding) {
-		// TODO Auto-generated method stub
+		if (logger.isDebugEnabled()) {
+			logger.debug("Request remove " + founding);
+		}
+		final long foundingId = founding.getId();
+		listener.requestRemoveFounding(foundingId);
 	}
 
 	/**
@@ -73,7 +100,19 @@ public class FoundingContextMenu extends ContextMenu {
 	 *            the {@link Founding}
 	 */
 	private void update(final Founding founding) {
-		// TODO Auto-generated method stub
+		if (logger.isDebugEnabled()) {
+			logger.debug("Request update founding " + founding);
+		}
+
+		final ModifyFoundingDialog dialog = new ModifyFoundingDialog(founding);
+		final Optional<ButtonType> type = dialog.showAndWait();
+		if (type.isPresent() && type.get() == ButtonType.OK) {
+			final long foundingId = founding.getId();
+			final String name = dialog.getName();
+			final String bankName = dialog.getBankName();
+
+			listener.requestUpdateFounding(foundingId, name, bankName);
+		}
 	}
 
 	/** the add {@link MenuItem}. */
