@@ -9,7 +9,6 @@ import de.sambalmueslie.loan_calculator.model.ModelChangeListener;
 import de.sambalmueslie.loan_calculator.model.founding.Founding;
 import de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
-import de.sambalmueslie.loan_calculator.view.entry_mgr.list.EntryList;
 
 /**
  * The {@link TabPane} for the
@@ -61,7 +60,7 @@ public class EntryTabPane extends TabPane {
 	/**
 	 * Constructor.
 	 */
-	public EntryTabPane(final Model model, final EntryList entryList) {
+	public EntryTabPane(final Model model) {
 		model.listenerRegister(modelChangeHandler);
 
 		model.getAllLoans().forEach(loan -> add(loan));

@@ -3,7 +3,6 @@
  */
 package de.sambalmueslie.loan_calculator.view.panel;
 
-import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -30,6 +29,7 @@ public class FoundingPanel extends BorderPane {
 	 */
 	public FoundingPanel(final Founding founding) {
 		this.founding = founding;
+		getStyleClass().add("founding-panel");
 
 		setupHeadline();
 		setupCharts();
@@ -66,14 +66,12 @@ public class FoundingPanel extends BorderPane {
 	 */
 	private void setupHeadline() {
 		final Label bankLabel = new Label(founding.getBankName());
-		bankLabel.setFont(Constants.TITLE_FONT);
-		bankLabel.setAlignment(Pos.CENTER);
+		bankLabel.getStyleClass().add("founding-panel-headline-label");
 		final Label nameLabel = new Label(founding.getName());
-		nameLabel.setFont(Constants.TITLE_FONT);
-		nameLabel.setAlignment(Pos.CENTER);
+		nameLabel.getStyleClass().add("founding-panel-headline-label");
 
 		final HBox box = new HBox(Constants.DEFAULT_SPACING, bankLabel, nameLabel);
-		box.setAlignment(Pos.CENTER);
+		box.getStyleClass().add("founding-panel-headline");
 		setTop(box);
 	}
 

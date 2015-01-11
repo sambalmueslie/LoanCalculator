@@ -10,7 +10,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import de.sambalmueslie.loan_calculator.model.Model;
 import de.sambalmueslie.loan_calculator.view.entry_mgr.EntryTabPane;
-import de.sambalmueslie.loan_calculator.view.entry_mgr.list.EntryList;
 import de.sambalmueslie.loan_calculator.view.entry_mgr.tree.EntryTree;
 
 /**
@@ -26,9 +25,8 @@ public class View extends BorderPane {
 	 * @param model
 	 */
 	public View(final Model model) {
-		entryList = new EntryList(model, actionListenerMgr);
 		entryTree = new EntryTree(model, actionListenerMgr);
-		entryTabPane = new EntryTabPane(model, entryList);
+		entryTabPane = new EntryTabPane(model);
 	}
 
 	/**
@@ -62,13 +60,16 @@ public class View extends BorderPane {
 		final Label statusbar = new Label();
 
 		final BorderPane content = new BorderPane();
+		content.getStyleClass().add("borderPane-viewcontent");
 		content.setLeft(entryTree);
 		content.setCenter(entryTabPane);
 
 		setCenter(content);
 		setBottom(statusbar);
 
-		primaryStage.setScene(new Scene(this, 1280, 880));
+		final Scene scene = new Scene(this, 1480, 940);
+		scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+		primaryStage.setScene(scene);
 		primaryStage.show();
 
 		statusbar.setText(primaryStage.getScene().getWidth() + " " + primaryStage.getScene().getHeight());
@@ -86,14 +87,11 @@ public class View extends BorderPane {
 	 * Teardown.
 	 */
 	public void teardown() {
-
+		// TODO not implemented yet
 	}
 
 	/** the {@link ViewActionListenerMgr}. */
 	private final ViewActionListenerMgr actionListenerMgr = new ViewActionListenerMgr();
-
-	/** the {@link EntryList}. */
-	private final EntryList entryList;
 	/** the {@link EntryTabPane}. */
 	private final EntryTabPane entryTabPane;
 	/** the {@link EntryTree} */

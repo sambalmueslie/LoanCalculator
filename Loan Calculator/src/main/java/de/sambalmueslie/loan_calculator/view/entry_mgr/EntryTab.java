@@ -27,7 +27,6 @@ public class EntryTab extends Tab {
 		setClosable(false);
 		final Node content = getContent(entry);
 		final ScrollPane scrollPane = new ScrollPane(content);
-		scrollPane.setPrefViewportWidth(800);
 		setContent(scrollPane);
 		final String name = entry.getName();
 		setText(name);

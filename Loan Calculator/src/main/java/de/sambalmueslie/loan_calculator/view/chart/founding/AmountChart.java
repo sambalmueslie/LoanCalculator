@@ -11,6 +11,7 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.text.Text;
 import de.sambalmueslie.loan_calculator.model.founding.Founding;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
+import de.sambalmueslie.loan_calculator.view.Constants;
 
 /**
  * The founding amount {@link PieChart}.
@@ -37,23 +38,23 @@ public class AmountChart extends FoundingChart {
 			setLegendSide(Side.BOTTOM);
 
 			final ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-			for (final Node node : lookupAll("Text.chart-pie-label")) {
-				if (node instanceof Text) {
-					for (final PieChart.Data data : pieChartData) {
-						if (data.getName().equals(((Text) node).getText())) {
-							((Text) node).setText(String.format("%,.0f", data.getPieValue()));
-						}
-					}
-				}
-			}
-
 			for (final Loan loan : founding.getLoans()) {
 				final String name = loan.getName();
 				final double value = loan.getTotalPayment();
 				pieChartData.add(new PieChart.Data(name, value));
 			}
-
 			setData(pieChartData);
+
+			for (final Node node : lookupAll("Text.chart-pie-label")) {
+				if (node instanceof Text) {
+					for (final PieChart.Data data : pieChartData) {
+						if (data.getName().equals(((Text) node).getText())) {
+							((Text) node).setText(String.format("%,.2f " + Constants.DEFAULT_CURRENCY, data.getPieValue()));
+						}
+					}
+				}
+			}
+
 		}
 
 		/** the {@link Loan}. */
