@@ -9,8 +9,11 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import de.sambalmueslie.loan_calculator.model.founding.Founding;
-import de.sambalmueslie.loan_calculator.view.Constants;
 import de.sambalmueslie.loan_calculator.view.ViewActionListener;
 import de.sambalmueslie.loan_calculator.view.entry_mgr.FoundingContextMenu;
 
@@ -18,14 +21,23 @@ import de.sambalmueslie.loan_calculator.view.entry_mgr.FoundingContextMenu;
  * @author sambalmueslie 2015
  */
 public class EntryTreeItemFounding extends GridPane implements EntryTreeItemContent<Founding> {
+
+	/** the {@link Logger}. */
+	private static Logger logger = LogManager.getLogger(EntryTreeItemFounding.class);
+
 	/**
 	 * Constructor.
 	 */
 	public EntryTreeItemFounding() {
-		setHgap(Constants.DEFAULT_SPACING);
-		setVgap(Constants.DEFAULT_SPACING);
+		getStyleClass().add("entry-tree-item");
 
-		add(icon, 0, 0);
+		try {
+			final ImageView icon = new ImageView(new Image(getClass().getResourceAsStream("folder_page.gif")));
+			add(icon, 0, 0);
+		} catch (final RuntimeException e) {
+			logger.warn("Cannot add icon for founding tree item: " + e.getMessage());
+		}
+
 		add(name, 1, 0);
 	}
 
@@ -57,8 +69,6 @@ public class EntryTreeItemFounding extends GridPane implements EntryTreeItemCont
 
 	/** the {@link FoundingContextMenu}. */
 	private final FoundingContextMenu contextMenu = new FoundingContextMenu();
-	/** the icon {@link ImageView}. */
-	private final ImageView icon = new ImageView(new Image(getClass().getResourceAsStream("folder_page.gif")));
 	/** the name {@link Label}. */
 	private final Label name = new Label();
 

@@ -60,10 +60,11 @@ public class View extends BorderPane {
 		final Label statusbar = new Label();
 
 		final BorderPane content = new BorderPane();
-		content.getStyleClass().add("borderPane-viewcontent");
+		content.getStyleClass().add("view-content");
 		content.setLeft(entryTree);
 		content.setCenter(entryTabPane);
 
+		getStyleClass().add("view");
 		setCenter(content);
 		setBottom(statusbar);
 

@@ -24,6 +24,7 @@ public class EntryTab extends Tab {
 	 */
 	public EntryTab(final GenericModelEntry<?> entry) {
 		this.entry = entry;
+		getStyleClass().add("entry-tab");
 		setClosable(false);
 		final Node content = getContent(entry);
 		final ScrollPane scrollPane = new ScrollPane(content);

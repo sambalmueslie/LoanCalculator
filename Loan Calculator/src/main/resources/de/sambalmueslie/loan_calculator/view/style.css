@@ -10,7 +10,11 @@
 
 }
 
-.borderPane-viewcontent {
+.view {
+	-fx-padding: 0px;
+}
+
+.view-content {
 	-fx-padding: 0px;
 }
 
@@ -22,13 +26,14 @@
     -fx-alignment: top-left;
 }
 
-.founding-panel-headline-label {
+.headline-label {
     -fx-font-size: 20px;
     -fx-font-weight: bold;
     -fx-font-family: "Verdana";
     -fx-alignment: center;
     -fx-underline: true;
 }
+
 
 .tile-pane{
 
@@ -42,4 +47,17 @@
     -fx-orientation: vertical;
     -fx-border-insets: 0 5 0 5;
     -fx-border-color: lightgray;
+}
+
+.entry-tab {
+
+}
+
+.entry-tab-pane {
+	-fx-padding: 0px;
+}
+
+.entry-tree-item {
+    -fx-hgap: 5px;
+    -fx-vgap: 5px;
 }

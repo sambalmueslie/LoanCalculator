@@ -4,7 +4,6 @@
 package de.sambalmueslie.loan_calculator.view.entry_mgr.tree;
 
 import static de.sambalmueslie.loan_calculator.view.Constants.DEFAULT_SPACING;
-import static de.sambalmueslie.loan_calculator.view.Constants.TITLE_FONT;
 
 import java.util.Optional;
 
@@ -44,7 +43,7 @@ public class EntryTree extends GridPane {
 		final HBox title = new HBox(DEFAULT_SPACING);
 		title.setAlignment(Pos.CENTER);
 		final Label overview = new Label("Overview");
-		overview.setFont(TITLE_FONT);
+		overview.getStyleClass().add("headline-label");
 		title.getChildren().add(overview);
 		add(title, 0, 0);
 

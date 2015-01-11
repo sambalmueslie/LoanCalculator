@@ -61,6 +61,7 @@ public class EntryTabPane extends TabPane {
 	 * Constructor.
 	 */
 	public EntryTabPane(final Model model) {
+		getStyleClass().add("entry-tab-pane");
 		model.listenerRegister(modelChangeHandler);
 
 		model.getAllLoans().forEach(loan -> add(loan));

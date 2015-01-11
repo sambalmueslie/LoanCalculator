@@ -66,11 +66,11 @@ public class FoundingPanel extends BorderPane {
 	 */
 	private void setupHeadline() {
 		final Label bankLabel = new Label(founding.getBankName());
-		bankLabel.getStyleClass().add("founding-panel-headline-label");
+		bankLabel.getStyleClass().add("headline-label");
 		final Label nameLabel = new Label(founding.getName());
-		nameLabel.getStyleClass().add("founding-panel-headline-label");
+		nameLabel.getStyleClass().add("headline-label");
 
-		final HBox box = new HBox(Constants.DEFAULT_SPACING, bankLabel, nameLabel);
+		final HBox box = new HBox(bankLabel, nameLabel);
 		box.getStyleClass().add("founding-panel-headline");
 		setTop(box);
 	}

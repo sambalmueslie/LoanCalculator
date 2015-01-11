@@ -133,8 +133,7 @@ public abstract class LoanPanel<T extends Loan> extends Pane {
 	 */
 	private void setupHeadline() {
 		final Label nameLabel = new Label(loan.getName());
-		nameLabel.setFont(Constants.TITLE_FONT);
-		nameLabel.setAlignment(Pos.CENTER);
+		nameLabel.getStyleClass().add("headline-label");
 		BorderPane.setAlignment(nameLabel, Pos.CENTER);
 		borderPane.setTop(nameLabel);
 	}
