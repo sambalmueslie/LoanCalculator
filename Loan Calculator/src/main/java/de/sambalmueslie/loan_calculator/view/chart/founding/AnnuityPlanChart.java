@@ -33,7 +33,7 @@ public class AnnuityPlanChart extends FoundingChart {
 		public Chart(final Founding founding) {
 			super(new CategoryAxis(), new NumberAxis());
 			this.founding = founding;
-			setTitle("Annuity " + founding.getName());
+			setTitle("Annuity plan");
 			setAnimated(false);
 			setLegendVisible(true);
 			setLegendSide(Side.BOTTOM);
