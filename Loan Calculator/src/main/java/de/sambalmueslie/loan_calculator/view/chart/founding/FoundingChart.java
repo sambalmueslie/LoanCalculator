@@ -22,7 +22,9 @@ public abstract class FoundingChart extends TilePane implements Chart<Founding> 
 	public FoundingChart() {
 		setHgap(Constants.DEFAULT_SPACING);
 		setVgap(Constants.DEFAULT_SPACING);
-		setPrefColumns(2);
+		setPrefColumns(1);
+
+		setStyle("-fx-border-color: lightgray;");
 	}
 
 	/**
@@ -49,8 +51,24 @@ public abstract class FoundingChart extends TilePane implements Chart<Founding> 
 		getChildren().removeIf(c -> equals(c, founding));
 	}
 
+	/**
+	 * Create a chart for a {@link Founding}.
+	 *
+	 * @param founding
+	 *            the founding
+	 * @return the chart
+	 */
 	protected abstract Node createChart(final Founding founding);
 
+	/**
+	 * Check if the {@link Node} is equals to the {@link Founding}.
+	 *
+	 * @param node
+	 *            the node to check
+	 * @param founding
+	 *            the {@link Founding}
+	 * @return <code>true</code> if so,otherwise <code>false</code>
+	 */
 	protected abstract boolean equals(Node node, Founding founding);
 
 }

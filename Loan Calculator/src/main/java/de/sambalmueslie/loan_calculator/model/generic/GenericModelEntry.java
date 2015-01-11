@@ -15,6 +15,11 @@ public interface GenericModelEntry<T extends GenericModelEntry<?>> {
 	long getId();
 
 	/**
+	 * @return the name.
+	 */
+	String getName();
+
+	/**
 	 * Register the {@link L}.
 	 *
 	 * @param listener

@@ -25,19 +25,12 @@ public class EntryTab extends Tab {
 	public EntryTab(final GenericModelEntry<?> entry) {
 		this.entry = entry;
 		setClosable(false);
-		if (entry instanceof AnnuityLoan) {
-			final AnnuityLoan annuityLoan = (AnnuityLoan) entry;
-			final Node content = new AnnuityLoanPanel(annuityLoan);
-			final String name = annuityLoan.getName();
-			setContent(new ScrollPane(content));
-			setText(name);
-		} else if (entry instanceof Founding) {
-			final Founding founding = (Founding) entry;
-			final Node content = new FoundingPanel(founding);
-			final String name = founding.getName();
-			setContent(new ScrollPane(content));
-			setText(name);
-		}
+		final Node content = getContent(entry);
+		final ScrollPane scrollPane = new ScrollPane(content);
+		scrollPane.setPrefViewportWidth(800);
+		setContent(scrollPane);
+		final String name = entry.getName();
+		setText(name);
 	}
 
 	/**
@@ -45,6 +38,25 @@ public class EntryTab extends Tab {
 	 */
 	GenericModelEntry<?> getEntry() {
 		return entry;
+	}
+
+	/**
+	 * Get the content {@link Node} for a {@link GenericModelEntry}.
+	 *
+	 * @param entry
+	 *            the entry
+	 * @return the content
+	 */
+	private Node getContent(final GenericModelEntry<?> entry) {
+		if (entry instanceof AnnuityLoan) {
+			final AnnuityLoan annuityLoan = (AnnuityLoan) entry;
+			return new AnnuityLoanPanel(annuityLoan);
+		}
+		if (entry instanceof Founding) {
+			final Founding founding = (Founding) entry;
+			return new FoundingPanel(founding);
+		}
+		return null;
 	}
 
 	/** the {@link GenericModelEntry}. */

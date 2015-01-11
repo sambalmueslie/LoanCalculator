@@ -5,7 +5,10 @@ package de.sambalmueslie.loan_calculator.view.panel;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.TilePane;
 import de.sambalmueslie.loan_calculator.model.founding.Founding;
 import de.sambalmueslie.loan_calculator.view.Constants;
 import de.sambalmueslie.loan_calculator.view.chart.Chart;
@@ -17,7 +20,7 @@ import de.sambalmueslie.loan_calculator.view.component.TextFieldType;
  *
  * @author sambalmueslie 2015
  */
-public class FoundingPanel extends Pane {
+public class FoundingPanel extends BorderPane {
 
 	/**
 	 * Constructor.
@@ -27,8 +30,6 @@ public class FoundingPanel extends Pane {
 	 */
 	public FoundingPanel(final Founding founding) {
 		this.founding = founding;
-		borderPane = new BorderPane();
-		getChildren().add(borderPane);
 
 		setupHeadline();
 		setupCharts();
@@ -37,24 +38,26 @@ public class FoundingPanel extends Pane {
 		founding.register(this::update);
 	}
 
+	private void addChart(final Chart<Founding> interestChart) {
+		interestChart.add(founding);
+		chartPane.getChildren().add(interestChart.getChart());
+	}
+
 	/**
 	 * Setup the charts.
 	 */
 	private void setupCharts() {
-		chartPane = new GridPane();
+		chartPane = new TilePane();
 		chartPane.setVgap(Constants.DEFAULT_SPACING);
 		chartPane.setHgap(Constants.DEFAULT_SPACING);
-		chartPane.setPrefWidth(800);
+		chartPane.setPrefColumns(2);
 
-		final Chart<Founding> redemptionChart = FoundingChartFactory.createRedemptionPlanChart();
-		redemptionChart.add(founding);
-		chartPane.add(redemptionChart.getChart(), 0, 0);
+		addChart(FoundingChartFactory.createRedemptionPlanChart());
+		addChart(FoundingChartFactory.createAnnuityPlanChart());
+		addChart(FoundingChartFactory.createAmountChart());
+		addChart(FoundingChartFactory.createInterestChart());
 
-		final Chart<Founding> amountChart = FoundingChartFactory.createAmountChart();
-		amountChart.add(founding);
-		chartPane.add(amountChart.getChart(), 0, 1);
-
-		borderPane.setCenter(chartPane);
+		setCenter(chartPane);
 
 	}
 
@@ -71,7 +74,7 @@ public class FoundingPanel extends Pane {
 
 		final HBox box = new HBox(Constants.DEFAULT_SPACING, bankLabel, nameLabel);
 		box.setAlignment(Pos.CENTER);
-		borderPane.setTop(box);
+		setTop(box);
 	}
 
 	/**
@@ -85,7 +88,7 @@ public class FoundingPanel extends Pane {
 		infoPanel.add("Total interest", founding.getTotalInterest(), TextFieldType.CURRENCY);
 		infoPanel.add("Total Payment", founding.getTotalPayment(), TextFieldType.CURRENCY);
 		infoPanel.add("Term", founding.getTerm(), TextFieldType.NUMBER);
-		borderPane.setLeft(infoPanel);
+		setLeft(infoPanel);
 	}
 
 	/**
@@ -103,10 +106,8 @@ public class FoundingPanel extends Pane {
 		infoPanel.update("Term", founding.getTerm());
 	}
 
-	/** the {@link BorderPane}. */
-	private final BorderPane borderPane;
 	/** the chart {@link TilePane}. */
-	private GridPane chartPane;
+	private TilePane chartPane;
 	/** the {@link Founding}. */
 	private final Founding founding;
 	/** the {@link InfoPanel}. */

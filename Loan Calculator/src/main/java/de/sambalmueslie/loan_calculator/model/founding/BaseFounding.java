@@ -232,7 +232,7 @@ public class BaseFounding implements Founding {
 	/** the name. */
 	private String name;
 	/** the {@link List} if {@link RedemptionPlanEntry}s. */
-	private List<RedemptionPlanEntry> redemptionPlan;
+	private List<RedemptionPlanEntry> redemptionPlan = new LinkedList<>();
 	/** the term. */
 	private int term;
 	/** the total interest. */

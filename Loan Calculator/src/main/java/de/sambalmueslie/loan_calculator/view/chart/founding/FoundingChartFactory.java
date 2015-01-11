@@ -22,6 +22,20 @@ public final class FoundingChartFactory {
 	}
 
 	/**
+	 * @return a new annuity plan {@link Chart}.
+	 */
+	public static Chart<Founding> createAnnuityPlanChart() {
+		return new ChartController<Founding>(new AnnuityPlanChart());
+	}
+
+	/**
+	 * @return a new redemption plan {@link Chart}.
+	 */
+	public static Chart<Founding> createInterestChart() {
+		return new ChartController<Founding>(new InterestChart());
+	}
+
+	/**
 	 * @return a new redemption plan {@link Chart}.
 	 */
 	public static Chart<Founding> createRedemptionPlanChart() {
