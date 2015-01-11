@@ -6,13 +6,8 @@ package de.sambalmueslie.loan_calculator.view.entry_mgr.tree;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
 import de.sambalmueslie.loan_calculator.view.ViewActionListener;
 import de.sambalmueslie.loan_calculator.view.entry_mgr.LoanContextMenu;
@@ -22,21 +17,14 @@ import de.sambalmueslie.loan_calculator.view.entry_mgr.LoanContextMenu;
  */
 public class EntryTreeItemLoan extends GridPane implements EntryTreeItemContent<Loan> {
 
-	/** the {@link Logger}. */
-	private static Logger logger = LogManager.getLogger(EntryTreeItemLoan.class);
-
 	/**
 	 * Constructor.
 	 */
 	public EntryTreeItemLoan() {
 		getStyleClass().add("entry-tree-item");
 
-		try {
-			final ImageView icon = new ImageView(new Image(getClass().getResourceAsStream("page.gif")));
-			add(icon, 0, 0);
-		} catch (final RuntimeException e) {
-			logger.warn("Cannot add icon for loan tree item: " + e.getMessage());
-		}
+		final ImageView icon = IconProvider.createImageView(IconProvider.ICON_PAGE);
+		add(icon, 0, 0);
 
 		add(name, 1, 0);
 	}
