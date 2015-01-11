@@ -17,8 +17,15 @@ public final class FoundingChartFactory {
 	/**
 	 * @return a new founding amount {@link Chart}.
 	 */
-	public static Chart<Founding> createFoundingAmountChart() {
-		return new ChartController<Founding>(new FoundingAmountChart());
+	public static Chart<Founding> createAmountChart() {
+		return new ChartController<Founding>(new AmountChart());
+	}
+
+	/**
+	 * @return a new redemption plan {@link Chart}.
+	 */
+	public static Chart<Founding> createRedemptionPlanChart() {
+		return new ChartController<Founding>(new RedemptionPlanChart());
 	}
 
 	/**

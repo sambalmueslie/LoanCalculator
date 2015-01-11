@@ -7,11 +7,9 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import de.sambalmueslie.loan_calculator.model.founding.Founding;
-import de.sambalmueslie.loan_calculator.model.loan.Loan;
 import de.sambalmueslie.loan_calculator.view.Constants;
 import de.sambalmueslie.loan_calculator.view.chart.Chart;
 import de.sambalmueslie.loan_calculator.view.chart.founding.FoundingChartFactory;
-import de.sambalmueslie.loan_calculator.view.chart.loan.LoanChartFactory;
 import de.sambalmueslie.loan_calculator.view.component.TextFieldType;
 
 /**
@@ -35,6 +33,8 @@ public class FoundingPanel extends Pane {
 		setupHeadline();
 		setupCharts();
 		setupInfo();
+
+		founding.register(this::update);
 	}
 
 	/**
@@ -46,12 +46,13 @@ public class FoundingPanel extends Pane {
 		chartPane.setHgap(Constants.DEFAULT_SPACING);
 		chartPane.setPrefWidth(800);
 
-		final Chart<Loan> residualDebtChart = LoanChartFactory.createResidualDebtChart();
-		founding.getLoans().forEach(l -> residualDebtChart.add(l));
-		chartPane.add(residualDebtChart.getChart(), 0, 0);
+		final Chart<Founding> redemptionChart = FoundingChartFactory.createRedemptionPlanChart();
+		redemptionChart.add(founding);
+		chartPane.add(redemptionChart.getChart(), 0, 0);
 
-		final Chart<Founding> amountChart = FoundingChartFactory.createFoundingAmountChart();
-		chartPane.add(amountChart.getChart(), 1, 0);
+		final Chart<Founding> amountChart = FoundingChartFactory.createAmountChart();
+		amountChart.add(founding);
+		chartPane.add(amountChart.getChart(), 0, 1);
 
 		borderPane.setCenter(chartPane);
 
@@ -85,6 +86,21 @@ public class FoundingPanel extends Pane {
 		infoPanel.add("Total Payment", founding.getTotalPayment(), TextFieldType.CURRENCY);
 		infoPanel.add("Term", founding.getTerm(), TextFieldType.NUMBER);
 		borderPane.setLeft(infoPanel);
+	}
+
+	/**
+	 * Handle a update.
+	 *
+	 * @param founding
+	 *            the {@link Founding}
+	 */
+	private void update(final Founding founding) {
+		infoPanel.update("Name", founding.getName());
+		infoPanel.update("Bank Name", founding.getName());
+		infoPanel.update("Total Amount", founding.getAmount());
+		infoPanel.update("Total interest", founding.getTotalInterest());
+		infoPanel.update("Total Payment", founding.getTotalPayment());
+		infoPanel.update("Term", founding.getTerm());
 	}
 
 	/** the {@link BorderPane}. */

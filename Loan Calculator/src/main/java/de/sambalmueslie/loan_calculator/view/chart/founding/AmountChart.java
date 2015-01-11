@@ -8,26 +8,23 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.chart.PieChart;
-import javafx.scene.layout.TilePane;
 import javafx.scene.text.Text;
 import de.sambalmueslie.loan_calculator.model.founding.Founding;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
-import de.sambalmueslie.loan_calculator.view.Constants;
-import de.sambalmueslie.loan_calculator.view.chart.Chart;
 
 /**
  * The founding amount {@link PieChart}.
  *
  * @author sambalmueslie 2015
  */
-public class FoundingAmountChart extends TilePane implements Chart<Founding> {
+public class AmountChart extends FoundingChart {
 
 	/**
 	 * The chart for a single {@link Founding}.
 	 *
 	 * @author sambalmueslie 2015
 	 */
-	private class Chart extends PieChart {
+	protected class Chart extends PieChart {
 		/**
 		 * Constructor.
 		 */
@@ -64,36 +61,21 @@ public class FoundingAmountChart extends TilePane implements Chart<Founding> {
 	}
 
 	/**
-	 * Constructor.
+	 * @see de.sambalmueslie.loan_calculator.view.chart.founding.FoundingChart#createChart(de.sambalmueslie.loan_calculator.model.founding.Founding)
 	 */
-	public FoundingAmountChart() {
-		setHgap(Constants.DEFAULT_SPACING);
-		setVgap(Constants.DEFAULT_SPACING);
-		setPrefColumns(2);
+	@Override
+	protected Node createChart(final Founding founding) {
+		return new Chart(founding);
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.view.chart.Chart#add(java.lang.Object)
+	 * @see de.sambalmueslie.loan_calculator.view.chart.founding.FoundingChart#equals(javafx.scene.Node,
+	 *      de.sambalmueslie.loan_calculator.model.founding.Founding)
 	 */
 	@Override
-	public void add(final Founding founding) {
-		getChildren().add(new Chart(founding));
-	}
-
-	/**
-	 * @see de.sambalmueslie.loan_calculator.view.chart.Chart#getChart()
-	 */
-	@Override
-	public Node getChart() {
-		return this;
-	}
-
-	/**
-	 * @see de.sambalmueslie.loan_calculator.view.chart.Chart#remove(java.lang.Object)
-	 */
-	@Override
-	public void remove(final Founding founding) {
-		getChildren().removeIf(c -> ((Chart) c).founding.getId() == founding.getId());
+	protected boolean equals(final Node node, final Founding founding) {
+		if (node instanceof Chart) return ((Chart) node).founding.getId() == founding.getId();
+		return false;
 	}
 
 }
