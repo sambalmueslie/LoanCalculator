@@ -59,8 +59,16 @@ public class EntryTree extends GridPane {
 		treeView.setCellFactory(entry -> new EntryTreeItem(foundingFactory, loanFactory));
 
 		add(treeView, 0, 1);
+
+		treeView.setContextMenu(new EntryTreeContextMenu(actionForwarder));
 	}
 
+	/**
+	 * Add a {@link Founding}.
+	 *
+	 * @param founding
+	 *            the founding
+	 */
 	void add(final Founding founding) {
 		final TreeItem<GenericModelEntry<?>> foundingItem = new TreeItem<>(founding);
 		treeView.getRoot().getChildren().add(foundingItem);
@@ -69,23 +77,52 @@ public class EntryTree extends GridPane {
 		foundingItem.setExpanded(true);
 	}
 
+	/**
+	 * Add a new {@link Loan}.
+	 *
+	 * @param loan
+	 *            the loan
+	 */
 	void add(final Loan loan) {
-		// check if loan is in founding
-		// add to founding
-
-		// add to root
 		final TreeItem<GenericModelEntry<?>> loanItem = new TreeItem<>(loan);
-		treeView.getRoot().getChildren().add(loanItem);
+		final TreeItem<GenericModelEntry<?>> foundingParent = getLoanFoundingParent(loan);
+		if (foundingParent != null) {
+			foundingParent.getChildren().add(loanItem);
+		} else {
+			treeView.getRoot().getChildren().add(loanItem);
+		}
 	}
 
+	/**
+	 * Remove a {@link Founding}.
+	 *
+	 * @param founding
+	 *            the founding
+	 */
 	void remove(final Founding founding) {
-
+		final ObservableList<TreeItem<GenericModelEntry<?>>> rootChildren = treeView.getRoot().getChildren();
+		rootChildren.removeIf(n -> n.getValue().equals(founding));
 	}
 
+	/**
+	 * Remove a {@link Loan}.
+	 *
+	 * @param loan
+	 *            the loan
+	 */
 	void remove(final Loan loan) {
-
+		final ObservableList<TreeItem<GenericModelEntry<?>>> rootChildren = treeView.getRoot().getChildren();
+		rootChildren.removeIf(n -> n.getValue().equals(loan));
 	}
 
+	/**
+	 * Assign the children of a founding to the {@link TreeItem}.
+	 *
+	 * @param founding
+	 *            the {@link Founding}
+	 * @param foundingItem
+	 *            the founding {@link TreeItem}.
+	 */
 	private void assignFoundingChildren(final Founding founding, final TreeItem<GenericModelEntry<?>> foundingItem) {
 		final ObservableList<TreeItem<GenericModelEntry<?>>> rootChildren = treeView.getRoot().getChildren();
 		for (final Loan loan : founding.getLoans()) {
@@ -108,6 +145,20 @@ public class EntryTree extends GridPane {
 		if (foundingItem != null) {
 			assignFoundingChildren(founding, foundingItem);
 		}
+	}
+
+	/**
+	 * Get the {@link Founding} parent {@link TreeItem} for a {@link Loan}.
+	 *
+	 * @param loan
+	 *            the loan
+	 * @return the {@link TreeItem} or <code>null</code> if not exists.
+	 */
+	private TreeItem<GenericModelEntry<?>> getLoanFoundingParent(final Loan loan) {
+		final ObservableList<TreeItem<GenericModelEntry<?>>> rootChildren = treeView.getRoot().getChildren();
+		final Optional<TreeItem<GenericModelEntry<?>>> result = rootChildren.stream()
+				.filter(item -> item.getValue() instanceof Founding && ((Founding) item.getValue()).getLoans().contains(loan)).findFirst();
+		return result.isPresent() ? result.get() : null;
 	}
 
 	/**
