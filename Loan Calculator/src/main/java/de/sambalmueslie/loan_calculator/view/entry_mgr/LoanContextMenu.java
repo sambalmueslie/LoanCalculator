@@ -16,6 +16,7 @@ import de.sambalmueslie.loan_calculator.model.loan.AnnuityLoan;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
 import de.sambalmueslie.loan_calculator.view.ViewActionListener;
 import de.sambalmueslie.loan_calculator.view.dialog.ModifyAnnuityLoanDialog;
+import de.sambalmueslie.loan_calculator.view.entry_mgr.tree.IconProvider;
 
 /**
  * The context menu for a loan list cell entry.
@@ -30,9 +31,9 @@ public class LoanContextMenu extends ContextMenu {
 	 * Constructor.
 	 */
 	public LoanContextMenu() {
-		addAnnuitiyLoanMenuItem = new MenuItem("Add annuity loan");
-		updateMenuItem = new MenuItem("Update");
-		removeMenuItem = new MenuItem("Remove");
+		addAnnuitiyLoanMenuItem = new MenuItem("Add annuity loan", IconProvider.createImageView(IconProvider.ICON_NOTE_NEW));
+		updateMenuItem = new MenuItem("Update", IconProvider.createImageView(IconProvider.ICON_NOTE_NEW));
+		removeMenuItem = new MenuItem("Remove", IconProvider.createImageView(IconProvider.ICON_NOTE_DELETE));
 		getItems().addAll(addAnnuitiyLoanMenuItem, updateMenuItem, removeMenuItem);
 		set(null);
 	}

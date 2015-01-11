@@ -23,7 +23,7 @@ public class EntryTreeItemLoan extends GridPane implements EntryTreeItemContent<
 	public EntryTreeItemLoan() {
 		getStyleClass().add("entry-tree-item");
 
-		final ImageView icon = IconProvider.createImageView(IconProvider.ICON_PAGE);
+		final ImageView icon = IconProvider.createImageView(IconProvider.ICON_NOTE);
 		add(icon, 0, 0);
 
 		add(name, 1, 0);
