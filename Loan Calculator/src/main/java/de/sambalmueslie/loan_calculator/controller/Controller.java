@@ -93,6 +93,8 @@ public class Controller extends Application {
 		final Loan loan = model.getLoan(loanId);
 		if (founding == null || loan == null) return;
 		founding.add(loan);
+		// remove from other foundings
+		model.getAllFoundings().stream().filter(f -> f.getLoans().contains(loan)).filter(f -> f != founding).forEach(f -> ((BaseFounding) f).remove(loan));
 	}
 
 	/**

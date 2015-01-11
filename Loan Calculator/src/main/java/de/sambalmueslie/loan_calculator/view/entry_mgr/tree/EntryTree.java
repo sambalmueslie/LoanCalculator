@@ -5,6 +5,7 @@ package de.sambalmueslie.loan_calculator.view.entry_mgr.tree;
 
 import static de.sambalmueslie.loan_calculator.view.Constants.DEFAULT_SPACING;
 
+import java.util.LinkedList;
 import java.util.Optional;
 
 import javafx.collections.ObservableList;
@@ -12,6 +13,8 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import de.sambalmueslie.loan_calculator.model.Model;
@@ -57,6 +60,29 @@ public class EntryTree extends GridPane {
 		loanFactory.setListener(actionForwarder);
 
 		treeView.setCellFactory(entry -> new EntryTreeItem(foundingFactory, loanFactory));
+
+		treeView.setOnDragOver(event -> {
+			event.acceptTransferModes(TransferMode.MOVE);
+			event.consume();
+		});
+
+		treeView.setOnDragDropped(event -> {
+			final Dragboard db = event.getDragboard();
+
+			final String strId = db.hasString() ? db.getString() : null;
+			if (strId != null) {
+				final long loanId = Long.parseLong(strId);
+				final Loan loan = model.getLoan(loanId);
+				final TreeItem<GenericModelEntry<?>> foundingItem = getLoanFoundingParent(loan);
+				if (foundingItem != null) {
+					final long foundingId = ((Founding) foundingItem.getValue()).getId();
+					actionForwarder.requestFoundingRemoveLoan(foundingId, loanId);
+				}
+			}
+
+			event.setDropCompleted(strId != null);
+			event.consume();
+		});
 
 		add(treeView, 0, 1);
 
@@ -125,11 +151,20 @@ public class EntryTree extends GridPane {
 	 */
 	private void assignFoundingChildren(final Founding founding, final TreeItem<GenericModelEntry<?>> foundingItem) {
 		final ObservableList<TreeItem<GenericModelEntry<?>>> rootChildren = treeView.getRoot().getChildren();
+		// handle added items
 		for (final Loan loan : founding.getLoans()) {
 			final TreeItem<GenericModelEntry<?>> loanItem = getTreeItemByValue(loan, rootChildren);
 			if (loanItem != null) {
 				rootChildren.remove(loanItem);
 				foundingItem.getChildren().add(loanItem);
+			}
+		}
+		// handle removed items
+		for (final TreeItem<GenericModelEntry<?>> loanItem : new LinkedList<TreeItem<GenericModelEntry<?>>>(foundingItem.getChildren())) {
+			final Loan loan = (Loan) loanItem.getValue();
+			if (!founding.getLoans().contains(loan)) {
+				foundingItem.getChildren().remove(loanItem);
+				rootChildren.add(loanItem);
 			}
 		}
 	}

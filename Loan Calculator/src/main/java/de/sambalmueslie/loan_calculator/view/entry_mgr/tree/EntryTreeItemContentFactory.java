@@ -8,7 +8,7 @@ import de.sambalmueslie.loan_calculator.view.ViewActionListener;
 
 /**
  * The factory for the {@link EntryTreeItemContent}.
- * 
+ *
  * @author sambalmueslie 2015
  */
 public class EntryTreeItemContentFactory<T extends GenericModelEntry<T>> {
@@ -52,7 +52,6 @@ public class EntryTreeItemContentFactory<T extends GenericModelEntry<T>> {
 	private final Class<? extends EntryTreeItemContent<T>> contentType;
 	/** the {@link ViewActionListener}. */
 	private ViewActionListener listener;
-
 	/** the type. */
 	private final Class<T> type;
 }
