@@ -1,7 +1,7 @@
 /**
  *
  */
-package de.sambalmueslie.loan_calculator.view.entry_mgr;
+package de.sambalmueslie.loan_calculator.view.entry_mgr.list;
 
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;

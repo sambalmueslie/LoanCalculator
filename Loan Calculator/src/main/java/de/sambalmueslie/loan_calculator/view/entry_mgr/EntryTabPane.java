@@ -9,6 +9,7 @@ import de.sambalmueslie.loan_calculator.model.ModelChangeListener;
 import de.sambalmueslie.loan_calculator.model.founding.Founding;
 import de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
+import de.sambalmueslie.loan_calculator.view.entry_mgr.list.EntryList;
 
 /**
  * The {@link TabPane} for the

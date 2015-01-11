@@ -29,7 +29,7 @@ public class LoanContextMenu extends ContextMenu {
 	/**
 	 * Constructor.
 	 */
-	LoanContextMenu() {
+	public LoanContextMenu() {
 		addAnnuitiyLoanMenuItem = new MenuItem("Add annuity loan");
 		updateMenuItem = new MenuItem("Update");
 		removeMenuItem = new MenuItem("Remove");
@@ -43,7 +43,7 @@ public class LoanContextMenu extends ContextMenu {
 	 * @param loan
 	 *            the loan
 	 */
-	void set(final Loan loan) {
+	public void set(final Loan loan) {
 		addAnnuitiyLoanMenuItem.setOnAction(e -> addAnnuitiyLoan());
 		if (loan == null) {
 			updateMenuItem.setOnAction(null);
@@ -58,7 +58,7 @@ public class LoanContextMenu extends ContextMenu {
 	 * @param listener
 	 *            the listener to set
 	 */
-	void setListener(final ViewActionListener listener) {
+	public void setListener(final ViewActionListener listener) {
 		this.listener = listener;
 	}
 

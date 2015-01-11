@@ -1,7 +1,7 @@
 /**
  *
  */
-package de.sambalmueslie.loan_calculator.view.entry_mgr;
+package de.sambalmueslie.loan_calculator.view.entry_mgr.list;
 
 import static de.sambalmueslie.loan_calculator.view.Constants.DEFAULT_SPACING;
 import static de.sambalmueslie.loan_calculator.view.Constants.TITLE_FONT;

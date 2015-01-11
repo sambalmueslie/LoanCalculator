@@ -79,6 +79,8 @@ class InfoPanel extends TilePane {
 			return new CurrencyTextField();
 		case PERCENTAGE:
 			return new PercentageTextField();
+		case NUMBER:
+			return new NumberTextField();
 		}
 	}
 

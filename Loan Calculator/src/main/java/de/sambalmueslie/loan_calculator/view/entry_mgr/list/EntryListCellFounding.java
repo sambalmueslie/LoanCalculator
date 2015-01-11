@@ -1,7 +1,7 @@
 /**
  *
  */
-package de.sambalmueslie.loan_calculator.view.entry_mgr;
+package de.sambalmueslie.loan_calculator.view.entry_mgr.list;
 
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
@@ -11,6 +11,7 @@ import javafx.scene.layout.GridPane;
 import de.sambalmueslie.loan_calculator.model.founding.Founding;
 import de.sambalmueslie.loan_calculator.view.Constants;
 import de.sambalmueslie.loan_calculator.view.ViewActionListener;
+import de.sambalmueslie.loan_calculator.view.entry_mgr.FoundingContextMenu;
 
 /**
  * The {@link Founding} entry {@link ListCell}.
@@ -30,7 +31,7 @@ public class EntryListCellFounding extends GridPane implements EntryListCellCont
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.view.entry_mgr.EntryListCellContent#getContextMenu(de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry)
+	 * @see de.sambalmueslie.loan_calculator.view.entry_mgr.list.EntryListCellContent#getContextMenu(de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry)
 	 */
 	@Override
 	public ContextMenu getContextMenu(final Founding entry) {
@@ -39,7 +40,7 @@ public class EntryListCellFounding extends GridPane implements EntryListCellCont
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.view.entry_mgr.EntryListCellContent#getGrapic(de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry)
+	 * @see de.sambalmueslie.loan_calculator.view.entry_mgr.list.EntryListCellContent#getGrapic(de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry)
 	 */
 	@Override
 	public Node getGrapic(final Founding entry) {
@@ -48,7 +49,7 @@ public class EntryListCellFounding extends GridPane implements EntryListCellCont
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.view.entry_mgr.EntryListCellContent#set(de.sambalmueslie.loan_calculator.view.ViewActionListener)
+	 * @see de.sambalmueslie.loan_calculator.view.entry_mgr.list.EntryListCellContent#set(de.sambalmueslie.loan_calculator.view.ViewActionListener)
 	 */
 	@Override
 	public void set(final ViewActionListener listener) {

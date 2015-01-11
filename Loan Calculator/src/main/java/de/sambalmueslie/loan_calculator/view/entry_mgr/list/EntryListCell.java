@@ -1,7 +1,7 @@
 /**
  *
  */
-package de.sambalmueslie.loan_calculator.view.entry_mgr;
+package de.sambalmueslie.loan_calculator.view.entry_mgr.list;
 
 import java.util.Arrays;
 import java.util.HashSet;

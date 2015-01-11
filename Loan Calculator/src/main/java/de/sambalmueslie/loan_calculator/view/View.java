@@ -9,8 +9,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import de.sambalmueslie.loan_calculator.model.Model;
-import de.sambalmueslie.loan_calculator.view.entry_mgr.EntryList;
 import de.sambalmueslie.loan_calculator.view.entry_mgr.EntryTabPane;
+import de.sambalmueslie.loan_calculator.view.entry_mgr.list.EntryList;
+import de.sambalmueslie.loan_calculator.view.entry_mgr.tree.EntryTree;
 
 /**
  * The view.
@@ -26,6 +27,7 @@ public class View extends BorderPane {
 	 */
 	public View(final Model model) {
 		entryList = new EntryList(model, actionListenerMgr);
+		entryTree = new EntryTree(model, actionListenerMgr);
 		entryTabPane = new EntryTabPane(model, entryList);
 	}
 
@@ -60,7 +62,7 @@ public class View extends BorderPane {
 		final Label statusbar = new Label();
 
 		final BorderPane content = new BorderPane();
-		content.setLeft(entryList);
+		content.setLeft(entryTree);
 		content.setCenter(entryTabPane);
 
 		setCenter(content);
@@ -89,9 +91,12 @@ public class View extends BorderPane {
 
 	/** the {@link ViewActionListenerMgr}. */
 	private final ViewActionListenerMgr actionListenerMgr = new ViewActionListenerMgr();
+
 	/** the {@link EntryList}. */
 	private final EntryList entryList;
 	/** the {@link EntryTabPane}. */
 	private final EntryTabPane entryTabPane;
+	/** the {@link EntryTree} */
+	private final EntryTree entryTree;
 
 }

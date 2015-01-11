@@ -17,7 +17,7 @@ public class FoundingContextMenu extends ContextMenu {
 	/**
 	 * Constructor.
 	 */
-	FoundingContextMenu() {
+	public FoundingContextMenu() {
 		addMenuItem = new MenuItem("Add");
 		updateMenuItem = new MenuItem("Update");
 		removeMenuItem = new MenuItem("Remove");
@@ -30,7 +30,7 @@ public class FoundingContextMenu extends ContextMenu {
 	 * @param loan
 	 *            the loan
 	 */
-	void set(final Founding founding) {
+	public void set(final Founding founding) {
 		addMenuItem.setOnAction(e -> add());
 		if (founding == null) {
 			updateMenuItem.setOnAction(null);
@@ -45,7 +45,7 @@ public class FoundingContextMenu extends ContextMenu {
 	 * @param listener
 	 *            the listener to set
 	 */
-	void setListener(final ViewActionListener listener) {
+	public void setListener(final ViewActionListener listener) {
 		this.listener = listener;
 	}
 
@@ -58,7 +58,7 @@ public class FoundingContextMenu extends ContextMenu {
 
 	/**
 	 * Remove a existing {@link Founding}.
-	 * 
+	 *
 	 * @param founding
 	 *            the {@link Founding}
 	 */
@@ -68,7 +68,7 @@ public class FoundingContextMenu extends ContextMenu {
 
 	/**
 	 * Update a existing {@link Founding}.
-	 * 
+	 *
 	 * @param founding
 	 *            the {@link Founding}
 	 */

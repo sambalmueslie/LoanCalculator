@@ -46,7 +46,7 @@ public class Controller extends Application {
 	/**
 	 * @see ViewActionListener#requestAddAnnuityLoan(String, double, double, double, int, double)
 	 */
-	void handleRequestAddAnnuityLoan(final String name, final double amount, final double paymentRate, final double fixedDebitInterest,
+	Loan handleRequestAddAnnuityLoan(final String name, final double amount, final double paymentRate, final double fixedDebitInterest,
 			final int fixedInterestPeriod, final double estimatedDebitInterest) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Handle request to add loan " + name + ", " + amount + ", " + paymentRate + ", " + fixedDebitInterest + ", " + fixedInterestPeriod
@@ -55,27 +55,31 @@ public class Controller extends Application {
 		try {
 			final AnnuityLoan annuityLoan = new BaseAnnuityLoan(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
 			model.add(annuityLoan);
+			return annuityLoan;
 		} catch (final IllegalArgumentException e) {
 			logger.error("Cannot add loan " + name + ", " + amount + ", " + paymentRate + ", " + fixedDebitInterest + ", " + fixedInterestPeriod + ", "
 					+ estimatedDebitInterest + " cause " + e.getMessage());
 			// TODO handle error
 		}
+		return null;
 	}
 
 	/**
 	 * @see ViewActionListener#requestAddFounding(String, String)
 	 */
-	void handleRequestAddFounding(final String name, final String bankName) {
+	Founding handleRequestAddFounding(final String name, final String bankName) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Handle request to add founding " + name + ", " + bankName);
 		}
 		try {
 			final BaseFounding founding = new BaseFounding(name, bankName);
 			model.add(founding);
+			return founding;
 		} catch (final IllegalArgumentException e) {
 			logger.error("Cannot add founding " + name + ", " + bankName + " cause " + e.getMessage());
 			// TODO handle error
 		}
+		return null;
 	}
 
 	/**
@@ -172,13 +176,19 @@ public class Controller extends Application {
 	 * Create some example data.
 	 */
 	private void setupExampleData() {
-		handleRequestAddAnnuityLoan("2,5% komplett fest", 100000, 3.0, 2.5, 100, 2.5);
-		handleRequestAddAnnuityLoan("2,5% 10 Jahre fest", 100000, 3.0, 2.5, 10, 5.0);
-		handleRequestAddAnnuityLoan("2,5% 15 Jahre fest", 100000, 3.0, 2.5, 15, 5.0);
+		final Loan l1 = handleRequestAddAnnuityLoan("2,5% komplett fest", 100000, 3.0, 2.5, 100, 2.5);
+		final Loan l2 = handleRequestAddAnnuityLoan("2,5% 10 Jahre fest", 100000, 3.0, 2.5, 10, 5.0);
+		final Loan l3 = handleRequestAddAnnuityLoan("2,5% 15 Jahre fest", 100000, 3.0, 2.5, 15, 5.0);
 
 		handleRequestAddAnnuityLoan("5,0% komplett fest", 100000, 3.0, 5.0, 100, 5.0);
 		handleRequestAddAnnuityLoan("5,0% 10 Jahre fest", 100000, 3.0, 5.0, 10, 7.5);
 		handleRequestAddAnnuityLoan("5,0% 15 Jahre fest", 100000, 3.0, 5.0, 15, 7.5);
+
+		final Founding f = handleRequestAddFounding("Test founding", "Testbank");
+		final long foundingId = f.getId();
+		handleRequestFoundingAddLoan(foundingId, l1.getId());
+		handleRequestFoundingAddLoan(foundingId, l2.getId());
+		handleRequestFoundingAddLoan(foundingId, l3.getId());
 	}
 
 	/** the {@link BaseModel}. */
