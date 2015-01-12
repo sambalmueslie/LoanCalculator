@@ -10,6 +10,7 @@ import de.sambalmueslie.loan_calculator.model.compare.Comparison;
 import de.sambalmueslie.loan_calculator.model.founding.Founding;
 import de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
+import de.sambalmueslie.loan_calculator.view.ViewActionListener;
 
 /**
  * The {@link TabPane} for the
@@ -75,8 +76,15 @@ public class EntryTabPane extends TabPane {
 
 	/**
 	 * Constructor.
+	 *
+	 * @param model
+	 *            {@link #model}
+	 * @param actionListener
+	 *            {@link #actionListener}
 	 */
-	public EntryTabPane(final Model model) {
+	public EntryTabPane(final Model model, final ViewActionListener actionListener) {
+		this.model = model;
+		this.actionListener = actionListener;
 		getStyleClass().add("entry-tab-pane");
 		model.listenerRegister(modelChangeHandler);
 
@@ -92,7 +100,7 @@ public class EntryTabPane extends TabPane {
 	 *            the entry
 	 */
 	private void add(final GenericModelEntry<?> entry) {
-		final EntryTab tab = new EntryTab(entry);
+		final EntryTab tab = new EntryTab(entry, actionListener, model);
 		getTabs().add(tab);
 		getSelectionModel().select(tab);
 	}
@@ -107,5 +115,10 @@ public class EntryTabPane extends TabPane {
 		getTabs().removeIf(t -> ((EntryTab) t).getEntry().equals(entry));
 	}
 
+	/** the {@link ViewActionListener}. */
+	private final ViewActionListener actionListener;
+	/** the {@link Model}. */
+	private final Model model;
+	/** the {@link ModelChangeHandler}. */
 	private final ModelChangeHandler modelChangeHandler = new ModelChangeHandler();
 }

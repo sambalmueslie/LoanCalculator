@@ -6,12 +6,15 @@ package de.sambalmueslie.loan_calculator.view.entry_mgr;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
+import de.sambalmueslie.loan_calculator.model.Model;
 import de.sambalmueslie.loan_calculator.model.compare.Comparison;
 import de.sambalmueslie.loan_calculator.model.founding.Founding;
 import de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry;
 import de.sambalmueslie.loan_calculator.model.loan.AnnuityLoan;
+import de.sambalmueslie.loan_calculator.view.ViewActionListener;
+import de.sambalmueslie.loan_calculator.view.compare.ComparePanel;
+import de.sambalmueslie.loan_calculator.view.compare.ComparePanelFactory;
 import de.sambalmueslie.loan_calculator.view.panel.AnnuityLoanPanel;
-import de.sambalmueslie.loan_calculator.view.panel.ComparisonPanel;
 import de.sambalmueslie.loan_calculator.view.panel.FoundingPanel;
 
 /**
@@ -23,9 +26,19 @@ public class EntryTab extends Tab {
 
 	/**
 	 * Constructor.
+	 * 
+	 * @param entry
+	 *            {@link #entry}
+	 * @param actionListener
+	 *            {@link #actionListener}
+	 * @param model
+	 *            {@link #model}
 	 */
-	public EntryTab(final GenericModelEntry<?> entry) {
+	public EntryTab(final GenericModelEntry<?> entry, final ViewActionListener actionListener, final Model model) {
 		this.entry = entry;
+		this.actionListener = actionListener;
+		this.model = model;
+
 		getStyleClass().add("entry-tab");
 		setClosable(false);
 		final Node content = getContent(entry);
@@ -60,12 +73,17 @@ public class EntryTab extends Tab {
 		}
 		if (entry instanceof Comparison) {
 			final Comparison<?> comparison = (Comparison<?>) entry;
-			return new ComparisonPanel(comparison);
+			final ComparePanel<?> panel = ComparePanelFactory.createComparePanel(comparison, actionListener, model);
+			return panel.getContent();
 		}
 		return null;
 	}
 
+	/** the {@link ViewActionListener}. */
+	private final ViewActionListener actionListener;
 	/** the {@link GenericModelEntry}. */
 	private final GenericModelEntry<?> entry;
+	/** the {@link Model}. */
+	private final Model model;
 
 }

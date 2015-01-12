@@ -26,7 +26,7 @@ public class View extends BorderPane {
 	 */
 	public View(final Model model) {
 		entryTree = new EntryTree(model, actionListenerMgr);
-		entryTabPane = new EntryTabPane(model);
+		entryTabPane = new EntryTabPane(model, actionListenerMgr);
 	}
 
 	/**
