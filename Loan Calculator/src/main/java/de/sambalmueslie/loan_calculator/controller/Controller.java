@@ -226,7 +226,7 @@ public class Controller extends Application {
 		if (founding == null) return;
 		model.remove(founding);
 		founding.getLoans().forEach(model::remove);
-		// TODO remove founding from comparisons
+		comparisonsRemoveEntry(founding);
 	}
 
 	/**
@@ -239,7 +239,7 @@ public class Controller extends Application {
 		final Loan loan = model.getLoan(loanId);
 		if (loan == null) return;
 		model.remove(loan);
-		// TODO remove loans from comparisons
+		comparisonsRemoveEntry(loan);
 	}
 
 	/**
@@ -316,6 +316,18 @@ public class Controller extends Application {
 
 		final BaseComparison<T> bc = (BaseComparison<T>) comparison;
 		bc.remove(entry);
+	}
+
+	/**
+	 * Remove a entry from all {@link Comparison}s.
+	 *
+	 * @param entry
+	 *            the entry
+	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private <T extends GenericModelEntry<T>> void comparisonsRemoveEntry(final T entry) {
+		model.getAllComparisons().forEach(c -> ((BaseComparison) c).remove(entry));
+		model.getAllComparisons().stream().filter(c -> c.getElements().isEmpty()).forEach(model::remove);
 	}
 
 	/**
