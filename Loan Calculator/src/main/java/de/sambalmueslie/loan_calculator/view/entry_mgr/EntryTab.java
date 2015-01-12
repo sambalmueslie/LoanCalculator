@@ -6,10 +6,12 @@ package de.sambalmueslie.loan_calculator.view.entry_mgr;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
+import de.sambalmueslie.loan_calculator.model.compare.Comparison;
 import de.sambalmueslie.loan_calculator.model.founding.Founding;
 import de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry;
 import de.sambalmueslie.loan_calculator.model.loan.AnnuityLoan;
 import de.sambalmueslie.loan_calculator.view.panel.AnnuityLoanPanel;
+import de.sambalmueslie.loan_calculator.view.panel.ComparisonPanel;
 import de.sambalmueslie.loan_calculator.view.panel.FoundingPanel;
 
 /**
@@ -55,6 +57,10 @@ public class EntryTab extends Tab {
 		if (entry instanceof Founding) {
 			final Founding founding = (Founding) entry;
 			return new FoundingPanel(founding);
+		}
+		if (entry instanceof Comparison) {
+			final Comparison<?> comparison = (Comparison<?>) entry;
+			return new ComparisonPanel(comparison);
 		}
 		return null;
 	}

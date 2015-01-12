@@ -6,6 +6,7 @@ package de.sambalmueslie.loan_calculator.view.entry_mgr;
 import javafx.scene.control.TabPane;
 import de.sambalmueslie.loan_calculator.model.Model;
 import de.sambalmueslie.loan_calculator.model.ModelChangeListener;
+import de.sambalmueslie.loan_calculator.model.compare.Comparison;
 import de.sambalmueslie.loan_calculator.model.founding.Founding;
 import de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
@@ -22,6 +23,22 @@ public class EntryTabPane extends TabPane {
 	 * @author sambalmueslie 2015
 	 */
 	private class ModelChangeHandler implements ModelChangeListener {
+
+		/**
+		 * @see de.sambalmueslie.loan_calculator.model.ModelChangeListener#comparisonAdded(de.sambalmueslie.loan_calculator.model.compare.Comparison)
+		 */
+		@Override
+		public void comparisonAdded(final Comparison<?> comparison) {
+			add(comparison);
+		}
+
+		/**
+		 * @see de.sambalmueslie.loan_calculator.model.ModelChangeListener#comparisonRemoved(de.sambalmueslie.loan_calculator.model.compare.Comparison)
+		 */
+		@Override
+		public void comparisonRemoved(final Comparison<?> comparison) {
+			remove(comparison);
+		}
 
 		/**
 		 * @see de.sambalmueslie.loan_calculator.model.ModelChangeListener#foundingAdded(de.sambalmueslie.loan_calculator.model.founding.Founding)
@@ -54,7 +71,6 @@ public class EntryTabPane extends TabPane {
 		public void loanRemoved(final Loan loan) {
 			remove(loan);
 		}
-
 	}
 
 	/**

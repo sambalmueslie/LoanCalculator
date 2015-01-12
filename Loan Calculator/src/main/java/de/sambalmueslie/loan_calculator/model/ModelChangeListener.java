@@ -3,6 +3,7 @@
  */
 package de.sambalmueslie.loan_calculator.model;
 
+import de.sambalmueslie.loan_calculator.model.compare.Comparison;
 import de.sambalmueslie.loan_calculator.model.founding.Founding;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
 
@@ -13,8 +14,24 @@ import de.sambalmueslie.loan_calculator.model.loan.Loan;
  */
 public interface ModelChangeListener {
 	/**
+	 * A {@link Comparison} was added.
+	 *
+	 * @param comparison
+	 *            the comparison
+	 */
+	void comparisonAdded(Comparison<?> comparison);
+
+	/**
+	 * A {@link Comparison} was removed.
+	 *
+	 * @param comparison
+	 *            the comparison
+	 */
+	void comparisonRemoved(Comparison<?> comparison);
+
+	/**
 	 * A {@link Founding} was added.
-	 * 
+	 *
 	 * @param founding
 	 *            the founding
 	 */
@@ -22,7 +39,7 @@ public interface ModelChangeListener {
 
 	/**
 	 * A {@link Founding} was added.
-	 * 
+	 *
 	 * @param founding
 	 *            the founding
 	 */

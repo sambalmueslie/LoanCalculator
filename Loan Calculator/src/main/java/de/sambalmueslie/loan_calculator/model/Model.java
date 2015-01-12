@@ -5,6 +5,7 @@ package de.sambalmueslie.loan_calculator.model;
 
 import java.util.Collection;
 
+import de.sambalmueslie.loan_calculator.model.compare.Comparison;
 import de.sambalmueslie.loan_calculator.model.founding.Founding;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
 
@@ -16,6 +17,11 @@ import de.sambalmueslie.loan_calculator.model.loan.Loan;
 public interface Model {
 
 	/**
+	 * @return a {@link Collection} of all currently stored {@link Comparison}s.
+	 */
+	Collection<Comparison<?>> getAllComparisons();
+
+	/**
 	 * @return a {@link Collection} of all currently stored {@link Founding}s.
 	 */
 	Collection<Founding> getAllFoundings();
@@ -24,6 +30,15 @@ public interface Model {
 	 * @return a {@link Collection} of all currently stored {@link Loan}s.
 	 */
 	Collection<Loan> getAllLoans();
+
+	/**
+	 * Get a {@link Comparison} by id.
+	 *
+	 * @param id
+	 *            the id
+	 * @return the comparison or <code>null</code> if not found
+	 */
+	Comparison<?> getComparison(final long id);
 
 	/**
 	 * Get a {@link Founding} by id.

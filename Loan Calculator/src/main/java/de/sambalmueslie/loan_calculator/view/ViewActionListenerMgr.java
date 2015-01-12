@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * The {@link ViewActionListenerMgr}.
- * 
+ *
  * @author sambalmueslie 2015
  */
 public class ViewActionListenerMgr implements ViewActionListener {
@@ -31,6 +31,54 @@ public class ViewActionListenerMgr implements ViewActionListener {
 	}
 
 	/**
+	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestAddComparisonFounding(long)
+	 */
+	@Override
+	public void requestAddComparisonFounding(final long foundingId) {
+		listeners.forEach(l -> l.requestAddComparisonFounding(foundingId));
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestAddComparisonLoan(long)
+	 */
+	@Override
+	public void requestAddComparisonLoan(final long loanId) {
+		listeners.forEach(l -> l.requestAddComparisonLoan(loanId));
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestComparisonAddFounding(long, long)
+	 */
+	@Override
+	public void requestComparisonAddFounding(final long comparisonId, final long foundingId) {
+		listeners.forEach(l -> l.requestComparisonAddFounding(comparisonId, foundingId));
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestComparisonAddLoan(long, long)
+	 */
+	@Override
+	public void requestComparisonAddLoan(final long comparisonId, final long loanId) {
+		listeners.forEach(l -> l.requestComparisonAddLoan(comparisonId, loanId));
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestComparisonRemoveFounding(long, long)
+	 */
+	@Override
+	public void requestComparisonRemoveFounding(final long comparisonId, final long foundingId) {
+		listeners.forEach(l -> l.requestComparisonRemoveFounding(comparisonId, foundingId));
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestComparisonRemoveLoan(long, long)
+	 */
+	@Override
+	public void requestComparisonRemoveLoan(final long comparisonId, final long loanId) {
+		listeners.forEach(l -> l.requestComparisonRemoveLoan(comparisonId, loanId));
+	}
+
+	/**
 	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestFoundingAddLoan(long, long)
 	 */
 	@Override
@@ -44,6 +92,14 @@ public class ViewActionListenerMgr implements ViewActionListener {
 	@Override
 	public void requestFoundingRemoveLoan(final long foundingId, final long loanId) {
 		listeners.forEach(l -> l.requestFoundingRemoveLoan(foundingId, loanId));
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestRemoveComparison(long)
+	 */
+	@Override
+	public void requestRemoveComparison(final long comparisonId) {
+		listeners.forEach(l -> l.requestRemoveComparison(comparisonId));
 	}
 
 	/**

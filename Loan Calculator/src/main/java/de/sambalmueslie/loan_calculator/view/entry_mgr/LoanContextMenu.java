@@ -19,7 +19,7 @@ import de.sambalmueslie.loan_calculator.view.dialog.ModifyAnnuityLoanDialog;
 import de.sambalmueslie.loan_calculator.view.entry_mgr.tree.IconProvider;
 
 /**
- * The context menu for a loan list cell entry.
+ * The context menu for a loan list cell loan.
  *
  * @author sambalmueslie 2015
  */
@@ -34,7 +34,8 @@ public class LoanContextMenu extends ContextMenu {
 		addAnnuitiyLoanMenuItem = new MenuItem("Add annuity loan", IconProvider.createImageView(IconProvider.ICON_NOTE_NEW));
 		updateMenuItem = new MenuItem("Update", IconProvider.createImageView(IconProvider.ICON_NOTE_NEW));
 		removeMenuItem = new MenuItem("Remove", IconProvider.createImageView(IconProvider.ICON_NOTE_DELETE));
-		getItems().addAll(addAnnuitiyLoanMenuItem, updateMenuItem, removeMenuItem);
+		compareMenuItem = new MenuItem("Compare", IconProvider.createImageView(IconProvider.ICON_LIST_IMAGES));
+		getItems().addAll(addAnnuitiyLoanMenuItem, updateMenuItem, removeMenuItem, compareMenuItem);
 		set(null);
 	}
 
@@ -49,9 +50,11 @@ public class LoanContextMenu extends ContextMenu {
 		if (loan == null) {
 			updateMenuItem.setOnAction(null);
 			removeMenuItem.setOnAction(null);
+			compareMenuItem.setOnAction(null);
 		} else {
 			updateMenuItem.setOnAction(e -> update(loan));
 			removeMenuItem.setOnAction(e -> remove(loan));
+			compareMenuItem.setOnAction(e -> compare(loan));
 		}
 	}
 
@@ -86,35 +89,49 @@ public class LoanContextMenu extends ContextMenu {
 	}
 
 	/**
+	 * Request to compare the {@link Loan}.
+	 *
+	 * @param loan
+	 *            the loan
+	 */
+	private void compare(final Loan loan) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("Request compare " + loan);
+		}
+		final long loanId = loan.getId();
+		listener.requestAddComparisonLoan(loanId);
+	}
+
+	/**
 	 * Request to remove a {@link Loan}.
 	 *
-	 * @param entry
-	 *            the entry
+	 * @param loan
+	 *            the loan
 	 */
-	private void remove(final Loan entry) {
+	private void remove(final Loan loan) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("Request remove " + entry);
+			logger.debug("Request remove " + loan);
 		}
-		final long loanId = entry.getId();
+		final long loanId = loan.getId();
 		listener.requestRemoveLoan(loanId);
 	}
 
 	/**
 	 * Request to update a {@link Loan}.
 	 *
-	 * @param entry
-	 *            the entry
+	 * @param loan
+	 *            the loan
 	 */
-	private void update(final Loan entry) {
+	private void update(final Loan loan) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("Request update " + entry);
+			logger.debug("Request update " + loan);
 		}
-		if (entry instanceof AnnuityLoan) {
-			final ModifyAnnuityLoanDialog dialog = new ModifyAnnuityLoanDialog((AnnuityLoan) entry);
+		if (loan instanceof AnnuityLoan) {
+			final ModifyAnnuityLoanDialog dialog = new ModifyAnnuityLoanDialog((AnnuityLoan) loan);
 			final Optional<ButtonType> type = dialog.showAndWait();
 			if (type.isPresent() && type.get() == ButtonType.OK) {
 
-				final long loanId = entry.getId();
+				final long loanId = loan.getId();
 				final String name = dialog.getName();
 				final double amount = dialog.getAmount();
 				final double paymentRate = dialog.getPaymentRate();
@@ -129,6 +146,8 @@ public class LoanContextMenu extends ContextMenu {
 
 	/** the add {@link MenuItem}. */
 	private final MenuItem addAnnuitiyLoanMenuItem;
+	/** the compare {@link MenuItem}. */
+	private final MenuItem compareMenuItem;
 	/** the {@link ViewActionListener}. */
 	private ViewActionListener listener;
 	/** the remove {@link MenuItem}. */

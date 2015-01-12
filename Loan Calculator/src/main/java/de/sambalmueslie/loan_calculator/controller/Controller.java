@@ -10,8 +10,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import de.sambalmueslie.loan_calculator.model.BaseModel;
+import de.sambalmueslie.loan_calculator.model.compare.BaseComparison;
+import de.sambalmueslie.loan_calculator.model.compare.Comparison;
 import de.sambalmueslie.loan_calculator.model.founding.BaseFounding;
 import de.sambalmueslie.loan_calculator.model.founding.Founding;
+import de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry;
 import de.sambalmueslie.loan_calculator.model.loan.AnnuityLoan;
 import de.sambalmueslie.loan_calculator.model.loan.BaseAnnuityLoan;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
@@ -65,6 +68,40 @@ public class Controller extends Application {
 	}
 
 	/**
+	 * @see ViewActionListener#requestAddComparisonFounding(long)
+	 */
+	Comparison<Founding> handleRequestAddComparisonFounding(final long foundingId) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("Handle request to add comparison founding " + foundingId);
+		}
+
+		final Founding founding = model.getFounding(foundingId);
+		if (founding == null) return null;
+
+		final String name = "Comparison-" + model.getAllComparisons().size();
+		final BaseComparison<Founding> comparison = new BaseComparison<>(name, Founding.class);
+		comparison.add(founding);
+		model.add(comparison);
+		return comparison;
+	}
+
+	/**
+	 * @see ViewActionListener#requestAddComparisonLoan(long)
+	 */
+	Comparison<Loan> handleRequestAddComparisonLoan(final long loanId) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("Handle request to add comparison loan " + loanId);
+		}
+		final Loan loan = model.getLoan(loanId);
+		if (loan == null) return null;
+		final String name = "Comparison-" + model.getAllComparisons().size();
+		final BaseComparison<Loan> comparison = new BaseComparison<>(name, Loan.class);
+		comparison.add(loan);
+		model.add(comparison);
+		return comparison;
+	}
+
+	/**
 	 * @see ViewActionListener#requestAddFounding(String, String)
 	 */
 	Founding handleRequestAddFounding(final String name, final String bankName) {
@@ -80,6 +117,62 @@ public class Controller extends Application {
 			// TODO handle error
 		}
 		return null;
+	}
+
+	/**
+	 * @see ViewActionListener#requestComparisonAddFounding(long, long)
+	 */
+	void handleRequestComparisonAddFounding(final long comparisonId, final long foundingId) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("Handle request to remove comparison founding " + comparisonId + ", " + foundingId);
+		}
+
+		final Founding founding = model.getFounding(foundingId);
+		if (founding == null) return;
+
+		comparisonAddEntry(comparisonId, founding, Founding.class);
+	}
+
+	/**
+	 * @see ViewActionListener#requestComparisonAddLoan(long, long)
+	 */
+	void handleRequestComparisonAddLoan(final long comparisonId, final long loanId) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("Handle request to add comparison loan " + comparisonId + ", " + loanId);
+		}
+		final Loan loan = model.getLoan(loanId);
+		if (loan == null) return;
+
+		comparisonAddEntry(comparisonId, loan, Loan.class);
+
+	}
+
+	/**
+	 * @see ViewActionListener#requestComparisonRemoveFounding(long, long)
+	 */
+	void handleRequestComparisonRemoveFounding(final long comparisonId, final long foundingId) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("Handle request to remove comparison founding " + comparisonId + ", " + foundingId);
+		}
+
+		final Founding founding = model.getFounding(foundingId);
+		if (founding == null) return;
+
+		comparisonRemoveEntry(comparisonId, founding, Founding.class);
+
+	}
+
+	/**
+	 * @see ViewActionListener#requestComparisonRemoveLoan(long, long)
+	 */
+	void handleRequestComparisonRemoveLoan(final long comparisonId, final long loanId) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("Handle request to remove comparison loan " + comparisonId + ", " + loanId);
+		}
+		final Loan loan = model.getLoan(loanId);
+		if (loan == null) return;
+
+		comparisonRemoveEntry(comparisonId, loan, Loan.class);
 	}
 
 	/**
@@ -111,6 +204,18 @@ public class Controller extends Application {
 	}
 
 	/**
+	 * @see ViewActionListener#requestRemoveComparison(long)
+	 */
+	void handleRequestRemoveComparison(final long comparisonId) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("Handle request to remove comparison " + comparisonId);
+		}
+		final Comparison<?> comparison = model.getComparison(comparisonId);
+		if (comparison == null) return;
+		model.remove(comparison);
+	}
+
+	/**
 	 * @see ViewActionListener#requestRemoveFounding(long)
 	 */
 	void handleRequestRemoveFounding(final long foundingId) {
@@ -118,10 +223,10 @@ public class Controller extends Application {
 			logger.debug("Handle request to remove founding " + foundingId);
 		}
 		final Founding founding = model.getFounding(foundingId);
-		if (founding != null) {
-			model.remove(founding);
-			founding.getLoans().forEach(model::remove);
-		}
+		if (founding == null) return;
+		model.remove(founding);
+		founding.getLoans().forEach(model::remove);
+		// TODO remove founding from comparisons
 	}
 
 	/**
@@ -132,9 +237,9 @@ public class Controller extends Application {
 			logger.debug("Handle request to remove loan " + loanId);
 		}
 		final Loan loan = model.getLoan(loanId);
-		if (loan != null) {
-			model.remove(loan);
-		}
+		if (loan == null) return;
+		model.remove(loan);
+		// TODO remove loans from comparisons
 	}
 
 	/**
@@ -176,6 +281,44 @@ public class Controller extends Application {
 	}
 
 	/**
+	 * Handle {@link Comparison} add entry.
+	 *
+	 * @param comparisonId
+	 *            the comparison id
+	 * @param entry
+	 *            the entry
+	 * @param type
+	 *            the entry type
+	 */
+	@SuppressWarnings("unchecked")
+	private <T extends GenericModelEntry<T>> void comparisonAddEntry(final long comparisonId, final T entry, final Class<T> type) {
+		final Comparison<?> comparison = model.getComparison(comparisonId);
+		if (comparison == null || !comparison.getType().equals(type)) return;
+
+		final BaseComparison<T> bc = (BaseComparison<T>) comparison;
+		bc.add(entry);
+	}
+
+	/**
+	 * Handle {@link Comparison} remove entry.
+	 *
+	 * @param comparisonId
+	 *            the comparison id
+	 * @param entry
+	 *            the entry
+	 * @param type
+	 *            the entry type
+	 */
+	@SuppressWarnings("unchecked")
+	private <T extends GenericModelEntry<T>> void comparisonRemoveEntry(final long comparisonId, final T entry, final Class<T> type) {
+		final Comparison<?> comparison = model.getComparison(comparisonId);
+		if (comparison == null || !comparison.getType().equals(type)) return;
+
+		final BaseComparison<T> bc = (BaseComparison<T>) comparison;
+		bc.remove(entry);
+	}
+
+	/**
 	 * Create some example data.
 	 */
 	private void setupExampleData() {
@@ -196,10 +339,8 @@ public class Controller extends Application {
 
 	/** the {@link BaseModel}. */
 	private BaseModel model;
-
 	/** the {@link View}. */
 	private View view;
-
 	/** the {@link ViewActionHandler}. */
 	private ViewActionHandler viewActionHandler;
 

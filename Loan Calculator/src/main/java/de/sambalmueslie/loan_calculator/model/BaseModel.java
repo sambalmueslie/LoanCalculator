@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+import de.sambalmueslie.loan_calculator.model.compare.Comparison;
 import de.sambalmueslie.loan_calculator.model.founding.Founding;
 import de.sambalmueslie.loan_calculator.model.generic.GenericModel;
 import de.sambalmueslie.loan_calculator.model.generic.GenericModelListener;
@@ -49,6 +50,30 @@ public class BaseModel implements Model {
 				listeners.forEach(l -> l.loanRemoved(entry));
 			}
 		});
+
+		comparisonModel = new GenericModel<>();
+		comparisonModel.register(new GenericModelListener<Comparison<?>>() {
+
+			@Override
+			public void entryAdded(final GenericModel<Comparison<?>> model, final Comparison<?> entry) {
+				listeners.forEach(l -> l.comparisonAdded(entry));
+			}
+
+			@Override
+			public void entryRemoved(final GenericModel<Comparison<?>> model, final Comparison<?> entry) {
+				listeners.forEach(l -> l.comparisonRemoved(entry));
+			}
+		});
+	}
+
+	/**
+	 * Add a {@link Comparison}.
+	 *
+	 * @param comparison
+	 *            the comparison to add
+	 */
+	public void add(final Comparison<?> comparison) {
+		comparisonModel.add(comparison);
 	}
 
 	/**
@@ -72,6 +97,14 @@ public class BaseModel implements Model {
 	}
 
 	/**
+	 * @see de.sambalmueslie.loan_calculator.model.Model#getAllComparisons()
+	 */
+	@Override
+	public Collection<Comparison<?>> getAllComparisons() {
+		return comparisonModel.getAll();
+	}
+
+	/**
 	 * @see de.sambalmueslie.loan_calculator.model.Model#getAllFoundings()
 	 */
 	@Override
@@ -85,6 +118,14 @@ public class BaseModel implements Model {
 	@Override
 	public Collection<Loan> getAllLoans() {
 		return loanModel.getAll();
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.model.Model#getComparison(long)
+	 */
+	@Override
+	public Comparison<?> getComparison(final long id) {
+		return comparisonModel.get(id);
 	}
 
 	/**
@@ -124,6 +165,16 @@ public class BaseModel implements Model {
 	}
 
 	/**
+	 * Remove a {@link Comparison}.
+	 *
+	 * @param comparison
+	 *            the loan
+	 */
+	public void remove(final Comparison<?> comparison) {
+		comparisonModel.remove(comparison);
+	}
+
+	/**
 	 * Remove a {@link Founding}.
 	 *
 	 * @param founding
@@ -143,6 +194,8 @@ public class BaseModel implements Model {
 		loanModel.remove(loan);
 	}
 
+	/** the {@link GenericModel} for the {@link Comparison}. */
+	private final GenericModel<Comparison<?>> comparisonModel;
 	/** the {@link GenericModel} for the {@link Founding}s. */
 	private final GenericModel<Founding> foundingModel;
 	/** the {@link ModelChangeListener}. */

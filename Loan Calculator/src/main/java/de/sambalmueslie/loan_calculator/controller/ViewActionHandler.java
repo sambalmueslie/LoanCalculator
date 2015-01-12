@@ -41,6 +41,55 @@ public class ViewActionHandler implements ViewActionListener {
 	}
 
 	/**
+	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestAddComparisonFounding(long)
+	 */
+	@Override
+	public void requestAddComparisonFounding(final long foundingId) {
+		controller.handleRequestAddComparisonFounding(foundingId);
+
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestAddComparisonLoan(long)
+	 */
+	@Override
+	public void requestAddComparisonLoan(final long loanId) {
+		controller.handleRequestAddComparisonLoan(loanId);
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestComparisonAddFounding(long, long)
+	 */
+	@Override
+	public void requestComparisonAddFounding(final long comparisonId, final long foundingId) {
+		controller.handleRequestComparisonAddFounding(comparisonId, foundingId);
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestComparisonAddLoan(long, long)
+	 */
+	@Override
+	public void requestComparisonAddLoan(final long comparisonId, final long loanId) {
+		controller.handleRequestComparisonAddLoan(comparisonId, loanId);
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestComparisonRemoveFounding(long, long)
+	 */
+	@Override
+	public void requestComparisonRemoveFounding(final long comparisonId, final long foundingId) {
+		controller.handleRequestComparisonRemoveFounding(comparisonId, foundingId);
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestComparisonRemoveLoan(long, long)
+	 */
+	@Override
+	public void requestComparisonRemoveLoan(final long comparisonId, final long loanId) {
+		controller.handleRequestComparisonRemoveLoan(comparisonId, loanId);
+	}
+
+	/**
 	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestFoundingAddLoan(long, long)
 	 */
 	@Override
@@ -54,6 +103,14 @@ public class ViewActionHandler implements ViewActionListener {
 	@Override
 	public void requestFoundingRemoveLoan(final long foundingId, final long loanId) {
 		controller.handleRequestFoundingRemoveLoan(foundingId, loanId);
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestRemoveComparison(long)
+	 */
+	@Override
+	public void requestRemoveComparison(final long comparisonId) {
+		controller.handleRequestRemoveComparison(comparisonId);
 	}
 
 	/**

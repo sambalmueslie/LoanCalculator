@@ -4,6 +4,7 @@
 package de.sambalmueslie.loan_calculator.view.entry_mgr.tree;
 
 import de.sambalmueslie.loan_calculator.model.ModelChangeListener;
+import de.sambalmueslie.loan_calculator.model.compare.Comparison;
 import de.sambalmueslie.loan_calculator.model.founding.Founding;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
 
@@ -22,6 +23,24 @@ class ModelChangeHandler implements ModelChangeListener {
 	 */
 	ModelChangeHandler(final EntryTree entryTree) {
 		this.entryTree = entryTree;
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.model.ModelChangeListener#comparisonAdded(de.sambalmueslie.loan_calculator.model.compare.Comparison)
+	 */
+	@Override
+	public void comparisonAdded(final Comparison<?> comparison) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.model.ModelChangeListener#comparisonRemoved(de.sambalmueslie.loan_calculator.model.compare.Comparison)
+	 */
+	@Override
+	public void comparisonRemoved(final Comparison<?> comparison) {
+		// TODO Auto-generated method stub
+
 	}
 
 	/**

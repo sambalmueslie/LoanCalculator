@@ -37,7 +37,7 @@ public class EntryTreeContextMenu extends ContextMenu {
 		this.listener = listener;
 		addAnnuitiyLoanMenuItem = new MenuItem("Add annuity loan", IconProvider.createImageView(IconProvider.ICON_NOTE_NEW));
 		addAnnuitiyLoanMenuItem.setOnAction(e -> addAnnuitiyLoan());
-		addFoundingMenuItem = new MenuItem("Add founding", IconProvider.createImageView(IconProvider.ICON_PAGE_NEW));
+		addFoundingMenuItem = new MenuItem("Add founding", IconProvider.createImageView(IconProvider.ICON_FOLDER_NEW));
 		addFoundingMenuItem.setOnAction(e -> addFounding());
 		getItems().addAll(addAnnuitiyLoanMenuItem, addFoundingMenuItem);
 	}
