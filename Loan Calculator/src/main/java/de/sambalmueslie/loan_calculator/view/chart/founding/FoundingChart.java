@@ -22,7 +22,7 @@ public abstract class FoundingChart extends TilePane implements Chart<Founding> 
 	public FoundingChart() {
 		setHgap(Constants.DEFAULT_SPACING);
 		setVgap(Constants.DEFAULT_SPACING);
-		setPrefColumns(1);
+		setPrefColumns(2);
 
 		setStyle("-fx-border-color: lightgray;");
 	}
