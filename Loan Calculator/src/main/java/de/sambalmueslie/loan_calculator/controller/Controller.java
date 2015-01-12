@@ -342,11 +342,21 @@ public class Controller extends Application {
 		handleRequestAddAnnuityLoan("5,0% 10 Jahre fest", 100000, 3.0, 5.0, 10, 7.5);
 		handleRequestAddAnnuityLoan("5,0% 15 Jahre fest", 100000, 3.0, 5.0, 15, 7.5);
 
-		final Founding f = handleRequestAddFounding("Test founding", "Testbank");
-		final long foundingId = f.getId();
-		handleRequestFoundingAddLoan(foundingId, l1.getId());
-		handleRequestFoundingAddLoan(foundingId, l2.getId());
-		handleRequestFoundingAddLoan(foundingId, l3.getId());
+		final Founding f1 = handleRequestAddFounding("Test founding 1", "Testbank");
+		final long f1Id = f1.getId();
+		handleRequestFoundingAddLoan(f1Id, l1.getId());
+		handleRequestFoundingAddLoan(f1Id, l2.getId());
+		handleRequestFoundingAddLoan(f1Id, l3.getId());
+
+		final Loan l4 = handleRequestAddAnnuityLoan("3,0% komplett fest", 100000, 3.0, 3.0, 100, 3.0);
+		final Loan l5 = handleRequestAddAnnuityLoan("3,0% 10 Jahre fest", 100000, 3.0, 3.0, 10, 5.0);
+		final Loan l6 = handleRequestAddAnnuityLoan("3,0% 15 Jahre fest", 100000, 3.0, 3.0, 15, 5.0);
+
+		final Founding f2 = handleRequestAddFounding("Test founding 2", "Testbank");
+		final long f2Id = f2.getId();
+		handleRequestFoundingAddLoan(f2Id, l4.getId());
+		handleRequestFoundingAddLoan(f2Id, l5.getId());
+		handleRequestFoundingAddLoan(f2Id, l6.getId());
 	}
 
 	/** the {@link BaseModel}. */

@@ -7,6 +7,8 @@ import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DataFormat;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
@@ -30,6 +32,16 @@ public class EntryTreeItemFounding extends GridPane implements EntryTreeItemCont
 		final ImageView icon = IconProvider.createImageView(IconProvider.ICON_FOLDER_PAGE);
 		add(icon, 0, 0);
 		add(name, 1, 0);
+
+		setOnDragDetected(event -> {
+			if (founding == null) return;
+
+			final Dragboard dragBoard = startDragAndDrop(TransferMode.MOVE);
+			final ClipboardContent content = new ClipboardContent();
+			content.put(DataFormat.PLAIN_TEXT, Long.toString(founding.getId()));
+			dragBoard.setContent(content);
+			event.consume();
+		});
 
 		setOnDragOver(event -> {
 			if (founding != null) {

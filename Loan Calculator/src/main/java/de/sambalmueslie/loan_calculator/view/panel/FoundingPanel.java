@@ -38,9 +38,15 @@ public class FoundingPanel extends BorderPane {
 		founding.register(this::update);
 	}
 
-	private void addChart(final Chart<Founding> interestChart) {
-		interestChart.add(founding);
-		chartPane.getChildren().add(interestChart.getChart());
+	/**
+	 * Add a {@link Chart}.
+	 * 
+	 * @param chart
+	 *            the chart
+	 */
+	private void addChart(final Chart<Founding> chart) {
+		chart.add(founding);
+		chartPane.getChildren().add(chart.getChart());
 	}
 
 	/**
