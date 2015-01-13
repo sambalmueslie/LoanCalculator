@@ -357,6 +357,11 @@ public class Controller extends Application {
 		handleRequestFoundingAddLoan(f2Id, l4.getId());
 		handleRequestFoundingAddLoan(f2Id, l5.getId());
 		handleRequestFoundingAddLoan(f2Id, l6.getId());
+
+		final Comparison<Founding> comparison = handleRequestAddComparisonFounding(f1Id);
+		final long comparisonId = comparison.getId();
+		handleRequestComparisonAddFounding(comparisonId, f2Id);
+
 	}
 
 	/** the {@link BaseModel}. */

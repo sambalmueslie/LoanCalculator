@@ -169,7 +169,7 @@ public class BaseFounding implements Founding {
 	 * Notify that the founding has changed.
 	 */
 	private void notifyChanged() {
-		listeners.forEach(l -> l.entryChanged(this));
+		new LinkedList<>(listeners).forEach(l -> l.entryChanged(this));
 	}
 
 	/**

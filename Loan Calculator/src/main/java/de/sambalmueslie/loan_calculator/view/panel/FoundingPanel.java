@@ -10,12 +10,11 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.TilePane;
 import de.sambalmueslie.loan_calculator.model.founding.Founding;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
-import de.sambalmueslie.loan_calculator.view.Constants;
 import de.sambalmueslie.loan_calculator.view.chart.Chart;
 import de.sambalmueslie.loan_calculator.view.chart.founding.FoundingChartFactory;
+import de.sambalmueslie.loan_calculator.view.chart.generic.ChartPanel;
 import de.sambalmueslie.loan_calculator.view.chart.generic.GenericPieChart;
 import de.sambalmueslie.loan_calculator.view.component.TextFieldType;
 
@@ -49,7 +48,7 @@ public class FoundingPanel extends BorderPane {
 	 * @param chart
 	 *            the chart
 	 */
-	private void addChart(final Chart<Founding> chart) {
+	private void addChart(final ChartPanel chartPane, final Chart<Founding> chart) {
 		chart.add(founding);
 		chartPane.getChildren().add(chart.getChart());
 	}
@@ -64,22 +63,17 @@ public class FoundingPanel extends BorderPane {
 	 * @return the chart {@link Node}
 	 */
 	private Node addPieChartFunction(final String title, final Function<Loan, Double> function) {
-		final GenericPieChart<Founding, Loan> chart = new GenericPieChart<>(Founding::getLoans, function, title);
-		chart.add(founding);
-		return chart;
+		return new GenericPieChart<>(Founding::getLoans, function, title, founding);
 	}
 
 	/**
 	 * Setup the charts.
 	 */
 	private void setupCharts() {
-		chartPane = new TilePane();
-		chartPane.setVgap(Constants.DEFAULT_SPACING);
-		chartPane.setHgap(Constants.DEFAULT_SPACING);
-		chartPane.setPrefColumns(2);
+		final ChartPanel chartPane = new ChartPanel();
 
-		addChart(FoundingChartFactory.createRedemptionPlanChart());
-		addChart(FoundingChartFactory.createAnnuityPlanChart());
+		addChart(chartPane, FoundingChartFactory.createRedemptionPlanChart());
+		addChart(chartPane, FoundingChartFactory.createAnnuityPlanChart());
 		chartPane.getChildren().add(addPieChartFunction("Total amount", Loan::getAmount));
 		chartPane.getChildren().add(addPieChartFunction("Total interest", Loan::getTotalInterest));
 
@@ -128,10 +122,10 @@ public class FoundingPanel extends BorderPane {
 		infoPanel.update("Total interest", founding.getTotalInterest());
 		infoPanel.update("Total Payment", founding.getTotalPayment());
 		infoPanel.update("Term", founding.getTerm());
+
+		setupCharts();
 	}
 
-	/** the chart {@link TilePane}. */
-	private TilePane chartPane;
 	/** the {@link Founding}. */
 	private final Founding founding;
 	/** the {@link InfoPanel}. */

@@ -6,8 +6,13 @@ package de.sambalmueslie.loan_calculator.view.compare;
 import java.util.Set;
 import java.util.function.Function;
 
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
 import de.sambalmueslie.loan_calculator.model.Model;
 import de.sambalmueslie.loan_calculator.model.compare.Comparison;
@@ -63,6 +68,7 @@ class ComparePanelFounding extends BaseComparePanel<Founding> {
 	@Override
 	protected void setup(final Set<Founding> elements) {
 		final TilePane comparePane = new TilePane(Orientation.HORIZONTAL);
+		comparePane.setPadding(new Insets(Constants.DEFAULT_SPACING));
 		comparePane.setVgap(Constants.DEFAULT_SPACING);
 		comparePane.setHgap(Constants.DEFAULT_SPACING);
 		comparePane.setPrefColumns(4);
@@ -73,30 +79,14 @@ class ComparePanelFounding extends BaseComparePanel<Founding> {
 		comparePane.getChildren().add(addCompareFunction("Term", Founding::getTerm));
 		setTop(comparePane);
 
-		chartPane = new TilePane();
-		chartPane.setVgap(Constants.DEFAULT_SPACING);
-		chartPane.setHgap(Constants.DEFAULT_SPACING);
-		chartPane.setPrefColumns(1);
+		final TilePane detailsPane = new TilePane();
+		detailsPane.setPadding(new Insets(Constants.DEFAULT_SPACING));
+		detailsPane.setVgap(Constants.DEFAULT_SPACING);
+		detailsPane.setHgap(Constants.DEFAULT_SPACING);
+		detailsPane.setPrefRows(1);
 
-		addChart(FoundingChartFactory.createRedemptionPlanChart());
-		addChart(FoundingChartFactory.createAnnuityPlanChart());
-
-		chartPane.getChildren().add(addPieChartFunction("Total amount", Loan::getAmount));
-		chartPane.getChildren().add(addPieChartFunction("Total payment", Loan::getTotalPayment));
-		chartPane.getChildren().add(addPieChartFunction("Total interest", Loan::getTotalInterest));
-
-		setCenter(chartPane);
-	}
-
-	/**
-	 * Add a {@link Chart}.
-	 *
-	 * @param chart
-	 *            the chart
-	 */
-	private void addChart(final Chart<Founding> chart) {
-		getComparison().getElements().forEach(f -> chart.add(f));
-		chartPane.getChildren().add(chart.getChart());
+		elements.forEach(f -> detailsPane.getChildren().add(createDetailsPanel(f)));
+		setCenter(detailsPane);
 	}
 
 	/**
@@ -115,21 +105,41 @@ class ComparePanelFounding extends BaseComparePanel<Founding> {
 	}
 
 	/**
-	 * Add a pie chart function.
+	 * Create the details panel for a {@link Founding}.
 	 *
-	 * @param title
-	 *            the title
-	 * @param function
-	 *            the function
-	 * @return the chart {@link Node}
+	 * @param founding
+	 *            the founding
+	 * @return the {@link Node}
 	 */
-	private Node addPieChartFunction(final String title, final Function<Loan, Double> function) {
-		final GenericPieChart<Founding, Loan> chart = new GenericPieChart<>(Founding::getLoans, function, title);
-		getComparison().getElements().forEach(f -> chart.add(f));
-		return chart;
-	}
+	private Node createDetailsPanel(final Founding founding) {
+		final GridPane detailsPane = new GridPane();
+		detailsPane.setVgap(Constants.DEFAULT_SPACING);
+		detailsPane.setHgap(Constants.DEFAULT_SPACING);
 
-	/** the chart pane. */
-	private TilePane chartPane;
+		final Label title = new Label(founding.getName());
+		title.getStyleClass().add("headline-label");
+		title.setAlignment(Pos.CENTER);
+		GridPane.setHalignment(title, HPos.CENTER);
+		detailsPane.add(title, 0, 0, 2, 1);
+
+		final Chart<Founding> redemptionPlanChart = FoundingChartFactory.createRedemptionPlanChart();
+		redemptionPlanChart.add(founding);
+		detailsPane.add(redemptionPlanChart.getChart(), 0, 1);
+
+		final Chart<Founding> annuityPlanChart = FoundingChartFactory.createAnnuityPlanChart();
+		annuityPlanChart.add(founding);
+		detailsPane.add(annuityPlanChart.getChart(), 0, 2);
+
+		final GenericPieChart<Founding, Loan> totalAmountChart = new GenericPieChart<>(Founding::getLoans, Loan::getAmount, "Total amount", founding);
+		detailsPane.add(totalAmountChart, 0, 3);
+
+		final GenericPieChart<Founding, Loan> totalPaymentChart = new GenericPieChart<>(Founding::getLoans, Loan::getTotalPayment, "Total payment", founding);
+		detailsPane.add(totalPaymentChart, 0, 4);
+
+		final GenericPieChart<Founding, Loan> totalInterestChart = new GenericPieChart<>(Founding::getLoans, Loan::getTotalInterest, "Total interest", founding);
+		detailsPane.add(totalInterestChart, 0, 5);
+
+		return detailsPane;
+	}
 
 }

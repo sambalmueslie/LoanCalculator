@@ -30,8 +30,10 @@ public class GenericPieChart<T extends GenericModelEntry<T>, R extends GenericMo
 	 *            the function to call on every {@link T}
 	 * @param title
 	 *            the title
+	 * @param entry
+	 *            the entry
 	 */
-	public GenericPieChart(final Function<T, Collection<R>> dataGetterFunction, final Function<R, Double> valueFunction, final String title) {
+	public GenericPieChart(final Function<T, Collection<R>> dataGetterFunction, final Function<R, Double> valueFunction, final String title, final T entry) {
 		this.dataGetterFunction = dataGetterFunction;
 		this.valueFunction = valueFunction;
 
@@ -39,51 +41,26 @@ public class GenericPieChart<T extends GenericModelEntry<T>, R extends GenericMo
 		setAnimated(false);
 		setLegendVisible(true);
 		setLegendSide(Side.BOTTOM);
-		setPrefWidth(250);
-		setData(data);
 
 		setStyle("-fx-border-color: lightgray;");
+		setData(entry);
 	}
 
 	/**
-	 * Add a {@link T}.
+	 * Set the data.
 	 *
 	 * @param entry
 	 *            the entry
 	 */
-	public void add(final T entry) {
+	public void setData(final T entry) {
 		if (entry == null) return;
-		for (final R loan : dataGetterFunction.apply(entry)) {
-			final String name = loan.getName();
-			final Double value = valueFunction.apply(loan);
+		final ObservableList<PieChart.Data> data = FXCollections.observableArrayList();
+		for (final R d : dataGetterFunction.apply(entry)) {
+			final String name = d.getName();
+			final Double value = valueFunction.apply(d);
 			data.add(new PieChart.Data(name, value));
 		}
-
-		for (final Node node : lookupAll("Text.chart-pie-label")) {
-			if (node instanceof Text) {
-				for (final PieChart.Data d : data) {
-					if (d.getName().equals(((Text) node).getText())) {
-						((Text) node).setText(String.format("%,.2f " + Constants.DEFAULT_CURRENCY, d.getPieValue()));
-					}
-				}
-			}
-		}
-		entry.register(this::update);
-	}
-
-	/**
-	 * Update.
-	 *
-	 * @param entry
-	 *            the {@link T}.
-	 */
-	private void update(final T entry) {
-		data.clear();
-		for (final R loan : dataGetterFunction.apply(entry)) {
-			final String name = loan.getName();
-			final Double value = valueFunction.apply(loan);
-			data.add(new PieChart.Data(name, value));
-		}
+		setData(data);
 
 		for (final Node node : lookupAll("Text.chart-pie-label")) {
 			if (node instanceof Text) {
@@ -97,8 +74,6 @@ public class GenericPieChart<T extends GenericModelEntry<T>, R extends GenericMo
 
 	}
 
-	/** the data. */
-	private final ObservableList<PieChart.Data> data = FXCollections.observableArrayList();
 	/** the data getter function. */
 	private final Function<T, Collection<R>> dataGetterFunction;
 	/** the function to use for the chart. */
