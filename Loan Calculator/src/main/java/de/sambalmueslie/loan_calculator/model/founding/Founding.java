@@ -33,12 +33,18 @@ public interface Founding extends GenericModelEntry<Founding> {
 	/**
 	 * @return the name.
 	 */
+	@Override
 	String getName();
 
 	/**
 	 * @return the redemption plan.
 	 */
 	List<RedemptionPlanEntry> getRedemptionPlan();
+
+	/**
+	 * @return the risk capital of not fixed interest.
+	 */
+	double getRiskCapital();
 
 	/**
 	 * @return the term in months.

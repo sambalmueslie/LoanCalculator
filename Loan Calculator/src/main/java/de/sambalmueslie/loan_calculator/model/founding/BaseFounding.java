@@ -94,6 +94,14 @@ public class BaseFounding implements Founding {
 	}
 
 	/**
+	 * @see de.sambalmueslie.loan_calculator.model.founding.Founding#getRiskCapital()
+	 */
+	@Override
+	public double getRiskCapital() {
+		return riskCapital;
+	}
+
+	/**
 	 * @see de.sambalmueslie.loan_calculator.model.founding.Founding#getTerm()
 	 */
 	@Override
@@ -180,6 +188,7 @@ public class BaseFounding implements Founding {
 		totalInterest = 0;
 		term = 0;
 		totalPayment = 0;
+		riskCapital = 0;
 		redemptionPlan = new LinkedList<>();
 
 		for (final Loan loan : loans.values()) {
@@ -187,6 +196,7 @@ public class BaseFounding implements Founding {
 			totalInterest += loan.getTotalInterest();
 			term = Integer.max(term, loan.getTerm());
 			totalPayment += loan.getTotalPayment();
+			riskCapital += loan.getRiskCapital();
 			final List<RedemptionPlanEntry> loanRedPlan = loan.getRedemptionPlan();
 			for (int i = 0; i < loanRedPlan.size(); i++) {
 				final RedemptionPlanEntry e1 = loanRedPlan.get(i);
@@ -233,11 +243,12 @@ public class BaseFounding implements Founding {
 	private String name;
 	/** the {@link List} if {@link RedemptionPlanEntry}s. */
 	private List<RedemptionPlanEntry> redemptionPlan = new LinkedList<>();
+	/** the risk capital. */
+	private double riskCapital;
 	/** the term. */
 	private int term;
 	/** the total interest. */
 	private double totalInterest;
-
 	/** the total payment. */
 	private double totalPayment;
 }

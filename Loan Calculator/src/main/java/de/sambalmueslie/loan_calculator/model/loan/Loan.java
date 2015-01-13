@@ -22,12 +22,18 @@ public interface Loan extends GenericModelEntry<Loan> {
 	/**
 	 * @return the name.
 	 */
+	@Override
 	String getName();
 
 	/**
 	 * @return the redemption plan.
 	 */
 	List<RedemptionPlanEntry> getRedemptionPlan();
+
+	/**
+	 * @return the risk capital of not fixed interest.
+	 */
+	double getRiskCapital();
 
 	/**
 	 * @return the term in months.
@@ -43,5 +49,4 @@ public interface Loan extends GenericModelEntry<Loan> {
 	 * @return the total payment (interest and amount).
 	 */
 	double getTotalPayment();
-
 }

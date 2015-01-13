@@ -71,12 +71,13 @@ class ComparePanelFounding extends BaseComparePanel<Founding> {
 		comparePane.setPadding(new Insets(Constants.DEFAULT_SPACING));
 		comparePane.setVgap(Constants.DEFAULT_SPACING);
 		comparePane.setHgap(Constants.DEFAULT_SPACING);
-		comparePane.setPrefColumns(4);
+		comparePane.setPrefRows(1);
 
 		comparePane.getChildren().add(addCompareFunction("Total payment", Founding::getTotalPayment));
 		comparePane.getChildren().add(addCompareFunction("Total interest", Founding::getTotalInterest));
 		comparePane.getChildren().add(addCompareFunction("Total Amount", Founding::getAmount));
 		comparePane.getChildren().add(addCompareFunction("Term", Founding::getTerm));
+		comparePane.getChildren().add(addCompareFunction("Risk capital", Founding::getRiskCapital));
 		setTop(comparePane);
 
 		final TilePane detailsPane = new TilePane();
@@ -133,6 +134,9 @@ class ComparePanelFounding extends BaseComparePanel<Founding> {
 
 		final GenericPieChart<Founding, Loan> totalInterestChart = new GenericPieChart<>(Founding::getLoans, Loan::getTotalInterest, "Total interest", founding);
 		detailsPane.add(totalInterestChart, 0, 5);
+
+		final GenericPieChart<Founding, Loan> riskCapitalChart = new GenericPieChart<>(Founding::getLoans, Loan::getRiskCapital, "Risk capital", founding);
+		detailsPane.add(riskCapitalChart, 0, 5);
 
 		return detailsPane;
 	}

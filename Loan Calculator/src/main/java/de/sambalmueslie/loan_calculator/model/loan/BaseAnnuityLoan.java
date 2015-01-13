@@ -77,6 +77,14 @@ public class BaseAnnuityLoan extends BaseLoan implements AnnuityLoan {
 	}
 
 	/**
+	 * @see de.sambalmueslie.loan_calculator.model.loan.Loan#getRiskCapital()
+	 */
+	@Override
+	public double getRiskCapital() {
+		return riskCapital;
+	}
+
+	/**
 	 * @see de.sambalmueslie.loan_calculator.model.loan.Loan#getTerm()
 	 */
 	@Override
@@ -170,21 +178,25 @@ public class BaseAnnuityLoan extends BaseLoan implements AnnuityLoan {
 
 		double residualDebt = getAmount();
 		totalInterest = 0;
+		riskCapital = 0;
 		final double annuity = getAmount() * (paymentRate + fixedDebitInterest) / 100;
 		redemptionPlan.add(new BaseRedemptionPlanEntry(residualDebt));
 
 		for (int i = 0; residualDebt > 0; i++) {
-
-			final double debitInterest = (i < fixedInterestPeriod ? fixedDebitInterest : estimatedDebitInterest) / 100;
+			final boolean noRisk = i < fixedInterestPeriod;
+			final double debitInterest = (noRisk ? fixedDebitInterest : estimatedDebitInterest) / 100;
 			final double interest = residualDebt * debitInterest;
 			totalInterest += interest;
 
 			final double redemption = annuity - interest;
 			if (redemption >= residualDebt) {
+				riskCapital += (noRisk) ? 0 : residualDebt;
 				residualDebt = 0;
 			} else {
 				residualDebt -= redemption;
+				riskCapital += (noRisk) ? 0 : redemption;
 			}
+
 			redemptionPlan.add(new BaseRedemptionPlanEntry(residualDebt, interest, redemption));
 
 		}
@@ -204,6 +216,8 @@ public class BaseAnnuityLoan extends BaseLoan implements AnnuityLoan {
 	private double paymentRate;
 	/** the redemption plan. */
 	private List<RedemptionPlanEntry> redemptionPlan;
+	/** the risk capital.. */
+	private double riskCapital;
 	/** the term (Laufzeit). */
 	private int term;
 	/** the total interest (Zins). */
