@@ -20,8 +20,8 @@ import de.sambalmueslie.loan_calculator.model.founding.Founding;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
 import de.sambalmueslie.loan_calculator.view.Constants;
 import de.sambalmueslie.loan_calculator.view.ViewActionListener;
-import de.sambalmueslie.loan_calculator.view.chart.Chart;
-import de.sambalmueslie.loan_calculator.view.chart.founding.FoundingChartFactory;
+import de.sambalmueslie.loan_calculator.view.chart.founding.AnnuityPlanChart;
+import de.sambalmueslie.loan_calculator.view.chart.founding.RedemptionPlanChart;
 import de.sambalmueslie.loan_calculator.view.chart.generic.GenericBarChart;
 import de.sambalmueslie.loan_calculator.view.chart.generic.GenericPieChart;
 
@@ -122,13 +122,8 @@ class ComparePanelFounding extends BaseComparePanel<Founding> {
 		GridPane.setHalignment(title, HPos.CENTER);
 		detailsPane.add(title, 0, 0, 2, 1);
 
-		final Chart<Founding> redemptionPlanChart = FoundingChartFactory.createRedemptionPlanChart();
-		redemptionPlanChart.add(founding);
-		detailsPane.add(redemptionPlanChart.getChart(), 0, 1);
-
-		final Chart<Founding> annuityPlanChart = FoundingChartFactory.createAnnuityPlanChart();
-		annuityPlanChart.add(founding);
-		detailsPane.add(annuityPlanChart.getChart(), 0, 2);
+		detailsPane.add(new RedemptionPlanChart(founding), 0, 1);
+		detailsPane.add(new AnnuityPlanChart(founding), 0, 2);
 
 		final GenericPieChart<Founding, Loan> totalAmountChart = new GenericPieChart<>(Founding::getLoans, Loan::getAmount, "Total amount", founding);
 		detailsPane.add(totalAmountChart, 0, 3);

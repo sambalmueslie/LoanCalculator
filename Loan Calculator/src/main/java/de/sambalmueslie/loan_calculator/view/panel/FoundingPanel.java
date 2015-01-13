@@ -13,7 +13,8 @@ import javafx.scene.layout.Pane;
 import de.sambalmueslie.loan_calculator.model.founding.Founding;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
 import de.sambalmueslie.loan_calculator.view.chart.Chart;
-import de.sambalmueslie.loan_calculator.view.chart.founding.FoundingChartFactory;
+import de.sambalmueslie.loan_calculator.view.chart.founding.AnnuityPlanChart;
+import de.sambalmueslie.loan_calculator.view.chart.founding.RedemptionPlanChart;
 import de.sambalmueslie.loan_calculator.view.chart.generic.ChartPanel;
 import de.sambalmueslie.loan_calculator.view.chart.generic.GenericPieChart;
 import de.sambalmueslie.loan_calculator.view.component.TextFieldType;
@@ -72,8 +73,8 @@ public class FoundingPanel extends BorderPane {
 	private void setupCharts() {
 		final ChartPanel chartPane = new ChartPanel();
 
-		addChart(chartPane, FoundingChartFactory.createRedemptionPlanChart());
-		addChart(chartPane, FoundingChartFactory.createAnnuityPlanChart());
+		chartPane.getChildren().add(new RedemptionPlanChart(founding));
+		chartPane.getChildren().add(new AnnuityPlanChart(founding));
 		chartPane.getChildren().add(addPieChartFunction("Total amount", Loan::getAmount));
 		chartPane.getChildren().add(addPieChartFunction("Total interest", Loan::getTotalInterest));
 

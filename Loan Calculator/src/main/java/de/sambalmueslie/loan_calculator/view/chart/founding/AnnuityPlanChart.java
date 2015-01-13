@@ -6,12 +6,10 @@ package de.sambalmueslie.loan_calculator.view.chart.founding;
 import java.util.List;
 
 import javafx.geometry.Side;
-import javafx.scene.Node;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.StackedBarChart;
 import de.sambalmueslie.loan_calculator.model.founding.Founding;
-import de.sambalmueslie.loan_calculator.model.loan.Loan;
 import de.sambalmueslie.loan_calculator.model.loan.RedemptionPlanEntry;
 
 /**
@@ -19,61 +17,34 @@ import de.sambalmueslie.loan_calculator.model.loan.RedemptionPlanEntry;
  *
  * @author sambalmueslie 2015
  */
-public class AnnuityPlanChart extends FoundingChart {
+public class AnnuityPlanChart extends StackedBarChart<String, Number> {
 
 	/**
-	 * The chart for a single {@link Loan}.
-	 *
-	 * @author sambalmueslie 2015
+	 * Constructor.
 	 */
-	private class Chart extends StackedBarChart<String, Number> {
-		/**
-		 * Constructor.
-		 */
-		public Chart(final Founding founding) {
-			super(new CategoryAxis(), new NumberAxis());
-			this.founding = founding;
-			setTitle("Annuity plan");
-			setAnimated(false);
-			setLegendVisible(true);
-			setLegendSide(Side.BOTTOM);
+	public AnnuityPlanChart(final Founding founding) {
+		super(new CategoryAxis(), new NumberAxis());
 
-			final Series<String, Number> interestSeries = new Series<>();
-			interestSeries.setName("interest");
-			final Series<String, Number> redemptionSeries = new Series<>();
-			redemptionSeries.setName("redemption");
+		setTitle("Annuity plan");
+		setAnimated(false);
+		setLegendVisible(true);
+		setLegendSide(Side.BOTTOM);
 
-			final List<RedemptionPlanEntry> redemptionPlan = founding.getRedemptionPlan();
-			for (int i = 1; i < redemptionPlan.size(); i++) {
-				final String name = i + "";
-				final RedemptionPlanEntry redemption = redemptionPlan.get(i);
-				interestSeries.getData().add(new Data<String, Number>(name, redemption.getInterest()));
-				redemptionSeries.getData().add(new Data<String, Number>(name, redemption.getRedemption()));
-			}
+		final Series<String, Number> interestSeries = new Series<>();
+		interestSeries.setName("interest");
+		final Series<String, Number> redemptionSeries = new Series<>();
+		redemptionSeries.setName("redemption");
 
-			getData().add(interestSeries);
-			getData().add(redemptionSeries);
+		final List<RedemptionPlanEntry> redemptionPlan = founding.getRedemptionPlan();
+		for (int i = 1; i < redemptionPlan.size(); i++) {
+			final String name = i + "";
+			final RedemptionPlanEntry redemption = redemptionPlan.get(i);
+			interestSeries.getData().add(new Data<String, Number>(name, redemption.getInterest()));
+			redemptionSeries.getData().add(new Data<String, Number>(name, redemption.getRedemption()));
 		}
 
-		/** the {@link Founding}. */
-		private final Founding founding;
+		getData().add(interestSeries);
+		getData().add(redemptionSeries);
 	}
 
-	/**
-	 * @see de.sambalmueslie.loan_calculator.view.chart.founding.FoundingChart#createChart(de.sambalmueslie.loan_calculator.model.founding.Founding)
-	 */
-	@Override
-	protected Node createChart(final Founding founding) {
-		return new Chart(founding);
-	}
-
-	/**
-	 * @see de.sambalmueslie.loan_calculator.view.chart.founding.FoundingChart#equals(javafx.scene.Node,
-	 *      de.sambalmueslie.loan_calculator.model.founding.Founding)
-	 */
-	@Override
-	protected boolean equals(final Node node, final Founding founding) {
-		if (node instanceof Chart) return ((Chart) node).founding.getId() == founding.getId();
-		return false;
-	}
 }
