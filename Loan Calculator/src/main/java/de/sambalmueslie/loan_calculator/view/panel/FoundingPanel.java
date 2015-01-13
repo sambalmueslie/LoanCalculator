@@ -3,15 +3,20 @@
  */
 package de.sambalmueslie.loan_calculator.view.panel;
 
+import java.util.function.Function;
+
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import de.sambalmueslie.loan_calculator.model.founding.Founding;
+import de.sambalmueslie.loan_calculator.model.loan.Loan;
 import de.sambalmueslie.loan_calculator.view.Constants;
 import de.sambalmueslie.loan_calculator.view.chart.Chart;
 import de.sambalmueslie.loan_calculator.view.chart.founding.FoundingChartFactory;
+import de.sambalmueslie.loan_calculator.view.chart.generic.GenericPieChart;
 import de.sambalmueslie.loan_calculator.view.component.TextFieldType;
 
 /**
@@ -40,13 +45,28 @@ public class FoundingPanel extends BorderPane {
 
 	/**
 	 * Add a {@link Chart}.
-	 * 
+	 *
 	 * @param chart
 	 *            the chart
 	 */
 	private void addChart(final Chart<Founding> chart) {
 		chart.add(founding);
 		chartPane.getChildren().add(chart.getChart());
+	}
+
+	/**
+	 * Add a pie chart function.
+	 *
+	 * @param title
+	 *            the title
+	 * @param function
+	 *            the function
+	 * @return the chart {@link Node}
+	 */
+	private Node addPieChartFunction(final String title, final Function<Loan, Double> function) {
+		final GenericPieChart<Founding, Loan> chart = new GenericPieChart<>(Founding::getLoans, function, title);
+		chart.add(founding);
+		return chart;
 	}
 
 	/**
@@ -60,8 +80,8 @@ public class FoundingPanel extends BorderPane {
 
 		addChart(FoundingChartFactory.createRedemptionPlanChart());
 		addChart(FoundingChartFactory.createAnnuityPlanChart());
-		addChart(FoundingChartFactory.createAmountChart());
-		addChart(FoundingChartFactory.createInterestChart());
+		chartPane.getChildren().add(addPieChartFunction("Total amount", Loan::getAmount));
+		chartPane.getChildren().add(addPieChartFunction("Total interest", Loan::getTotalInterest));
 
 		setCenter(chartPane);
 

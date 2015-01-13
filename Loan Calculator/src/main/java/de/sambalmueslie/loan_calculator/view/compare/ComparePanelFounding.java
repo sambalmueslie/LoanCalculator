@@ -16,8 +16,9 @@ import de.sambalmueslie.loan_calculator.model.loan.Loan;
 import de.sambalmueslie.loan_calculator.view.Constants;
 import de.sambalmueslie.loan_calculator.view.ViewActionListener;
 import de.sambalmueslie.loan_calculator.view.chart.Chart;
-import de.sambalmueslie.loan_calculator.view.chart.founding.FoundingBarChart;
 import de.sambalmueslie.loan_calculator.view.chart.founding.FoundingChartFactory;
+import de.sambalmueslie.loan_calculator.view.chart.generic.GenericBarChart;
+import de.sambalmueslie.loan_calculator.view.chart.generic.GenericPieChart;
 
 /**
  * The compare panel for {@link Loan}s.
@@ -79,8 +80,10 @@ class ComparePanelFounding extends BaseComparePanel<Founding> {
 
 		addChart(FoundingChartFactory.createRedemptionPlanChart());
 		addChart(FoundingChartFactory.createAnnuityPlanChart());
-		addChart(FoundingChartFactory.createAmountChart());
-		addChart(FoundingChartFactory.createInterestChart());
+
+		chartPane.getChildren().add(addPieChartFunction("Total amount", Loan::getAmount));
+		chartPane.getChildren().add(addPieChartFunction("Total payment", Loan::getTotalPayment));
+		chartPane.getChildren().add(addPieChartFunction("Total interest", Loan::getTotalInterest));
 
 		setCenter(chartPane);
 	}
@@ -96,10 +99,34 @@ class ComparePanelFounding extends BaseComparePanel<Founding> {
 		chartPane.getChildren().add(chart.getChart());
 	}
 
-	private Node addCompareFunction(final String name, final Function<Founding, Number> function) {
-		final FoundingBarChart totalPaymentChart = new FoundingBarChart(function, name);
-		getComparison().getElements().forEach(f -> totalPaymentChart.add(f));
-		return totalPaymentChart;
+	/**
+	 * Add a compare function.
+	 *
+	 * @param title
+	 *            the title
+	 * @param function
+	 *            the function
+	 * @return the chart {@link Node}
+	 */
+	private Node addCompareFunction(final String title, final Function<Founding, Number> function) {
+		final GenericBarChart<Founding> chart = new GenericBarChart<>(function, title);
+		getComparison().getElements().forEach(f -> chart.add(f));
+		return chart;
+	}
+
+	/**
+	 * Add a pie chart function.
+	 *
+	 * @param title
+	 *            the title
+	 * @param function
+	 *            the function
+	 * @return the chart {@link Node}
+	 */
+	private Node addPieChartFunction(final String title, final Function<Loan, Double> function) {
+		final GenericPieChart<Founding, Loan> chart = new GenericPieChart<>(Founding::getLoans, function, title);
+		getComparison().getElements().forEach(f -> chart.add(f));
+		return chart;
 	}
 
 	/** the chart pane. */

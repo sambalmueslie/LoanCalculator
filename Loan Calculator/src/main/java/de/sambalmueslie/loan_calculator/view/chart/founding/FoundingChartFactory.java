@@ -15,24 +15,10 @@ import de.sambalmueslie.loan_calculator.view.chart.ChartController;
 public final class FoundingChartFactory {
 
 	/**
-	 * @return a new founding amount {@link Chart}.
-	 */
-	public static Chart<Founding> createAmountChart() {
-		return new ChartController<Founding>(new AmountChart());
-	}
-
-	/**
 	 * @return a new annuity plan {@link Chart}.
 	 */
 	public static Chart<Founding> createAnnuityPlanChart() {
 		return new ChartController<Founding>(new AnnuityPlanChart());
-	}
-
-	/**
-	 * @return a new redemption plan {@link Chart}.
-	 */
-	public static Chart<Founding> createInterestChart() {
-		return new ChartController<Founding>(new InterestChart());
 	}
 
 	/**

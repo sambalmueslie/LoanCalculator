@@ -1,7 +1,7 @@
 /**
  *
  */
-package de.sambalmueslie.loan_calculator.view.chart.founding;
+package de.sambalmueslie.loan_calculator.view.chart.generic;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,14 +14,14 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import de.sambalmueslie.loan_calculator.model.founding.Founding;
+import de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry;
 
 /**
- * The bar chart for the {@link Founding}.
+ * A generic {@link BarChart}.
  *
  * @author sambalmueslie 2015
  */
-public class FoundingBarChart extends BarChart<String, Number> {
-
+public class GenericBarChart<T extends GenericModelEntry<T>> extends BarChart<String, Number> {
 	/**
 	 * Constructor.
 	 *
@@ -30,7 +30,7 @@ public class FoundingBarChart extends BarChart<String, Number> {
 	 * @param title
 	 *            the title
 	 */
-	public FoundingBarChart(final Function<Founding, Number> function, final String title) {
+	public GenericBarChart(final Function<T, Number> function, final String title) {
 		super(new CategoryAxis(), new NumberAxis());
 		this.function = function;
 
@@ -40,49 +40,48 @@ public class FoundingBarChart extends BarChart<String, Number> {
 		setLegendVisible(true);
 		setLegendSide(Side.BOTTOM);
 		setPrefWidth(250);
+
+		setStyle("-fx-border-color: lightgray;");
 	}
 
 	/**
-	 * Add a {@link Founding}.
+	 * Add a entry.
 	 *
-	 * @param founding
-	 *            the founding
+	 * @param entry
+	 *            the entry
 	 */
-	public void add(final Founding founding) {
-		if (founding == null) return;
-		final String name = founding.getName();
-		final Number value = function.apply(founding);
+	public void add(final T entry) {
+		if (entry == null) return;
+		final String name = entry.getName();
+		final Number value = function.apply(entry);
 
 		final ObservableList<Data<String, Number>> data = FXCollections.observableArrayList();
 		data.add(new Data<String, Number>(getTitle(), value));
 		final Series<String, Number> series = new Series<>(data);
 		series.setName(name);
 		getData().add(series);
-		seriesMap.put(founding.getId(), series);
+		seriesMap.put(entry.getId(), series);
 
-		founding.register(this::update);
+		entry.register(this::update);
 	}
 
 	/**
 	 * Update.
 	 *
-	 * @param founding
-	 *            the {@link Founding}.
+	 * @param entry
+	 *            the entry
 	 */
-	private void update(final Founding founding) {
-		final Number value = function.apply(founding);
+	public void update(final T entry) {
+		final Number value = function.apply(entry);
 
-		final Series<String, Number> series = seriesMap.get(founding.getId());
-
+		final Series<String, Number> series = seriesMap.get(entry.getId());
 		final ObservableList<Data<String, Number>> data = FXCollections.observableArrayList();
 		data.add(new Data<String, Number>(getTitle(), value));
 		series.setData(data);
-
 	}
 
 	/** the function to use for the chart. */
-	private final Function<Founding, Number> function;
-	/** the {@link Series} by founding id. */
+	private final Function<T, Number> function;
+	/** the {@link Series} by entry id. */
 	private final Map<Long, Series<String, Number>> seriesMap = new HashMap<>();
-
 }
