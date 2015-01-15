@@ -3,9 +3,9 @@
  */
 package de.sambalmueslie.loan_calculator.view.chart.generic;
 
+import static de.sambalmueslie.loan_calculator.view.Constants.CLASS_PANEL_BORDER;
 import javafx.scene.Node;
 import javafx.scene.layout.TilePane;
-import de.sambalmueslie.loan_calculator.view.Constants;
 
 /**
  * A chart panel.
@@ -19,16 +19,13 @@ public class ChartPanel extends TilePane {
 	 */
 	public ChartPanel() {
 		super();
-		setHgap(Constants.DEFAULT_SPACING);
-		setVgap(Constants.DEFAULT_SPACING);
+		getStyleClass().add(CLASS_PANEL_BORDER);
 		setPrefColumns(2);
-
-		setStyle("-fx-border-color: lightgray;");
 	}
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param nodes
 	 *            the nodes
 	 */

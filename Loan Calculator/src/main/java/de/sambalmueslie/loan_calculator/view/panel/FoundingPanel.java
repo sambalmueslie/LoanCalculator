@@ -3,6 +3,9 @@
  */
 package de.sambalmueslie.loan_calculator.view.panel;
 
+import static de.sambalmueslie.loan_calculator.view.Constants.CLASS_HEADLINE_LABEL;
+import static de.sambalmueslie.loan_calculator.view.Constants.CLASS_PANEL;
+
 import java.util.function.Function;
 
 import javafx.scene.Node;
@@ -12,7 +15,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import de.sambalmueslie.loan_calculator.model.founding.Founding;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
-import de.sambalmueslie.loan_calculator.view.chart.Chart;
 import de.sambalmueslie.loan_calculator.view.chart.founding.AnnuityPlanChart;
 import de.sambalmueslie.loan_calculator.view.chart.founding.RedemptionPlanChart;
 import de.sambalmueslie.loan_calculator.view.chart.generic.ChartPanel;
@@ -34,24 +36,12 @@ public class FoundingPanel extends BorderPane {
 	 */
 	public FoundingPanel(final Founding founding) {
 		this.founding = founding;
-		getStyleClass().add("founding-panel");
 
 		setupHeadline();
 		setupCharts();
 		setupInfo();
 
 		founding.register(this::update);
-	}
-
-	/**
-	 * Add a {@link Chart}.
-	 *
-	 * @param chart
-	 *            the chart
-	 */
-	private void addChart(final ChartPanel chartPane, final Chart<Founding> chart) {
-		chart.add(founding);
-		chartPane.getChildren().add(chart.getChart());
 	}
 
 	/**
@@ -87,12 +77,12 @@ public class FoundingPanel extends BorderPane {
 	 */
 	private void setupHeadline() {
 		final Label bankLabel = new Label(founding.getBankName());
-		bankLabel.getStyleClass().add("headline-label");
+		bankLabel.getStyleClass().add(CLASS_HEADLINE_LABEL);
 		final Label nameLabel = new Label(founding.getName());
-		nameLabel.getStyleClass().add("headline-label");
+		nameLabel.getStyleClass().add(CLASS_HEADLINE_LABEL);
 
 		final HBox box = new HBox(bankLabel, nameLabel);
-		box.getStyleClass().add("founding-panel-headline");
+		box.getStyleClass().add(CLASS_PANEL);
 		setTop(box);
 	}
 

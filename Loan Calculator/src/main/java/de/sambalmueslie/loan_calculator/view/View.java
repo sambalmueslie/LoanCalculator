@@ -3,6 +3,7 @@
  */
 package de.sambalmueslie.loan_calculator.view;
 
+import static de.sambalmueslie.loan_calculator.view.Constants.CLASS_PANEL_EMPTY;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -60,11 +61,11 @@ public class View extends BorderPane {
 		final Label statusbar = new Label();
 
 		final BorderPane content = new BorderPane();
-		content.getStyleClass().add("view-content");
+		content.getStyleClass().add(CLASS_PANEL_EMPTY);
 		content.setLeft(entryTree);
 		content.setCenter(entryTabPane);
 
-		getStyleClass().add("view");
+		getStyleClass().add(CLASS_PANEL_EMPTY);
 		setCenter(content);
 		setBottom(statusbar);
 

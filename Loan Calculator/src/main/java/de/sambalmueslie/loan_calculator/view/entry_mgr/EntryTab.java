@@ -3,6 +3,7 @@
  */
 package de.sambalmueslie.loan_calculator.view.entry_mgr;
 
+import static de.sambalmueslie.loan_calculator.view.Constants.CLASS_PANEL;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
@@ -26,7 +27,7 @@ public class EntryTab extends Tab {
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param entry
 	 *            {@link #entry}
 	 * @param actionListener
@@ -39,7 +40,7 @@ public class EntryTab extends Tab {
 		this.actionListener = actionListener;
 		this.model = model;
 
-		getStyleClass().add("entry-tab");
+		getStyleClass().add(CLASS_PANEL);
 		setClosable(false);
 		final Node content = getContent(entry);
 		final ScrollPane scrollPane = new ScrollPane(content);

@@ -3,6 +3,8 @@
  */
 package de.sambalmueslie.loan_calculator.view.panel;
 
+import static de.sambalmueslie.loan_calculator.view.Constants.CLASS_HEADLINE_LABEL;
+import static de.sambalmueslie.loan_calculator.view.Constants.CLASS_PANEL;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.chart.Chart;
@@ -12,7 +14,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
-import de.sambalmueslie.loan_calculator.view.Constants;
 import de.sambalmueslie.loan_calculator.view.component.TextFieldType;
 
 /**
@@ -122,8 +123,7 @@ public abstract class LoanPanel<T extends Loan> extends Pane {
 	 */
 	private void setupCharts() {
 		chartPane = new GridPane();
-		chartPane.setVgap(Constants.DEFAULT_SPACING);
-		chartPane.setHgap(Constants.DEFAULT_SPACING);
+		chartPane.getStyleClass().add(CLASS_PANEL);
 		chartPane.setPrefWidth(800);
 		borderPane.setCenter(chartPane);
 	}
@@ -133,7 +133,7 @@ public abstract class LoanPanel<T extends Loan> extends Pane {
 	 */
 	private void setupHeadline() {
 		final Label nameLabel = new Label(loan.getName());
-		nameLabel.getStyleClass().add("headline-label");
+		nameLabel.getStyleClass().add(CLASS_HEADLINE_LABEL);
 		BorderPane.setAlignment(nameLabel, Pos.CENTER);
 		borderPane.setTop(nameLabel);
 	}

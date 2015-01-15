@@ -3,6 +3,7 @@
  */
 package de.sambalmueslie.loan_calculator.view.entry_mgr.tree;
 
+import static de.sambalmueslie.loan_calculator.view.Constants.CLASS_PANEL;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
@@ -27,7 +28,7 @@ public class EntryTreeItemFounding extends GridPane implements EntryTreeItemCont
 	 * Constructor.
 	 */
 	public EntryTreeItemFounding() {
-		getStyleClass().add("entry-tree-item");
+		getStyleClass().add(CLASS_PANEL);
 
 		final ImageView icon = IconProvider.createImageView(IconProvider.ICON_FOLDER_PAGE);
 		add(icon, 0, 0);

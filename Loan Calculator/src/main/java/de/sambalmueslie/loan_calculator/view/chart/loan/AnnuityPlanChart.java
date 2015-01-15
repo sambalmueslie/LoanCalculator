@@ -3,6 +3,8 @@
  */
 package de.sambalmueslie.loan_calculator.view.chart.loan;
 
+import static de.sambalmueslie.loan_calculator.view.Constants.CLASS_PANEL;
+
 import java.util.List;
 
 import javafx.geometry.Side;
@@ -13,7 +15,6 @@ import javafx.scene.chart.StackedBarChart;
 import javafx.scene.layout.TilePane;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
 import de.sambalmueslie.loan_calculator.model.loan.RedemptionPlanEntry;
-import de.sambalmueslie.loan_calculator.view.Constants;
 import de.sambalmueslie.loan_calculator.view.chart.Chart;
 
 /**
@@ -68,8 +69,7 @@ public class AnnuityPlanChart extends TilePane implements Chart<Loan> {
 	 *            the {@link Loan} to show
 	 */
 	AnnuityPlanChart() {
-		setHgap(Constants.DEFAULT_SPACING);
-		setVgap(Constants.DEFAULT_SPACING);
+		getStyleClass().add(CLASS_PANEL);
 		setPrefColumns(2);
 	}
 

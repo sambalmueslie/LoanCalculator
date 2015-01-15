@@ -3,7 +3,8 @@
  */
 package de.sambalmueslie.loan_calculator.view.entry_mgr.tree;
 
-import static de.sambalmueslie.loan_calculator.view.Constants.DEFAULT_SPACING;
+import static de.sambalmueslie.loan_calculator.view.Constants.CLASS_HEADLINE_LABEL;
+import static de.sambalmueslie.loan_calculator.view.Constants.CLASS_PANEL;
 
 import java.util.LinkedList;
 import java.util.Optional;
@@ -40,13 +41,13 @@ public class EntryTree extends GridPane {
 		modelChangeHandler = new ModelChangeHandler(this);
 		model.listenerRegister(modelChangeHandler);
 
-		setHgap(DEFAULT_SPACING);
-		setVgap(DEFAULT_SPACING);
+		getStyleClass().add(CLASS_PANEL);
 
-		final HBox title = new HBox(DEFAULT_SPACING);
+		final HBox title = new HBox();
+		title.getStyleClass().add(CLASS_PANEL);
 		title.setAlignment(Pos.CENTER);
 		final Label overview = new Label("Overview");
-		overview.getStyleClass().add("headline-label");
+		overview.getStyleClass().add(CLASS_HEADLINE_LABEL);
 		title.getChildren().add(overview);
 		add(title, 0, 0);
 

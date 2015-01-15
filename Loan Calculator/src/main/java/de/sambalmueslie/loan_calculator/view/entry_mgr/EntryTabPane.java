@@ -3,6 +3,7 @@
  */
 package de.sambalmueslie.loan_calculator.view.entry_mgr;
 
+import static de.sambalmueslie.loan_calculator.view.Constants.CLASS_PANEL_EMPTY;
 import javafx.scene.control.TabPane;
 import de.sambalmueslie.loan_calculator.model.Model;
 import de.sambalmueslie.loan_calculator.model.ModelChangeListener;
@@ -85,7 +86,7 @@ public class EntryTabPane extends TabPane {
 	public EntryTabPane(final Model model, final ViewActionListener actionListener) {
 		this.model = model;
 		this.actionListener = actionListener;
-		getStyleClass().add("entry-tab-pane");
+		getStyleClass().add(CLASS_PANEL_EMPTY);
 		model.listenerRegister(modelChangeHandler);
 
 		model.getAllLoans().forEach(loan -> add(loan));

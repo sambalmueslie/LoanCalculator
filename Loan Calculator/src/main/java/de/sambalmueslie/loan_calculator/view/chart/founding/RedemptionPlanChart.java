@@ -27,6 +27,8 @@ public class RedemptionPlanChart extends StackedAreaChart<Number, Number> {
 	public RedemptionPlanChart(final Founding founding) {
 		super(new NumberAxis(), new NumberAxis());
 
+		setStyle("-fx-border-color: lightgray;");
+
 		setTitle("Redemption Plan");
 		setAnimated(false);
 		setLegendVisible(true);

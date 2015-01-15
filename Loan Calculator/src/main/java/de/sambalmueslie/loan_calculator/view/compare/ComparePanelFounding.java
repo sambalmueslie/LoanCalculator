@@ -3,11 +3,14 @@
  */
 package de.sambalmueslie.loan_calculator.view.compare;
 
+import static de.sambalmueslie.loan_calculator.view.Constants.CLASS_HEADLINE_LABEL;
+import static de.sambalmueslie.loan_calculator.view.Constants.CLASS_PANEL;
+import static de.sambalmueslie.loan_calculator.view.Constants.CLASS_PANEL_BORDER;
+
 import java.util.Set;
 import java.util.function.Function;
 
 import javafx.geometry.HPos;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -18,7 +21,6 @@ import de.sambalmueslie.loan_calculator.model.compare.Comparison;
 import de.sambalmueslie.loan_calculator.model.founding.Founding;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
 import de.sambalmueslie.loan_calculator.model.loan.RedemptionPlanEntry;
-import de.sambalmueslie.loan_calculator.view.Constants;
 import de.sambalmueslie.loan_calculator.view.ViewActionListener;
 import de.sambalmueslie.loan_calculator.view.chart.SeriesDefinition;
 import de.sambalmueslie.loan_calculator.view.chart.founding.AnnuityPlanChart;
@@ -70,9 +72,7 @@ class ComparePanelFounding extends BaseComparePanel<Founding> {
 	@Override
 	protected void setup(final Set<Founding> elements) {
 		final TilePane comparePane = new TilePane();
-		comparePane.setPadding(new Insets(Constants.DEFAULT_SPACING));
-		comparePane.setVgap(Constants.DEFAULT_SPACING);
-		comparePane.setHgap(Constants.DEFAULT_SPACING);
+		comparePane.getStyleClass().add(CLASS_PANEL);
 
 		comparePane.getChildren().add(addCompareFunction("Total payment", Founding::getTotalPayment));
 		comparePane.getChildren().add(addCompareFunction("Total interest", Founding::getTotalInterest));
@@ -89,9 +89,7 @@ class ComparePanelFounding extends BaseComparePanel<Founding> {
 		setTop(comparePane);
 
 		final TilePane detailsPane = new TilePane();
-		detailsPane.setPadding(new Insets(Constants.DEFAULT_SPACING));
-		detailsPane.setVgap(Constants.DEFAULT_SPACING);
-		detailsPane.setHgap(Constants.DEFAULT_SPACING);
+		detailsPane.getStyleClass().add(CLASS_PANEL);
 		detailsPane.setPrefRows(1);
 
 		elements.forEach(f -> detailsPane.getChildren().add(createDetailsPanel(f)));
@@ -122,11 +120,10 @@ class ComparePanelFounding extends BaseComparePanel<Founding> {
 	 */
 	private Node createDetailsPanel(final Founding founding) {
 		final GridPane detailsPane = new GridPane();
-		detailsPane.setVgap(Constants.DEFAULT_SPACING);
-		detailsPane.setHgap(Constants.DEFAULT_SPACING);
+		detailsPane.getStyleClass().add(CLASS_PANEL_BORDER);
 
 		final Label title = new Label(founding.getName());
-		title.getStyleClass().add("headline-label");
+		title.getStyleClass().add(CLASS_HEADLINE_LABEL);
 		title.setAlignment(Pos.CENTER);
 		GridPane.setHalignment(title, HPos.CENTER);
 		detailsPane.add(title, 0, 0, 2, 1);
