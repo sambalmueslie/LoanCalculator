@@ -75,7 +75,7 @@ public class EntryTree extends GridPane {
 			if (strId != null) {
 				final long loanId = Long.parseLong(strId);
 				final Loan loan = model.getLoan(loanId);
-				final TreeItem<GenericModelEntry<?>> foundingItem = getLoanFoundingParent(loan);
+				final TreeItem<GenericModelEntry> foundingItem = getLoanFoundingParent(loan);
 				if (foundingItem != null) {
 					final long foundingId = ((Founding) foundingItem.getValue()).getId();
 					actionForwarder.requestFoundingRemoveLoan(foundingId, loanId);
@@ -98,10 +98,10 @@ public class EntryTree extends GridPane {
 	 *            the founding
 	 */
 	void add(final Founding founding) {
-		final TreeItem<GenericModelEntry<?>> foundingItem = new TreeItem<>(founding);
+		final TreeItem<GenericModelEntry> foundingItem = new TreeItem<>(founding);
 		treeView.getRoot().getChildren().add(foundingItem);
 		assignFoundingChildren(founding, foundingItem);
-		founding.register(this::foundingChanged);
+		founding.register(f -> foundingChanged((Founding) f));
 		foundingItem.setExpanded(true);
 	}
 
@@ -112,8 +112,8 @@ public class EntryTree extends GridPane {
 	 *            the loan
 	 */
 	void add(final Loan loan) {
-		final TreeItem<GenericModelEntry<?>> loanItem = new TreeItem<>(loan);
-		final TreeItem<GenericModelEntry<?>> foundingParent = getLoanFoundingParent(loan);
+		final TreeItem<GenericModelEntry> loanItem = new TreeItem<>(loan);
+		final TreeItem<GenericModelEntry> foundingParent = getLoanFoundingParent(loan);
 		if (foundingParent != null) {
 			foundingParent.getChildren().add(loanItem);
 		} else {
@@ -128,7 +128,7 @@ public class EntryTree extends GridPane {
 	 *            the founding
 	 */
 	void remove(final Founding founding) {
-		final ObservableList<TreeItem<GenericModelEntry<?>>> rootChildren = treeView.getRoot().getChildren();
+		final ObservableList<TreeItem<GenericModelEntry>> rootChildren = treeView.getRoot().getChildren();
 		rootChildren.removeIf(n -> n.getValue().equals(founding));
 	}
 
@@ -139,7 +139,7 @@ public class EntryTree extends GridPane {
 	 *            the loan
 	 */
 	void remove(final Loan loan) {
-		final ObservableList<TreeItem<GenericModelEntry<?>>> rootChildren = treeView.getRoot().getChildren();
+		final ObservableList<TreeItem<GenericModelEntry>> rootChildren = treeView.getRoot().getChildren();
 		rootChildren.removeIf(n -> n.getValue().equals(loan));
 	}
 
@@ -151,18 +151,18 @@ public class EntryTree extends GridPane {
 	 * @param foundingItem
 	 *            the founding {@link TreeItem}.
 	 */
-	private void assignFoundingChildren(final Founding founding, final TreeItem<GenericModelEntry<?>> foundingItem) {
-		final ObservableList<TreeItem<GenericModelEntry<?>>> rootChildren = treeView.getRoot().getChildren();
+	private void assignFoundingChildren(final Founding founding, final TreeItem<GenericModelEntry> foundingItem) {
+		final ObservableList<TreeItem<GenericModelEntry>> rootChildren = treeView.getRoot().getChildren();
 		// handle added items
 		for (final Loan loan : founding.getLoans()) {
-			final TreeItem<GenericModelEntry<?>> loanItem = getTreeItemByValue(loan, rootChildren);
+			final TreeItem<GenericModelEntry> loanItem = getTreeItemByValue(loan, rootChildren);
 			if (loanItem != null) {
 				rootChildren.remove(loanItem);
 				foundingItem.getChildren().add(loanItem);
 			}
 		}
 		// handle removed items
-		for (final TreeItem<GenericModelEntry<?>> loanItem : new LinkedList<TreeItem<GenericModelEntry<?>>>(foundingItem.getChildren())) {
+		for (final TreeItem<GenericModelEntry> loanItem : new LinkedList<TreeItem<GenericModelEntry>>(foundingItem.getChildren())) {
 			final Loan loan = (Loan) loanItem.getValue();
 			if (!founding.getLoans().contains(loan)) {
 				foundingItem.getChildren().remove(loanItem);
@@ -177,8 +177,8 @@ public class EntryTree extends GridPane {
 	 * @param founding
 	 */
 	private void foundingChanged(final Founding founding) {
-		final ObservableList<TreeItem<GenericModelEntry<?>>> rootChildren = treeView.getRoot().getChildren();
-		final TreeItem<GenericModelEntry<?>> foundingItem = getTreeItemByValue(founding, rootChildren);
+		final ObservableList<TreeItem<GenericModelEntry>> rootChildren = treeView.getRoot().getChildren();
+		final TreeItem<GenericModelEntry> foundingItem = getTreeItemByValue(founding, rootChildren);
 		if (foundingItem != null) {
 			assignFoundingChildren(founding, foundingItem);
 		}
@@ -191,9 +191,9 @@ public class EntryTree extends GridPane {
 	 *            the loan
 	 * @return the {@link TreeItem} or <code>null</code> if not exists.
 	 */
-	private TreeItem<GenericModelEntry<?>> getLoanFoundingParent(final Loan loan) {
-		final ObservableList<TreeItem<GenericModelEntry<?>>> rootChildren = treeView.getRoot().getChildren();
-		final Optional<TreeItem<GenericModelEntry<?>>> result = rootChildren.stream()
+	private TreeItem<GenericModelEntry> getLoanFoundingParent(final Loan loan) {
+		final ObservableList<TreeItem<GenericModelEntry>> rootChildren = treeView.getRoot().getChildren();
+		final Optional<TreeItem<GenericModelEntry>> result = rootChildren.stream()
 				.filter(item -> item.getValue() instanceof Founding && ((Founding) item.getValue()).getLoans().contains(loan)).findFirst();
 		return result.isPresent() ? result.get() : null;
 	}
@@ -207,14 +207,14 @@ public class EntryTree extends GridPane {
 	 *            the list to search
 	 * @return the {@link TreeItem} if found, otherwise <code>null</code>
 	 */
-	private TreeItem<GenericModelEntry<?>> getTreeItemByValue(final GenericModelEntry<?> value, final ObservableList<TreeItem<GenericModelEntry<?>>> treeItems) {
-		final Optional<TreeItem<GenericModelEntry<?>>> result = treeItems.stream().filter(item -> item.getValue().equals(value)).findFirst();
+	private TreeItem<GenericModelEntry> getTreeItemByValue(final GenericModelEntry value, final ObservableList<TreeItem<GenericModelEntry>> treeItems) {
+		final Optional<TreeItem<GenericModelEntry>> result = treeItems.stream().filter(item -> item.getValue().equals(value)).findFirst();
 		return (result.isPresent()) ? result.get() : null;
 	}
 
 	/** the {@link ModelChangeHandler}. */
 	private final ModelChangeHandler modelChangeHandler;
 	/** the {@link TreeView}. */
-	private final TreeView<GenericModelEntry<?>> treeView;
+	private final TreeView<GenericModelEntry> treeView;
 
 }

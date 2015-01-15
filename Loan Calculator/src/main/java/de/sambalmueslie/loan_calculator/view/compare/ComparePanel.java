@@ -11,7 +11,7 @@ import de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry;
  *
  * @author sambalmueslie 2015
  */
-public interface ComparePanel<T extends GenericModelEntry<T>> {
+public interface ComparePanel<T extends GenericModelEntry> {
 
 	/**
 	 * @return the content {@link Node}.

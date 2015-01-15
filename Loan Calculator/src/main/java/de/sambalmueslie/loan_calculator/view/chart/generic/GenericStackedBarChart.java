@@ -19,7 +19,7 @@ import de.sambalmueslie.loan_calculator.view.chart.SeriesDefinition;
  *
  * @author sambalmueslie 2015
  */
-public class GenericStackedBarChart<T extends GenericModelEntry<T>, R> extends StackedBarChart<String, Number> {
+public class GenericStackedBarChart<T extends GenericModelEntry, R> extends StackedBarChart<String, Number> {
 
 	/**
 	 * Constructor.

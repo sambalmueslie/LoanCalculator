@@ -8,7 +8,7 @@ package de.sambalmueslie.loan_calculator.model.generic;
  *
  * @author sambalmueslie 2015
  */
-public interface GenericModelListener<T extends GenericModelEntry<T>> {
+public interface GenericModelListener<T extends GenericModelEntry> {
 	/**
 	 * A {@link GenericModelEntry} was added.
 	 *

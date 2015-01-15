@@ -35,7 +35,7 @@ public class EntryTab extends Tab {
 	 * @param model
 	 *            {@link #model}
 	 */
-	public EntryTab(final GenericModelEntry<?> entry, final ViewActionListener actionListener, final Model model) {
+	public EntryTab(final GenericModelEntry entry, final ViewActionListener actionListener, final Model model) {
 		this.entry = entry;
 		this.actionListener = actionListener;
 		this.model = model;
@@ -52,7 +52,7 @@ public class EntryTab extends Tab {
 	/**
 	 * @return the {@link #entry}
 	 */
-	GenericModelEntry<?> getEntry() {
+	GenericModelEntry getEntry() {
 		return entry;
 	}
 
@@ -63,7 +63,7 @@ public class EntryTab extends Tab {
 	 *            the entry
 	 * @return the content
 	 */
-	private Node getContent(final GenericModelEntry<?> entry) {
+	private Node getContent(final GenericModelEntry entry) {
 		if (entry instanceof AnnuityLoan) {
 			final AnnuityLoan annuityLoan = (AnnuityLoan) entry;
 			return new AnnuityLoanPanel(annuityLoan);
@@ -83,7 +83,7 @@ public class EntryTab extends Tab {
 	/** the {@link ViewActionListener}. */
 	private final ViewActionListener actionListener;
 	/** the {@link GenericModelEntry}. */
-	private final GenericModelEntry<?> entry;
+	private final GenericModelEntry entry;
 	/** the {@link Model}. */
 	private final Model model;
 

@@ -15,7 +15,7 @@ import de.sambalmueslie.loan_calculator.model.generic.GenericModelEntryChangeLis
  * @param <T>
  *            the {@link GenericModelEntry} type
  */
-public class BaseComparison<T extends GenericModelEntry<T>> implements Comparison<T> {
+public class BaseComparison<T extends GenericModelEntry> implements Comparison<T> {
 
 	/**
 	 * Constructor.
@@ -81,7 +81,7 @@ public class BaseComparison<T extends GenericModelEntry<T>> implements Compariso
 	 * @see de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry#register(de.sambalmueslie.loan_calculator.model.generic.GenericModelEntryChangeListener)
 	 */
 	@Override
-	public final void register(final GenericModelEntryChangeListener<Comparison<T>> listener) {
+	public final void register(final GenericModelEntryChangeListener listener) {
 		if (listener == null || listeners.contains(listener)) return;
 		listeners.add(listener);
 	}
@@ -102,7 +102,7 @@ public class BaseComparison<T extends GenericModelEntry<T>> implements Compariso
 	 * @see de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry#unregister(de.sambalmueslie.loan_calculator.model.generic.GenericModelEntryChangeListener)
 	 */
 	@Override
-	public final void unregister(final GenericModelEntryChangeListener<Comparison<T>> listener) {
+	public final void unregister(final GenericModelEntryChangeListener listener) {
 		if (listener == null) return;
 		listeners.remove(listener);
 	}
@@ -133,7 +133,7 @@ public class BaseComparison<T extends GenericModelEntry<T>> implements Compariso
 	/** the id. */
 	private final long id;
 	/** the {@link GenericModelEntryChangeListener}s. */
-	private final List<GenericModelEntryChangeListener<Comparison<T>>> listeners = new LinkedList<>();
+	private final List<GenericModelEntryChangeListener> listeners = new LinkedList<>();
 	/** the name. */
 	private String name;
 	/** the type. */

@@ -12,7 +12,7 @@ import de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry;
  *
  * @author sambalmueslie 2015
  */
-public interface Comparison<T extends GenericModelEntry<T>> extends GenericModelEntry<Comparison<T>> {
+public interface Comparison<T extends GenericModelEntry> extends GenericModelEntry {
 
 	/**
 	 * @return the compared elements.

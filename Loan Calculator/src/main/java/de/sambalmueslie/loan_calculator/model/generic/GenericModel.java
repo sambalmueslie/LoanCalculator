@@ -15,7 +15,7 @@ import de.sambalmueslie.loan_calculator.model.ModelChangeListener;
  *
  * @author sambalmueslie 2015
  */
-public class GenericModel<T extends GenericModelEntry<T>> {
+public class GenericModel<T extends GenericModelEntry> {
 	/** the logger. */
 	private static final Logger logger = LogManager.getLogger(GenericModel.class);
 

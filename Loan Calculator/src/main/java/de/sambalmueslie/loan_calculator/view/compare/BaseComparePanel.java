@@ -24,7 +24,7 @@ import de.sambalmueslie.loan_calculator.view.ViewActionListener;
  * @param <T>
  *            the compare value type
  */
-public abstract class BaseComparePanel<T extends GenericModelEntry<T>> extends BorderPane implements ComparePanel<T> {
+public abstract class BaseComparePanel<T extends GenericModelEntry> extends BorderPane implements ComparePanel<T> {
 
 	/**
 	 * Constructor.
@@ -37,7 +37,7 @@ public abstract class BaseComparePanel<T extends GenericModelEntry<T>> extends B
 		this.actionListener = actionListener;
 		this.model = model;
 
-		comparison.register(this::update);
+		comparison.register(c -> update((Comparison) c));
 		setup(comparison.getElements());
 
 		setOnDragOver(event -> {

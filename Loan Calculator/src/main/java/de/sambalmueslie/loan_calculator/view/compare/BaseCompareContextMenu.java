@@ -15,7 +15,7 @@ import de.sambalmueslie.loan_calculator.view.ViewActionListener;
  *
  * @author sambalmueslie 2015
  */
-public abstract class BaseCompareContextMenu<T extends GenericModelEntry<T>> extends ContextMenu {
+public abstract class BaseCompareContextMenu<T extends GenericModelEntry> extends ContextMenu {
 
 	/**
 	 * Constructor.
@@ -43,7 +43,7 @@ public abstract class BaseCompareContextMenu<T extends GenericModelEntry<T>> ext
 
 	/**
 	 * Handle a element remove action.
-	 * 
+	 *
 	 * @param listener
 	 *            the {@link ViewActionListener}
 	 * @param comparisonId

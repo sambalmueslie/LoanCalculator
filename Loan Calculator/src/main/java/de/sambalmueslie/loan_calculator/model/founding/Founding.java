@@ -14,7 +14,7 @@ import de.sambalmueslie.loan_calculator.model.loan.RedemptionPlanEntry;
  *
  * @author sambalmueslie 2015
  */
-public interface Founding extends GenericModelEntry<Founding> {
+public interface Founding extends GenericModelEntry {
 	/**
 	 * @return the amount of the loan.
 	 */

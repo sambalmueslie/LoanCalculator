@@ -55,7 +55,7 @@ abstract class BaseLoan implements Loan {
 	 * @see de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry#register(de.sambalmueslie.loan_calculator.model.generic.GenericModelEntryChangeListener)
 	 */
 	@Override
-	public final void register(final GenericModelEntryChangeListener<Loan> listener) {
+	public final void register(final GenericModelEntryChangeListener listener) {
 		if (listener == null || listeners.contains(listener)) return;
 		listeners.add(listener);
 	}
@@ -64,7 +64,7 @@ abstract class BaseLoan implements Loan {
 	 * @see de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry#unregister(de.sambalmueslie.loan_calculator.model.generic.GenericModelEntryChangeListener)
 	 */
 	@Override
-	public final void unregister(final GenericModelEntryChangeListener<Loan> listener) {
+	public final void unregister(final GenericModelEntryChangeListener listener) {
 		if (listener == null || !listeners.contains(listener)) return;
 		listeners.remove(listener);
 	}
@@ -96,7 +96,7 @@ abstract class BaseLoan implements Loan {
 	/** the id. */
 	private final long id;
 	/** the {@link GenericModelEntryChangeListener}. */
-	private final List<GenericModelEntryChangeListener<Loan>> listeners = new LinkedList<>();
+	private final List<GenericModelEntryChangeListener> listeners = new LinkedList<>();
 	/** the title. */
 	private String name;
 

@@ -13,7 +13,7 @@ import de.sambalmueslie.loan_calculator.view.ViewActionListener;
  *
  * @author sambalmueslie 2015
  */
-public interface EntryTreeItemContent<T extends GenericModelEntry<T>> {
+public interface EntryTreeItemContent<T extends GenericModelEntry> {
 	/**
 	 * @param entry
 	 *            the entry

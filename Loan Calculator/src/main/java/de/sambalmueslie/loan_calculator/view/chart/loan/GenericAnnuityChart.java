@@ -29,7 +29,7 @@ import de.sambalmueslie.loan_calculator.view.chart.SeriesDefinition;
  * @param <R>
  *            the data value
  */
-public class GenericAnnuityChart<T extends GenericModelEntry<T>, D, R extends Number> extends StackedBarChart<String, Number> {
+public class GenericAnnuityChart<T extends GenericModelEntry, D, R extends Number> extends StackedBarChart<String, Number> {
 
 	/**
 	 * Constructor.

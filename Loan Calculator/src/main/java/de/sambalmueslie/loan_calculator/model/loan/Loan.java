@@ -12,18 +12,12 @@ import de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry;
  *
  * @author sambalmueslie 2015
  */
-public interface Loan extends GenericModelEntry<Loan> {
+public interface Loan extends GenericModelEntry {
 
 	/**
 	 * @return the amount of the loan (kredit).
 	 */
 	double getAmount();
-
-	/**
-	 * @return the name.
-	 */
-	@Override
-	String getName();
 
 	/**
 	 * @return the redemption plan.

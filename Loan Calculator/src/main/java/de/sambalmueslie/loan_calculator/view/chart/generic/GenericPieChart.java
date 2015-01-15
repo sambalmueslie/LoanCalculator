@@ -20,7 +20,7 @@ import de.sambalmueslie.loan_calculator.view.Constants;
  *
  * @author sambalmueslie 2015
  */
-public class GenericPieChart<T extends GenericModelEntry<T>, R extends GenericModelEntry<R>> extends PieChart {
+public class GenericPieChart<T extends GenericModelEntry, R extends GenericModelEntry> extends PieChart {
 	/**
 	 * Constructor.
 	 *

@@ -21,7 +21,7 @@ import de.sambalmueslie.loan_calculator.view.chart.SeriesDefinition;
  *
  * @author sambalmueslie 2015
  */
-public class GenericStackedAreaChart<T extends GenericModelEntry<T>, R> extends StackedAreaChart<Number, Number> {
+public class GenericStackedAreaChart<T extends GenericModelEntry, R> extends StackedAreaChart<Number, Number> {
 
 	/**
 	 * Constructor.

@@ -8,7 +8,7 @@ package de.sambalmueslie.loan_calculator.model.generic;
  *
  * @author sambalmueslie 2015
  */
-public interface GenericModelEntry<T extends GenericModelEntry<?>> {
+public interface GenericModelEntry {
 	/**
 	 * @return the id.
 	 */
@@ -25,7 +25,7 @@ public interface GenericModelEntry<T extends GenericModelEntry<?>> {
 	 * @param listener
 	 *            the listener
 	 */
-	void register(GenericModelEntryChangeListener<T> listener);
+	void register(GenericModelEntryChangeListener listener);
 
 	/**
 	 * Unregister the {@link L}.
@@ -33,5 +33,5 @@ public interface GenericModelEntry<T extends GenericModelEntry<?>> {
 	 * @param listener
 	 *            the listener
 	 */
-	void unregister(GenericModelEntryChangeListener<T> listener);
+	void unregister(GenericModelEntryChangeListener listener);
 }

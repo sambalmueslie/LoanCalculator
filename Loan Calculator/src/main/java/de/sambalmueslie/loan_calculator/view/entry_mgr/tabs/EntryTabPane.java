@@ -100,7 +100,7 @@ public class EntryTabPane extends TabPane {
 	 * @param entry
 	 *            the entry
 	 */
-	private void add(final GenericModelEntry<?> entry) {
+	private void add(final GenericModelEntry entry) {
 		final EntryTab tab = new EntryTab(entry, actionListener, model);
 		getTabs().add(tab);
 		getSelectionModel().select(tab);
@@ -112,7 +112,7 @@ public class EntryTabPane extends TabPane {
 	 * @param entry
 	 *            the entry
 	 */
-	private void remove(final GenericModelEntry<?> entry) {
+	private void remove(final GenericModelEntry entry) {
 		getTabs().removeIf(t -> ((EntryTab) t).getEntry().equals(entry));
 	}
 

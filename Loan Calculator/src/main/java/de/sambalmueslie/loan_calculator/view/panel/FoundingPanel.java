@@ -41,7 +41,7 @@ public class FoundingPanel extends BorderPane {
 		setupCharts();
 		setupInfo();
 
-		founding.register(this::update);
+		founding.register(f -> update((Founding) f));
 	}
 
 	/**

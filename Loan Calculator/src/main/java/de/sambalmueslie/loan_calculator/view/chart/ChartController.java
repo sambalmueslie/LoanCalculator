@@ -14,7 +14,7 @@ import de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry;
  *
  * @author sambalmueslie 2015
  */
-public class ChartController<T extends GenericModelEntry<T>> implements Chart<T> {
+public class ChartController<T extends GenericModelEntry> implements Chart<T> {
 
 	/**
 	 * Constructor.
@@ -32,7 +32,7 @@ public class ChartController<T extends GenericModelEntry<T>> implements Chart<T>
 	public void add(final T entry) {
 		if (entry == null || entries.containsKey(entry.getId())) return;
 		entries.put(entry.getId(), entry);
-		entry.register(this::update);
+		entry.register(e -> update((T) e));
 		chart.add(entry);
 	}
 
@@ -51,7 +51,7 @@ public class ChartController<T extends GenericModelEntry<T>> implements Chart<T>
 	public void remove(final T entry) {
 		if (entry == null || !entries.containsKey(entry.getId())) return;
 		entries.remove(entry.getId());
-		entry.unregister(this::update);
+		entry.unregister(e -> update((T) e));
 		chart.remove(entry);
 	}
 

@@ -9,7 +9,7 @@ package de.sambalmueslie.loan_calculator.model.generic;
  * @author sambalmueslie 2015
  */
 @FunctionalInterface
-public interface GenericModelEntryChangeListener<T extends GenericModelEntry<?>> {
+public interface GenericModelEntryChangeListener {
 
 	/**
 	 * The {@link GenericModelEntry} has changed.
@@ -17,6 +17,6 @@ public interface GenericModelEntryChangeListener<T extends GenericModelEntry<?>>
 	 * @param entry
 	 *            the affected entry.
 	 */
-	void entryChanged(T entry);
+	void entryChanged(GenericModelEntry entry);
 
 }

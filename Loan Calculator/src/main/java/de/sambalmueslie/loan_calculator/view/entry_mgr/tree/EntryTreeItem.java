@@ -15,7 +15,7 @@ import de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry;
 /**
  * @author sambalmueslie 2015
  */
-public class EntryTreeItem extends TreeCell<GenericModelEntry<?>> {
+public class EntryTreeItem extends TreeCell<GenericModelEntry> {
 	/**
 	 * Constructor.
 	 *
@@ -30,7 +30,7 @@ public class EntryTreeItem extends TreeCell<GenericModelEntry<?>> {
 	 * @see javafx.scene.control.Cell#updateItem(java.lang.Object, boolean)
 	 */
 	@Override
-	public final void updateItem(final GenericModelEntry<?> entry, final boolean empty) {
+	public final void updateItem(final GenericModelEntry entry, final boolean empty) {
 		super.updateItem(entry, empty);
 		if (empty) {
 			clearContent();
@@ -43,7 +43,7 @@ public class EntryTreeItem extends TreeCell<GenericModelEntry<?>> {
 	 * @param entry
 	 */
 	@SuppressWarnings("unchecked")
-	private <T extends GenericModelEntry<T>> void addContent(final GenericModelEntry<?> entry) {
+	private <T extends GenericModelEntry> void addContent(final GenericModelEntry entry) {
 		setText(null);
 		final T e = (T) entry;
 		final EntryTreeItemContent<T> content = getContent(e);
@@ -68,7 +68,7 @@ public class EntryTreeItem extends TreeCell<GenericModelEntry<?>> {
 	 *            the entry
 	 * @return <code>true</code> if so, otherwise <code>false</code>
 	 */
-	private boolean equals(final EntryTreeItemContentFactory<?> factory, final GenericModelEntry<?> entry) {
+	private boolean equals(final EntryTreeItemContentFactory<?> factory, final GenericModelEntry entry) {
 		final Class<?> factoryType = factory.getType();
 		final Class<?> entryType = entry.getClass();
 		return factoryType.isAssignableFrom(entryType);
@@ -82,7 +82,7 @@ public class EntryTreeItem extends TreeCell<GenericModelEntry<?>> {
 	 * @return the content {@link Node}
 	 */
 	@SuppressWarnings("unchecked")
-	private <T extends GenericModelEntry<T>> EntryTreeItemContent<T> getContent(final T entry) {
+	private <T extends GenericModelEntry> EntryTreeItemContent<T> getContent(final T entry) {
 		final Optional<EntryTreeItemContentFactory<?>> optional = factories.stream().filter(f -> equals(f, entry)).findFirst();
 		if (!optional.isPresent()) return null;
 		final EntryTreeItemContentFactory<T> factory = (EntryTreeItemContentFactory<T>) optional.get();

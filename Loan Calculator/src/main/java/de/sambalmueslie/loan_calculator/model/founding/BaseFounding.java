@@ -41,7 +41,7 @@ public class BaseFounding implements Founding {
 	public void add(final Loan loan) {
 		if (loan == null || loans.containsKey(loan.getId())) return;
 		loans.put(loan.getId(), loan);
-		loan.register(this::updated);
+		loan.register(l -> updated((Loan) l));
 		update();
 	}
 
@@ -129,7 +129,7 @@ public class BaseFounding implements Founding {
 	 * @see de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry#register(de.sambalmueslie.loan_calculator.model.generic.GenericModelEntryChangeListener)
 	 */
 	@Override
-	public void register(final GenericModelEntryChangeListener<Founding> listener) {
+	public void register(final GenericModelEntryChangeListener listener) {
 		if (listener == null || listeners.contains(listener)) return;
 		listeners.add(listener);
 	}
@@ -142,7 +142,7 @@ public class BaseFounding implements Founding {
 	 */
 	public void remove(final Loan loan) {
 		if (loan == null || !loans.containsKey(loan.getId())) return;
-		loan.unregister(this::updated);
+		loan.unregister(l -> updated((Loan) l));
 		loans.remove(loan.getId());
 		update();
 	}
@@ -151,7 +151,7 @@ public class BaseFounding implements Founding {
 	 * @see de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry#unregister(de.sambalmueslie.loan_calculator.model.generic.GenericModelEntryChangeListener)
 	 */
 	@Override
-	public void unregister(final GenericModelEntryChangeListener<Founding> listener) {
+	public void unregister(final GenericModelEntryChangeListener listener) {
 		if (listener == null) return;
 		listeners.remove(listener);
 	}
@@ -236,7 +236,7 @@ public class BaseFounding implements Founding {
 	/** the id. */
 	private final long id;
 	/** the {@link GenericModelEntryChangeListener}s. */
-	private final List<GenericModelEntryChangeListener<Founding>> listeners = new LinkedList<>();
+	private final List<GenericModelEntryChangeListener> listeners = new LinkedList<>();
 	/** the {@link Loan} by id. */
 	private final Map<Long, Loan> loans = new LinkedHashMap<>();
 	/** the name. */

@@ -291,7 +291,7 @@ public class Controller extends Application {
 	 *            the entry type
 	 */
 	@SuppressWarnings("unchecked")
-	private <T extends GenericModelEntry<T>> void comparisonAddEntry(final long comparisonId, final T entry, final Class<T> type) {
+	private <T extends GenericModelEntry> void comparisonAddEntry(final long comparisonId, final T entry, final Class<T> type) {
 		final Comparison<?> comparison = model.getComparison(comparisonId);
 		if (comparison == null || !comparison.getType().equals(type)) return;
 
@@ -310,7 +310,7 @@ public class Controller extends Application {
 	 *            the entry type
 	 */
 	@SuppressWarnings("unchecked")
-	private <T extends GenericModelEntry<T>> void comparisonRemoveEntry(final long comparisonId, final T entry, final Class<T> type) {
+	private <T extends GenericModelEntry> void comparisonRemoveEntry(final long comparisonId, final T entry, final Class<T> type) {
 		final Comparison<?> comparison = model.getComparison(comparisonId);
 		if (comparison == null || !comparison.getType().equals(type)) return;
 
@@ -329,7 +329,7 @@ public class Controller extends Application {
 	 *            the entry
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private <T extends GenericModelEntry<T>> void comparisonsRemoveEntry(final T entry) {
+	private <T extends GenericModelEntry> void comparisonsRemoveEntry(final T entry) {
 		model.getAllComparisons().forEach(c -> ((BaseComparison) c).remove(entry));
 		model.getAllComparisons().stream().filter(c -> c.getElements().isEmpty()).forEach(model::remove);
 	}

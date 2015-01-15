@@ -11,7 +11,7 @@ import de.sambalmueslie.loan_calculator.view.ViewActionListener;
  *
  * @author sambalmueslie 2015
  */
-public class EntryTreeItemContentFactory<T extends GenericModelEntry<T>> {
+public class EntryTreeItemContentFactory<T extends GenericModelEntry> {
 	/**
 	 * Constructor.
 	 */

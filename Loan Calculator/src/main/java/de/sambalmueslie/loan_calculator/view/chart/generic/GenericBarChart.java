@@ -21,7 +21,7 @@ import de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry;
  *
  * @author sambalmueslie 2015
  */
-public class GenericBarChart<T extends GenericModelEntry<T>> extends BarChart<String, Number> {
+public class GenericBarChart<T extends GenericModelEntry> extends BarChart<String, Number> {
 	/**
 	 * Constructor.
 	 *
@@ -62,7 +62,7 @@ public class GenericBarChart<T extends GenericModelEntry<T>> extends BarChart<St
 		getData().add(series);
 		seriesMap.put(entry.getId(), series);
 
-		entry.register(this::update);
+		entry.register(e -> update((T) e));
 	}
 
 	/**
