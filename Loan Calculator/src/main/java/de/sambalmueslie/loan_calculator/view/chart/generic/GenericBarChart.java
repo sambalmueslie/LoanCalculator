@@ -50,6 +50,7 @@ public class GenericBarChart<T extends GenericModelEntry> extends BarChart<Strin
 	 * @param entry
 	 *            the entry
 	 */
+	@SuppressWarnings("unchecked")
 	public void add(final T entry) {
 		if (entry == null) return;
 		final String name = entry.getName();

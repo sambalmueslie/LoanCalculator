@@ -32,12 +32,13 @@ public abstract class BaseComparePanel<T extends GenericModelEntry> extends Bord
 	 * @param comparison
 	 *            {@link #comparison}
 	 */
+	@SuppressWarnings("unchecked")
 	protected BaseComparePanel(final Comparison<T> comparison, final ViewActionListener actionListener, final Model model) {
 		this.comparison = comparison;
 		this.actionListener = actionListener;
 		this.model = model;
 
-		comparison.register(c -> update((Comparison) c));
+		comparison.register(c -> update((Comparison<T>) c));
 		setup(comparison.getElements());
 
 		setOnDragOver(event -> {

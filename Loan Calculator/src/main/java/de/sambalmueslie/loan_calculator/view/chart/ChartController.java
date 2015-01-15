@@ -28,6 +28,7 @@ public class ChartController<T extends GenericModelEntry> implements Chart<T> {
 	/**
 	 * @see de.sambalmueslie.loan_calculator.view.chart.Chart#add(java.lang.Object)
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void add(final T entry) {
 		if (entry == null || entries.containsKey(entry.getId())) return;
@@ -47,6 +48,7 @@ public class ChartController<T extends GenericModelEntry> implements Chart<T> {
 	/**
 	 * @see de.sambalmueslie.loan_calculator.view.chart.Chart#remove(java.lang.Object)
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void remove(final T entry) {
 		if (entry == null || !entries.containsKey(entry.getId())) return;
