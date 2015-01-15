@@ -316,6 +316,10 @@ public class Controller extends Application {
 
 		final BaseComparison<T> bc = (BaseComparison<T>) comparison;
 		bc.remove(entry);
+
+		if (comparison.getElements().isEmpty()) {
+			model.remove(comparison);
+		}
 	}
 
 	/**

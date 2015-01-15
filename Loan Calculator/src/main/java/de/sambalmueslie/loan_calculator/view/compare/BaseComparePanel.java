@@ -6,7 +6,10 @@ package de.sambalmueslie.loan_calculator.view.compare;
 import java.util.Set;
 
 import javafx.scene.Node;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import de.sambalmueslie.loan_calculator.model.Model;
@@ -60,6 +63,9 @@ public abstract class BaseComparePanel<T extends GenericModelEntry<T>> extends B
 			event.setDropCompleted(strId != null);
 			event.consume();
 		});
+
+		setOnMouseClicked(e -> showContextMenu(e));
+
 	}
 
 	/**
@@ -94,6 +100,11 @@ public abstract class BaseComparePanel<T extends GenericModelEntry<T>> extends B
 	}
 
 	/**
+	 * @return the {@link ContextMenu}.
+	 */
+	protected abstract ContextMenu getContextMenu();
+
+	/**
 	 * @return the {@link #model}
 	 */
 	protected Model getModel() {
@@ -121,6 +132,18 @@ public abstract class BaseComparePanel<T extends GenericModelEntry<T>> extends B
 		final T entry = get(entryId);
 		if (entry == null) return false;
 		return getComparison().getElements().stream().noneMatch(f -> f.getId() == entryId);
+	}
+
+	/**
+	 * Show the context menu.
+	 *
+	 * @param e
+	 *            the {@link MouseEvent}
+	 */
+	private void showContextMenu(final MouseEvent e) {
+		if (e.getButton() == MouseButton.SECONDARY) {
+			getContextMenu().show(this, e.getScreenX(), e.getScreenY());
+		}
 	}
 
 	/**

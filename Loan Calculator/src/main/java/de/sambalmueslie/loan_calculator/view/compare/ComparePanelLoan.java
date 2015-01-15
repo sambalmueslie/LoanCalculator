@@ -13,6 +13,7 @@ import java.util.function.Function;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
@@ -45,6 +46,7 @@ class ComparePanelLoan extends BaseComparePanel<Loan> {
 	 */
 	ComparePanelLoan(final Comparison<Loan> comparison, final ViewActionListener actionListener, final Model model) {
 		super(comparison, actionListener, model);
+
 	}
 
 	/**
@@ -53,6 +55,14 @@ class ComparePanelLoan extends BaseComparePanel<Loan> {
 	@Override
 	protected Loan get(final long entryId) {
 		return getModel().getLoan(entryId);
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.view.compare.BaseComparePanel#getContextMenu()
+	 */
+	@Override
+	protected ContextMenu getContextMenu() {
+		return new LoanCompareContextMenu(getActionListener(), getComparison());
 	}
 
 	/**
