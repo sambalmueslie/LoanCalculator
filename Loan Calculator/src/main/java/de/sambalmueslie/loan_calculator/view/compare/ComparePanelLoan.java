@@ -8,7 +8,6 @@ import java.util.function.Function;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -16,12 +15,14 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
 import de.sambalmueslie.loan_calculator.model.Model;
 import de.sambalmueslie.loan_calculator.model.compare.Comparison;
-import de.sambalmueslie.loan_calculator.model.founding.Founding;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
+import de.sambalmueslie.loan_calculator.model.loan.RedemptionPlanEntry;
 import de.sambalmueslie.loan_calculator.view.Constants;
 import de.sambalmueslie.loan_calculator.view.ViewActionListener;
 import de.sambalmueslie.loan_calculator.view.chart.Chart;
+import de.sambalmueslie.loan_calculator.view.chart.SeriesDefinition;
 import de.sambalmueslie.loan_calculator.view.chart.generic.GenericBarChart;
+import de.sambalmueslie.loan_calculator.view.chart.loan.GenericAnnuityChart;
 import de.sambalmueslie.loan_calculator.view.chart.loan.LoanChartFactory;
 
 /**
@@ -65,17 +66,22 @@ class ComparePanelLoan extends BaseComparePanel<Loan> {
 	 */
 	@Override
 	protected void setup(final Set<Loan> loans) {
-		final TilePane comparePane = new TilePane(Orientation.HORIZONTAL);
+		final TilePane comparePane = new TilePane();
 		comparePane.setPadding(new Insets(Constants.DEFAULT_SPACING));
 		comparePane.setVgap(Constants.DEFAULT_SPACING);
 		comparePane.setHgap(Constants.DEFAULT_SPACING);
-		comparePane.setPrefRows(1);
 
 		comparePane.getChildren().add(addCompareFunction("Total payment", Loan::getTotalPayment));
 		comparePane.getChildren().add(addCompareFunction("Total interest", Loan::getTotalInterest));
 		comparePane.getChildren().add(addCompareFunction("Total Amount", Loan::getAmount));
 		comparePane.getChildren().add(addCompareFunction("Term", Loan::getTerm));
 		comparePane.getChildren().add(addCompareFunction("Risk capital", Loan::getRiskCapital));
+
+		final Function<Loan, RedemptionPlanEntry> dataGetterFunction = (l -> l.getRedemptionPlan().get(1));
+		final SeriesDefinition<RedemptionPlanEntry, Double> sd1 = new SeriesDefinition<>("interest", RedemptionPlanEntry::getInterest);
+		final SeriesDefinition<RedemptionPlanEntry, Double> sd2 = new SeriesDefinition<>("redemption", RedemptionPlanEntry::getRedemption);
+		final GenericAnnuityChart<Loan, RedemptionPlanEntry, Double> chart = new GenericAnnuityChart<>("Annuitity", dataGetterFunction, loans, sd1, sd2);
+		comparePane.getChildren().add(chart);
 		setTop(comparePane);
 
 		final TilePane detailsPane = new TilePane();
@@ -100,35 +106,36 @@ class ComparePanelLoan extends BaseComparePanel<Loan> {
 	 */
 	private Node addCompareFunction(final String title, final Function<Loan, Number> function) {
 		final GenericBarChart<Loan> chart = new GenericBarChart<>(function, title);
+		chart.setPrefWidth(120);
 		getComparison().getElements().forEach(f -> chart.add(f));
 		return chart;
 	}
 
 	/**
-	 * Create the details panel for a {@link Founding}.
+	 * Create the details panel for a {@link Loan}.
 	 *
-	 * @param founding
-	 *            the founding
+	 * @param loan
+	 *            the loan
 	 * @return the {@link Node}
 	 */
-	private Node createDetailsPanel(final Loan founding) {
+	private Node createDetailsPanel(final Loan loan) {
 		final GridPane detailsPane = new GridPane();
 		detailsPane.setPrefWidth(450);
 		detailsPane.setVgap(Constants.DEFAULT_SPACING);
 		detailsPane.setHgap(Constants.DEFAULT_SPACING);
 
-		final Label title = new Label(founding.getName());
+		final Label title = new Label(loan.getName());
 		title.getStyleClass().add("headline-label");
 		title.setAlignment(Pos.CENTER);
 		GridPane.setHalignment(title, HPos.CENTER);
 		detailsPane.add(title, 0, 0, 2, 1);
 
 		final Chart<Loan> residualDebtChart = LoanChartFactory.createResidualDebtChart();
-		residualDebtChart.add(founding);
+		residualDebtChart.add(loan);
 		detailsPane.add(residualDebtChart.getChart(), 0, 1);
 
 		final Chart<Loan> anuityPlanChart = LoanChartFactory.createAnnuityPlanChart();
-		anuityPlanChart.add(founding);
+		anuityPlanChart.add(loan);
 		detailsPane.add(anuityPlanChart.getChart(), 0, 2);
 
 		// detailsPane.add(new RedemptionPlanChart(founding), 0, 1);
@@ -136,5 +143,4 @@ class ComparePanelLoan extends BaseComparePanel<Loan> {
 
 		return detailsPane;
 	}
-
 }

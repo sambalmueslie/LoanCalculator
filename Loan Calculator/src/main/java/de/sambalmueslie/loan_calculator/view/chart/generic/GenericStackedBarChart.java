@@ -3,9 +3,7 @@
  */
 package de.sambalmueslie.loan_calculator.view.chart.generic;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 import java.util.function.Function;
 
@@ -36,7 +34,7 @@ public class GenericStackedBarChart<T extends GenericModelEntry<T>, R> extends S
 	 *            the {@link SeriesDefinition}
 	 */
 	@SafeVarargs
-	public GenericStackedBarChart(final T entry, final String title, final Function<T, List<R>> dataGetterFunction,
+	public GenericStackedBarChart(final T entry, final String title, final Function<T, Collection<R>> dataGetterFunction, final boolean ignoreFirstElement,
 			final SeriesDefinition<R, Number>... seriesDefinition) {
 		super(new CategoryAxis(), new NumberAxis());
 
@@ -44,6 +42,7 @@ public class GenericStackedBarChart<T extends GenericModelEntry<T>, R> extends S
 		setAnimated(false);
 		setLegendVisible(true);
 		setLegendSide(Side.BOTTOM);
+		setStyle("-fx-border-color: lightgray;");
 
 		// create the series
 		final Map<SeriesDefinition<R, Number>, Series<String, Number>> series = new LinkedHashMap<>();
@@ -54,8 +53,9 @@ public class GenericStackedBarChart<T extends GenericModelEntry<T>, R> extends S
 		}
 
 		// setup data
-		final List<R> dataList = dataGetterFunction.apply(entry);
-		for (int i = 1; i < dataList.size(); i++) {
+		final List<R> dataList = new LinkedList<R>(dataGetterFunction.apply(entry));
+		final int offset = ignoreFirstElement ? 1 : 0;
+		for (int i = offset; i < dataList.size(); i++) {
 			final String name = i + "";
 			final R data = dataList.get(i);
 			for (final Entry<SeriesDefinition<R, Number>, Series<String, Number>> e : series.entrySet()) {
@@ -70,4 +70,23 @@ public class GenericStackedBarChart<T extends GenericModelEntry<T>, R> extends S
 		getData().addAll(series.values());
 
 	}
+
+	/**
+	 * Constructor.
+	 *
+	 * @param entry
+	 *            the entry to get the data from
+	 * @param title
+	 *            the title
+	 * @param dataGetterFunction
+	 *            the data getter {@link Function}
+	 * @param seriesDefinition
+	 *            the {@link SeriesDefinition}
+	 */
+	@SafeVarargs
+	public GenericStackedBarChart(final T entry, final String title, final Function<T, Collection<R>> dataGetterFunction,
+			final SeriesDefinition<R, Number>... seriesDefinition) {
+		this(entry, title, dataGetterFunction, false, seriesDefinition);
+	}
+
 }

@@ -8,7 +8,6 @@ import java.util.function.Function;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -18,12 +17,15 @@ import de.sambalmueslie.loan_calculator.model.Model;
 import de.sambalmueslie.loan_calculator.model.compare.Comparison;
 import de.sambalmueslie.loan_calculator.model.founding.Founding;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
+import de.sambalmueslie.loan_calculator.model.loan.RedemptionPlanEntry;
 import de.sambalmueslie.loan_calculator.view.Constants;
 import de.sambalmueslie.loan_calculator.view.ViewActionListener;
+import de.sambalmueslie.loan_calculator.view.chart.SeriesDefinition;
 import de.sambalmueslie.loan_calculator.view.chart.founding.AnnuityPlanChart;
 import de.sambalmueslie.loan_calculator.view.chart.founding.RedemptionPlanChart;
 import de.sambalmueslie.loan_calculator.view.chart.generic.GenericBarChart;
 import de.sambalmueslie.loan_calculator.view.chart.generic.GenericPieChart;
+import de.sambalmueslie.loan_calculator.view.chart.loan.GenericAnnuityChart;
 
 /**
  * The compare panel for {@link Loan}s.
@@ -67,17 +69,23 @@ class ComparePanelFounding extends BaseComparePanel<Founding> {
 	 */
 	@Override
 	protected void setup(final Set<Founding> elements) {
-		final TilePane comparePane = new TilePane(Orientation.HORIZONTAL);
+		final TilePane comparePane = new TilePane();
 		comparePane.setPadding(new Insets(Constants.DEFAULT_SPACING));
 		comparePane.setVgap(Constants.DEFAULT_SPACING);
 		comparePane.setHgap(Constants.DEFAULT_SPACING);
-		comparePane.setPrefRows(1);
 
 		comparePane.getChildren().add(addCompareFunction("Total payment", Founding::getTotalPayment));
 		comparePane.getChildren().add(addCompareFunction("Total interest", Founding::getTotalInterest));
 		comparePane.getChildren().add(addCompareFunction("Total Amount", Founding::getAmount));
 		comparePane.getChildren().add(addCompareFunction("Term", Founding::getTerm));
 		comparePane.getChildren().add(addCompareFunction("Risk capital", Founding::getRiskCapital));
+
+		final Function<Founding, RedemptionPlanEntry> dataGetterFunction = (f -> f.getRedemptionPlan().get(1));
+		final SeriesDefinition<RedemptionPlanEntry, Double> sd1 = new SeriesDefinition<>("interest", RedemptionPlanEntry::getInterest);
+		final SeriesDefinition<RedemptionPlanEntry, Double> sd2 = new SeriesDefinition<>("redemption", RedemptionPlanEntry::getRedemption);
+		final GenericAnnuityChart<Founding, RedemptionPlanEntry, Double> chart = new GenericAnnuityChart<>("Annuitity", dataGetterFunction, elements, sd1, sd2);
+		comparePane.getChildren().add(chart);
+
 		setTop(comparePane);
 
 		final TilePane detailsPane = new TilePane();
@@ -136,7 +144,7 @@ class ComparePanelFounding extends BaseComparePanel<Founding> {
 		detailsPane.add(totalInterestChart, 0, 5);
 
 		final GenericPieChart<Founding, Loan> riskCapitalChart = new GenericPieChart<>(Founding::getLoans, Loan::getRiskCapital, "Risk capital", founding);
-		detailsPane.add(riskCapitalChart, 0, 5);
+		detailsPane.add(riskCapitalChart, 0, 6);
 
 		return detailsPane;
 	}

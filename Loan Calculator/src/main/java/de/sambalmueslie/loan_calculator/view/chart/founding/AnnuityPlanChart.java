@@ -19,7 +19,7 @@ public class AnnuityPlanChart extends GenericStackedBarChart<Founding, Redemptio
 	 * Constructor.
 	 */
 	public AnnuityPlanChart(final Founding founding) {
-		super(founding, "Annuity plan", Founding::getRedemptionPlan, new SeriesDefinition<>("interest", RedemptionPlanEntry::getInterest),
+		super(founding, "Annuity plan", Founding::getRedemptionPlan, true, new SeriesDefinition<>("interest", RedemptionPlanEntry::getInterest),
 				new SeriesDefinition<>("redemption", RedemptionPlanEntry::getRedemption));
 	}
 }

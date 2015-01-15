@@ -238,7 +238,7 @@ public class BaseFounding implements Founding {
 	/** the {@link GenericModelEntryChangeListener}s. */
 	private final List<GenericModelEntryChangeListener<Founding>> listeners = new LinkedList<>();
 	/** the {@link Loan} by id. */
-	private final Map<Long, Loan> loans = new HashMap<>();
+	private final Map<Long, Loan> loans = new LinkedHashMap<>();
 	/** the name. */
 	private String name;
 	/** the {@link List} if {@link RedemptionPlanEntry}s. */

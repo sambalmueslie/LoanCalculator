@@ -15,13 +15,6 @@ import de.sambalmueslie.loan_calculator.view.chart.ChartController;
 public final class LoanChartFactory {
 
 	/**
-	 * @return a annuity {@link Chart<Loan>}.
-	 */
-	public static Chart<Loan> createAnnuityCart() {
-		return new ChartController<Loan>(new AnnuityCart());
-	}
-
-	/**
 	 * @return the annuity plan {@link Chart<Loan>}.
 	 */
 	public static Chart<Loan> createAnnuityPlanChart() {
@@ -33,13 +26,6 @@ public final class LoanChartFactory {
 	 */
 	public static Chart<Loan> createResidualDebtChart() {
 		return new ChartController<Loan>(new ResidualDebtChart());
-	}
-
-	/**
-	 * @return a total amount {@link Chart<Loan>}.
-	 */
-	public static Chart<Loan> createTotalAmountChart() {
-		return new ChartController<Loan>(new TotalAmountChart());
 	}
 
 	/**
