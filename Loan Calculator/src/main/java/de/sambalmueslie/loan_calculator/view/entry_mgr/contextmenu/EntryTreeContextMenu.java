@@ -1,7 +1,7 @@
 /**
  *
  */
-package de.sambalmueslie.loan_calculator.view.entry_mgr.tree;
+package de.sambalmueslie.loan_calculator.view.entry_mgr.contextmenu;
 
 import java.util.Optional;
 
@@ -17,6 +17,7 @@ import de.sambalmueslie.loan_calculator.model.loan.Loan;
 import de.sambalmueslie.loan_calculator.view.ViewActionListener;
 import de.sambalmueslie.loan_calculator.view.dialog.ModifyAnnuityLoanDialog;
 import de.sambalmueslie.loan_calculator.view.dialog.ModifyFoundingDialog;
+import de.sambalmueslie.loan_calculator.view.entry_mgr.tree.IconProvider;
 
 /**
  * The {@link ContextMenu} for the entry tree.

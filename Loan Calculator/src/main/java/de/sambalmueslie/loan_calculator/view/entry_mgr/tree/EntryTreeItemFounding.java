@@ -15,7 +15,7 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
 import de.sambalmueslie.loan_calculator.model.founding.Founding;
 import de.sambalmueslie.loan_calculator.view.ViewActionListener;
-import de.sambalmueslie.loan_calculator.view.entry_mgr.FoundingContextMenu;
+import de.sambalmueslie.loan_calculator.view.entry_mgr.contextmenu.FoundingContextMenu;
 
 /**
  * The {@link Founding} {@link EntryTreeItemContent}.

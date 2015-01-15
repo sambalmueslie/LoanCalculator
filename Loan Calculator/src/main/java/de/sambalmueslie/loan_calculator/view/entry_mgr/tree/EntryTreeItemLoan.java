@@ -19,7 +19,7 @@ import org.apache.logging.log4j.Logger;
 
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
 import de.sambalmueslie.loan_calculator.view.ViewActionListener;
-import de.sambalmueslie.loan_calculator.view.entry_mgr.LoanContextMenu;
+import de.sambalmueslie.loan_calculator.view.entry_mgr.contextmenu.LoanContextMenu;
 
 /**
  * @author sambalmueslie 2015

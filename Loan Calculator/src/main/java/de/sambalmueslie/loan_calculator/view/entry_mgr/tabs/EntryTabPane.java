@@ -1,7 +1,7 @@
 /**
  *
  */
-package de.sambalmueslie.loan_calculator.view.entry_mgr;
+package de.sambalmueslie.loan_calculator.view.entry_mgr.tabs;
 
 import static de.sambalmueslie.loan_calculator.view.Constants.CLASS_PANEL_EMPTY;
 import javafx.scene.control.TabPane;
