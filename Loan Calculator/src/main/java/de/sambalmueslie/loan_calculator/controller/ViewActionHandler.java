@@ -33,14 +33,6 @@ public class ViewActionHandler implements ViewActionListener {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestAddFounding(java.lang.String, java.lang.String)
-	 */
-	@Override
-	public void requestAddFounding(final String name, final String bankName) {
-		controller.handleRequestAddFounding(name, bankName);
-	}
-
-	/**
 	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestAddComparisonFounding(long)
 	 */
 	@Override
@@ -55,6 +47,14 @@ public class ViewActionHandler implements ViewActionListener {
 	@Override
 	public void requestAddComparisonLoan(final long loanId) {
 		controller.handleRequestAddComparisonLoan(loanId);
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestAddFounding(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public void requestAddFounding(final String name, final String bankName) {
+		controller.handleRequestAddFounding(name, bankName);
 	}
 
 	/**
@@ -87,6 +87,30 @@ public class ViewActionHandler implements ViewActionListener {
 	@Override
 	public void requestComparisonRemoveLoan(final long comparisonId, final long loanId) {
 		controller.handleRequestComparisonRemoveLoan(comparisonId, loanId);
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestFileNew()
+	 */
+	@Override
+	public void requestFileNew() {
+		controller.handleRequestFileNew();
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestFileOpen(java.lang.String)
+	 */
+	@Override
+	public void requestFileOpen(final String fileName) {
+		controller.handleRequestFileOpen(fileName);
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestFileSave(java.lang.String)
+	 */
+	@Override
+	public void requestFileSave(final String fileName) {
+		controller.handleRequestFileSave(fileName);
 	}
 
 	/**

@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import de.sambalmueslie.loan_calculator.model.Model;
 import de.sambalmueslie.loan_calculator.view.entry_mgr.tabs.EntryTabPane;
 import de.sambalmueslie.loan_calculator.view.entry_mgr.tree.EntryTree;
+import de.sambalmueslie.loan_calculator.view.menu.MainMenu;
 
 /**
  * The view.
@@ -65,7 +66,10 @@ public class View extends BorderPane {
 		content.setLeft(entryTree);
 		content.setCenter(entryTabPane);
 
+		final MainMenu mainMenu = new MainMenu(actionListenerMgr);
+
 		getStyleClass().add(CLASS_PANEL_EMPTY);
+		setTop(mainMenu);
 		setCenter(content);
 		setBottom(statusbar);
 

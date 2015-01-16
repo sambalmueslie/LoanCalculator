@@ -176,6 +176,30 @@ public class Controller extends Application {
 	}
 
 	/**
+	 * @see ViewActionListener#requestFileNew()
+	 */
+	void handleRequestFileNew() {
+		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 * @see ViewActionListener#requestFileOpen(String)
+	 */
+	void handleRequestFileOpen(final String fileName) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 * @see ViewActionListener#requestFileSave(String)
+	 */
+	void handleRequestFileSave(final String fileName) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/**
 	 * @see ViewActionListener#requestFoundingAddLoan(long, long)
 	 */
 	void handleRequestFoundingAddLoan(final long foundingId, final long loanId) {
@@ -370,8 +394,10 @@ public class Controller extends Application {
 
 	/** the {@link BaseModel}. */
 	private BaseModel model;
+
 	/** the {@link View}. */
 	private View view;
+
 	/** the {@link ViewActionHandler}. */
 	private ViewActionHandler viewActionHandler;
 

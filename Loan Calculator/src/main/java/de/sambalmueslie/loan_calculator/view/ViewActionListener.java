@@ -34,16 +34,6 @@ public interface ViewActionListener {
 			final int fixedInterestPeriod, final double estimatedDebitInterest);
 
 	/**
-	 * Request to add a new founding.
-	 *
-	 * @param name
-	 *            the name
-	 * @param bankName
-	 *            the bank name
-	 */
-	void requestAddFounding(String name, String bankName);
-
-	/**
 	 * Request to add a loan comparison.
 	 *
 	 * @param foundingId
@@ -58,6 +48,16 @@ public interface ViewActionListener {
 	 *            the initial loan id
 	 */
 	void requestAddComparisonLoan(long loanId);
+
+	/**
+	 * Request to add a new founding.
+	 *
+	 * @param name
+	 *            the name
+	 * @param bankName
+	 *            the bank name
+	 */
+	void requestAddFounding(String name, String bankName);
 
 	/**
 	 * Request to add a {@link Founding} to a {@link Comparison}.
@@ -98,6 +98,27 @@ public interface ViewActionListener {
 	 *            the loan id
 	 */
 	void requestComparisonRemoveLoan(long comparisonId, long loanId);
+
+	/**
+	 * Create a new file.
+	 */
+	void requestFileNew();
+
+	/**
+	 * Open a file.
+	 * 
+	 * @param fileName
+	 *            the file name
+	 */
+	void requestFileOpen(String fileName);
+
+	/**
+	 * Save a file.
+	 * 
+	 * @param fileName
+	 *            the file name
+	 */
+	void requestFileSave(String fileName);
 
 	/**
 	 * Request to add a loan to a founding.

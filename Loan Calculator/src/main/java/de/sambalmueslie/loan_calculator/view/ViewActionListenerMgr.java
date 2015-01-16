@@ -23,14 +23,6 @@ public class ViewActionListenerMgr implements ViewActionListener {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestAddFounding(java.lang.String, java.lang.String)
-	 */
-	@Override
-	public void requestAddFounding(final String name, final String bankName) {
-		listeners.forEach(l -> l.requestAddFounding(name, bankName));
-	}
-
-	/**
 	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestAddComparisonFounding(long)
 	 */
 	@Override
@@ -44,6 +36,14 @@ public class ViewActionListenerMgr implements ViewActionListener {
 	@Override
 	public void requestAddComparisonLoan(final long loanId) {
 		listeners.forEach(l -> l.requestAddComparisonLoan(loanId));
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestAddFounding(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public void requestAddFounding(final String name, final String bankName) {
+		listeners.forEach(l -> l.requestAddFounding(name, bankName));
 	}
 
 	/**
@@ -76,6 +76,30 @@ public class ViewActionListenerMgr implements ViewActionListener {
 	@Override
 	public void requestComparisonRemoveLoan(final long comparisonId, final long loanId) {
 		listeners.forEach(l -> l.requestComparisonRemoveLoan(comparisonId, loanId));
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestFileNew()
+	 */
+	@Override
+	public void requestFileNew() {
+		listeners.forEach(l -> l.requestFileNew());
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestFileOpen(java.lang.String)
+	 */
+	@Override
+	public void requestFileOpen(final String fileName) {
+		listeners.forEach(l -> l.requestFileOpen(fileName));
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestFileSave(java.lang.String)
+	 */
+	@Override
+	public void requestFileSave(final String fileName) {
+		listeners.forEach(l -> l.requestFileSave(fileName));
 	}
 
 	/**
