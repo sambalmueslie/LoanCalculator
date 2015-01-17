@@ -19,6 +19,21 @@ public class BaseFounding implements Founding {
 
 	/**
 	 * Constructor.
+	 * 
+	 * @param id
+	 *            {@link #id}
+	 * @param name
+	 *            {@link #name}
+	 * @param bankName
+	 *            {@link #bankName}
+	 */
+	public BaseFounding(final long id, final String name, final String bankName) {
+		this.id = id;
+		update(name, bankName);
+	}
+
+	/**
+	 * Constructor.
 	 *
 	 * @param name
 	 *            {@link #name}
@@ -28,8 +43,7 @@ public class BaseFounding implements Founding {
 	 *             illegal argument
 	 */
 	public BaseFounding(final String name, final String bankName) throws IllegalArgumentException {
-		id = UUID.randomUUID().getLeastSignificantBits();
-		update(name, bankName);
+		this(UUID.randomUUID().getLeastSignificantBits(), name, bankName);
 	}
 
 	/**

@@ -1,7 +1,7 @@
 /**
  *
  */
-package de.sambalmueslie.loan_calculator.controller.file.wrapper;
+package de.sambalmueslie.loan_calculator.controller.file.xml.data;
 
 
 /**

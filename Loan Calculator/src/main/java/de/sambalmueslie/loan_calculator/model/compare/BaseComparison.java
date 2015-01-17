@@ -19,6 +19,22 @@ public class BaseComparison<T extends GenericModelEntry> implements Comparison<T
 
 	/**
 	 * Constructor.
+	 * 
+	 * @param id
+	 *            {@link #id}
+	 * @param name
+	 *            {@link #name}
+	 * @param type
+	 *            {@link #type}
+	 */
+	public BaseComparison(final long id, final String name, final Class<T> type) {
+		this.id = id;
+		this.type = type;
+		update(name);
+	}
+
+	/**
+	 * Constructor.
 	 *
 	 * @param name
 	 *            {@link #name}
@@ -28,9 +44,7 @@ public class BaseComparison<T extends GenericModelEntry> implements Comparison<T
 	 *             illegal argument
 	 */
 	public BaseComparison(final String name, final Class<T> type) throws IllegalArgumentException {
-		this.type = type;
-		id = UUID.randomUUID().getLeastSignificantBits();
-		update(name);
+		this(UUID.randomUUID().getLeastSignificantBits(), name, type);
 	}
 
 	/**

@@ -1,7 +1,7 @@
 /**
  *
  */
-package de.sambalmueslie.loan_calculator.controller.file.wrapper;
+package de.sambalmueslie.loan_calculator.controller.file.xml.data;
 
 import java.util.Set;
 
@@ -31,6 +31,13 @@ public class XMLFounding {
 	}
 
 	/**
+	 * @return the {@link #name}
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
 	 * @param bankName
 	 *            the bankName to set
 	 */
@@ -54,10 +61,20 @@ public class XMLFounding {
 		this.loanIds = loanIds;
 	}
 
+	/**
+	 * @param name
+	 *            the name to set
+	 */
+	public void setName(final String name) {
+		this.name = name;
+	}
+
 	/** the name of the bank. */
 	private String bankName;
 	/** the id. */
 	private long id;
 	/** the loan ids. */
 	private Set<Long> loanIds;
+	/** the name. */
+	private String name;
 }

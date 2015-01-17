@@ -22,7 +22,6 @@ import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
 
 import de.sambalmueslie.loan_calculator.controller.file.LoanFile;
-import de.sambalmueslie.loan_calculator.model.Model;
 import de.sambalmueslie.loan_calculator.view.entry_mgr.tabs.EntryTabPane;
 import de.sambalmueslie.loan_calculator.view.entry_mgr.tree.EntryTree;
 import de.sambalmueslie.loan_calculator.view.menu.MainMenu;
@@ -68,6 +67,11 @@ public class View extends BorderPane {
 
 		content = new BorderPane();
 		content.getStyleClass().add(CLASS_PANEL_EMPTY);
+		entryTree = new EntryTree(actionListenerMgr);
+		entryTabPane = new EntryTabPane(actionListenerMgr);
+
+		content.setLeft(entryTree);
+		content.setCenter(entryTabPane);
 
 		final MainMenu mainMenu = new MainMenu(actionListenerMgr);
 
@@ -100,13 +104,37 @@ public class View extends BorderPane {
 	 */
 	public void show(final LoanFile file) {
 		primaryStage.setTitle("Loan calculator: " + file.getName());
+		entryTree.show(file);
+		entryTabPane.show(file);
+	}
 
-		final Model model = file.getModel();
-		final EntryTree entryTree = new EntryTree(model, actionListenerMgr);
-		final EntryTabPane entryTabPane = new EntryTabPane(model, actionListenerMgr);
+	/**
+	 * @return
+	 */
+	public Path ShowDialogOpenFile() {
+		final FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Open file ");
+		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Loan Data files", "*.ldf"));
 
-		content.setLeft(entryTree);
-		content.setCenter(entryTabPane);
+		final File file = fileChooser.showOpenDialog(primaryStage);
+		return (file != null) ? file.toPath() : null;
+	}
+
+	/**
+	 * Show the open file failed diaog.
+	 *
+	 * @param path
+	 *            the {@link Path} to open
+	 * @param message
+	 *            the message
+	 */
+	public void showDialogOpenFileFailed(final Path path, final String message) {
+		final Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Opn file failed");
+		alert.setHeaderText("Open file failed");
+		alert.setContentText(message);
+		alert.showAndWait();
 	}
 
 	/**
@@ -177,6 +205,8 @@ public class View extends BorderPane {
 	private final ViewActionListenerMgr actionListenerMgr = new ViewActionListenerMgr();
 	/** the content pane. */
 	private BorderPane content;
+	private EntryTabPane entryTabPane;
+	private EntryTree entryTree;
 	/** the primary {@link Stage}. */
 	private Stage primaryStage;
 

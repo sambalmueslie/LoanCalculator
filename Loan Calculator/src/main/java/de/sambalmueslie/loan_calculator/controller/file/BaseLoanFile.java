@@ -17,15 +17,25 @@ public class BaseLoanFile implements LoanFile {
 	/**
 	 * Constructor.
 	 *
-	 * @param name
-	 *            {@link #name}
+	 * @param path
+	 *            {@link #path}
 	 * @param model
 	 *            {@link #model}
 	 */
-	BaseLoanFile(final String name, final Model model) {
-		this.name = name;
+	public BaseLoanFile(final Path path, final Model model) {
+		this.path = path;
 		this.model = model;
 		new ModelChangeHandler(model, this);
+	}
+
+	/**
+	 * Constructor.
+	 *
+	 * @param model
+	 *            {@link #model}
+	 */
+	BaseLoanFile(final Model model) {
+		this(null, model);
 	}
 
 	/**
@@ -41,7 +51,7 @@ public class BaseLoanFile implements LoanFile {
 	 */
 	@Override
 	public String getName() {
-		return name;
+		return (path == null) ? "New file" : path.toString();
 	}
 
 	/**
@@ -73,7 +83,6 @@ public class BaseLoanFile implements LoanFile {
 	 */
 	void setPath(final Path path) {
 		this.path = path;
-		name = path.toString();
 	}
 
 	/**
@@ -85,12 +94,8 @@ public class BaseLoanFile implements LoanFile {
 
 	/** the {@link Model}. */
 	private final Model model;
-	/** the name. */
-	private String name;
-
 	/** the {@link Path}. */
 	private Path path;
-
 	/** the unsaved changes flag. */
 	private boolean unsavedChanges;
 

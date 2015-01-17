@@ -5,6 +5,7 @@ package de.sambalmueslie.loan_calculator.view.entry_mgr.tabs;
 
 import static de.sambalmueslie.loan_calculator.view.Constants.CLASS_PANEL_EMPTY;
 import javafx.scene.control.TabPane;
+import de.sambalmueslie.loan_calculator.controller.file.LoanFile;
 import de.sambalmueslie.loan_calculator.model.Model;
 import de.sambalmueslie.loan_calculator.model.ModelChangeListener;
 import de.sambalmueslie.loan_calculator.model.compare.Comparison;
@@ -78,20 +79,29 @@ public class EntryTabPane extends TabPane {
 	/**
 	 * Constructor.
 	 *
-	 * @param model
-	 *            {@link #model}
 	 * @param actionListener
 	 *            {@link #actionListener}
 	 */
-	public EntryTabPane(final Model model, final ViewActionListener actionListener) {
-		this.model = model;
+	public EntryTabPane(final ViewActionListener actionListener) {
 		this.actionListener = actionListener;
 		getStyleClass().add(CLASS_PANEL_EMPTY);
-		model.listenerRegister(modelChangeHandler);
 
-		model.getAllLoans().forEach(loan -> add(loan));
-		model.getAllFoundings().forEach(founding -> add(founding));
+	}
 
+	/**
+	 * Show.
+	 *
+	 * @param file
+	 *            the {@link LoanFile}
+	 */
+	public void show(final LoanFile file) {
+		getTabs().clear();
+		model = file.getModel();
+		model.listenerRegister(new ModelChangeHandler());
+
+		model.getAllLoans().forEach(this::add);
+		model.getAllFoundings().forEach(this::add);
+		model.getAllComparisons().forEach(this::add);
 	}
 
 	/**
@@ -119,7 +129,6 @@ public class EntryTabPane extends TabPane {
 	/** the {@link ViewActionListener}. */
 	private final ViewActionListener actionListener;
 	/** the {@link Model}. */
-	private final Model model;
-	/** the {@link ModelChangeHandler}. */
-	private final ModelChangeHandler modelChangeHandler = new ModelChangeHandler();
+	private Model model;
+
 }

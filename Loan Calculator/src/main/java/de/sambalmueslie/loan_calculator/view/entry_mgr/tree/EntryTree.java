@@ -18,6 +18,7 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import de.sambalmueslie.loan_calculator.controller.file.LoanFile;
 import de.sambalmueslie.loan_calculator.model.Model;
 import de.sambalmueslie.loan_calculator.model.founding.Founding;
 import de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry;
@@ -33,15 +34,10 @@ public class EntryTree extends GridPane {
 	/**
 	 * Constructor.
 	 *
-	 * @param model
-	 *            the {@link Model}
 	 * @param actionForwarder
 	 *            the {@link ViewActionListener}
 	 */
-	public EntryTree(final Model model, final ViewActionListener actionForwarder) {
-		modelChangeHandler = new ModelChangeHandler(this);
-		model.listenerRegister(modelChangeHandler);
-
+	public EntryTree(final ViewActionListener actionForwarder) {
 		getStyleClass().add(CLASS_PANEL);
 
 		final HBox title = new HBox();
@@ -89,6 +85,22 @@ public class EntryTree extends GridPane {
 		add(treeView, 0, 1);
 
 		treeView.setContextMenu(new EntryTreeContextMenu(actionForwarder));
+	}
+
+	/**
+	 * Show.
+	 *
+	 * @param loanFile
+	 *            the {@link LoanFile}.
+	 */
+	public void show(final LoanFile loanFile) {
+		treeView.setRoot(new TreeItem<>());
+		model = loanFile.getModel();
+		final ModelChangeHandler modelChangeHandler = new ModelChangeHandler(this);
+		model.listenerRegister(modelChangeHandler);
+
+		model.getAllLoans().forEach(this::add);
+		model.getAllFoundings().forEach(this::add);
 	}
 
 	/**
@@ -212,8 +224,8 @@ public class EntryTree extends GridPane {
 		return (result.isPresent()) ? result.get() : null;
 	}
 
-	/** the {@link ModelChangeHandler}. */
-	private final ModelChangeHandler modelChangeHandler;
+	/** the {@link Model}. */
+	private Model model;
 	/** the {@link TreeView}. */
 	private final TreeView<GenericModelEntry> treeView;
 
