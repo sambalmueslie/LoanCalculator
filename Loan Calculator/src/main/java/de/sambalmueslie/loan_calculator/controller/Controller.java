@@ -205,8 +205,24 @@ public class Controller extends Application {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Handle request to open a file.");
 		}
-		// TODO Auto-generated method stub
-
+		if (fileController.hasUnsavedChanges()) {
+			if (!view.showDialogRefuseUnsavedChanges()) return;
+		}
+		final Path path = view.ShowDialogOpenFile();
+		try {
+			final LoanFile file = fileController.open(path);
+			model = (BaseModel) file.getModel();
+			view.show(file);
+		} catch (final IOException e) {
+			logger.error("Cannot open file due to IOException " + e.getMessage());
+			view.showDialogOpenFileFailed(path, e.getMessage());
+		} catch (final JAXBException e) {
+			logger.error("Cannot open file due to JAXBException " + e.getMessage());
+			view.showDialogOpenFileFailed(path, e.getMessage());
+		} catch (final RuntimeException e) {
+			logger.error("Cannot open file due to runtime exception " + e.getMessage());
+			view.showDialogOpenFileFailed(path, e.getMessage());
+		}
 	}
 
 	/**

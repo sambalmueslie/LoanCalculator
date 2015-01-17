@@ -17,6 +17,29 @@ public class BaseAnnuityLoan extends BaseLoan implements AnnuityLoan {
 	/**
 	 * Constructor.
 	 *
+	 * @param {@link BaseLoan#getId()}
+	 * @param name
+	 *            {@link BaseLoan#getName()}
+	 * @param amount
+	 *            {@link BaseLoan#getAmount()}
+	 * @param paymentRate
+	 *            {@link #paymentRate}
+	 * @param fixedDebitInterest
+	 *            {@link #fixedDebitInterest}
+	 * @param fixedInterestPeriod
+	 *            {@link #fixedInterestPeriod}
+	 * @param estimatedDebitInterest
+	 *            {@link #estimatedDebitInterest}
+	 */
+	public BaseAnnuityLoan(final long id, final String name, final double amount, final double paymentRate, final double fixedDebitInterest,
+			final int fixedInterestPeriod, final double estimatedDebitInterest) throws IllegalArgumentException {
+		super(id, name, amount);
+		update(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
+	}
+
+	/**
+	 * Constructor.
+	 *
 	 * @param name
 	 *            {@link BaseLoan#getName()}
 	 * @param amount

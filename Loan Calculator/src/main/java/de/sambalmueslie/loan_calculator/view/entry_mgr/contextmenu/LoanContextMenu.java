@@ -6,8 +6,8 @@ package de.sambalmueslie.loan_calculator.view.entry_mgr.contextmenu;
 import java.util.Optional;
 
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SeparatorMenuItem;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,7 +23,7 @@ import de.sambalmueslie.loan_calculator.view.entry_mgr.tree.IconProvider;
  *
  * @author sambalmueslie 2015
  */
-public class LoanContextMenu extends ContextMenu {
+public class LoanContextMenu extends EntryTreeContextMenu {
 	/** the logger. */
 	private static final Logger logger = LogManager.getLogger(LoanContextMenu.class);
 
@@ -31,11 +31,11 @@ public class LoanContextMenu extends ContextMenu {
 	 * Constructor.
 	 */
 	public LoanContextMenu() {
-		addAnnuitiyLoanMenuItem = new MenuItem("Add annuity loan", IconProvider.createImageView(IconProvider.ICON_NOTE_NEW));
-		updateMenuItem = new MenuItem("Update", IconProvider.createImageView(IconProvider.ICON_NOTE_NEW));
-		removeMenuItem = new MenuItem("Remove", IconProvider.createImageView(IconProvider.ICON_NOTE_DELETE));
-		compareMenuItem = new MenuItem("Compare", IconProvider.createImageView(IconProvider.ICON_LIST_IMAGES));
-		getItems().addAll(addAnnuitiyLoanMenuItem, updateMenuItem, removeMenuItem, compareMenuItem);
+		super();
+		updateMenuItem = new MenuItem("Update", IconProvider.createImageView(IconProvider.ICON_PAGE_EDIT));
+		removeMenuItem = new MenuItem("Remove", IconProvider.createImageView(IconProvider.ICON_PAGE_DELETE));
+		compareMenuItem = new MenuItem("Compare", IconProvider.createImageView(IconProvider.ICON_PAGE_COMPONENT));
+		getItems().addAll(new SeparatorMenuItem(), updateMenuItem, removeMenuItem, compareMenuItem);
 		set(null);
 	}
 
@@ -46,15 +46,20 @@ public class LoanContextMenu extends ContextMenu {
 	 *            the loan
 	 */
 	public void set(final Loan loan) {
-		addAnnuitiyLoanMenuItem.setOnAction(e -> addAnnuitiyLoan());
 		if (loan == null) {
 			updateMenuItem.setOnAction(null);
+			updateMenuItem.setText("Update");
 			removeMenuItem.setOnAction(null);
+			removeMenuItem.setText("Remove");
 			compareMenuItem.setOnAction(null);
+			compareMenuItem.setText("Compare");
 		} else {
 			updateMenuItem.setOnAction(e -> update(loan));
+			updateMenuItem.setText("Update " + loan.getName());
 			removeMenuItem.setOnAction(e -> remove(loan));
+			removeMenuItem.setText("Remove " + loan.getName());
 			compareMenuItem.setOnAction(e -> compare(loan));
+			compareMenuItem.setText("Compare " + loan.getName());
 		}
 	}
 
@@ -62,30 +67,9 @@ public class LoanContextMenu extends ContextMenu {
 	 * @param listener
 	 *            the listener to set
 	 */
+	@Override
 	public void setListener(final ViewActionListener listener) {
 		this.listener = listener;
-	}
-
-	/**
-	 * Add a new loan.
-	 */
-	private void addAnnuitiyLoan() {
-		if (logger.isDebugEnabled()) {
-			logger.debug("Request add new loan");
-		}
-		final ModifyAnnuityLoanDialog dialog = new ModifyAnnuityLoanDialog(null);
-		final Optional<ButtonType> type = dialog.showAndWait();
-		if (type.isPresent() && type.get() == ButtonType.OK) {
-
-			final String name = dialog.getName();
-			final double amount = dialog.getAmount();
-			final double paymentRate = dialog.getPaymentRate();
-			final double fixedDebitInterest = dialog.getFixedDebitInterest();
-			final int fixedInterestPeriod = dialog.getFixedInterestPeriod();
-			final double estimatedDebitInterest = dialog.getEstimatedDebitInterest();
-
-			listener.requestAddAnnuityLoan(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
-		}
 	}
 
 	/**
@@ -144,8 +128,6 @@ public class LoanContextMenu extends ContextMenu {
 		}
 	}
 
-	/** the add {@link MenuItem}. */
-	private final MenuItem addAnnuitiyLoanMenuItem;
 	/** the compare {@link MenuItem}. */
 	private final MenuItem compareMenuItem;
 	/** the {@link ViewActionListener}. */

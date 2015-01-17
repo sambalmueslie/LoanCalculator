@@ -17,14 +17,28 @@ abstract class BaseLoan implements Loan {
 	/**
 	 * Constructor.
 	 *
+	 * @param id
+	 *            {@link #id}
 	 * @param name
 	 *            {@link #name}
 	 * @param amount
 	 *            {@link #amount}
 	 */
-	BaseLoan(final String name, final double amount) throws IllegalArgumentException {
-		id = UUID.randomUUID().getLeastSignificantBits();
+	protected BaseLoan(final long id, final String name, final double amount) {
+		this.id = id;
 		update(name, amount);
+	}
+
+	/**
+	 * Constructor.
+	 *
+	 * @param name
+	 *            {@link #name}
+	 * @param amount
+	 *            {@link #amount}
+	 */
+	protected BaseLoan(final String name, final double amount) throws IllegalArgumentException {
+		this(UUID.randomUUID().getLeastSignificantBits(), name, amount);
 	}
 
 	/**
