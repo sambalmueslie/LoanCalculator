@@ -34,10 +34,14 @@ public class FileController {
 	}
 
 	/**
-	 * @return the current {@link LoanFile}.
+	 * @return <code>true</code> if the current {@link LoanFile} has unsaved changes, otherwise <code>false</code>.
 	 */
-	public LoanFile getCurrentFile() {
-		return currentFile;
+	public boolean hasUnsavedChanges() {
+		return currentFile != null && currentFile.hasUnsavedChanges();
+	}
+
+	public void saveCurrentFile() {
+
 	}
 
 	/** the current {@link LoanFile}. */

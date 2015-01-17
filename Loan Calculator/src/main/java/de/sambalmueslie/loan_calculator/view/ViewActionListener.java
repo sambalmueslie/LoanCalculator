@@ -106,19 +106,13 @@ public interface ViewActionListener {
 
 	/**
 	 * Open a file.
-	 * 
-	 * @param fileName
-	 *            the file name
 	 */
-	void requestFileOpen(String fileName);
+	void requestFileOpen();
 
 	/**
 	 * Save a file.
-	 * 
-	 * @param fileName
-	 *            the file name
 	 */
-	void requestFileSave(String fileName);
+	void requestFileSave();
 
 	/**
 	 * Request to add a loan to a founding.
@@ -139,6 +133,11 @@ public interface ViewActionListener {
 	 *            the loan id to add
 	 */
 	void requestFoundingRemoveLoan(long foundingId, long loanId);
+
+	/**
+	 * Request to exit the programm.
+	 */
+	void requestProgrammExit();
 
 	/**
 	 * Request to remove a comparison.

@@ -31,6 +31,7 @@ public class ModelChangeHandler implements ModelChangeListener, GenericModelEntr
 		model.getAllComparisons().forEach(c -> c.register(this));
 		model.getAllFoundings().forEach(f -> f.register(this));
 		model.getAllLoans().forEach(l -> l.register(this));
+		model.listenerRegister(this);
 	}
 
 	/**

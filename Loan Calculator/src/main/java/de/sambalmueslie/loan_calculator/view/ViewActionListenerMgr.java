@@ -87,19 +87,19 @@ public class ViewActionListenerMgr implements ViewActionListener {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestFileOpen(java.lang.String)
+	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestFileOpen()
 	 */
 	@Override
-	public void requestFileOpen(final String fileName) {
-		listeners.forEach(l -> l.requestFileOpen(fileName));
+	public void requestFileOpen() {
+		listeners.forEach(l -> l.requestFileOpen());
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestFileSave(java.lang.String)
+	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestFileSave()
 	 */
 	@Override
-	public void requestFileSave(final String fileName) {
-		listeners.forEach(l -> l.requestFileSave(fileName));
+	public void requestFileSave() {
+		listeners.forEach(l -> l.requestFileSave());
 	}
 
 	/**
@@ -116,6 +116,14 @@ public class ViewActionListenerMgr implements ViewActionListener {
 	@Override
 	public void requestFoundingRemoveLoan(final long foundingId, final long loanId) {
 		listeners.forEach(l -> l.requestFoundingRemoveLoan(foundingId, loanId));
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestProgrammExit()
+	 */
+	@Override
+	public void requestProgrammExit() {
+		listeners.forEach(l -> l.requestProgrammExit());
 	}
 
 	/**

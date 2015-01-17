@@ -34,12 +34,15 @@ public class MainMenu extends MenuBar {
 		final MenuItem fileNew = new MenuItem("New");
 		fileNew.setOnAction(f -> actionListener.requestFileNew());
 		final MenuItem fileOpen = new MenuItem("Open");
+		fileOpen.setOnAction(f -> actionListener.requestFileOpen());
 		final MenuItem fileSave = new MenuItem("Save");
+		fileSave.setOnAction(f -> actionListener.requestFileSave());
 		file.getItems().addAll(fileNew, fileOpen, fileSave);
 
 		file.getItems().add(new SeparatorMenuItem());
 
 		final MenuItem exit = new MenuItem("Exit");
+		exit.setOnAction(f -> actionListener.requestProgrammExit());
 		file.getItems().add(exit);
 
 		return file;

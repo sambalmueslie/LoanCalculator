@@ -182,7 +182,10 @@ public class Controller extends Application {
 	 * @see ViewActionListener#requestFileNew()
 	 */
 	void handleRequestFileNew() {
-		if (fileController.getCurrentFile() != null && fileController.getCurrentFile().hasUnsavedChanges()) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("Handle request to create new file.");
+		}
+		if (fileController.hasUnsavedChanges()) {
 			if (!view.showDialogRefuseUnsavedChanges()) return;
 		}
 		model = new BaseModel();
@@ -191,17 +194,23 @@ public class Controller extends Application {
 	}
 
 	/**
-	 * @see ViewActionListener#requestFileOpen(String)
+	 * @see ViewActionListener#requestFileOpen()
 	 */
-	void handleRequestFileOpen(final String fileName) {
+	void handleRequestFileOpen() {
+		if (logger.isDebugEnabled()) {
+			logger.debug("Handle request to open a file.");
+		}
 		// TODO Auto-generated method stub
 
 	}
 
 	/**
-	 * @see ViewActionListener#requestFileSave(String)
+	 * @see ViewActionListener#requestFileSave()
 	 */
-	void handleRequestFileSave(final String fileName) {
+	void handleRequestFileSave() {
+		if (logger.isDebugEnabled()) {
+			logger.debug("Handle request to save current file.");
+		}
 		// TODO Auto-generated method stub
 
 	}
@@ -232,6 +241,19 @@ public class Controller extends Application {
 		final Loan loan = model.getLoan(loanId);
 		if (founding == null || loan == null) return;
 		founding.remove(loan);
+	}
+
+	/**
+	 * @see ViewActionListener#requestProgrammExit()
+	 */
+	void handleRequestProgrammExit() {
+		if (logger.isDebugEnabled()) {
+			logger.debug("Handle request exit the programm.");
+		}
+		if (fileController.hasUnsavedChanges()) {
+			if (!view.showDialogRefuseUnsavedChanges()) return;
+		}
+		System.exit(0);
 	}
 
 	/**
