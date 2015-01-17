@@ -22,6 +22,9 @@ import de.sambalmueslie.loan_calculator.controller.file.LoanFile;
 import de.sambalmueslie.loan_calculator.view.entry_mgr.tabs.EntryTabPane;
 import de.sambalmueslie.loan_calculator.view.entry_mgr.tree.EntryTree;
 import de.sambalmueslie.loan_calculator.view.menu.MainMenu;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * The view.
@@ -189,9 +192,13 @@ public class View extends BorderPane {
 		final FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Save file as");
 		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+                fileChooser.setInitialFileName(new SimpleDateFormat("YYYY-MM-dd").format(new Date()) + "_LoanCalcutlation.ldf");
 		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Loan Data files", "*.ldf"));
 
-		final File file = fileChooser.showSaveDialog(primaryStage);
+                File file = fileChooser.showSaveDialog(primaryStage);
+                if (!file.getName().endsWith(".ldf")) {
+                    file = new File(file.getPath() + ".ldf");
+                }
 		return (file != null) ? file.toPath() : null;
 	}
 

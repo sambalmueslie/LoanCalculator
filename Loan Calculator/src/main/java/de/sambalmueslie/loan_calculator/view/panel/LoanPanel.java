@@ -124,7 +124,7 @@ public abstract class LoanPanel<T extends Loan> extends Pane {
 	private void setupCharts() {
 		chartPane = new GridPane();
 		chartPane.getStyleClass().add(CLASS_PANEL);
-		chartPane.setPrefWidth(800);
+		//chartPane.setPrefWidth(800);
 		borderPane.setCenter(chartPane);
 	}
 
