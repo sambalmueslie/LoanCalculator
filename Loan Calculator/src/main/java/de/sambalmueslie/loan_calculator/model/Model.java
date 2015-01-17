@@ -59,6 +59,11 @@ public interface Model {
 	Loan getLoan(final long id);
 
 	/**
+	 * @return <code>true</code> if the model is empty, otherwise <code>false</code>.
+	 */
+	boolean isEmpty();
+
+	/**
 	 * Register a {@link ModelChangeListener}.
 	 *
 	 * @param listener

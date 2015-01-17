@@ -25,7 +25,9 @@ public class FileController {
 	public LoanFile createNewFile(final Model model) {
 		final String name = "Unknown";
 		final BaseLoanFile file = new BaseLoanFile(name, model);
-		file.setUnsavedChanges();
+		if (!model.isEmpty()) {
+			file.setUnsavedChanges();
+		}
 		files.put(name, file);
 		currentFile = file;
 		return file;

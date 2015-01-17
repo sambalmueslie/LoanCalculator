@@ -57,6 +57,13 @@ public class GenericModel<T extends GenericModelEntry> {
 	}
 
 	/**
+	 * @see Collection#isEmpty()
+	 */
+	public boolean isEmpty() {
+		return entries.isEmpty();
+	}
+
+	/**
 	 * Register a {@link GenericModelListener}.
 	 *
 	 * @param listener

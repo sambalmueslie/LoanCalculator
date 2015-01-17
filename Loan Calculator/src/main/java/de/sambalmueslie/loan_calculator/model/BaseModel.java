@@ -145,6 +145,14 @@ public class BaseModel implements Model {
 	}
 
 	/**
+	 * @see de.sambalmueslie.loan_calculator.model.Model#isEmpty()
+	 */
+	@Override
+	public boolean isEmpty() {
+		return comparisonModel.isEmpty() && foundingModel.isEmpty() && loanModel.isEmpty();
+	}
+
+	/**
 	 * @see de.sambalmueslie.loan_calculator.model.Model#listenerRegister(de.sambalmueslie.loan_calculator.model.ModelChangeListener)
 	 */
 	@Override
