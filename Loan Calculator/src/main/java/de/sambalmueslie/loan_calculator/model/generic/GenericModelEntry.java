@@ -3,6 +3,7 @@
  */
 package de.sambalmueslie.loan_calculator.model.generic;
 
+
 /**
  * A model entry.
  *

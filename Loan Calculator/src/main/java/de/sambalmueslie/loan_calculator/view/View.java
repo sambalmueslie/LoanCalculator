@@ -4,10 +4,15 @@
 package de.sambalmueslie.loan_calculator.view;
 
 import static de.sambalmueslie.loan_calculator.view.Constants.CLASS_PANEL_EMPTY;
+
+import java.io.File;
+import java.nio.file.Path;
+
 import javafx.beans.value.ChangeListener;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import org.controlsfx.control.action.Action;
@@ -55,6 +60,7 @@ public class View extends BorderPane {
 	 *            the primary {@link Stage}
 	 */
 	public void setup(final Stage primaryStage) {
+		this.primaryStage = primaryStage;
 		primaryStage.setTitle("Loan calculator by sambalmueslie!");
 		final Label statusbar = new Label();
 
@@ -111,6 +117,19 @@ public class View extends BorderPane {
 	}
 
 	/**
+	 * @return the save {@link Path}.
+	 */
+	public Path showDialogSaveNewFile() {
+		final FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Save file as");
+		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Loan Data files", "*.ldf"));
+
+		final File file = fileChooser.showSaveDialog(primaryStage);
+		return (file != null) ? file.toPath() : null;
+	}
+
+	/**
 	 * Teardown.
 	 */
 	public void teardown() {
@@ -119,7 +138,10 @@ public class View extends BorderPane {
 
 	/** the {@link ViewActionListenerMgr}. */
 	private final ViewActionListenerMgr actionListenerMgr = new ViewActionListenerMgr();
+
 	/** the content pane. */
 	private BorderPane content;
+	/** the primary {@link Stage}. */
+	private Stage primaryStage;
 
 }

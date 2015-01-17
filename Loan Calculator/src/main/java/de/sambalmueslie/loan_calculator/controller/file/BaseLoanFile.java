@@ -3,6 +3,8 @@
  */
 package de.sambalmueslie.loan_calculator.controller.file;
 
+import java.nio.file.Path;
+
 import de.sambalmueslie.loan_calculator.model.Model;
 
 /**
@@ -51,6 +53,21 @@ public class BaseLoanFile implements LoanFile {
 	}
 
 	/**
+	 * @return the {@link #path}
+	 */
+	Path getPath() {
+		return path;
+	}
+
+	/**
+	 * @param path
+	 *            the path to set
+	 */
+	void setPath(final Path path) {
+		this.path = path;
+	}
+
+	/**
 	 * Set the unsaved changes.
 	 */
 	void setUnsavedChanges() {
@@ -61,6 +78,10 @@ public class BaseLoanFile implements LoanFile {
 	private final Model model;
 	/** the name. */
 	private final String name;
+
+	/** the {@link Path}. */
+	private Path path;
+
 	/** the unsaved changes flag. */
 	private boolean unsavedChanges;
 

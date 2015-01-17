@@ -3,6 +3,8 @@
  */
 package de.sambalmueslie.loan_calculator.controller;
 
+import java.nio.file.Path;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -211,8 +213,12 @@ public class Controller extends Application {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Handle request to save current file.");
 		}
-		// TODO Auto-generated method stub
-
+		if (!fileController.isCurrendFileAlreadySaved()) {
+			final Path path = view.showDialogSaveNewFile();
+			fileController.saveCurrentNewFile(path);
+		} else {
+			fileController.saveCurrentFile();
+		}
 	}
 
 	/**
