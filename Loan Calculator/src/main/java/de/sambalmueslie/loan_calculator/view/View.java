@@ -7,20 +7,17 @@ import static de.sambalmueslie.loan_calculator.view.Constants.CLASS_PANEL_EMPTY;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.Optional;
 
 import javafx.beans.value.ChangeListener;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
-import org.controlsfx.control.action.Action;
-import org.controlsfx.dialog.Dialog;
-import org.controlsfx.dialog.Dialogs;
-
 import de.sambalmueslie.loan_calculator.controller.file.LoanFile;
 import de.sambalmueslie.loan_calculator.view.entry_mgr.tabs.EntryTabPane;
 import de.sambalmueslie.loan_calculator.view.entry_mgr.tree.EntryTree;
@@ -31,7 +28,6 @@ import de.sambalmueslie.loan_calculator.view.menu.MainMenu;
  *
  * @author sambalmueslie 2015
  */
-@SuppressWarnings("deprecation")
 public class View extends BorderPane {
 
 	/**
@@ -143,9 +139,14 @@ public class View extends BorderPane {
 	 * @return <code>true</code> if he like to refuse, othewise <code>false</code>
 	 */
 	public boolean showDialogRefuseUnsavedChanges() {
-		final Action response = Dialogs.create().title("Refuse unsaved changes?").message("There are unsaved changes, do you realy want to continue?")
-				.showConfirm();
-		return response == Dialog.ACTION_YES;
+		final Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Confirmation Dialog");
+		alert.setHeaderText("There are unsaved changes.");
+		alert.setContentText("Do you want to continue?");
+		alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
+
+		final Optional<ButtonType> result = alert.showAndWait();
+		return result.get() == ButtonType.YES;
 	}
 
 	/**
