@@ -3,7 +3,7 @@
     -fx-font-family: "Verdana";
     -fx-hgap: 5px;
     -fx-vgap: 5px;
-   	-fx-padding: 5px; 
+    -fx-padding: 5px; 
 }
 
 .headline-label {
@@ -15,20 +15,24 @@
 }
 
 .empty-panel {
-	-fx-padding: 0px;
+    -fx-padding: 0px;
     -fx-hgap: 0px;
     -fx-vgap: 0px;
 }
 
 .panel {
-   	-fx-padding: 5px; 
+    -fx-padding: 5px; 
     -fx-hgap: 5px;
     -fx-vgap: 5px;
 }
 
 .border-panel {
-   	-fx-padding: 5px; 
+    -fx-padding: 5px; 
     -fx-hgap: 5px;
     -fx-vgap: 5px;
-	-fx-border-color: lightgray;
+    -fx-border-color: lightgray;
+}
+
+.text-field:readonly {
+    -fx-background-color: #ddd;
 }
