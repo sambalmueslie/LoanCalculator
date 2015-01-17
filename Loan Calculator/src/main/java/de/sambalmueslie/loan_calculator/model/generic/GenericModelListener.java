@@ -28,4 +28,5 @@ public interface GenericModelListener<T extends GenericModelEntry> {
 	 *            the entry
 	 */
 	void entryRemoved(GenericModel<T> model, T entry);
+
 }

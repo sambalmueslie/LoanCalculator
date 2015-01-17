@@ -9,6 +9,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+
+import org.controlsfx.control.action.Action;
+import org.controlsfx.dialog.Dialog;
+import org.controlsfx.dialog.Dialogs;
+
+import de.sambalmueslie.loan_calculator.controller.file.LoanFile;
 import de.sambalmueslie.loan_calculator.model.Model;
 import de.sambalmueslie.loan_calculator.view.entry_mgr.tabs.EntryTabPane;
 import de.sambalmueslie.loan_calculator.view.entry_mgr.tree.EntryTree;
@@ -19,17 +25,8 @@ import de.sambalmueslie.loan_calculator.view.menu.MainMenu;
  *
  * @author sambalmueslie 2015
  */
+@SuppressWarnings("deprecation")
 public class View extends BorderPane {
-
-	/**
-	 * Constructor.
-	 *
-	 * @param model
-	 */
-	public View(final Model model) {
-		entryTree = new EntryTree(model, actionListenerMgr);
-		entryTabPane = new EntryTabPane(model, actionListenerMgr);
-	}
 
 	/**
 	 * Register a {@link ViewActionListener}.
@@ -61,10 +58,8 @@ public class View extends BorderPane {
 		primaryStage.setTitle("Loan calculator by sambalmueslie!");
 		final Label statusbar = new Label();
 
-		final BorderPane content = new BorderPane();
+		content = new BorderPane();
 		content.getStyleClass().add(CLASS_PANEL_EMPTY);
-		content.setLeft(entryTree);
-		content.setCenter(entryTabPane);
 
 		final MainMenu mainMenu = new MainMenu(actionListenerMgr);
 
@@ -90,6 +85,32 @@ public class View extends BorderPane {
 	}
 
 	/**
+	 * Show.
+	 *
+	 * @param file
+	 *            the {@link LoanFile}
+	 */
+	public void show(final LoanFile file) {
+		final Model model = file.getModel();
+		final EntryTree entryTree = new EntryTree(model, actionListenerMgr);
+		final EntryTabPane entryTabPane = new EntryTabPane(model, actionListenerMgr);
+
+		content.setLeft(entryTree);
+		content.setCenter(entryTabPane);
+	}
+
+	/**
+	 * Show the dialog to ask the user if it is his will to refuse the unsaved changes.
+	 *
+	 * @return <code>true</code> if he like to refuse, othewise <code>false</code>
+	 */
+	public boolean showDialogRefuseUnsavedChanges() {
+		final Action response = Dialogs.create().title("Refuse unsaved changes?").message("There are unsaved changes, do you realy want to continue?")
+				.showConfirm();
+		return response == Dialog.ACTION_YES;
+	}
+
+	/**
 	 * Teardown.
 	 */
 	public void teardown() {
@@ -98,9 +119,7 @@ public class View extends BorderPane {
 
 	/** the {@link ViewActionListenerMgr}. */
 	private final ViewActionListenerMgr actionListenerMgr = new ViewActionListenerMgr();
-	/** the {@link EntryTabPane}. */
-	private final EntryTabPane entryTabPane;
-	/** the {@link EntryTree} */
-	private final EntryTree entryTree;
+	/** the content pane. */
+	private BorderPane content;
 
 }

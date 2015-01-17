@@ -9,6 +9,8 @@ import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import de.sambalmueslie.loan_calculator.controller.file.FileController;
+import de.sambalmueslie.loan_calculator.controller.file.LoanFile;
 import de.sambalmueslie.loan_calculator.model.BaseModel;
 import de.sambalmueslie.loan_calculator.model.compare.BaseComparison;
 import de.sambalmueslie.loan_calculator.model.compare.Comparison;
@@ -37,12 +39,13 @@ public class Controller extends Application {
 	@Override
 	public void start(final Stage primaryStage) throws Exception {
 		model = new BaseModel();
-		view = new View(model);
+		view = new View();
 
 		view.setup(primaryStage);
 		viewActionHandler = new ViewActionHandler(this);
 		view.listenerRegister(viewActionHandler);
 
+		handleRequestFileNew();
 		setupExampleData();
 	}
 
@@ -179,8 +182,12 @@ public class Controller extends Application {
 	 * @see ViewActionListener#requestFileNew()
 	 */
 	void handleRequestFileNew() {
-		// TODO Auto-generated method stub
-
+		if (fileController.getCurrentFile() != null && fileController.getCurrentFile().hasUnsavedChanges()) {
+			if (!view.showDialogRefuseUnsavedChanges()) return;
+		}
+		model = new BaseModel();
+		final LoanFile file = fileController.createNewFile(model);
+		view.show(file);
 	}
 
 	/**
@@ -391,6 +398,9 @@ public class Controller extends Application {
 		handleRequestComparisonAddFounding(comparisonId, f2Id);
 
 	}
+
+	/** the {@link FileController}. */
+	private final FileController fileController = new FileController();
 
 	/** the {@link BaseModel}. */
 	private BaseModel model;
