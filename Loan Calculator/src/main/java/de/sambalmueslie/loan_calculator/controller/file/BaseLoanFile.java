@@ -45,6 +45,14 @@ public class BaseLoanFile implements LoanFile {
 	}
 
 	/**
+	 * @see de.sambalmueslie.loan_calculator.controller.file.LoanFile#getPath()
+	 */
+	@Override
+	public Path getPath() {
+		return path;
+	}
+
+	/**
 	 * @see de.sambalmueslie.loan_calculator.controller.file.LoanFile#hasUnsavedChanges()
 	 */
 	@Override
@@ -53,10 +61,10 @@ public class BaseLoanFile implements LoanFile {
 	}
 
 	/**
-	 * @return the {@link #path}
+	 * Clear the unsaved changes.
 	 */
-	Path getPath() {
-		return path;
+	void clearUnsavedChanges() {
+		unsavedChanges = false;
 	}
 
 	/**
@@ -65,6 +73,7 @@ public class BaseLoanFile implements LoanFile {
 	 */
 	void setPath(final Path path) {
 		this.path = path;
+		name = path.toString();
 	}
 
 	/**
@@ -77,7 +86,7 @@ public class BaseLoanFile implements LoanFile {
 	/** the {@link Model}. */
 	private final Model model;
 	/** the name. */
-	private final String name;
+	private String name;
 
 	/** the {@link Path}. */
 	private Path path;

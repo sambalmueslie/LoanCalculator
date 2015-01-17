@@ -3,6 +3,8 @@
  */
 package de.sambalmueslie.loan_calculator.controller.file;
 
+import java.nio.file.Path;
+
 import de.sambalmueslie.loan_calculator.model.Model;
 
 /**
@@ -20,6 +22,11 @@ public interface LoanFile {
 	 * @return the name.
 	 */
 	String getName();
+
+	/**
+	 * @return the {@link Path}.
+	 */
+	Path getPath();
 
 	/**
 	 * @return <code>true</code> if the file has unsaved changes, otherwise <code>false</code>.

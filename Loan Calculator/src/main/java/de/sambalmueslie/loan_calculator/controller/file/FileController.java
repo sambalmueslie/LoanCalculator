@@ -44,7 +44,7 @@ public class FileController {
 	 * @return the created file
 	 */
 	public LoanFile createNewFile(final Model model) {
-		final String name = "Unknown";
+		final String name = "New file";
 		final BaseLoanFile file = new BaseLoanFile(name, model);
 		if (!model.isEmpty()) {
 			file.setUnsavedChanges();
@@ -55,6 +55,13 @@ public class FileController {
 	}
 
 	/**
+	 * @return the {@link #currentFile}
+	 */
+	public LoanFile getCurrentFile() {
+		return currentFile;
+	}
+
+	/**
 	 * @return <code>true</code> if the current {@link LoanFile} has unsaved changes, otherwise <code>false</code>.
 	 */
 	public boolean hasUnsavedChanges() {
@@ -62,91 +69,87 @@ public class FileController {
 	}
 
 	/**
-	 * @return <code>true</code> if the current {@link LoanFile} is already saved, otherwise <code>false</code>.
-	 */
-	public boolean isCurrendFileAlreadySaved() {
-		return currentFile != null && currentFile.getPath() != null;
-	}
-
-	/**
-	 * Save the current file.
-	 */
-	public void saveCurrentFile() {
-		if (isCurrendFileAlreadySaved()) return;
-		// TODO Auto-generated method stub
-	}
-
-	/**
-	 * Save the current file.
+	 * Save the file.
 	 *
-	 * @param path
-	 *            the {@link Path} to save
+	 * @param loanFile
+	 *            the {@link LoanFile} to save
+	 * @throws IOException
+	 *             on io error
+	 * @throws JAXBException
+	 *             on jaxb error
 	 */
-	public void saveCurrentNewFile(final Path path) {
-		if (isCurrendFileAlreadySaved()) return;
+	public void save(final LoanFile loanFile) throws IOException, JAXBException {
+		final BaseLoanFile baseLoanFile = (BaseLoanFile) loanFile;
+		final Path path = baseLoanFile.getPath();
 
-		currentFile.setPath(path);
+		final OutputStream file = Files.newOutputStream(path, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.WRITE);
 
-		try {
-			final OutputStream file = Files.newOutputStream(path, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.WRITE);
+		final JAXBContext context = JAXBContext.newInstance(XMLModel.class);
+		final Marshaller m = context.createMarshaller();
+		m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
-			final JAXBContext context = JAXBContext.newInstance(XMLModel.class);
-			final Marshaller m = context.createMarshaller();
-			m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+		final Model model = currentFile.getModel();
+		final XMLModel xmlModel = new XMLModel();
 
-			final Model model = currentFile.getModel();
-			final XMLModel xmlModel = new XMLModel();
-
-			// add all loans
-			final List<XMLAnnuityLoan> annuityLoans = new LinkedList<>();
-			for (final Loan loan : model.getAllLoans()) {
-				if (loan instanceof BaseAnnuityLoan) {
-					final BaseAnnuityLoan annuityLoan = (BaseAnnuityLoan) loan;
-					final XMLAnnuityLoan xmlAnnuityLoan = new XMLAnnuityLoan();
-					xmlAnnuityLoan.setId(annuityLoan.getId());
-					xmlAnnuityLoan.setName(annuityLoan.getName());
-					xmlAnnuityLoan.setAmount(annuityLoan.getAmount());
-					xmlAnnuityLoan.setEstimatedDebitInterest(annuityLoan.getEstimatedDebitInterest());
-					xmlAnnuityLoan.setFixedDebitInterest(annuityLoan.getFixedDebitInterest());
-					xmlAnnuityLoan.setFixedInterestPeriod(annuityLoan.getFixedInterestPeriod());
-					annuityLoans.add(xmlAnnuityLoan);
-				}
+		// add all loans
+		final List<XMLAnnuityLoan> annuityLoans = new LinkedList<>();
+		for (final Loan loan : model.getAllLoans()) {
+			if (loan instanceof BaseAnnuityLoan) {
+				final BaseAnnuityLoan annuityLoan = (BaseAnnuityLoan) loan;
+				final XMLAnnuityLoan xmlAnnuityLoan = new XMLAnnuityLoan();
+				xmlAnnuityLoan.setId(annuityLoan.getId());
+				xmlAnnuityLoan.setName(annuityLoan.getName());
+				xmlAnnuityLoan.setAmount(annuityLoan.getAmount());
+				xmlAnnuityLoan.setEstimatedDebitInterest(annuityLoan.getEstimatedDebitInterest());
+				xmlAnnuityLoan.setFixedDebitInterest(annuityLoan.getFixedDebitInterest());
+				xmlAnnuityLoan.setFixedInterestPeriod(annuityLoan.getFixedInterestPeriod());
+				annuityLoans.add(xmlAnnuityLoan);
 			}
-			xmlModel.setAnnuityLoans(annuityLoans);
+		}
+		xmlModel.setAnnuityLoans(annuityLoans);
 
-			// add all foundings
-			final List<XMLFounding> foundings = new LinkedList<>();
-			for (final Founding founding : model.getAllFoundings()) {
-				final XMLFounding xmlFounding = new XMLFounding();
-				xmlFounding.setId(founding.getId());
-				xmlFounding.setBankName(founding.getBankName());
-				xmlFounding.setLoanIds(founding.getLoans().stream().map(Loan::getId).collect(Collectors.toSet()));
-				foundings.add(xmlFounding);
-			}
-
-			xmlModel.setFoundings(foundings);
-			// add all comparisons
-			final List<XMLComparison> comparisons = new LinkedList<>();
-			for (final Comparison<?> comparison : model.getAllComparisons()) {
-				final XMLComparison xmlComparison = new XMLComparison();
-				xmlComparison.setId(comparison.getId());
-				xmlComparison.setName(comparison.getName());
-				xmlComparison.setType(comparison.getType());
-				xmlComparison.setElementIds(comparison.getElements().stream().map(GenericModelEntry::getId).collect(Collectors.toSet()));
-				comparisons.add(xmlComparison);
-			}
-			xmlModel.setComparisons(comparisons);
-
-			m.marshal(xmlModel, file);
-
-		} catch (final IOException e) {
-			e.printStackTrace();
-			// TODO Auto-generated method stub
-		} catch (final JAXBException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		// add all foundings
+		final List<XMLFounding> foundings = new LinkedList<>();
+		for (final Founding founding : model.getAllFoundings()) {
+			final XMLFounding xmlFounding = new XMLFounding();
+			xmlFounding.setId(founding.getId());
+			xmlFounding.setBankName(founding.getBankName());
+			xmlFounding.setLoanIds(founding.getLoans().stream().map(Loan::getId).collect(Collectors.toSet()));
+			foundings.add(xmlFounding);
 		}
 
+		xmlModel.setFoundings(foundings);
+		// add all comparisons
+		final List<XMLComparison> comparisons = new LinkedList<>();
+		for (final Comparison<?> comparison : model.getAllComparisons()) {
+			final XMLComparison xmlComparison = new XMLComparison();
+			xmlComparison.setId(comparison.getId());
+			xmlComparison.setName(comparison.getName());
+			xmlComparison.setType(comparison.getType());
+			xmlComparison.setElementIds(comparison.getElements().stream().map(GenericModelEntry::getId).collect(Collectors.toSet()));
+			comparisons.add(xmlComparison);
+		}
+		xmlModel.setComparisons(comparisons);
+
+		m.marshal(xmlModel, file);
+		baseLoanFile.clearUnsavedChanges();
+	}
+
+	/**
+	 * Save the file.
+	 *
+	 * @param loanFile
+	 *            the {@link LoanFile} to save
+	 * @param path
+	 *            the path to save
+	 * @throws IOException
+	 *             on io error
+	 * @throws JAXBException
+	 *             on jaxb error
+	 */
+	public void saveAs(final LoanFile loanFile, final Path path) throws IOException, JAXBException {
+		((BaseLoanFile) loanFile).setPath(path);
+		save(loanFile);
 	}
 
 	/** the current {@link LoanFile}. */

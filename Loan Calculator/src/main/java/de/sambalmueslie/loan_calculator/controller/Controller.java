@@ -3,10 +3,13 @@
  */
 package de.sambalmueslie.loan_calculator.controller;
 
+import java.io.IOException;
 import java.nio.file.Path;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+
+import javax.xml.bind.JAXBException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -213,11 +216,21 @@ public class Controller extends Application {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Handle request to save current file.");
 		}
-		if (!fileController.isCurrendFileAlreadySaved()) {
-			final Path path = view.showDialogSaveNewFile();
-			fileController.saveCurrentNewFile(path);
-		} else {
-			fileController.saveCurrentFile();
+		final LoanFile file = fileController.getCurrentFile();
+		try {
+			if (file.getPath() == null) {
+				final Path path = view.showDialogSaveNewFile();
+				fileController.saveAs(file, path);
+			} else {
+				fileController.save(file);
+			}
+			view.showDialogSaveFileSucceed(file);
+		} catch (final IOException e) {
+			logger.error("Cannot save file due to IOException " + e.getMessage());
+			view.showDialogSaveFileFailed(file, e.getMessage());
+		} catch (final JAXBException e) {
+			logger.error("Cannot save file due to JAXBException " + e.getMessage());
+			view.showDialogSaveFileFailed(file, e.getMessage());
 		}
 	}
 

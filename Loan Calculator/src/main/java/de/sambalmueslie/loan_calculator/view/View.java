@@ -10,6 +10,8 @@ import java.nio.file.Path;
 
 import javafx.beans.value.ChangeListener;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
@@ -97,6 +99,8 @@ public class View extends BorderPane {
 	 *            the {@link LoanFile}
 	 */
 	public void show(final LoanFile file) {
+		primaryStage.setTitle("Loan calculator: " + file.getName());
+
 		final Model model = file.getModel();
 		final EntryTree entryTree = new EntryTree(model, actionListenerMgr);
 		final EntryTabPane entryTabPane = new EntryTabPane(model, actionListenerMgr);
@@ -114,6 +118,39 @@ public class View extends BorderPane {
 		final Action response = Dialogs.create().title("Refuse unsaved changes?").message("There are unsaved changes, do you realy want to continue?")
 				.showConfirm();
 		return response == Dialog.ACTION_YES;
+	}
+
+	/**
+	 * Show the save file failed dialog.
+	 *
+	 * @param file
+	 *            the affected {@link LoanFile}
+	 * @param message
+	 *            the message
+	 */
+	public void showDialogSaveFileFailed(final LoanFile file, final String message) {
+		final Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Save file failed");
+		alert.setHeaderText("Save file failed");
+		alert.setContentText(message);
+		alert.showAndWait();
+	}
+
+	/**
+	 * Show the save file succeed dialog.
+	 *
+	 * @param file
+	 *            the {@link LoanFile}
+	 */
+	public void showDialogSaveFileSucceed(final LoanFile file) {
+		final Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Information Dialog");
+		alert.setHeaderText(null);
+		alert.setContentText("File successfully saved!");
+
+		alert.showAndWait();
+
+		primaryStage.setTitle("Loan calculator: " + file.getName());
 	}
 
 	/**
@@ -138,7 +175,6 @@ public class View extends BorderPane {
 
 	/** the {@link ViewActionListenerMgr}. */
 	private final ViewActionListenerMgr actionListenerMgr = new ViewActionListenerMgr();
-
 	/** the content pane. */
 	private BorderPane content;
 	/** the primary {@link Stage}. */
