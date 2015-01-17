@@ -41,7 +41,7 @@ public class EntryTab extends Tab {
 		this.model = model;
 
 		getStyleClass().add(CLASS_PANEL);
-		setClosable(false);
+		setClosable(true);
 		final Node content = getContent(entry);
 		final ScrollPane scrollPane = new ScrollPane(content);
 		setContent(scrollPane);

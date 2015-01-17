@@ -11,6 +11,7 @@ import java.util.Set;
 import javafx.scene.Node;
 import javafx.scene.control.TreeCell;
 import de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry;
+import de.sambalmueslie.loan_calculator.view.entry_mgr.tabs.EntryTabPane;
 
 /**
  * The entry tree {@link TreeCell}.
@@ -21,10 +22,13 @@ public class EntryTreeCell extends TreeCell<GenericModelEntry> {
 	/**
 	 * Constructor.
 	 *
+	 * @param entryTabPane
+	 *            {@link #entryTabPane}
 	 * @param factories
 	 *            the {@link EntryTreeCellContentFactory}s.
 	 */
-	public EntryTreeCell(final EntryTreeCellContentFactory<?>... factories) {
+	public EntryTreeCell(final EntryTabPane entryTabPane, final EntryTreeCellContentFactory<?>... factories) {
+		this.entryTabPane = entryTabPane;
 		this.factories = new HashSet<>(Arrays.asList(factories));
 	}
 
@@ -53,6 +57,11 @@ public class EntryTreeCell extends TreeCell<GenericModelEntry> {
 			setGraphic(null);
 			setContextMenu(null);
 		} else {
+			setOnMouseClicked(event -> {
+				if (event.getClickCount() == 2) {
+					entryTabPane.show(entry);
+				}
+			});
 			setGraphic(content.getGrapic(e));
 			setContextMenu(content.getContextMenu(e));
 		}
@@ -96,6 +105,8 @@ public class EntryTreeCell extends TreeCell<GenericModelEntry> {
 		final EntryTreeCellContent<T> content = factory.create();
 		return content;
 	}
+
+	private final EntryTabPane entryTabPane;
 
 	/** the {@link EntryTreeCellContentFactory}s. */
 	private final Set<EntryTreeCellContentFactory<?>> factories;

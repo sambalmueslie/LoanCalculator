@@ -4,6 +4,7 @@
 package de.sambalmueslie.loan_calculator.view.entry_mgr.tabs;
 
 import static de.sambalmueslie.loan_calculator.view.Constants.CLASS_PANEL_EMPTY;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import de.sambalmueslie.loan_calculator.controller.file.LoanFile;
 import de.sambalmueslie.loan_calculator.model.Model;
@@ -32,7 +33,7 @@ public class EntryTabPane extends TabPane {
 		 */
 		@Override
 		public void comparisonAdded(final Comparison<?> comparison) {
-			add(comparison);
+			// add(comparison);
 		}
 
 		/**
@@ -48,7 +49,7 @@ public class EntryTabPane extends TabPane {
 		 */
 		@Override
 		public void foundingAdded(final Founding founding) {
-			add(founding);
+			// add(founding);
 		}
 
 		/**
@@ -64,7 +65,7 @@ public class EntryTabPane extends TabPane {
 		 */
 		@Override
 		public void loanAdded(final Loan loan) {
-			add(loan);
+			// add(loan);
 		}
 
 		/**
@@ -88,20 +89,27 @@ public class EntryTabPane extends TabPane {
 
 	}
 
+	public void show(final GenericModelEntry entry) {
+		for (final Tab tab : getTabs()) {
+			if (((EntryTab) tab).getEntry().equals(entry)) return;
+		}
+		add(entry);
+	}
+
 	/**
 	 * Show.
 	 *
 	 * @param file
 	 *            the {@link LoanFile}
 	 */
-	public void show(final LoanFile file) {
+	public void update(final LoanFile file) {
 		getTabs().clear();
 		model = file.getModel();
 		model.listenerRegister(new ModelChangeHandler());
-
-		model.getAllLoans().forEach(this::add);
-		model.getAllFoundings().forEach(this::add);
-		model.getAllComparisons().forEach(this::add);
+		//
+		// model.getAllLoans().forEach(this::add);
+		// model.getAllFoundings().forEach(this::add);
+		// model.getAllComparisons().forEach(this::add);
 	}
 
 	/**

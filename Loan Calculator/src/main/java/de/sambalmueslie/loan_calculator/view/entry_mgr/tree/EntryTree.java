@@ -26,6 +26,7 @@ import de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
 import de.sambalmueslie.loan_calculator.view.ViewActionListener;
 import de.sambalmueslie.loan_calculator.view.entry_mgr.contextmenu.EntryTreeContextMenu;
+import de.sambalmueslie.loan_calculator.view.entry_mgr.tabs.EntryTabPane;
 
 /**
  * @author sambalmueslie 2015
@@ -39,7 +40,7 @@ public class EntryTree extends BorderPane {
 	 *            the {@link ViewActionListener}
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public EntryTree(final ViewActionListener actionForwarder) {
+	public EntryTree(final EntryTabPane entryTabPane, final ViewActionListener actionForwarder) {
 		getStyleClass().add(CLASS_PANEL);
 
 		final HBox title = new HBox();
@@ -61,7 +62,7 @@ public class EntryTree extends BorderPane {
 		final EntryTreeCellContentFactory comparisonFactory = new EntryTreeCellContentFactory(Comparison.class, EntryTreeCellComparison.class);
 		comparisonFactory.setListener(actionForwarder);
 
-		treeView.setCellFactory(entry -> new EntryTreeCell(foundingFactory, loanFactory, comparisonFactory));
+		treeView.setCellFactory(entry -> new EntryTreeCell(entryTabPane, foundingFactory, loanFactory, comparisonFactory));
 
 		treeView.setOnDragOver(event -> {
 			event.acceptTransferModes(TransferMode.MOVE);

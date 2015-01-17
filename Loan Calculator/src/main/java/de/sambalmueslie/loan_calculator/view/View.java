@@ -7,6 +7,8 @@ import static de.sambalmueslie.loan_calculator.view.Constants.CLASS_PANEL_EMPTY;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 
 import javafx.beans.value.ChangeListener;
@@ -22,9 +24,6 @@ import de.sambalmueslie.loan_calculator.controller.file.LoanFile;
 import de.sambalmueslie.loan_calculator.view.entry_mgr.tabs.EntryTabPane;
 import de.sambalmueslie.loan_calculator.view.entry_mgr.tree.EntryTree;
 import de.sambalmueslie.loan_calculator.view.menu.MainMenu;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 /**
  * The view.
@@ -66,8 +65,8 @@ public class View extends BorderPane {
 
 		content = new BorderPane();
 		content.getStyleClass().add(CLASS_PANEL_EMPTY);
-		entryTree = new EntryTree(actionListenerMgr);
 		entryTabPane = new EntryTabPane(actionListenerMgr);
+		entryTree = new EntryTree(entryTabPane, actionListenerMgr);
 
 		content.setLeft(entryTree);
 		content.setCenter(entryTabPane);
@@ -104,7 +103,7 @@ public class View extends BorderPane {
 	public void show(final LoanFile file) {
 		primaryStage.setTitle("Loan calculator: " + file.getName());
 		entryTree.show(file);
-		entryTabPane.show(file);
+		entryTabPane.update(file);
 	}
 
 	/**
@@ -192,13 +191,13 @@ public class View extends BorderPane {
 		final FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Save file as");
 		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-                fileChooser.setInitialFileName(new SimpleDateFormat("YYYY-MM-dd").format(new Date()) + "_LoanCalcutlation.ldf");
+		fileChooser.setInitialFileName(new SimpleDateFormat("YYYY-MM-dd").format(new Date()) + "_LoanCalcutlation.ldf");
 		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Loan Data files", "*.ldf"));
 
-                File file = fileChooser.showSaveDialog(primaryStage);
-                if (!file.getName().endsWith(".ldf")) {
-                    file = new File(file.getPath() + ".ldf");
-                }
+		File file = fileChooser.showSaveDialog(primaryStage);
+		if (!file.getName().endsWith(".ldf")) {
+			file = new File(file.getPath() + ".ldf");
+		}
 		return (file != null) ? file.toPath() : null;
 	}
 
