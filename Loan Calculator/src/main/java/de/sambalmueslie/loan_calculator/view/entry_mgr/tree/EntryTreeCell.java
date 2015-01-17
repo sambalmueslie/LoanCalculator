@@ -13,16 +13,18 @@ import javafx.scene.control.TreeCell;
 import de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry;
 
 /**
+ * The entry tree {@link TreeCell}.
+ *
  * @author sambalmueslie 2015
  */
-public class EntryTreeItem extends TreeCell<GenericModelEntry> {
+public class EntryTreeCell extends TreeCell<GenericModelEntry> {
 	/**
 	 * Constructor.
 	 *
 	 * @param factories
-	 *            the {@link EntryTreeItemContentFactory}s.
+	 *            the {@link EntryTreeCellContentFactory}s.
 	 */
-	public EntryTreeItem(final EntryTreeItemContentFactory<?>... factories) {
+	public EntryTreeCell(final EntryTreeCellContentFactory<?>... factories) {
 		this.factories = new HashSet<>(Arrays.asList(factories));
 	}
 
@@ -46,9 +48,14 @@ public class EntryTreeItem extends TreeCell<GenericModelEntry> {
 	private <T extends GenericModelEntry> void addContent(final GenericModelEntry entry) {
 		setText(null);
 		final T e = (T) entry;
-		final EntryTreeItemContent<T> content = getContent(e);
-		setGraphic(content.getGrapic(e));
-		setContextMenu(content.getContextMenu(e));
+		final EntryTreeCellContent<T> content = getContent(e);
+		if (content == null) {
+			setGraphic(null);
+			setContextMenu(null);
+		} else {
+			setGraphic(content.getGrapic(e));
+			setContextMenu(content.getContextMenu(e));
+		}
 	}
 
 	/**
@@ -60,7 +67,7 @@ public class EntryTreeItem extends TreeCell<GenericModelEntry> {
 	}
 
 	/**
-	 * Is {@link EntryTreeItemContentFactory} type and {@link GenericModelEntry} type equals.
+	 * Is {@link EntryTreeCellContentFactory} type and {@link GenericModelEntry} type equals.
 	 *
 	 * @param factory
 	 *            the factory
@@ -68,7 +75,7 @@ public class EntryTreeItem extends TreeCell<GenericModelEntry> {
 	 *            the entry
 	 * @return <code>true</code> if so, otherwise <code>false</code>
 	 */
-	private boolean equals(final EntryTreeItemContentFactory<?> factory, final GenericModelEntry entry) {
+	private boolean equals(final EntryTreeCellContentFactory<?> factory, final GenericModelEntry entry) {
 		final Class<?> factoryType = factory.getType();
 		final Class<?> entryType = entry.getClass();
 		return factoryType.isAssignableFrom(entryType);
@@ -82,14 +89,14 @@ public class EntryTreeItem extends TreeCell<GenericModelEntry> {
 	 * @return the content {@link Node}
 	 */
 	@SuppressWarnings("unchecked")
-	private <T extends GenericModelEntry> EntryTreeItemContent<T> getContent(final T entry) {
-		final Optional<EntryTreeItemContentFactory<?>> optional = factories.stream().filter(f -> equals(f, entry)).findFirst();
+	private <T extends GenericModelEntry> EntryTreeCellContent<T> getContent(final T entry) {
+		final Optional<EntryTreeCellContentFactory<?>> optional = factories.stream().filter(f -> equals(f, entry)).findFirst();
 		if (!optional.isPresent()) return null;
-		final EntryTreeItemContentFactory<T> factory = (EntryTreeItemContentFactory<T>) optional.get();
-		final EntryTreeItemContent<T> content = factory.create();
+		final EntryTreeCellContentFactory<T> factory = (EntryTreeCellContentFactory<T>) optional.get();
+		final EntryTreeCellContent<T> content = factory.create();
 		return content;
 	}
 
-	/** the {@link EntryTreeItemContentFactory}s. */
-	private final Set<EntryTreeItemContentFactory<?>> factories;
+	/** the {@link EntryTreeCellContentFactory}s. */
+	private final Set<EntryTreeCellContentFactory<?>> factories;
 }

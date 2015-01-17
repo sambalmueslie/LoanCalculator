@@ -9,11 +9,11 @@ import de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry;
 import de.sambalmueslie.loan_calculator.view.ViewActionListener;
 
 /**
- * The content for the entry tree item.
+ * The content for the entry tree cell.
  *
  * @author sambalmueslie 2015
  */
-public interface EntryTreeItemContent<T extends GenericModelEntry> {
+public interface EntryTreeCellContent<T extends GenericModelEntry> {
 	/**
 	 * @param entry
 	 *            the entry

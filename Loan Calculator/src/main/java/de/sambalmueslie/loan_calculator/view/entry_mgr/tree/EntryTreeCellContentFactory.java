@@ -7,25 +7,25 @@ import de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry;
 import de.sambalmueslie.loan_calculator.view.ViewActionListener;
 
 /**
- * The factory for the {@link EntryTreeItemContent}.
+ * The factory for the {@link EntryTreeCellContent}.
  *
  * @author sambalmueslie 2015
  */
-public class EntryTreeItemContentFactory<T extends GenericModelEntry> {
+public class EntryTreeCellContentFactory<T extends GenericModelEntry> {
 	/**
 	 * Constructor.
 	 */
-	public EntryTreeItemContentFactory(final Class<T> type, final Class<? extends EntryTreeItemContent<T>> contentType) {
+	public EntryTreeCellContentFactory(final Class<T> type, final Class<? extends EntryTreeCellContent<T>> contentType) {
 		this.type = type;
 		this.contentType = contentType;
 	}
 
 	/**
-	 * @return create a new {@link EntryTreeItemContent}.
+	 * @return create a new {@link EntryTreeCellContent}.
 	 */
-	EntryTreeItemContent<T> create() {
+	EntryTreeCellContent<T> create() {
 		try {
-			final EntryTreeItemContent<T> content = contentType.newInstance();
+			final EntryTreeCellContent<T> content = contentType.newInstance();
 			content.set(listener);
 			return content;
 		} catch (InstantiationException | IllegalAccessException e) {
@@ -48,8 +48,8 @@ public class EntryTreeItemContentFactory<T extends GenericModelEntry> {
 		this.listener = listener;
 	}
 
-	/** the {@link EntryTreeItemContent} type.. */
-	private final Class<? extends EntryTreeItemContent<T>> contentType;
+	/** the {@link EntryTreeCellContent} type.. */
+	private final Class<? extends EntryTreeCellContent<T>> contentType;
 	/** the {@link ViewActionListener}. */
 	private ViewActionListener listener;
 	/** the type. */

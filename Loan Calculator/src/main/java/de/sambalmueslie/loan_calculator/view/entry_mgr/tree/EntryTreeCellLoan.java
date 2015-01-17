@@ -13,57 +13,42 @@ import javafx.scene.input.DataFormat;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
-import de.sambalmueslie.loan_calculator.model.founding.Founding;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import de.sambalmueslie.loan_calculator.model.loan.Loan;
 import de.sambalmueslie.loan_calculator.view.ViewActionListener;
-import de.sambalmueslie.loan_calculator.view.entry_mgr.contextmenu.FoundingContextMenu;
+import de.sambalmueslie.loan_calculator.view.entry_mgr.contextmenu.LoanContextMenu;
 
 /**
- * The {@link Founding} {@link EntryTreeItemContent}.
- *
+ * The {@link EntryTreeCellContent} for a {@link Loan}.
+ * 
  * @author sambalmueslie 2015
  */
-public class EntryTreeItemFounding extends GridPane implements EntryTreeItemContent<Founding> {
+public class EntryTreeCellLoan extends GridPane implements EntryTreeCellContent<Loan> {
+
+	/** the {@link Logger}. */
+	private static Logger logger = LogManager.getLogger(EntryTreeCellLoan.class);
 
 	/**
 	 * Constructor.
 	 */
-	public EntryTreeItemFounding() {
+	public EntryTreeCellLoan() {
 		getStyleClass().add(CLASS_PANEL);
 
-		final ImageView icon = IconProvider.createImageView(IconProvider.ICON_FOLDER_PAGE);
+		final ImageView icon = IconProvider.createImageView(IconProvider.ICON_NOTE);
 		add(icon, 0, 0);
+
 		add(name, 1, 0);
 
 		setOnDragDetected(event -> {
-			if (founding == null) return;
-
+			if (loan == null) return;
+			logger.info("Start drag of " + Long.toHexString(loan.getId()) + " " + loan.getName());
 			final Dragboard dragBoard = startDragAndDrop(TransferMode.MOVE);
 			final ClipboardContent content = new ClipboardContent();
-			content.put(DataFormat.PLAIN_TEXT, Long.toString(founding.getId()));
+			content.put(DataFormat.PLAIN_TEXT, Long.toString(loan.getId()));
 			dragBoard.setContent(content);
-			event.consume();
-		});
-
-		setOnDragOver(event -> {
-			if (founding != null) {
-				event.acceptTransferModes(TransferMode.MOVE);
-			}
-			event.consume();
-		});
-
-		setOnDragDropped(event -> {
-			if (founding == null) return;
-
-			final Dragboard db = event.getDragboard();
-
-			final String strId = db.hasString() ? db.getString() : null;
-			if (strId != null) {
-				final long loanId = Long.parseLong(strId);
-				final long foundingId = founding.getId();
-				listener.requestFoundingAddLoan(foundingId, loanId);
-			}
-
-			event.setDropCompleted(strId != null);
 			event.consume();
 		});
 	}
@@ -72,9 +57,9 @@ public class EntryTreeItemFounding extends GridPane implements EntryTreeItemCont
 	 * @see de.sambalmueslie.loan_calculator.view.entry_mgr.list.EntryListCellContent#getContextMenu(de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry)
 	 */
 	@Override
-	public ContextMenu getContextMenu(final Founding founding) {
-		this.founding = founding;
-		contextMenu.set(founding);
+	public ContextMenu getContextMenu(final Loan loan) {
+		this.loan = loan;
+		contextMenu.set(loan);
 		return contextMenu;
 	}
 
@@ -82,9 +67,9 @@ public class EntryTreeItemFounding extends GridPane implements EntryTreeItemCont
 	 * @see de.sambalmueslie.loan_calculator.view.entry_mgr.list.EntryListCellContent#getGrapic(de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry)
 	 */
 	@Override
-	public Node getGrapic(final Founding founding) {
-		this.founding = founding;
-		name.setText(founding.getName());
+	public Node getGrapic(final Loan loan) {
+		this.loan = loan;
+		name.setText(loan.getName());
 		return this;
 	}
 
@@ -93,17 +78,13 @@ public class EntryTreeItemFounding extends GridPane implements EntryTreeItemCont
 	 */
 	@Override
 	public void set(final ViewActionListener listener) {
-		this.listener = listener;
 		contextMenu.setListener(listener);
 	}
 
-	/** the {@link FoundingContextMenu}. */
-	private final FoundingContextMenu contextMenu = new FoundingContextMenu();
-	/** the {@link Founding}. */
-	private Founding founding;
-	/** the {@link ViewActionListener}. */
-	private ViewActionListener listener;
+	/** the {@link LoanContextMenu}. */
+	private final LoanContextMenu contextMenu = new LoanContextMenu();
+	/** the {@link Loan}. */
+	private Loan loan;
 	/** the name {@link Label}. */
 	private final Label name = new Label();
-
 }

@@ -10,27 +10,31 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import de.sambalmueslie.loan_calculator.model.compare.Comparison;
+import de.sambalmueslie.loan_calculator.model.founding.Founding;
 import de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry;
+import de.sambalmueslie.loan_calculator.model.loan.Loan;
 import de.sambalmueslie.loan_calculator.view.ViewActionListener;
 import de.sambalmueslie.loan_calculator.view.entry_mgr.contextmenu.ComparisonContextMenu;
 
 /**
- * The {@link EntryTreeItemContent} for the {@link Comparison}.
+ * The {@link EntryTreeCellContent} for the {@link Comparison}.
  *
  * @author sambalmueslie 2015
  */
-public class EntryTreeItemComparison<T extends GenericModelEntry> extends GridPane implements EntryTreeItemContent<Comparison<T>> {
+public class EntryTreeCellComparison<T extends GenericModelEntry> extends GridPane implements EntryTreeCellContent<Comparison<T>> {
 
 	/**
 	 * Constructor.
 	 */
-	public EntryTreeItemComparison() {
+	public EntryTreeCellComparison() {
 		getStyleClass().add(CLASS_PANEL);
 
 		final ImageView icon = IconProvider.createImageView(IconProvider.ICON_NOTE);
-		add(icon, 0, 0);
+		iconPane.setCenter(icon);
+		add(iconPane, 0, 0);
 
 		add(name, 1, 0);
 
@@ -77,6 +81,12 @@ public class EntryTreeItemComparison<T extends GenericModelEntry> extends GridPa
 	public Node getGrapic(final Comparison<T> comparison) {
 		this.comparison = comparison;
 		name.setText(comparison.getName());
+		if (comparison.getType().equals(Founding.class)) {
+			iconPane.setCenter(IconProvider.createImageView(IconProvider.ICON_LIST_IMAGES));
+		} else if (comparison.getType().equals(Loan.class)) {
+			iconPane.setCenter(IconProvider.createImageView(IconProvider.ICON_PAGE_COMPONENT));
+		}
+
 		return this;
 	}
 
@@ -93,6 +103,8 @@ public class EntryTreeItemComparison<T extends GenericModelEntry> extends GridPa
 	private Comparison<?> comparison;
 	/** the {@link ComparisonContextMenu}. */
 	private final ComparisonContextMenu contextMenu = new ComparisonContextMenu();
+	/** the icon pane. */
+	private final BorderPane iconPane = new BorderPane();
 	/** the {@link ViewActionListener}. */
 	private ViewActionListener listener;
 	/** the name {@link Label}. */

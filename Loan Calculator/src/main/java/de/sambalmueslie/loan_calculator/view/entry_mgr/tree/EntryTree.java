@@ -54,14 +54,14 @@ public class EntryTree extends BorderPane {
 		treeView.setShowRoot(false);
 		treeView.setEditable(false);
 
-		final EntryTreeItemContentFactory<?> foundingFactory = new EntryTreeItemContentFactory<Founding>(Founding.class, EntryTreeItemFounding.class);
+		final EntryTreeCellContentFactory<?> foundingFactory = new EntryTreeCellContentFactory<Founding>(Founding.class, EntryTreeCellFounding.class);
 		foundingFactory.setListener(actionForwarder);
-		final EntryTreeItemContentFactory<?> loanFactory = new EntryTreeItemContentFactory<Loan>(Loan.class, EntryTreeItemLoan.class);
+		final EntryTreeCellContentFactory<?> loanFactory = new EntryTreeCellContentFactory<Loan>(Loan.class, EntryTreeCellLoan.class);
 		loanFactory.setListener(actionForwarder);
-		final EntryTreeItemContentFactory comparisonFactory = new EntryTreeItemContentFactory(Comparison.class, EntryTreeItemComparison.class);
+		final EntryTreeCellContentFactory comparisonFactory = new EntryTreeCellContentFactory(Comparison.class, EntryTreeCellComparison.class);
 		comparisonFactory.setListener(actionForwarder);
 
-		treeView.setCellFactory(entry -> new EntryTreeItem(foundingFactory, loanFactory, comparisonFactory));
+		treeView.setCellFactory(entry -> new EntryTreeCell(foundingFactory, loanFactory, comparisonFactory));
 
 		treeView.setOnDragOver(event -> {
 			event.acceptTransferModes(TransferMode.MOVE);
