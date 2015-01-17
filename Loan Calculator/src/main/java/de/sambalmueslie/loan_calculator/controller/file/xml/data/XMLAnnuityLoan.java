@@ -3,7 +3,6 @@
  */
 package de.sambalmueslie.loan_calculator.controller.file.xml.data;
 
-
 /**
  * @author sambalmueslie 2015
  */
@@ -116,7 +115,7 @@ public class XMLAnnuityLoan {
 
 	/** the amount. */
 	private double amount;
-	/** the estimated debit interest (geschätzter Sollzins nach Bindungsende). */
+	/** the estimated debit interest (geschaetzter Sollzins nach Bindungsende). */
 	private double estimatedDebitInterest;
 	/** the fixed debit interest (Gebundener Sollzins). */
 	private double fixedDebitInterest;

@@ -18,7 +18,7 @@ public final class Constants {
 	/** style class for an empty panel. */
 	public static String CLASS_PANEL_EMPTY = "empty-panel";
 	/** the default currency. */
-	public static String DEFAULT_CURRENCY = "€";
+	public static String DEFAULT_CURRENCY = "EUR";
 
 	/**
 	 * Constructor.
