@@ -16,7 +16,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import de.sambalmueslie.loan_calculator.controller.file.LoanFile;
 import de.sambalmueslie.loan_calculator.model.Model;
@@ -29,7 +29,7 @@ import de.sambalmueslie.loan_calculator.view.entry_mgr.contextmenu.EntryTreeCont
 /**
  * @author sambalmueslie 2015
  */
-public class EntryTree extends GridPane {
+public class EntryTree extends BorderPane {
 
 	/**
 	 * Constructor.
@@ -46,7 +46,7 @@ public class EntryTree extends GridPane {
 		final Label overview = new Label("Overview");
 		overview.getStyleClass().add(CLASS_HEADLINE_LABEL);
 		title.getChildren().add(overview);
-		add(title, 0, 0);
+		setTop(title);
 
 		treeView = new TreeView<>(new TreeItem<>());
 		treeView.setShowRoot(false);
@@ -82,9 +82,11 @@ public class EntryTree extends GridPane {
 			event.consume();
 		});
 
-		add(treeView, 0, 1);
+		setCenter(treeView);
 
-		treeView.setContextMenu(new EntryTreeContextMenu(actionForwarder));
+		final EntryTreeContextMenu contextMenu = new EntryTreeContextMenu();
+		contextMenu.setListener(actionForwarder);
+		treeView.setContextMenu(contextMenu);
 	}
 
 	/**

@@ -30,17 +30,23 @@ public class EntryTreeContextMenu extends ContextMenu {
 
 	/**
 	 * Constructor.
+	 */
+	public EntryTreeContextMenu() {
+		addAnnuitiyLoanMenuItem = new MenuItem("Add new annuity loan", IconProvider.createImageView(IconProvider.ICON_PAGE_NEW));
+		addFoundingMenuItem = new MenuItem("Add new founding", IconProvider.createImageView(IconProvider.ICON_FOLDER_NEW));
+		getItems().addAll(addAnnuitiyLoanMenuItem, addFoundingMenuItem);
+	}
+
+	/**
+	 * Set the {@link ViewActionListener}.
 	 *
 	 * @param listener
-	 *            the {@link ViewActionListener}
+	 *            the listener to set
 	 */
-	public EntryTreeContextMenu(final ViewActionListener listener) {
+	public void setListener(final ViewActionListener listener) {
 		this.listener = listener;
-		addAnnuitiyLoanMenuItem = new MenuItem("Add annuity loan", IconProvider.createImageView(IconProvider.ICON_NOTE_NEW));
 		addAnnuitiyLoanMenuItem.setOnAction(e -> addAnnuitiyLoan());
-		addFoundingMenuItem = new MenuItem("Add founding", IconProvider.createImageView(IconProvider.ICON_FOLDER_NEW));
 		addFoundingMenuItem.setOnAction(e -> addFounding());
-		getItems().addAll(addAnnuitiyLoanMenuItem, addFoundingMenuItem);
 	}
 
 	/**
@@ -88,5 +94,5 @@ public class EntryTreeContextMenu extends ContextMenu {
 	/** the add {@link MenuItem}. */
 	private final MenuItem addFoundingMenuItem;
 	/** the {@link ViewActionListener}. */
-	private final ViewActionListener listener;
+	private ViewActionListener listener;
 }
