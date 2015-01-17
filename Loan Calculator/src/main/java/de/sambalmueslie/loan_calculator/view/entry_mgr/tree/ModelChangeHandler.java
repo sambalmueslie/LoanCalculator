@@ -30,8 +30,7 @@ class ModelChangeHandler implements ModelChangeListener {
 	 */
 	@Override
 	public void comparisonAdded(final Comparison<?> comparison) {
-		// TODO Auto-generated method stub
-
+		entryTree.add(comparison);
 	}
 
 	/**
@@ -39,8 +38,7 @@ class ModelChangeHandler implements ModelChangeListener {
 	 */
 	@Override
 	public void comparisonRemoved(final Comparison<?> comparison) {
-		// TODO Auto-generated method stub
-
+		entryTree.remove(comparison);
 	}
 
 	/**

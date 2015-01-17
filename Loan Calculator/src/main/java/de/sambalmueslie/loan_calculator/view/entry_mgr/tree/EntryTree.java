@@ -20,6 +20,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import de.sambalmueslie.loan_calculator.controller.file.LoanFile;
 import de.sambalmueslie.loan_calculator.model.Model;
+import de.sambalmueslie.loan_calculator.model.compare.Comparison;
 import de.sambalmueslie.loan_calculator.model.founding.Founding;
 import de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
@@ -37,6 +38,7 @@ public class EntryTree extends BorderPane {
 	 * @param actionForwarder
 	 *            the {@link ViewActionListener}
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public EntryTree(final ViewActionListener actionForwarder) {
 		getStyleClass().add(CLASS_PANEL);
 
@@ -56,8 +58,10 @@ public class EntryTree extends BorderPane {
 		foundingFactory.setListener(actionForwarder);
 		final EntryTreeItemContentFactory<?> loanFactory = new EntryTreeItemContentFactory<Loan>(Loan.class, EntryTreeItemLoan.class);
 		loanFactory.setListener(actionForwarder);
+		final EntryTreeItemContentFactory comparisonFactory = new EntryTreeItemContentFactory(Comparison.class, EntryTreeItemComparison.class);
+		comparisonFactory.setListener(actionForwarder);
 
-		treeView.setCellFactory(entry -> new EntryTreeItem(foundingFactory, loanFactory));
+		treeView.setCellFactory(entry -> new EntryTreeItem(foundingFactory, loanFactory, comparisonFactory));
 
 		treeView.setOnDragOver(event -> {
 			event.acceptTransferModes(TransferMode.MOVE);
@@ -106,6 +110,21 @@ public class EntryTree extends BorderPane {
 	}
 
 	/**
+	 * Add a {@link Comparison}.
+	 *
+	 * @param comparison
+	 *            the comparison
+	 */
+	void add(final Comparison<?> comparison) {
+		final TreeItem<GenericModelEntry> comparisonItem = new TreeItem<>(comparison);
+		treeView.getRoot().getChildren().add(comparisonItem);
+		assignComparisonChildren(comparison, comparisonItem);
+		comparison.register(c -> comparisonChanged((Comparison<?>) c));
+		comparisonItem.setExpanded(true);
+
+	}
+
+	/**
 	 * Add a {@link Founding}.
 	 *
 	 * @param founding
@@ -136,6 +155,17 @@ public class EntryTree extends BorderPane {
 	}
 
 	/**
+	 * Remove a {@link Comparison}.
+	 *
+	 * @param comparison
+	 *            the comparison
+	 */
+	void remove(final Comparison<?> comparison) {
+		final ObservableList<TreeItem<GenericModelEntry>> rootChildren = treeView.getRoot().getChildren();
+		rootChildren.removeIf(n -> n.getValue().equals(comparison));
+	}
+
+	/**
 	 * Remove a {@link Founding}.
 	 *
 	 * @param founding
@@ -155,6 +185,19 @@ public class EntryTree extends BorderPane {
 	void remove(final Loan loan) {
 		final ObservableList<TreeItem<GenericModelEntry>> rootChildren = treeView.getRoot().getChildren();
 		rootChildren.removeIf(n -> n.getValue().equals(loan));
+	}
+
+	/**
+	 * Assign the children of a comparison to the {@link TreeItem}.
+	 *
+	 * @param comparison
+	 *            the {@link Comparison}
+	 * @param comparisonItem
+	 *            the comparison {@link TreeItem}.
+	 */
+	private <T extends GenericModelEntry> void assignComparisonChildren(final Comparison<T> comparison, final TreeItem<GenericModelEntry> comparisonItem) {
+		comparisonItem.getChildren().clear();
+		comparison.getElements().forEach(e -> comparisonItem.getChildren().add(new TreeItem<GenericModelEntry>(e)));
 	}
 
 	/**
@@ -186,9 +229,24 @@ public class EntryTree extends BorderPane {
 	}
 
 	/**
+	 * The {@link Comparison} has changed.
+	 *
+	 * @param founding
+	 *            the founding
+	 */
+	private void comparisonChanged(final Comparison<?> comparison) {
+		final ObservableList<TreeItem<GenericModelEntry>> rootChildren = treeView.getRoot().getChildren();
+		final TreeItem<GenericModelEntry> comparisonItem = getTreeItemByValue(comparison, rootChildren);
+		if (comparisonItem != null) {
+			assignComparisonChildren(comparison, comparisonItem);
+		}
+	}
+
+	/**
 	 * The {@link Founding} has changed.
 	 *
 	 * @param founding
+	 *            the founding
 	 */
 	private void foundingChanged(final Founding founding) {
 		final ObservableList<TreeItem<GenericModelEntry>> rootChildren = treeView.getRoot().getChildren();
