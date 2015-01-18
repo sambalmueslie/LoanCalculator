@@ -12,10 +12,12 @@ import de.sambalmueslie.loan_calculator.model.compare.Comparison;
 import de.sambalmueslie.loan_calculator.model.founding.Founding;
 import de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry;
 import de.sambalmueslie.loan_calculator.model.loan.AnnuityLoan;
+import de.sambalmueslie.loan_calculator.model.loan.BuildingLoanAgreement;
 import de.sambalmueslie.loan_calculator.view.ViewActionListener;
 import de.sambalmueslie.loan_calculator.view.compare.ComparePanel;
 import de.sambalmueslie.loan_calculator.view.compare.ComparePanelFactory;
 import de.sambalmueslie.loan_calculator.view.panel.AnnuityLoanPanel;
+import de.sambalmueslie.loan_calculator.view.panel.BuildingLoanAgreementPanel;
 import de.sambalmueslie.loan_calculator.view.panel.FoundingPanel;
 
 /**
@@ -67,6 +69,10 @@ public class EntryTab extends Tab {
 		if (entry instanceof AnnuityLoan) {
 			final AnnuityLoan annuityLoan = (AnnuityLoan) entry;
 			return new AnnuityLoanPanel(annuityLoan);
+		}
+		if (entry instanceof BuildingLoanAgreement) {
+			final BuildingLoanAgreement buildingLoanAgreement = (BuildingLoanAgreement) entry;
+			return new BuildingLoanAgreementPanel(buildingLoanAgreement);
 		}
 		if (entry instanceof Founding) {
 			final Founding founding = (Founding) entry;

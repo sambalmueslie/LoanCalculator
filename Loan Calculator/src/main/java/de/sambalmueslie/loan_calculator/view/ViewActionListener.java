@@ -34,6 +34,31 @@ public interface ViewActionListener {
 			final int fixedInterestPeriod, final double estimatedDebitInterest);
 
 	/**
+	 * Request to add a building loan agreement.
+	 *
+	 * @param name
+	 *            the name
+	 * @param amount
+	 *            the amount
+	 * @param creditInterest
+	 *            the credit interest (guthabenszins).
+	 * @param regularSavingAmount
+	 *            the regular saving amount. (monatlicher regelsparbetrag in promille).
+	 * @param minimumSavings
+	 *            the minimum savings (mindestsparguthaben in prozent).
+	 * @param savingDuration
+	 *            the saving duration (spardauer).
+	 * @param debitInterest
+	 *            the debit interest (sollzins ab zuteilung).
+	 * @param contribution
+	 *            the contribution. (zins und tilgungsbeitrag mtl in promille).
+	 * @param aquisitonFee
+	 *            the aquisition fee (abschlussgebuehr in prozent).
+	 */
+	void requestAddBuildingLoanAgreement(String name, double amount, final double creditInterest, final double regularSavingAmount,
+			final double minimumSavings, final int savingDuration, final double debitInterest, final double contribution, final double aquisitonFee);
+
+	/**
 	 * Request to add a loan comparison.
 	 *
 	 * @param foundingId
@@ -138,6 +163,14 @@ public interface ViewActionListener {
 	 * Request to exit the programm.
 	 */
 	void requestProgrammExit();
+
+	/**
+	 * Request to remove a building loan agreement.
+	 *
+	 * @param buildingLoanAgreementId
+	 *            the building loan agreement id
+	 */
+	void requestRemoveBuildingLoanAgreement(long buildingLoanAgreementId);
 
 	/**
 	 * Request to remove a comparison.

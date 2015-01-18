@@ -24,6 +24,7 @@ import de.sambalmueslie.loan_calculator.model.founding.Founding;
 import de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry;
 import de.sambalmueslie.loan_calculator.model.loan.AnnuityLoan;
 import de.sambalmueslie.loan_calculator.model.loan.BaseAnnuityLoan;
+import de.sambalmueslie.loan_calculator.model.loan.BaseBuildingLoanAgreement;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
 import de.sambalmueslie.loan_calculator.view.View;
 import de.sambalmueslie.loan_calculator.view.ViewActionListener;
@@ -70,6 +71,28 @@ public class Controller extends Application {
 		} catch (final IllegalArgumentException e) {
 			logger.error("Cannot add loan " + name + ", " + amount + ", " + paymentRate + ", " + fixedDebitInterest + ", " + fixedInterestPeriod + ", "
 					+ estimatedDebitInterest + " cause " + e.getMessage());
+			// TODO handle error
+		}
+		return null;
+	}
+
+	/**
+	 * @see ViewActionListener#requestAddBuildingLoanAgreement(String, double, double, double, double, int, double, double, double)
+	 */
+	Loan handleRequestAddBuildingLoanAgreement(final String name, final double amount, final double creditInterest, final double regularSavingAmount,
+			final double minimumSavings, final int savingDuration, final double debitInterest, final double contribution, final double aquisitonFee) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("Handle request to add building loan agreement " + name + ", " + amount + ", " + creditInterest + ", " + regularSavingAmount + ", "
+					+ minimumSavings + ", " + savingDuration + ", " + debitInterest + ", " + contribution + ", " + aquisitonFee);
+		}
+		try {
+			final BaseBuildingLoanAgreement baseBuildingLoanAgreement = new BaseBuildingLoanAgreement(name, amount, creditInterest, regularSavingAmount,
+					minimumSavings, savingDuration, debitInterest, contribution, aquisitonFee);
+			model.add(baseBuildingLoanAgreement);
+			return baseBuildingLoanAgreement;
+		} catch (final IllegalArgumentException e) {
+			logger.error("Cannot add loan building loan agreement " + name + ", " + amount + ", " + creditInterest + ", " + regularSavingAmount + ", "
+					+ minimumSavings + ", " + savingDuration + ", " + debitInterest + ", " + contribution + ", " + aquisitonFee + " cause " + e.getMessage());
 			// TODO handle error
 		}
 		return null;
@@ -292,6 +315,19 @@ public class Controller extends Application {
 	}
 
 	/**
+	 * @see ViewActionListener#requestRemoveBuildingLoanAgreement(long)
+	 */
+	void handleRequestRemoveBuildingLoanAgreement(final long buildingLoanAgreementId) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("Handle request to remove building loan agreement " + buildingLoanAgreementId);
+		}
+		final Loan loan = model.getLoan(buildingLoanAgreementId);
+		if (loan == null) return;
+		model.remove(loan);
+		comparisonsRemoveEntry(loan);
+	}
+
+	/**
 	 * @see ViewActionListener#requestRemoveComparison(long)
 	 */
 	void handleRequestRemoveComparison(final long comparisonId) {
@@ -453,6 +489,8 @@ public class Controller extends Application {
 		final Comparison<Founding> comparison = handleRequestAddComparisonFounding(f1Id);
 		final long comparisonId = comparison.getId();
 		handleRequestComparisonAddFounding(comparisonId, f2Id);
+
+		handleRequestAddBuildingLoanAgreement("Eigenheim Rente", 100000, 0.25, 5.0, 25.0, 10, 1.5, 7.0, 1.0);
 
 	}
 

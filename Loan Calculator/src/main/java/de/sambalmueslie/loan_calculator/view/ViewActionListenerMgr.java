@@ -23,6 +23,18 @@ public class ViewActionListenerMgr implements ViewActionListener {
 	}
 
 	/**
+	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestAddBuildingLoanAgreement(java.lang.String, double, double,
+	 *      double, double, int, double, double, double)
+	 */
+	@Override
+	public void requestAddBuildingLoanAgreement(final String name, final double amount, final double creditInterest, final double regularSavingAmount,
+			final double minimumSavings, final int savingDuration, final double debitInterest, final double contribution, final double aquisitonFee) {
+		listeners.forEach(l -> l.requestAddBuildingLoanAgreement(name, amount, creditInterest, regularSavingAmount, minimumSavings, savingDuration,
+				debitInterest, contribution, aquisitonFee));
+
+	}
+
+	/**
 	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestAddComparisonFounding(long)
 	 */
 	@Override
@@ -124,6 +136,14 @@ public class ViewActionListenerMgr implements ViewActionListener {
 	@Override
 	public void requestProgrammExit() {
 		listeners.forEach(l -> l.requestProgrammExit());
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestRemoveBuildingLoanAgreement(long)
+	 */
+	@Override
+	public void requestRemoveBuildingLoanAgreement(final long buildingLoanAgreementId) {
+		listeners.forEach(l -> l.requestRemoveBuildingLoanAgreement(buildingLoanAgreementId));
 	}
 
 	/**
