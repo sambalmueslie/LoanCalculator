@@ -9,6 +9,7 @@ import java.util.Map;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.TilePane;
+import de.sambalmueslie.loan_calculator.view.Constants;
 import de.sambalmueslie.loan_calculator.view.component.*;
 
 /**
@@ -22,7 +23,7 @@ class InfoPanel extends TilePane {
 	 * Constructor.
 	 */
 	InfoPanel() {
-		getStyleClass().add("info-panel");
+		getStyleClass().add(Constants.CLASS_PANEL_BORDER);
 	}
 
 	/**
