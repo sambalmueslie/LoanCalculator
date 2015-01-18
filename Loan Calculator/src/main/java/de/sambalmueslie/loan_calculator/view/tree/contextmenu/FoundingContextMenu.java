@@ -6,6 +6,7 @@ package de.sambalmueslie.loan_calculator.view.tree.contextmenu;
 import java.util.Optional;
 
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 
@@ -13,6 +14,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import de.sambalmueslie.loan_calculator.model.founding.Founding;
+import de.sambalmueslie.loan_calculator.model.loan.Loan;
 import de.sambalmueslie.loan_calculator.view.ViewActionListener;
 import de.sambalmueslie.loan_calculator.view.dialog.ModifyFoundingDialog;
 import de.sambalmueslie.loan_calculator.view.icons.IconProvider;
@@ -43,7 +45,17 @@ public class FoundingContextMenu extends BaseContextMenu {
 		removeMenuItem.setOnAction(e -> remove(founding));
 		compareMenuItem = new MenuItem("Compare " + founding.getName(), IconProvider.createImageView(IconProvider.ICON_LIST_IMAGES));
 		compareMenuItem.setOnAction(e -> compare(founding));
-		getItems().addAll(new SeparatorMenuItem(), updateMenuItem, removeMenuItem, compareMenuItem);
+		getItems().addAll(new SeparatorMenuItem(), updateMenuItem, removeMenuItem, compareMenuItem, new SeparatorMenuItem());
+
+		final long foundingId = founding.getId();
+		final Menu remove = new Menu("Remove Element");
+		for (final Loan loan : founding.getLoans()) {
+			final MenuItem menuItem = new MenuItem(loan.getName());
+			final long loanId = loan.getId();
+			menuItem.setOnAction(event -> listener.requestFoundingRemoveLoan(foundingId, loanId));
+			remove.getItems().add(menuItem);
+		}
+		getItems().add(remove);
 	}
 
 	/**
