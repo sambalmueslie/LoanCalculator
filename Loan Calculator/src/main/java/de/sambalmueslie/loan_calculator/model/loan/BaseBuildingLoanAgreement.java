@@ -29,6 +29,8 @@ public class BaseBuildingLoanAgreement extends BaseLoan implements BuildingLoanA
 	 *            {@link #minimumSavings}
 	 * @param savingDuration
 	 *            {@link #savingDuration}
+	 * @param savingPhaseInterest
+	 *            {@link #savingPhaseInterest}
 	 * @param debitInterest
 	 *            {@link #debitInterest}
 	 * @param contribution
@@ -37,9 +39,11 @@ public class BaseBuildingLoanAgreement extends BaseLoan implements BuildingLoanA
 	 *            {@link #aquisitonFee}
 	 */
 	public BaseBuildingLoanAgreement(final long id, final String name, final double amount, final double creditInterest, final double regularSavingAmount,
-			final double minimumSavings, final int savingDuration, final double debitInterest, final double contribution, final double aquisitonFee) {
+			final double minimumSavings, final int savingDuration, final double savingPhaseInterest, final double debitInterest, final double contribution,
+			final double aquisitonFee) {
 		super(id, name, amount);
-		update(name, amount, creditInterest, regularSavingAmount, minimumSavings, savingDuration, debitInterest, contribution, aquisitonFee);
+		update(name, amount, creditInterest, regularSavingAmount, minimumSavings, savingDuration, savingPhaseInterest, debitInterest, contribution,
+				aquisitonFee);
 	}
 
 	/**
@@ -57,6 +61,8 @@ public class BaseBuildingLoanAgreement extends BaseLoan implements BuildingLoanA
 	 *            {@link #minimumSavings}
 	 * @param savingDuration
 	 *            {@link #savingDuration}
+	 * @param savingPhaseInterest
+	 *            {@link #savingPhaseInterest}
 	 * @param debitInterest
 	 *            {@link #debitInterest}
 	 * @param contribution
@@ -65,9 +71,11 @@ public class BaseBuildingLoanAgreement extends BaseLoan implements BuildingLoanA
 	 *            {@link #aquisitonFee}
 	 */
 	public BaseBuildingLoanAgreement(final String name, final double amount, final double creditInterest, final double regularSavingAmount,
-			final double minimumSavings, final int savingDuration, final double debitInterest, final double contribution, final double aquisitonFee) {
+			final double minimumSavings, final int savingDuration, final double savingPhaseInterest, final double debitInterest, final double contribution,
+			final double aquisitonFee) {
 		super(name, amount);
-		update(name, amount, creditInterest, regularSavingAmount, minimumSavings, savingDuration, debitInterest, contribution, aquisitonFee);
+		update(name, amount, creditInterest, regularSavingAmount, minimumSavings, savingDuration, savingPhaseInterest, debitInterest, contribution,
+				aquisitonFee);
 	}
 
 	/**
@@ -143,6 +151,14 @@ public class BaseBuildingLoanAgreement extends BaseLoan implements BuildingLoanA
 	}
 
 	/**
+	 * @see de.sambalmueslie.loan_calculator.model.loan.BuildingLoanAgreement#getSavingPhaseInterest()
+	 */
+	@Override
+	public double getSavingPhaseInterest() {
+		return savingPhaseInterest;
+	}
+
+	/**
 	 * @see de.sambalmueslie.loan_calculator.model.loan.Loan#getTerm()
 	 */
 	@Override
@@ -189,7 +205,7 @@ public class BaseBuildingLoanAgreement extends BaseLoan implements BuildingLoanA
 	 *            {@link #aquisitonFee}
 	 */
 	public void update(final String name, final double amount, final double creditInterest, final double regularSavingAmount, final double minimumSavings,
-			final int savingDuration, final double debitInterest, final double contribution, final double aquisitonFee) {
+			final int savingDuration, final double savingPhaseInterest, final double debitInterest, final double contribution, final double aquisitonFee) {
 		super.update(name, amount);
 		if (creditInterest <= 0 || creditInterest >= 100) throw new IllegalArgumentException("Credit interest '" + creditInterest + "' must 0 < X < 100.");
 		this.creditInterest = creditInterest;
@@ -200,6 +216,9 @@ public class BaseBuildingLoanAgreement extends BaseLoan implements BuildingLoanA
 		this.minimumSavings = minimumSavings;
 		if (savingDuration < 0) throw new IllegalArgumentException("Saving duration '" + savingDuration + "' must >= 0.");
 		this.savingDuration = savingDuration;
+		if (savingPhaseInterest <= 0 || savingPhaseInterest >= 100) throw new IllegalArgumentException("Saving phase interest '" + savingPhaseInterest
+				+ "' must 0 < X < 100.");
+		this.savingPhaseInterest = savingPhaseInterest;
 		if (debitInterest <= 0 || debitInterest >= 100) throw new IllegalArgumentException("Debit interest '" + debitInterest + "' must 0 < X < 100.");
 		this.debitInterest = debitInterest;
 		if (contribution <= 0 || contribution >= 100) throw new IllegalArgumentException("Contribution '" + contribution + "' must 0 < X < 100.");
@@ -220,12 +239,14 @@ public class BaseBuildingLoanAgreement extends BaseLoan implements BuildingLoanA
 		double savedAmount = 0;
 		final double regularSaving = getAmount() * regularSavingAmount / 1000 * 12;
 		final double minimumSavedAmount = getAmount() * minimumSavings / 100;
+		final double transitionalLoanInterest = getAmount() * savingPhaseInterest / 100;
 		redemptionPlan.add(new BaseRedemptionPlanEntry(0, 0, -regularSaving));
 		for (int i = 0; i < savingDuration || savedAmount < minimumSavedAmount; i++) {
-			final double interest = (savedAmount + regularSaving) * creditInterest / 100;
-			totalInterest -= interest;
-			savedAmount += regularSaving + interest;
-			redemptionPlan.add(new BaseRedemptionPlanEntry(-savedAmount, -interest, -regularSaving));
+			final double currentCreditInterest = (savedAmount + regularSaving) * creditInterest / 100;
+			final double interest = transitionalLoanInterest - currentCreditInterest;
+			totalInterest += interest;
+			savedAmount += regularSaving + currentCreditInterest;
+			redemptionPlan.add(new BaseRedemptionPlanEntry(savedAmount, interest, regularSaving));
 		}
 		// tilgungsphase
 		final double interestAndPrincipalContribution = getAmount() * contribution / 1000 * 12;
@@ -241,6 +262,8 @@ public class BaseBuildingLoanAgreement extends BaseLoan implements BuildingLoanA
 			}
 			redemptionPlan.add(new BaseRedemptionPlanEntry(residualDebt, interest, principal));
 		}
+
+		totalInterest += getAmount() * aquisitonFee / 100;
 		term = redemptionPlan.size() - 1;
 		totalPayment = totalInterest + getAmount();
 		notifyChanged();
@@ -262,6 +285,8 @@ public class BaseBuildingLoanAgreement extends BaseLoan implements BuildingLoanA
 	private double regularSavingAmount;
 	/** the saving duration (spardauer). */
 	private int savingDuration;
+	/** the interest to pay for getting the money, while beeing in saving phase (zins für uebergangsdarlehen). */
+	private double savingPhaseInterest;
 	/** the term (Laufzeit). */
 	private int term;
 	/** the total interest (Zins). */

@@ -80,19 +80,21 @@ public class Controller extends Application {
 	 * @see ViewActionListener#requestAddBuildingLoanAgreement(String, double, double, double, double, int, double, double, double)
 	 */
 	Loan handleRequestAddBuildingLoanAgreement(final String name, final double amount, final double creditInterest, final double regularSavingAmount,
-			final double minimumSavings, final int savingDuration, final double debitInterest, final double contribution, final double aquisitonFee) {
+			final double minimumSavings, final int savingDuration, final double savingPhaseInterest, final double debitInterest, final double contribution,
+			final double aquisitonFee) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Handle request to add building loan agreement " + name + ", " + amount + ", " + creditInterest + ", " + regularSavingAmount + ", "
-					+ minimumSavings + ", " + savingDuration + ", " + debitInterest + ", " + contribution + ", " + aquisitonFee);
+					+ minimumSavings + ", " + savingDuration + ", " + savingPhaseInterest + ", " + debitInterest + ", " + contribution + ", " + aquisitonFee);
 		}
 		try {
 			final BaseBuildingLoanAgreement baseBuildingLoanAgreement = new BaseBuildingLoanAgreement(name, amount, creditInterest, regularSavingAmount,
-					minimumSavings, savingDuration, debitInterest, contribution, aquisitonFee);
+					minimumSavings, savingDuration, savingPhaseInterest, debitInterest, contribution, aquisitonFee);
 			model.add(baseBuildingLoanAgreement);
 			return baseBuildingLoanAgreement;
 		} catch (final IllegalArgumentException e) {
 			logger.error("Cannot add loan building loan agreement " + name + ", " + amount + ", " + creditInterest + ", " + regularSavingAmount + ", "
-					+ minimumSavings + ", " + savingDuration + ", " + debitInterest + ", " + contribution + ", " + aquisitonFee + " cause " + e.getMessage());
+					+ minimumSavings + ", " + savingDuration + ", " + savingPhaseInterest + ", " + debitInterest + ", " + contribution + ", " + aquisitonFee
+					+ " cause " + e.getMessage());
 			// TODO handle error
 		}
 		return null;
@@ -490,7 +492,7 @@ public class Controller extends Application {
 		final long comparisonId = comparison.getId();
 		handleRequestComparisonAddFounding(comparisonId, f2Id);
 
-		handleRequestAddBuildingLoanAgreement("Eigenheim Rente", 100000, 0.25, 5.0, 25.0, 10, 1.5, 7.0, 1.0);
+		handleRequestAddBuildingLoanAgreement("Eigenheim Rente", 100000, 0.25, 5.0, 25.0, 10, 1.5, 1.5, 7.0, 1.0);
 
 	}
 

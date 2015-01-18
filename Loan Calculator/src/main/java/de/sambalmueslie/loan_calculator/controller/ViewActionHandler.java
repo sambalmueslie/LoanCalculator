@@ -33,14 +33,15 @@ public class ViewActionHandler implements ViewActionListener {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestAddBuildingLoanAgreement(java.lang.String, double, double,
-	 *      double, double, int, double, double, double)
+	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestAddBuildingLoanAgreement(String, double, double, double, double,
+	 *      int, double, double, double, double)
 	 */
 	@Override
 	public void requestAddBuildingLoanAgreement(final String name, final double amount, final double creditInterest, final double regularSavingAmount,
-			final double minimumSavings, final int savingDuration, final double debitInterest, final double contribution, final double aquisitonFee) {
-		controller.handleRequestAddBuildingLoanAgreement(name, amount, creditInterest, regularSavingAmount, minimumSavings, savingDuration, debitInterest,
-				contribution, aquisitonFee);
+			final double minimumSavings, final int savingDuration, final double savingPhaseInterest, final double debitInterest, final double contribution,
+			final double aquisitonFee) {
+		controller.handleRequestAddBuildingLoanAgreement(name, amount, creditInterest, regularSavingAmount, minimumSavings, savingDuration,
+				savingPhaseInterest, debitInterest, contribution, aquisitonFee);
 	}
 
 	/**

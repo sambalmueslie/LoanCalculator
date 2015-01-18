@@ -48,6 +48,8 @@ public interface ViewActionListener {
 	 *            the minimum savings (mindestsparguthaben in prozent).
 	 * @param savingDuration
 	 *            the saving duration (spardauer).
+	 * @param savingPhaseInterest
+	 *            the interest to pay for getting the money, while beeing in saving phase (zins für uebergangsdarlehen).
 	 * @param debitInterest
 	 *            the debit interest (sollzins ab zuteilung).
 	 * @param contribution
@@ -56,7 +58,8 @@ public interface ViewActionListener {
 	 *            the aquisition fee (abschlussgebuehr in prozent).
 	 */
 	void requestAddBuildingLoanAgreement(String name, double amount, final double creditInterest, final double regularSavingAmount,
-			final double minimumSavings, final int savingDuration, final double debitInterest, final double contribution, final double aquisitonFee);
+			final double minimumSavings, final int savingDuration, final double savingPhaseInterest, final double debitInterest, final double contribution,
+			final double aquisitonFee);
 
 	/**
 	 * Request to add a loan comparison.
