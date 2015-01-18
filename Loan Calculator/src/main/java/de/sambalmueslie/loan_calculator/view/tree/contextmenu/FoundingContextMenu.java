@@ -1,12 +1,11 @@
 /**
  *
  */
-package de.sambalmueslie.loan_calculator.view.entry_mgr.contextmenu;
+package de.sambalmueslie.loan_calculator.view.tree.contextmenu;
 
 import java.util.Optional;
 
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 
@@ -16,61 +15,35 @@ import org.apache.logging.log4j.Logger;
 import de.sambalmueslie.loan_calculator.model.founding.Founding;
 import de.sambalmueslie.loan_calculator.view.ViewActionListener;
 import de.sambalmueslie.loan_calculator.view.dialog.ModifyFoundingDialog;
-import de.sambalmueslie.loan_calculator.view.entry_mgr.tree.IconProvider;
+import de.sambalmueslie.loan_calculator.view.icons.IconProvider;
 
 /**
- * The {@link ContextMenu} for a {@link Founding}.
+ * The context menu for a loan list cell loan.
  *
  * @author sambalmueslie 2015
  */
-public class FoundingContextMenu extends EntryTreeContextMenu {
-
+public class FoundingContextMenu extends BaseContextMenu {
 	/** the logger. */
 	private static final Logger logger = LogManager.getLogger(FoundingContextMenu.class);
 
 	/**
 	 * Constructor.
-	 */
-	public FoundingContextMenu() {
-		super();
-		updateMenuItem = new MenuItem("Update");
-		removeMenuItem = new MenuItem("Remove");
-		compareMenuItem = new MenuItem("Compare", IconProvider.createImageView(IconProvider.ICON_LIST_IMAGES));
-		getItems().addAll(new SeparatorMenuItem(), updateMenuItem, removeMenuItem, compareMenuItem);
-	}
-
-	/**
-	 * Set the {@link Founding}.
 	 *
-	 * @param loan
-	 *            the loan
-	 */
-	public void set(final Founding founding) {
-		if (founding == null) {
-			updateMenuItem.setOnAction(null);
-			updateMenuItem.setText("Update");
-			removeMenuItem.setOnAction(null);
-			updateMenuItem.setText("Remove");
-			compareMenuItem.setOnAction(null);
-			updateMenuItem.setText("Compare");
-		} else {
-			updateMenuItem.setOnAction(e -> update(founding));
-			updateMenuItem.setText("Update " + founding.getName());
-			removeMenuItem.setOnAction(e -> remove(founding));
-			removeMenuItem.setText("Remove " + founding.getName());
-			compareMenuItem.setOnAction(e -> compare(founding));
-			compareMenuItem.setText("Compare " + founding.getName());
-		}
-	}
-
-	/**
+	 * @param founding
+	 *            the {@link Founding}
 	 * @param listener
-	 *            the listener to set
+	 *            {@link #listener}
 	 */
-	@Override
-	public void setListener(final ViewActionListener listener) {
-		super.setListener(listener);
+	public FoundingContextMenu(final Founding founding, final ViewActionListener listener) {
+		super(listener);
 		this.listener = listener;
+		updateMenuItem = new MenuItem("Update " + founding.getName());
+		updateMenuItem.setOnAction(e -> update(founding));
+		removeMenuItem = new MenuItem("Remove " + founding.getName());
+		removeMenuItem.setOnAction(e -> remove(founding));
+		compareMenuItem = new MenuItem("Compare " + founding.getName(), IconProvider.createImageView(IconProvider.ICON_LIST_IMAGES));
+		compareMenuItem.setOnAction(e -> compare(founding));
+		getItems().addAll(new SeparatorMenuItem(), updateMenuItem, removeMenuItem, compareMenuItem);
 	}
 
 	/**
@@ -126,7 +99,7 @@ public class FoundingContextMenu extends EntryTreeContextMenu {
 	/** the compare {@link MenuItem}. */
 	private final MenuItem compareMenuItem;
 	/** the {@link ViewActionListener}. */
-	private ViewActionListener listener;
+	private final ViewActionListener listener;
 	/** the remove {@link MenuItem}. */
 	private final MenuItem removeMenuItem;
 	/** the update {@link MenuItem}. */

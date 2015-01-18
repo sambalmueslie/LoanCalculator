@@ -1,7 +1,7 @@
 /**
  *
  */
-package de.sambalmueslie.loan_calculator.view.entry_mgr.tree;
+package de.sambalmueslie.loan_calculator.view.icons;
 
 import java.io.File;
 import java.io.IOException;

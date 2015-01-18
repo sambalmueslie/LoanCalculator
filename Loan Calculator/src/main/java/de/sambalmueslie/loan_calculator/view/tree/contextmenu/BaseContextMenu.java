@@ -1,7 +1,7 @@
 /**
  *
  */
-package de.sambalmueslie.loan_calculator.view.entry_mgr.contextmenu;
+package de.sambalmueslie.loan_calculator.view.tree.contextmenu;
 
 import java.util.Optional;
 
@@ -17,36 +17,30 @@ import de.sambalmueslie.loan_calculator.model.loan.Loan;
 import de.sambalmueslie.loan_calculator.view.ViewActionListener;
 import de.sambalmueslie.loan_calculator.view.dialog.ModifyAnnuityLoanDialog;
 import de.sambalmueslie.loan_calculator.view.dialog.ModifyFoundingDialog;
-import de.sambalmueslie.loan_calculator.view.entry_mgr.tree.IconProvider;
+import de.sambalmueslie.loan_calculator.view.icons.IconProvider;
 
 /**
- * The {@link ContextMenu} for the entry tree.
+ * The context menu for the entry tree view.
  *
  * @author sambalmueslie 2015
  */
-public class EntryTreeContextMenu extends ContextMenu {
+public class BaseContextMenu extends ContextMenu {
 	/** the logger. */
-	private static final Logger logger = LogManager.getLogger(EntryTreeContextMenu.class);
+	private static final Logger logger = LogManager.getLogger(BaseContextMenu.class);
 
 	/**
 	 * Constructor.
-	 */
-	public EntryTreeContextMenu() {
-		addAnnuitiyLoanMenuItem = new MenuItem("Add new annuity loan", IconProvider.createImageView(IconProvider.ICON_PAGE_NEW));
-		addFoundingMenuItem = new MenuItem("Add new founding", IconProvider.createImageView(IconProvider.ICON_FOLDER_NEW));
-		getItems().addAll(addAnnuitiyLoanMenuItem, addFoundingMenuItem);
-	}
-
-	/**
-	 * Set the {@link ViewActionListener}.
 	 *
 	 * @param listener
-	 *            the listener to set
+	 *            {@link #listener}
 	 */
-	public void setListener(final ViewActionListener listener) {
+	public BaseContextMenu(final ViewActionListener listener) {
 		this.listener = listener;
+		addAnnuitiyLoanMenuItem = new MenuItem("Add new annuity loan", IconProvider.createImageView(IconProvider.ICON_PAGE_NEW));
 		addAnnuitiyLoanMenuItem.setOnAction(e -> addAnnuitiyLoan());
+		addFoundingMenuItem = new MenuItem("Add new founding", IconProvider.createImageView(IconProvider.ICON_FOLDER_NEW));
 		addFoundingMenuItem.setOnAction(e -> addFounding());
+		getItems().addAll(addAnnuitiyLoanMenuItem, addFoundingMenuItem);
 	}
 
 	/**
@@ -94,5 +88,5 @@ public class EntryTreeContextMenu extends ContextMenu {
 	/** the add {@link MenuItem}. */
 	private final MenuItem addFoundingMenuItem;
 	/** the {@link ViewActionListener}. */
-	private ViewActionListener listener;
+	private final ViewActionListener listener;
 }

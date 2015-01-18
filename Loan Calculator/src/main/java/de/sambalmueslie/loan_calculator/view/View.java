@@ -21,9 +21,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import de.sambalmueslie.loan_calculator.controller.file.LoanFile;
-import de.sambalmueslie.loan_calculator.view.entry_mgr.tabs.EntryTabPane;
-import de.sambalmueslie.loan_calculator.view.entry_mgr.tree.EntryTree;
 import de.sambalmueslie.loan_calculator.view.menu.MainMenu;
+import de.sambalmueslie.loan_calculator.view.tabs.EntryTabPane;
+import de.sambalmueslie.loan_calculator.view.tree.EntryTreePane;
 
 /**
  * The view.
@@ -66,7 +66,7 @@ public class View extends BorderPane {
 		content = new BorderPane();
 		content.getStyleClass().add(CLASS_PANEL_EMPTY);
 		entryTabPane = new EntryTabPane(actionListenerMgr);
-		entryTree = new EntryTree(entryTabPane, actionListenerMgr);
+		entryTree = new EntryTreePane(entryTabPane, actionListenerMgr);
 
 		content.setLeft(entryTree);
 		content.setCenter(entryTabPane);
@@ -213,7 +213,7 @@ public class View extends BorderPane {
 	/** the content pane. */
 	private BorderPane content;
 	private EntryTabPane entryTabPane;
-	private EntryTree entryTree;
+	private EntryTreePane entryTree;
 	/** the primary {@link Stage}. */
 	private Stage primaryStage;
 

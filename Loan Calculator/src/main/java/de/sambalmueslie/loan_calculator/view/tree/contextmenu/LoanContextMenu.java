@@ -1,7 +1,7 @@
 /**
  *
  */
-package de.sambalmueslie.loan_calculator.view.entry_mgr.contextmenu;
+package de.sambalmueslie.loan_calculator.view.tree.contextmenu;
 
 import java.util.Optional;
 
@@ -16,60 +16,35 @@ import de.sambalmueslie.loan_calculator.model.loan.AnnuityLoan;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
 import de.sambalmueslie.loan_calculator.view.ViewActionListener;
 import de.sambalmueslie.loan_calculator.view.dialog.ModifyAnnuityLoanDialog;
-import de.sambalmueslie.loan_calculator.view.entry_mgr.tree.IconProvider;
+import de.sambalmueslie.loan_calculator.view.icons.IconProvider;
 
 /**
  * The context menu for a loan list cell loan.
  *
  * @author sambalmueslie 2015
  */
-public class LoanContextMenu extends EntryTreeContextMenu {
+public class LoanContextMenu extends BaseContextMenu {
 	/** the logger. */
 	private static final Logger logger = LogManager.getLogger(LoanContextMenu.class);
 
 	/**
 	 * Constructor.
-	 */
-	public LoanContextMenu() {
-		super();
-		updateMenuItem = new MenuItem("Update", IconProvider.createImageView(IconProvider.ICON_PAGE_EDIT));
-		removeMenuItem = new MenuItem("Remove", IconProvider.createImageView(IconProvider.ICON_PAGE_DELETE));
-		compareMenuItem = new MenuItem("Compare", IconProvider.createImageView(IconProvider.ICON_PAGE_COMPONENT));
-		getItems().addAll(new SeparatorMenuItem(), updateMenuItem, removeMenuItem, compareMenuItem);
-		set(null);
-	}
-
-	/**
-	 * Set the {@link Loan}.
 	 *
 	 * @param loan
-	 *            the loan
-	 */
-	public void set(final Loan loan) {
-		if (loan == null) {
-			updateMenuItem.setOnAction(null);
-			updateMenuItem.setText("Update");
-			removeMenuItem.setOnAction(null);
-			removeMenuItem.setText("Remove");
-			compareMenuItem.setOnAction(null);
-			compareMenuItem.setText("Compare");
-		} else {
-			updateMenuItem.setOnAction(e -> update(loan));
-			updateMenuItem.setText("Update " + loan.getName());
-			removeMenuItem.setOnAction(e -> remove(loan));
-			removeMenuItem.setText("Remove " + loan.getName());
-			compareMenuItem.setOnAction(e -> compare(loan));
-			compareMenuItem.setText("Compare " + loan.getName());
-		}
-	}
-
-	/**
+	 *            the {@link Loan}
 	 * @param listener
-	 *            the listener to set
+	 *            {@link #listener}
 	 */
-	@Override
-	public void setListener(final ViewActionListener listener) {
+	public LoanContextMenu(final Loan loan, final ViewActionListener listener) {
+		super(listener);
 		this.listener = listener;
+		updateMenuItem = new MenuItem("Update " + loan.getName(), IconProvider.createImageView(IconProvider.ICON_PAGE_EDIT));
+		updateMenuItem.setOnAction(e -> update(loan));
+		removeMenuItem = new MenuItem("Remove " + loan.getName(), IconProvider.createImageView(IconProvider.ICON_PAGE_DELETE));
+		removeMenuItem.setOnAction(e -> remove(loan));
+		compareMenuItem = new MenuItem("Compare " + loan.getName(), IconProvider.createImageView(IconProvider.ICON_PAGE_COMPONENT));
+		compareMenuItem.setOnAction(e -> compare(loan));
+		getItems().addAll(new SeparatorMenuItem(), updateMenuItem, removeMenuItem, compareMenuItem);
 	}
 
 	/**
@@ -131,7 +106,7 @@ public class LoanContextMenu extends EntryTreeContextMenu {
 	/** the compare {@link MenuItem}. */
 	private final MenuItem compareMenuItem;
 	/** the {@link ViewActionListener}. */
-	private ViewActionListener listener;
+	private final ViewActionListener listener;
 	/** the remove {@link MenuItem}. */
 	private final MenuItem removeMenuItem;
 	/** the update {@link MenuItem}. */

@@ -1,7 +1,7 @@
 /**
  *
  */
-package de.sambalmueslie.loan_calculator.view.entry_mgr.tree;
+package de.sambalmueslie.loan_calculator.view.tree;
 
 import de.sambalmueslie.loan_calculator.model.ModelChangeListener;
 import de.sambalmueslie.loan_calculator.model.compare.Comparison;
@@ -18,11 +18,11 @@ class ModelChangeHandler implements ModelChangeListener {
 	/**
 	 * Constructor.
 	 *
-	 * @param entryTree
-	 *            {@link #entryTree}
+	 * @param entryTreePane
+	 *            {@link #entryTreePane}
 	 */
-	ModelChangeHandler(final EntryTree entryTree) {
-		this.entryTree = entryTree;
+	ModelChangeHandler(final EntryTreePane entryTreePane) {
+		this.entryTreePane = entryTreePane;
 	}
 
 	/**
@@ -30,7 +30,7 @@ class ModelChangeHandler implements ModelChangeListener {
 	 */
 	@Override
 	public void comparisonAdded(final Comparison<?> comparison) {
-		entryTree.add(comparison);
+		entryTreePane.add(comparison);
 	}
 
 	/**
@@ -38,7 +38,7 @@ class ModelChangeHandler implements ModelChangeListener {
 	 */
 	@Override
 	public void comparisonRemoved(final Comparison<?> comparison) {
-		entryTree.remove(comparison);
+		entryTreePane.remove(comparison);
 	}
 
 	/**
@@ -46,7 +46,7 @@ class ModelChangeHandler implements ModelChangeListener {
 	 */
 	@Override
 	public void foundingAdded(final Founding founding) {
-		entryTree.add(founding);
+		entryTreePane.add(founding);
 	}
 
 	/**
@@ -54,7 +54,7 @@ class ModelChangeHandler implements ModelChangeListener {
 	 */
 	@Override
 	public void foundingRemoved(final Founding founding) {
-		entryTree.remove(founding);
+		entryTreePane.remove(founding);
 	}
 
 	/**
@@ -62,7 +62,7 @@ class ModelChangeHandler implements ModelChangeListener {
 	 */
 	@Override
 	public void loanAdded(final Loan loan) {
-		entryTree.add(loan);
+		entryTreePane.add(loan);
 	}
 
 	/**
@@ -70,10 +70,10 @@ class ModelChangeHandler implements ModelChangeListener {
 	 */
 	@Override
 	public void loanRemoved(final Loan loan) {
-		entryTree.remove(loan);
+		entryTreePane.remove(loan);
 	}
 
-	/** the {@link EntryTree}. */
-	private final EntryTree entryTree;
+	/** the {@link EntryTreePane}. */
+	private final EntryTreePane entryTreePane;
 
 }
