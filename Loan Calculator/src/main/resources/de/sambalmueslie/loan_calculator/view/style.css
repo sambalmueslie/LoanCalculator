@@ -18,12 +18,14 @@
     -fx-padding: 0px;
     -fx-hgap: 0px;
     -fx-vgap: 0px;
+    -fx-spacing: 5px; 
 }
 
 .panel {
     -fx-padding: 5px; 
     -fx-hgap: 5px;
     -fx-vgap: 5px;
+    -fx-spacing: 5px; 
 }
 
 .border-panel {
@@ -31,6 +33,7 @@
     -fx-hgap: 5px;
     -fx-vgap: 5px;
     -fx-border-color: lightgray;
+    -fx-spacing: 5px;
 }
 
 .text-field:readonly {

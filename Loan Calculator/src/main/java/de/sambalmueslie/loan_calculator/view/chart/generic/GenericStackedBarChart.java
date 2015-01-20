@@ -4,89 +4,90 @@
 package de.sambalmueslie.loan_calculator.view.chart.generic;
 
 import java.util.*;
-import java.util.Map.Entry;
-import java.util.function.Function;
 
 import javafx.geometry.Side;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.StackedBarChart;
 import de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry;
-import de.sambalmueslie.loan_calculator.view.chart.SeriesDefinition;
+import de.sambalmueslie.loan_calculator.view.chart.LineChartSeriesDefinition;
 
 /**
  * A generic {@link StackedBarChart}.
  *
  * @author sambalmueslie 2015
  */
-public class GenericStackedBarChart<T extends GenericModelEntry, R> extends StackedBarChart<String, Number> {
+public class GenericStackedBarChart<ENTRY extends GenericModelEntry, DATA> extends StackedBarChart<String, Number> {
 
 	/**
 	 * Constructor.
 	 *
-	 * @param entry
-	 *            the entry to get the data from
 	 * @param title
 	 *            the title
-	 * @param dataGetterFunction
-	 *            the data getter {@link Function}
 	 * @param seriesDefinition
-	 *            the {@link SeriesDefinition}
+	 *            the {@link LineChartSeriesDefinition}
+	 * @param ignoreFirstElement
+	 *            {@link #ignoreFirstElement}
 	 */
 	@SafeVarargs
-	public GenericStackedBarChart(final T entry, final String title, final Function<T, Collection<R>> dataGetterFunction, final boolean ignoreFirstElement,
-			final SeriesDefinition<R, Number>... seriesDefinition) {
+	public GenericStackedBarChart(final String title, final boolean ignoreFirstElement, final LineChartSeriesDefinition<ENTRY, DATA>... seriesDefinition) {
 		super(new CategoryAxis(), new NumberAxis());
+		seriesDefinitions = new LinkedList<LineChartSeriesDefinition<ENTRY, DATA>>(Arrays.asList(seriesDefinition));
+		this.ignoreFirstElement = ignoreFirstElement;
 
 		setTitle(title);
 		setAnimated(false);
 		setLegendVisible(true);
 		setLegendSide(Side.BOTTOM);
-		setStyle("-fx-border-color: lightgray;");
 
-		// create the series
-		final Map<SeriesDefinition<R, Number>, Series<String, Number>> series = new LinkedHashMap<>();
-		for (final SeriesDefinition<R, Number> definition : seriesDefinition) {
+		series = new LinkedHashMap<>();
+		for (final LineChartSeriesDefinition<ENTRY, DATA> definition : seriesDefinitions) {
 			final Series<String, Number> s = new Series<>();
 			s.setName(definition.getTitle());
 			series.put(definition, s);
 		}
-
-		// setup data
-		final List<R> dataList = new LinkedList<R>(dataGetterFunction.apply(entry));
-		final int offset = ignoreFirstElement ? 1 : 0;
-		for (int i = offset; i < dataList.size(); i++) {
-			final String name = i + "";
-			final R data = dataList.get(i);
-			for (final Entry<SeriesDefinition<R, Number>, Series<String, Number>> e : series.entrySet()) {
-				final Series<String, Number> s = e.getValue();
-				final SeriesDefinition<R, Number> d = e.getKey();
-				final Number value = d.getFunction().apply(data);
-				s.getData().add(new Data<String, Number>(name, value));
-			}
-		}
-
 		// add series
 		getData().addAll(series.values());
-
 	}
 
 	/**
 	 * Constructor.
 	 *
-	 * @param entry
-	 *            the entry to get the data from
 	 * @param title
 	 *            the title
-	 * @param dataGetterFunction
-	 *            the data getter {@link Function}
 	 * @param seriesDefinition
-	 *            the {@link SeriesDefinition}
+	 *            the {@link LineChartSeriesDefinition}
 	 */
 	@SafeVarargs
-	public GenericStackedBarChart(final T entry, final String title, final Function<T, Collection<R>> dataGetterFunction,
-			final SeriesDefinition<R, Number>... seriesDefinition) {
-		this(entry, title, dataGetterFunction, false, seriesDefinition);
+	public GenericStackedBarChart(final String title, final LineChartSeriesDefinition<ENTRY, DATA>... seriesDefinition) {
+		this(title, false, seriesDefinition);
 	}
 
+	/**
+	 * Add a entry.
+	 *
+	 * @param entry
+	 *            the entry
+	 */
+	public void add(final ENTRY entry) {
+		if (entry == null) return;
+
+		for (final LineChartSeriesDefinition<ENTRY, DATA> definition : seriesDefinitions) {
+			final List<DATA> datas = new LinkedList<>(definition.getDataGetterFunction().apply(entry));
+			final int offset = (ignoreFirstElement) ? 1 : 0;
+			for (int i = offset; i < datas.size(); i++) {
+				final String name = i + "";
+				final DATA data = datas.get(i);
+				final Number value = definition.getFunction().apply(data);
+				series.get(definition).getData().add(new Data<String, Number>(name, value));
+			}
+		}
+	}
+
+	/** ignore the first data element. */
+	private final boolean ignoreFirstElement;
+	/** the series. */
+	private final Map<LineChartSeriesDefinition<ENTRY, DATA>, Series<String, Number>> series;
+	/** the series definitions. */
+	private final List<LineChartSeriesDefinition<ENTRY, DATA>> seriesDefinitions;
 }

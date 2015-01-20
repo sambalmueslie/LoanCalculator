@@ -22,11 +22,12 @@ import de.sambalmueslie.loan_calculator.model.compare.Comparison;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
 import de.sambalmueslie.loan_calculator.model.loan.RedemptionPlanEntry;
 import de.sambalmueslie.loan_calculator.view.ViewActionListener;
-import de.sambalmueslie.loan_calculator.view.chart.Chart;
+import de.sambalmueslie.loan_calculator.view.chart.LineChartSeriesDefinition;
 import de.sambalmueslie.loan_calculator.view.chart.SeriesDefinition;
 import de.sambalmueslie.loan_calculator.view.chart.generic.GenericBarChart;
+import de.sambalmueslie.loan_calculator.view.chart.generic.GenericLineChart;
+import de.sambalmueslie.loan_calculator.view.chart.generic.GenericStackedBarChart;
 import de.sambalmueslie.loan_calculator.view.chart.loan.GenericAnnuityChart;
-import de.sambalmueslie.loan_calculator.view.chart.loan.LoanChartFactory;
 
 /**
  * The compare panel for {@link Loan}s.
@@ -137,16 +138,20 @@ class ComparePanelLoan extends BaseComparePanel<Loan> {
 		GridPane.setHalignment(title, HPos.CENTER);
 		detailsPane.add(title, 0, 0, 2, 1);
 
-		final Chart<Loan> residualDebtChart = LoanChartFactory.createResidualDebtChart();
+		final LineChartSeriesDefinition<Loan, RedemptionPlanEntry> s1 = new LineChartSeriesDefinition<>("residual debt", RedemptionPlanEntry::getResidualDebt,
+				Loan::getRedemptionPlan);
+		final GenericLineChart<Loan, RedemptionPlanEntry> residualDebtChart = new GenericLineChart<>("Redemption plan", s1);
+		residualDebtChart.setLegendVisible(false);
 		residualDebtChart.add(loan);
-		detailsPane.add(residualDebtChart.getChart(), 0, 1);
+		detailsPane.add(residualDebtChart, 0, 1);
 
-		final Chart<Loan> anuityPlanChart = LoanChartFactory.createAnnuityPlanChart();
-		anuityPlanChart.add(loan);
-		detailsPane.add(anuityPlanChart.getChart(), 0, 2);
-
-		// detailsPane.add(new RedemptionPlanChart(founding), 0, 1);
-		// detailsPane.add(new AnnuityPlanChart(founding), 0, 2);
+		final LineChartSeriesDefinition<Loan, RedemptionPlanEntry> s3 = new LineChartSeriesDefinition<>("interest", RedemptionPlanEntry::getInterest,
+				Loan::getRedemptionPlan);
+		final LineChartSeriesDefinition<Loan, RedemptionPlanEntry> s4 = new LineChartSeriesDefinition<>("redemption", RedemptionPlanEntry::getRedemption,
+				Loan::getRedemptionPlan);
+		final GenericStackedBarChart<Loan, RedemptionPlanEntry> annuityPlanChart = new GenericStackedBarChart<>("Annuity plan", true, s3, s4);
+		annuityPlanChart.add(loan);
+		detailsPane.add(annuityPlanChart, 0, 2);
 
 		return detailsPane;
 	}

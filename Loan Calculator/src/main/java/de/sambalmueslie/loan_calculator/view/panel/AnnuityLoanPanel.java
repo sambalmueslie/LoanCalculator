@@ -4,9 +4,9 @@
 package de.sambalmueslie.loan_calculator.view.panel;
 
 import de.sambalmueslie.loan_calculator.model.loan.AnnuityLoan;
-import de.sambalmueslie.loan_calculator.model.loan.Loan;
 import de.sambalmueslie.loan_calculator.model.loan.RedemptionPlanEntry;
-import de.sambalmueslie.loan_calculator.view.chart.Chart;
+import de.sambalmueslie.loan_calculator.view.chart.LineChartSeriesDefinition;
+import de.sambalmueslie.loan_calculator.view.chart.generic.GenericLineChart;
 import de.sambalmueslie.loan_calculator.view.chart.loan.LoanChartFactory;
 import de.sambalmueslie.loan_calculator.view.component.TextFieldType;
 
@@ -39,18 +39,19 @@ public class AnnuityLoanPanel extends LoanPanel<AnnuityLoan> {
 		addInfo("Total interest", loan.getTotalInterest(), TextFieldType.CURRENCY);
 		addInfo("Total payment", loan.getTotalPayment(), TextFieldType.CURRENCY);
 
-		final Chart<Loan> residualDebtChart = LoanChartFactory.createResidualDebtChart();
+		final LineChartSeriesDefinition<AnnuityLoan, RedemptionPlanEntry> s1 = new LineChartSeriesDefinition<>("residual debt",
+				RedemptionPlanEntry::getResidualDebt, AnnuityLoan::getRedemptionPlan);
+		final GenericLineChart<AnnuityLoan, RedemptionPlanEntry> residualDebtChart = new GenericLineChart<>("Redemption plan", s1);
+		residualDebtChart.setLegendVisible(false);
 		residualDebtChart.add(loan);
-		addChart(residualDebtChart.getChart(), 0, 0);
+		addChart(residualDebtChart);
 
-		final Chart<Loan> annuityPlanChart = LoanChartFactory.createAnnuityPlanChart();
-		annuityPlanChart.add(loan);
-		addChart(annuityPlanChart.getChart(), 0, 1);
+		addChart(LoanChartFactory.createAnnuityPlanChart(loan));
 	}
 
 	@Override
-	protected void update(final AnnuityLoan loan) {
-		super.update(loan);
+	protected void update() {
+		final AnnuityLoan loan = getLoan();
 		updateInfo("Payment rate", loan.getPaymentRate());
 		updateInfo("Fixed debit interest", loan.getFixedDebitInterest());
 		updateInfo("Fixed interest period", String.format("%d", loan.getFixedInterestPeriod()));
@@ -66,5 +67,14 @@ public class AnnuityLoanPanel extends LoanPanel<AnnuityLoan> {
 		updateInfo("Total amount", loan.getAmount());
 		updateInfo("Total interest", loan.getTotalInterest());
 		updateInfo("Total payment", loan.getTotalPayment());
+
+		final LineChartSeriesDefinition<AnnuityLoan, RedemptionPlanEntry> s1 = new LineChartSeriesDefinition<>("residual debt",
+				RedemptionPlanEntry::getResidualDebt, AnnuityLoan::getRedemptionPlan);
+		final GenericLineChart<AnnuityLoan, RedemptionPlanEntry> residualDebtChart = new GenericLineChart<>("Redemption plan", s1);
+		residualDebtChart.setLegendVisible(false);
+		residualDebtChart.add(loan);
+		addChart(residualDebtChart);
+
+		addChart(LoanChartFactory.createAnnuityPlanChart(loan));
 	}
 }

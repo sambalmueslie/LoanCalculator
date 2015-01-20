@@ -3,6 +3,8 @@
  */
 package de.sambalmueslie.loan_calculator.model.loan;
 
+import java.util.List;
+
 /**
  * A building loan agreement.
  *
@@ -48,4 +50,9 @@ public interface BuildingLoanAgreement extends Loan {
 	 * @return the interest to pay for getting the money, while beeing in saving phase (zins für uebergangsdarlehen).
 	 */
 	double getSavingPhaseInterest();
+
+	/**
+	 * @return the saving phase plan.
+	 */
+	List<RedemptionPlanEntry> getSavingPhasePlan();
 }

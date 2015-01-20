@@ -4,16 +4,16 @@
 package de.sambalmueslie.loan_calculator.view.panel;
 
 import static de.sambalmueslie.loan_calculator.view.Constants.CLASS_HEADLINE_LABEL;
-import javafx.geometry.Pos;
+import static de.sambalmueslie.loan_calculator.view.Constants.CLASS_PANEL;
+import static de.sambalmueslie.loan_calculator.view.Constants.CLASS_PANEL_BORDER;
+import static de.sambalmueslie.loan_calculator.view.Constants.CLASS_PANEL_EMPTY;
 import javafx.scene.Node;
 import javafx.scene.chart.Chart;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
-import de.sambalmueslie.loan_calculator.view.Constants;
 import de.sambalmueslie.loan_calculator.view.component.TextFieldType;
 
 /**
@@ -23,7 +23,7 @@ import de.sambalmueslie.loan_calculator.view.component.TextFieldType;
  * @param <T>
  *            the {@link Loan} type
  */
-public abstract class LoanPanel<T extends Loan> extends Pane {
+public abstract class LoanPanel<T extends Loan> extends VBox {
 
 	/**
 	 * Constructor.
@@ -36,13 +36,24 @@ public abstract class LoanPanel<T extends Loan> extends Pane {
 		this.loan = loan;
 		this.loan.register(l -> update((T) l));
 
-		borderPane = new BorderPane();
-		borderPane.getStyleClass().add(Constants.CLASS_PANEL);
-		getChildren().add(borderPane);
+		getStyleClass().add(CLASS_PANEL);
 
 		setupHeadline();
-		setupCharts();
-		setupInfo();
+
+		final HBox content = new HBox();
+		content.getStyleClass().add(CLASS_PANEL_EMPTY);
+
+		infoPanel = new InfoPanel();
+		infoPanel.add("Amount", loan.getAmount(), TextFieldType.CURRENCY);
+		content.getChildren().add(infoPanel);
+
+		chartPane = new TilePane();
+		chartPane.setPrefColumns(1);
+		chartPane.getStyleClass().add(CLASS_PANEL_BORDER);
+
+		content.getChildren().add(chartPane);
+
+		getChildren().add(content);
 	}
 
 	/**
@@ -50,31 +61,9 @@ public abstract class LoanPanel<T extends Loan> extends Pane {
 	 *
 	 * @param chart
 	 *            the chart
-	 * @param col
-	 *            the column index position for the child within the gridpane
-	 * @param row
-	 *            the row index position for the child within the gridpane
 	 */
-	protected void addChart(final Node chart, final int col, final int row) {
-		chartPane.add(chart, col, row);
-	}
-
-	/**
-	 * Add a {@link Chart}.
-	 *
-	 * @param chart
-	 *            the chart
-	 * @param col
-	 *            the column index position for the child within the gridpane
-	 * @param row
-	 *            the row index position for the child within the gridpane
-	 * @param colspan
-	 *            the number of columns the child's layout area should span
-	 * @param rowspan
-	 *            the number of rows the child's layout area should span
-	 */
-	protected void addChart(final Node chart, final int col, final int row, final int colspan, final int rowspan) {
-		chartPane.add(chart, col, row, colspan, rowspan);
+	protected void addChart(final Node chart) {
+		chartPane.getChildren().add(chart);
 	}
 
 	/**
@@ -100,13 +89,8 @@ public abstract class LoanPanel<T extends Loan> extends Pane {
 
 	/**
 	 * Update.
-	 *
-	 * @param loan
-	 *            the {@link Loan}.
 	 */
-	protected void update(final T loan) {
-		updateInfo("Amount", loan.getAmount());
-	}
+	protected abstract void update();
 
 	/**
 	 * Update a info.
@@ -121,39 +105,29 @@ public abstract class LoanPanel<T extends Loan> extends Pane {
 	}
 
 	/**
-	 * Setup the charts.
-	 */
-	private void setupCharts() {
-		chartPane = new GridPane();
-		chartPane.getStyleClass().add(Constants.CLASS_PANEL_BORDER);
-		borderPane.setCenter(chartPane);
-	}
-
-	/**
-	 * Setup headline.
+	 * Setup the headline.
 	 */
 	private void setupHeadline() {
 		final Label nameLabel = new Label(loan.getName());
 		nameLabel.getStyleClass().add(CLASS_HEADLINE_LABEL);
-		BorderPane.setAlignment(nameLabel, Pos.CENTER);
-		borderPane.setTop(nameLabel);
+		final HBox headline = new HBox(nameLabel);
+		getChildren().add(headline);
 	}
 
 	/**
-	 * Setup the info.
+	 * Update.
+	 *
+	 * @param loan
+	 *            the {@link Loan}.
 	 */
-	private void setupInfo() {
-		infoPanel = new InfoPanel();
-		infoPanel.add("Amount", loan.getAmount(), TextFieldType.CURRENCY);
-		borderPane.setLeft(infoPanel);
+	private void update(final T loan) {
+		chartPane.getChildren().clear();
+		updateInfo("Amount", loan.getAmount());
+		update();
 	}
 
-	/** the {@link BorderPane}. */
-	private final BorderPane borderPane;
-	/** the chart {@link TilePane}. */
-	private GridPane chartPane;
-	/** the {@link InfoPanel}. */
-	private InfoPanel infoPanel;
+	private final TilePane chartPane;
+	private final InfoPanel infoPanel;
 	/** the loan. */
 	private final T loan;
 

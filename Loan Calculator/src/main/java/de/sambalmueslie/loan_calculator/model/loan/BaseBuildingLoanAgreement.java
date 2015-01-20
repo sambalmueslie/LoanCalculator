@@ -159,6 +159,14 @@ public class BaseBuildingLoanAgreement extends BaseLoan implements BuildingLoanA
 	}
 
 	/**
+	 * @see de.sambalmueslie.loan_calculator.model.loan.BuildingLoanAgreement#getSavingPhasePlan()
+	 */
+	@Override
+	public List<RedemptionPlanEntry> getSavingPhasePlan() {
+		return Collections.unmodifiableList(savingPhasePlan);
+	}
+
+	/**
 	 * @see de.sambalmueslie.loan_calculator.model.loan.Loan#getTerm()
 	 */
 	@Override
@@ -233,20 +241,23 @@ public class BaseBuildingLoanAgreement extends BaseLoan implements BuildingLoanA
 	 */
 	private void calculateValues() {
 		redemptionPlan = new LinkedList<>();
+		savingPhasePlan = new LinkedList<>();
 		totalInterest = 0;
 
-		// sparphase
+		// sparphase (saving phase)
 		double savedAmount = 0;
 		final double regularSaving = getAmount() * regularSavingAmount / 1000 * 12;
 		final double minimumSavedAmount = getAmount() * minimumSavings / 100;
 		final double transitionalLoanInterest = getAmount() * savingPhaseInterest / 100;
-		redemptionPlan.add(new BaseRedemptionPlanEntry(0, 0, -regularSaving));
+		redemptionPlan.add(new BaseRedemptionPlanEntry(getAmount()));
+		savingPhasePlan.add(new BaseRedemptionPlanEntry(savedAmount));
 		for (int i = 0; i < savingDuration || savedAmount < minimumSavedAmount; i++) {
 			final double currentCreditInterest = (savedAmount + regularSaving) * creditInterest / 100;
 			final double interest = transitionalLoanInterest - currentCreditInterest;
 			totalInterest += interest;
 			savedAmount += regularSaving + currentCreditInterest;
-			redemptionPlan.add(new BaseRedemptionPlanEntry(savedAmount, interest, regularSaving));
+			redemptionPlan.add(new BaseRedemptionPlanEntry(getAmount(), interest, regularSaving));
+			savingPhasePlan.add(new BaseRedemptionPlanEntry(savedAmount));
 		}
 		// tilgungsphase
 		final double interestAndPrincipalContribution = getAmount() * contribution / 1000 * 12;
@@ -261,6 +272,7 @@ public class BaseBuildingLoanAgreement extends BaseLoan implements BuildingLoanA
 				residualDebt -= principal;
 			}
 			redemptionPlan.add(new BaseRedemptionPlanEntry(residualDebt, interest, principal));
+			savingPhasePlan.add(new BaseRedemptionPlanEntry(0));
 		}
 
 		totalInterest += getAmount() * aquisitonFee / 100;
@@ -287,6 +299,8 @@ public class BaseBuildingLoanAgreement extends BaseLoan implements BuildingLoanA
 	private int savingDuration;
 	/** the interest to pay for getting the money, while beeing in saving phase (zins für uebergangsdarlehen). */
 	private double savingPhaseInterest;
+	/** the redemption plan. */
+	private List<RedemptionPlanEntry> savingPhasePlan;
 	/** the term (Laufzeit). */
 	private int term;
 	/** the total interest (Zins). */

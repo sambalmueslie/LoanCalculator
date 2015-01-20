@@ -24,6 +24,7 @@ class InfoPanel extends TilePane {
 	 */
 	InfoPanel() {
 		getStyleClass().add(Constants.CLASS_PANEL_BORDER);
+		setPrefColumns(1);
 	}
 
 	/**

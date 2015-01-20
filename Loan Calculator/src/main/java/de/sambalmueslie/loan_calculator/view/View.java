@@ -78,7 +78,7 @@ public class View extends BorderPane {
 		setCenter(content);
 		setBottom(statusbar);
 
-		final Scene scene = new Scene(this, 1480, 940);
+		final Scene scene = new Scene(this, 1480, 960);
 		scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
 		primaryStage.setScene(scene);
 		primaryStage.show();

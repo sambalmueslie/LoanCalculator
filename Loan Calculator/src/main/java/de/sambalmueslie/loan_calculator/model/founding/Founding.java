@@ -31,12 +31,6 @@ public interface Founding extends GenericModelEntry {
 	List<Loan> getLoans();
 
 	/**
-	 * @return the name.
-	 */
-	@Override
-	String getName();
-
-	/**
 	 * @return the redemption plan.
 	 */
 	List<RedemptionPlanEntry> getRedemptionPlan();
