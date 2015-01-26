@@ -168,14 +168,6 @@ public interface ViewActionListener {
 	void requestProgrammExit();
 
 	/**
-	 * Request to remove a building loan agreement.
-	 *
-	 * @param buildingLoanAgreementId
-	 *            the building loan agreement id
-	 */
-	void requestRemoveBuildingLoanAgreement(long buildingLoanAgreementId);
-
-	/**
 	 * Request to remove a comparison.
 	 *
 	 * @param comparisonId
@@ -219,6 +211,36 @@ public interface ViewActionListener {
 	 */
 	void requestUpdateAnnuityLoan(long loanId, final String name, final double amount, final double paymentRate, final double fixedDebitInterest,
 			final int fixedInterestPeriod, final double estimatedDebitInterest);
+
+	/**
+	 * Request to update a building loan agreement.
+	 *
+	 * @param loanId
+	 *            the loan id
+	 * @param name
+	 *            the name
+	 * @param amount
+	 *            the amount
+	 * @param creditInterest
+	 *            the credit interest (guthabenszins).
+	 * @param regularSavingAmount
+	 *            the regular saving amount. (monatlicher regelsparbetrag in promille).
+	 * @param minimumSavings
+	 *            the minimum savings (mindestsparguthaben in prozent).
+	 * @param savingDuration
+	 *            the saving duration (spardauer).
+	 * @param savingPhaseInterest
+	 *            the interest to pay for getting the money, while beeing in saving phase (zins für uebergangsdarlehen).
+	 * @param debitInterest
+	 *            the debit interest (sollzins ab zuteilung).
+	 * @param contribution
+	 *            the contribution. (zins und tilgungsbeitrag mtl in promille).
+	 * @param aquisitonFee
+	 *            the aquisition fee (abschlussgebuehr in prozent).
+	 */
+	void requestUpdateBuildingLoanAgreement(long loanId, String name, double amount, final double creditInterest, final double regularSavingAmount,
+			final double minimumSavings, final int savingDuration, final double savingPhaseInterest, final double debitInterest, final double contribution,
+			final double aquisitonFee);
 
 	/**
 	 * Request to update a founding.

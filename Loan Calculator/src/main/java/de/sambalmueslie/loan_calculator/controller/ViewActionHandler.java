@@ -150,14 +150,6 @@ public class ViewActionHandler implements ViewActionListener {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestRemoveBuildingLoanAgreement(long)
-	 */
-	@Override
-	public void requestRemoveBuildingLoanAgreement(final long buildingLoanAgreementId) {
-		controller.handleRequestRemoveBuildingLoanAgreement(buildingLoanAgreementId);
-	}
-
-	/**
 	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestRemoveComparison(long)
 	 */
 	@Override
@@ -189,6 +181,18 @@ public class ViewActionHandler implements ViewActionListener {
 	public void requestUpdateAnnuityLoan(final long loanId, final String name, final double amount, final double paymentRate, final double fixedDebitInterest,
 			final int fixedInterestPeriod, final double estimatedDebitInterest) {
 		controller.handleRequestUpdateAnnuityLoan(loanId, name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.view.ViewActionListener#requestUpdateBuildingLoanAgreement(long, java.lang.String, double,
+	 *      double, double, double, int, double, double, double, double)
+	 */
+	@Override
+	public void requestUpdateBuildingLoanAgreement(final long loanId, final String name, final double amount, final double creditInterest,
+			final double regularSavingAmount, final double minimumSavings, final int savingDuration, final double savingPhaseInterest,
+			final double debitInterest, final double contribution, final double aquisitonFee) {
+		controller.handleRequestUpdateBuildingLoanAgreement(loanId, name, amount, creditInterest, regularSavingAmount, minimumSavings, savingDuration,
+				savingPhaseInterest, debitInterest, contribution, aquisitonFee);
 	}
 
 	/**

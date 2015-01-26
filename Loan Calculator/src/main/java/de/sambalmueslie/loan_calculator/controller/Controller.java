@@ -317,19 +317,6 @@ public class Controller extends Application {
 	}
 
 	/**
-	 * @see ViewActionListener#requestRemoveBuildingLoanAgreement(long)
-	 */
-	void handleRequestRemoveBuildingLoanAgreement(final long buildingLoanAgreementId) {
-		if (logger.isDebugEnabled()) {
-			logger.debug("Handle request to remove building loan agreement " + buildingLoanAgreementId);
-		}
-		final Loan loan = model.getLoan(buildingLoanAgreementId);
-		if (loan == null) return;
-		model.remove(loan);
-		comparisonsRemoveEntry(loan);
-	}
-
-	/**
 	 * @see ViewActionListener#requestRemoveComparison(long)
 	 */
 	void handleRequestRemoveComparison(final long comparisonId) {
@@ -387,6 +374,33 @@ public class Controller extends Application {
 					+ estimatedDebitInterest + " cause " + e.getMessage());
 			// TODO handle error
 		}
+	}
+
+	/**
+	 * @see ViewActionListener#requestUpdateBuildingLoanAgreement(long, String, double, double, double, double, int, double, double, double,
+	 *      double)
+	 */
+	void handleRequestUpdateBuildingLoanAgreement(final long loanId, final String name, final double amount, final double creditInterest,
+			final double regularSavingAmount, final double minimumSavings, final int savingDuration, final double savingPhaseInterest,
+			final double debitInterest, final double contribution, final double aquisitonFee) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("Handle request to update building loan agreement " + loanId + ", " + name + ", " + amount + ", " + creditInterest + ", "
+					+ regularSavingAmount + ", " + minimumSavings + ", " + savingDuration + ", " + savingPhaseInterest + ", " + debitInterest + ", "
+					+ contribution + ", " + aquisitonFee);
+		}
+		try {
+			final Loan loan = model.getLoan(loanId);
+			if (loan == null || !(loan instanceof BaseBuildingLoanAgreement)) return;
+			final BaseBuildingLoanAgreement buildingLoanAgreement = (BaseBuildingLoanAgreement) loan;
+			buildingLoanAgreement.update(name, amount, creditInterest, regularSavingAmount, minimumSavings, savingDuration, savingPhaseInterest, debitInterest,
+					contribution, aquisitonFee);
+		} catch (final IllegalArgumentException e) {
+			logger.error("Cannot update update building loan agreement " + loanId + ", " + name + ", " + amount + ", " + creditInterest + ", "
+					+ regularSavingAmount + ", " + minimumSavings + ", " + savingDuration + ", " + savingPhaseInterest + ", " + debitInterest + ", "
+					+ contribution + ", " + aquisitonFee + " cause " + e.getMessage());
+			// TODO handle error
+		}
+
 	}
 
 	/**

@@ -13,9 +13,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import de.sambalmueslie.loan_calculator.model.loan.AnnuityLoan;
+import de.sambalmueslie.loan_calculator.model.loan.BuildingLoanAgreement;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
 import de.sambalmueslie.loan_calculator.view.ViewActionListener;
 import de.sambalmueslie.loan_calculator.view.dialog.ModifyAnnuityLoanDialog;
+import de.sambalmueslie.loan_calculator.view.dialog.ModifyBuildingLoanAgreementDialog;
 import de.sambalmueslie.loan_calculator.view.icons.IconProvider;
 
 /**
@@ -99,6 +101,24 @@ public class LoanContextMenu extends BaseContextMenu {
 				final double estimatedDebitInterest = dialog.getEstimatedDebitInterest();
 
 				listener.requestUpdateAnnuityLoan(loanId, name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
+			}
+		} else if (loan instanceof BuildingLoanAgreement) {
+			final ModifyBuildingLoanAgreementDialog dialog = new ModifyBuildingLoanAgreementDialog((BuildingLoanAgreement) loan);
+			final Optional<ButtonType> type = dialog.showAndWait();
+			if (type.isPresent() && type.get() == ButtonType.OK) {
+				final long loanId = loan.getId();
+				final String name = dialog.getName();
+				final double amount = dialog.getAmount();
+				final double creditInterest = dialog.getCreditInterest();
+				final double regularSavingAmount = dialog.getRegularSavingAmount();
+				final double minimumSavings = dialog.getMinimumSavings();
+				final int savingDuration = dialog.getSavingDuration();
+				final double savingPhaseInterest = dialog.getSavingPhaseInterest();
+				final double debitInterest = dialog.getDebitInterest();
+				final double contribution = dialog.getContribution();
+				final double aquisitonFee = dialog.getAquisitionFee();
+				listener.requestUpdateBuildingLoanAgreement(loanId, name, amount, creditInterest, regularSavingAmount, minimumSavings, savingDuration,
+						savingPhaseInterest, debitInterest, contribution, aquisitonFee);
 			}
 		}
 	}
