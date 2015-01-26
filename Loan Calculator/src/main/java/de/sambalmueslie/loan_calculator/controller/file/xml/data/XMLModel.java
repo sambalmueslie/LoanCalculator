@@ -26,6 +26,15 @@ public class XMLModel {
 	}
 
 	/**
+	 * @return the {@link #buildingLoanAgreements}
+	 */
+	@XmlElementWrapper(name = "buildingLoanAgreements")
+	@XmlElement(name = "buildingLoanAgreement")
+	public List<XMLBuildingLoanAgreement> getBuildingLoanAgreements() {
+		return buildingLoanAgreements;
+	}
+
+	/**
 	 * @return the {@link #comparisons}
 	 */
 	@XmlElementWrapper(name = "comparisons")
@@ -52,6 +61,14 @@ public class XMLModel {
 	}
 
 	/**
+	 * @param buildingLoanAgreements
+	 *            the buildingLoanAgreements to set
+	 */
+	public void setBuildingLoanAgreements(final List<XMLBuildingLoanAgreement> buildingLoanAgreements) {
+		this.buildingLoanAgreements = buildingLoanAgreements;
+	}
+
+	/**
 	 * @param comparisons
 	 *            the comparisons to set
 	 */
@@ -67,12 +84,15 @@ public class XMLModel {
 		this.foundings = foundings;
 	}
 
-	/** the {@link XMLComparison}. */
+	/** the {@link XMLAnnuityLoan}. */
 	private List<XMLAnnuityLoan> annuityLoans;
+
+	/** the {@link XMLBuildingLoanAgreement}. */
+	private List<XMLBuildingLoanAgreement> buildingLoanAgreements;
 
 	/** the {@link XMLComparison}. */
 	private List<XMLComparison> comparisons;
 
-	/** the {@link XMLComparison}. */
+	/** the {@link XMLFounding}. */
 	private List<XMLFounding> foundings;
 }

@@ -23,10 +23,7 @@ import org.apache.logging.log4j.Logger;
 
 import de.sambalmueslie.loan_calculator.controller.file.BaseLoanFile;
 import de.sambalmueslie.loan_calculator.controller.file.LoanFile;
-import de.sambalmueslie.loan_calculator.controller.file.xml.data.XMLAnnuityLoan;
-import de.sambalmueslie.loan_calculator.controller.file.xml.data.XMLComparison;
-import de.sambalmueslie.loan_calculator.controller.file.xml.data.XMLFounding;
-import de.sambalmueslie.loan_calculator.controller.file.xml.data.XMLModel;
+import de.sambalmueslie.loan_calculator.controller.file.xml.data.*;
 import de.sambalmueslie.loan_calculator.model.BaseModel;
 import de.sambalmueslie.loan_calculator.model.Model;
 import de.sambalmueslie.loan_calculator.model.compare.BaseComparison;
@@ -34,9 +31,7 @@ import de.sambalmueslie.loan_calculator.model.compare.Comparison;
 import de.sambalmueslie.loan_calculator.model.founding.BaseFounding;
 import de.sambalmueslie.loan_calculator.model.founding.Founding;
 import de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry;
-import de.sambalmueslie.loan_calculator.model.loan.AnnuityLoan;
-import de.sambalmueslie.loan_calculator.model.loan.BaseAnnuityLoan;
-import de.sambalmueslie.loan_calculator.model.loan.Loan;
+import de.sambalmueslie.loan_calculator.model.loan.*;
 
 /**
  * The xml {@link LoanFile} parser.
@@ -125,6 +120,32 @@ public class XMLParser {
 	}
 
 	/**
+	 * Parse a {@link XMLBuildingLoanAgreement} from a {@link BuildingLoanAgreement}.
+	 *
+	 * @param buildingLoanAgreement
+	 *            the buildingLoanAgreement
+	 * @return the {@link XMLBuildingLoanAgreement}
+	 */
+	private XMLBuildingLoanAgreement parse(final BuildingLoanAgreement buildingLoanAgreement) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("Parse BuildingLoanAgreement [" + buildingLoanAgreement.getId() + "] to xml.");
+		}
+		final XMLBuildingLoanAgreement xmlBuildingLoanAgreement = new XMLBuildingLoanAgreement();
+		xmlBuildingLoanAgreement.setId(buildingLoanAgreement.getId());
+		xmlBuildingLoanAgreement.setName(buildingLoanAgreement.getName());
+		xmlBuildingLoanAgreement.setAmount(buildingLoanAgreement.getAmount());
+		xmlBuildingLoanAgreement.setAquisitonFee(buildingLoanAgreement.getAquisitonFee());
+		xmlBuildingLoanAgreement.setContribution(buildingLoanAgreement.getContribution());
+		xmlBuildingLoanAgreement.setCreditInterest(buildingLoanAgreement.getCreditInterest());
+		xmlBuildingLoanAgreement.setDebitInterest(buildingLoanAgreement.getDebitInterest());
+		xmlBuildingLoanAgreement.setMinimumSavings(buildingLoanAgreement.getMinimumSavings());
+		xmlBuildingLoanAgreement.setRegularSavingAmount(buildingLoanAgreement.getRegularSavingAmount());
+		xmlBuildingLoanAgreement.setSavingDuration(buildingLoanAgreement.getSavingDuration());
+		xmlBuildingLoanAgreement.setSavingPhaseInterest(buildingLoanAgreement.getSavingPhaseInterest());
+		return xmlBuildingLoanAgreement;
+	}
+
+	/**
 	 * Parse a {@link XMLComparison} from a {@link Comparison}.
 	 *
 	 * @param comparison
@@ -179,6 +200,10 @@ public class XMLParser {
 				.collect(Collectors.toList());
 		xmlModel.setAnnuityLoans(annuityLoans);
 
+		final List<XMLBuildingLoanAgreement> buildingLoanAgreements = model.getAllLoans().stream().filter(l -> l instanceof BaseBuildingLoanAgreement)
+				.map(l -> parse((BuildingLoanAgreement) l)).collect(Collectors.toList());
+		xmlModel.setBuildingLoanAgreements(buildingLoanAgreements);
+
 		final List<XMLFounding> foundings = model.getAllFoundings().stream().map(this::parse).collect(Collectors.toList());
 		xmlModel.setFoundings(foundings);
 
@@ -206,6 +231,32 @@ public class XMLParser {
 		final int fixedInterestPeriod = xmlAnnuityLoan.getFixedInterestPeriod();
 		final double estimatedDebitInterest = xmlAnnuityLoan.getEstimatedDebitInterest();
 		return new BaseAnnuityLoan(id, name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
+	}
+
+	/**
+	 * Parse a {@link BuildingLoanAgreement} from a {@link XMLBuildingLoanAgreement}.
+	 *
+	 * @param xmlBuildingLoanAgreement
+	 *            the xml data
+	 * @return the {@link BuildingLoanAgreement}
+	 */
+	private BuildingLoanAgreement parse(final XMLBuildingLoanAgreement xmlBuildingLoanAgreement) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("Parse BuildingLoanAgreement [" + xmlBuildingLoanAgreement.getId() + "] from xml.");
+		}
+		final long id = xmlBuildingLoanAgreement.getId();
+		final String name = xmlBuildingLoanAgreement.getName();
+		final double amount = xmlBuildingLoanAgreement.getAmount();
+		final double creditInterest = xmlBuildingLoanAgreement.getCreditInterest();
+		final double regularSavingAmount = xmlBuildingLoanAgreement.getRegularSavingAmount();
+		final double minimumSavings = xmlBuildingLoanAgreement.getMinimumSavings();
+		final int savingDuration = xmlBuildingLoanAgreement.getSavingDuration();
+		final double savingPhaseInterest = xmlBuildingLoanAgreement.getSavingPhaseInterest();
+		final double debitInterest = xmlBuildingLoanAgreement.getDebitInterest();
+		final double contribution = xmlBuildingLoanAgreement.getContribution();
+		final double aquisitonFee = xmlBuildingLoanAgreement.getAquisitonFee();
+		return new BaseBuildingLoanAgreement(id, name, amount, creditInterest, regularSavingAmount, minimumSavings, savingDuration, savingPhaseInterest,
+				debitInterest, contribution, aquisitonFee);
 	}
 
 	/**
@@ -282,6 +333,7 @@ public class XMLParser {
 		}
 		final BaseModel model = new BaseModel();
 		xmlModel.getAnnuityLoans().stream().map(this::parse).forEach(model::add);
+		xmlModel.getBuildingLoanAgreements().stream().map(this::parse).forEach(model::add);
 		xmlModel.getFoundings().stream().map(f -> parse(f, model.getAllLoans())).forEach(model::add);
 		xmlModel.getComparisons().stream().map(c -> parse(c, model.getAllLoans(), model.getAllFoundings())).forEach(model::add);
 		return model;
