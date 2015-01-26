@@ -191,6 +191,27 @@ public class BaseBuildingLoanAgreement extends BaseLoan implements BuildingLoanA
 	}
 
 	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		final StringBuilder builder = new StringBuilder();
+		builder.append("BaseBuildingLoanAgreement [aquisitonFee=" + aquisitonFee);
+		builder.append(", contribution=" + contribution);
+		builder.append(", creditInterest=" + creditInterest);
+		builder.append(", debitInterest=" + debitInterest);
+		builder.append(", minimumSavings=" + minimumSavings);
+		builder.append(", regularSavingAmount=" + regularSavingAmount);
+		builder.append(", savingDuration=" + savingDuration);
+		builder.append(", savingPhaseInterest=" + savingPhaseInterest);
+		builder.append(", term=" + term);
+		builder.append(", totalInterest=" + totalInterest);
+		builder.append(", totalPayment=" + totalPayment);
+		builder.append("]");
+		return builder.toString();
+	}
+
+	/**
 	 * Update.
 	 *
 	 * @param name
