@@ -106,10 +106,6 @@ public class EntryTabPane extends TabPane {
 		getTabs().clear();
 		model = file.getModel();
 		model.listenerRegister(new ModelChangeHandler());
-		//
-		// model.getAllLoans().forEach(this::add);
-		// model.getAllFoundings().forEach(this::add);
-		// model.getAllComparisons().forEach(this::add);
 	}
 
 	/**
