@@ -61,6 +61,15 @@ public class View extends BorderPane {
 	}
 
 	/**
+	 * Refresh the ui.
+	 */
+	public void refresh() {
+		primaryStage.setTitle(I18n.get(I18n.VIEW_TITLE) + file.getName());
+		entryTree.show(file);
+		entryTabPane.update(file);
+	}
+
+	/**
 	 * Setup.
 	 *
 	 * @param primaryStage
@@ -79,7 +88,7 @@ public class View extends BorderPane {
 		content.setLeft(entryTree);
 		content.setCenter(entryTabPane);
 
-		final MainMenu mainMenu = new MainMenu(actionListenerMgr);
+		final MainMenu mainMenu = new MainMenu(this, actionListenerMgr);
 
 		getStyleClass().add(CLASS_PANEL_EMPTY);
 		setTop(mainMenu);
@@ -109,9 +118,8 @@ public class View extends BorderPane {
 	 *            the {@link LoanFile}
 	 */
 	public void show(final LoanFile file) {
-		primaryStage.setTitle(I18n.get(I18n.VIEW_TITLE) + file.getName());
-		entryTree.show(file);
-		entryTabPane.update(file);
+		this.file = file;
+		refresh();
 	}
 
 	/**
@@ -121,8 +129,7 @@ public class View extends BorderPane {
 		final FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle(I18n.get(I18n.OPEN_DIALOG_TITLE));
 		fileChooser.setInitialDirectory(new File(System.getProperty(USER_HOME)));
-		fileChooser.getExtensionFilters().addAll(
-				new FileChooser.ExtensionFilter(I18n.get(I18n.FILE_DESCRIPTION), FILE_EXTENSION));
+		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter(I18n.get(I18n.FILE_DESCRIPTION), FILE_EXTENSION));
 
 		final File file = fileChooser.showOpenDialog(primaryStage);
 		return (file != null) ? file.toPath() : null;
@@ -201,8 +208,7 @@ public class View extends BorderPane {
 		fileChooser.setTitle(I18n.get(I18n.SAVE_NEW_FILE_DIALOG_TITLE));
 		fileChooser.setInitialDirectory(new File(System.getProperty(USER_HOME)));
 		fileChooser.setInitialFileName(new SimpleDateFormat("YYYY-MM-dd").format(new Date()) + "_LoanCalcutlation.ldf");
-		fileChooser.getExtensionFilters().addAll(
-				new FileChooser.ExtensionFilter(I18n.get(I18n.FILE_DESCRIPTION), FILE_EXTENSION));
+		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter(I18n.get(I18n.FILE_DESCRIPTION), FILE_EXTENSION));
 
 		File file = fileChooser.showSaveDialog(primaryStage);
 		if (!file.getName().endsWith(".ldf")) {
@@ -220,10 +226,14 @@ public class View extends BorderPane {
 
 	/** the {@link ViewActionListenerMgr}. */
 	private final ViewActionListenerMgr actionListenerMgr = new ViewActionListenerMgr();
+
 	/** the content pane. */
 	private BorderPane content;
 	private EntryTabPane entryTabPane;
 	private EntryTreePane entryTree;
+	/** the {@link LoanFile}. */
+	private LoanFile file;
+
 	/** the primary {@link Stage}. */
 	private Stage primaryStage;
 

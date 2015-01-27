@@ -55,6 +55,8 @@ public class I18n {
 	/** property key. */
 	public static final String MENU_FILE_SAVE = "menu_file_save";
 	/** property key. */
+	public static final String MENU_SETTINGS = "menu_settings";
+	/** property key. */
 	public static final String OPEN_DIALOG_TITLE = "open_dialog_title";
 	/** property key. */
 	public static final String OPEN_FAILED_DIALOG_MESSAGE = "open_failed_dialog_message";
@@ -160,11 +162,29 @@ public class I18n {
 	}
 
 	/**
+	 * Set the locale.
+	 * 
+	 * @param language
+	 *            the language
+	 * @param country
+	 *            the country
+	 */
+	public static void setLocale(final String language, final String country) {
+		try {
+			final Locale locale = new Locale(language, country);
+			final ResourceBundle messages = ResourceBundle.getBundle("i18n", locale);
+			getInstance().messages = messages;
+		} catch (final RuntimeException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
 	 * Constructor.
 	 */
 	private I18n() {
-		currentLocale = new Locale("en", "US");
-		messages = ResourceBundle.getBundle("i18n", currentLocale);
+		final Locale locale = new Locale("en", "US");
+		messages = ResourceBundle.getBundle("i18n", locale);
 	}
 
 	/**
@@ -180,8 +200,6 @@ public class I18n {
 		return value;
 	}
 
-	/** the current {@link Locale}. */
-	private final Locale currentLocale;
 	/** the {@link ResourceBundle}. */
-	private final ResourceBundle messages;
+	private ResourceBundle messages;
 }

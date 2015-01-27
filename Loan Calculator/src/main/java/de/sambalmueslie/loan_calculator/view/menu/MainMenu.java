@@ -3,10 +3,8 @@
  */
 package de.sambalmueslie.loan_calculator.view.menu;
 
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.*;
+import de.sambalmueslie.loan_calculator.view.View;
 import de.sambalmueslie.loan_calculator.view.ViewActionListener;
 import de.sambalmueslie.loan_calculator.view.i18n.I18n;
 
@@ -19,11 +17,18 @@ public class MainMenu extends MenuBar {
 
 	/**
 	 * Constructor.
+	 *
+	 * @param view
+	 *            {@link #view}
+	 * @param actionListener
+	 *            {@link #actionListener}
 	 */
-	public MainMenu(final ViewActionListener actionListener) {
+	public MainMenu(final View view, final ViewActionListener actionListener) {
+		this.view = view;
 		this.actionListener = actionListener;
 
 		getMenus().add(createFileMenu());
+		getMenus().add(createSettingsMenu());
 	}
 
 	/**
@@ -49,8 +54,38 @@ public class MainMenu extends MenuBar {
 		return file;
 	}
 
+	/**
+	 * @return {@link #settings}.
+	 */
+	private Menu createSettingsMenu() {
+		settings = new Menu(I18n.get(I18n.MENU_SETTINGS));
+
+		final CheckMenuItem langEnglish = new CheckMenuItem("English");
+		final CheckMenuItem langGerman = new CheckMenuItem("Deutsch");
+		langEnglish.setSelected(true);
+		langGerman.setSelected(false);
+
+		langEnglish.setOnAction(e -> {
+			langGerman.setSelected(false);
+			I18n.setLocale("en", "US");
+			view.refresh();
+		});
+		langGerman.setOnAction(e -> {
+			langEnglish.setSelected(false);
+			I18n.setLocale("de", "DE");
+			view.refresh();
+		});
+
+		settings.getItems().addAll(langEnglish, langGerman);
+		return settings;
+	}
+
 	/** the {@link ViewActionListener}. */
 	private final ViewActionListener actionListener;
-
+	/** the file {@link Menu}. */
 	private Menu file;
+	/** the settings {@link Menu}. */
+	private Menu settings;
+	/** the {@link View}. */
+	private final View view;
 }
