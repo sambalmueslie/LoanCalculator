@@ -21,6 +21,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import de.sambalmueslie.loan_calculator.controller.file.LoanFile;
+import de.sambalmueslie.loan_calculator.view.i18n.I18nPropertiesHandler;
 import de.sambalmueslie.loan_calculator.view.menu.MainMenu;
 import de.sambalmueslie.loan_calculator.view.tabs.EntryTabPane;
 import de.sambalmueslie.loan_calculator.view.tree.EntryTreePane;
@@ -31,6 +32,13 @@ import de.sambalmueslie.loan_calculator.view.tree.EntryTreePane;
  * @author sambalmueslie 2015
  */
 public class View extends BorderPane {
+
+	/** the file extension. */
+	private static final String FILE_EXTENSION = "*.ldf";
+	/** the stylesheet file name. */
+	private static final String STYLESHEET_FILE = "style.css";
+	/** the user home property. */
+	private static final String USER_HOME = "user.home";
 
 	/**
 	 * Register a {@link ViewActionListener}.
@@ -60,7 +68,7 @@ public class View extends BorderPane {
 	 */
 	public void setup(final Stage primaryStage) {
 		this.primaryStage = primaryStage;
-		primaryStage.setTitle("Loan calculator by sambalmueslie!");
+		primaryStage.setTitle(I18nPropertiesHandler.getString(I18nPropertiesHandler.VIEW_TITLE));
 		final Label statusbar = new Label();
 
 		content = new BorderPane();
@@ -79,7 +87,7 @@ public class View extends BorderPane {
 		setBottom(statusbar);
 
 		final Scene scene = new Scene(this, 1480, 960);
-		scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+		scene.getStylesheets().add(getClass().getResource(STYLESHEET_FILE).toExternalForm());
 		primaryStage.setScene(scene);
 		primaryStage.show();
 
@@ -101,7 +109,7 @@ public class View extends BorderPane {
 	 *            the {@link LoanFile}
 	 */
 	public void show(final LoanFile file) {
-		primaryStage.setTitle("Loan calculator: " + file.getName());
+		primaryStage.setTitle(I18nPropertiesHandler.getString(I18nPropertiesHandler.VIEW_TITLE) + file.getName());
 		entryTree.show(file);
 		entryTabPane.update(file);
 	}
@@ -111,9 +119,10 @@ public class View extends BorderPane {
 	 */
 	public Path ShowDialogOpenFile() {
 		final FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Open file ");
-		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Loan Data files", "*.ldf"));
+		fileChooser.setTitle(I18nPropertiesHandler.getString(I18nPropertiesHandler.OPEN_DIALOG_TITLE));
+		fileChooser.setInitialDirectory(new File(System.getProperty(USER_HOME)));
+		fileChooser.getExtensionFilters().addAll(
+				new FileChooser.ExtensionFilter(I18nPropertiesHandler.getString(I18nPropertiesHandler.FILE_DESCRIPTION), FILE_EXTENSION));
 
 		final File file = fileChooser.showOpenDialog(primaryStage);
 		return (file != null) ? file.toPath() : null;
@@ -129,8 +138,8 @@ public class View extends BorderPane {
 	 */
 	public void showDialogOpenFileFailed(final Path path, final String message) {
 		final Alert alert = new Alert(AlertType.ERROR);
-		alert.setTitle("Opn file failed");
-		alert.setHeaderText("Open file failed");
+		alert.setTitle(I18nPropertiesHandler.getString(I18nPropertiesHandler.OPEN_FAILED_DIALOG_TITLE));
+		alert.setHeaderText(I18nPropertiesHandler.getString(I18nPropertiesHandler.OPEN_FAILED_DIALOG_MESSAGE));
 		alert.setContentText(message);
 		alert.showAndWait();
 	}
@@ -142,9 +151,9 @@ public class View extends BorderPane {
 	 */
 	public boolean showDialogRefuseUnsavedChanges() {
 		final Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Confirmation Dialog");
-		alert.setHeaderText("There are unsaved changes.");
-		alert.setContentText("Do you want to continue?");
+		alert.setTitle(I18nPropertiesHandler.getString(I18nPropertiesHandler.REFUSE_UNSAVED_CHANGES_DIALOG_TITLE));
+		alert.setHeaderText(I18nPropertiesHandler.getString(I18nPropertiesHandler.REFUSE_UNSAVED_CHANGES_DIALOG_HEADER_TEXT));
+		alert.setContentText(I18nPropertiesHandler.getString(I18nPropertiesHandler.REFUSE_UNSAVED_CHANGES_DIALOG_CONTENT_TEXT));
 		alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
 
 		final Optional<ButtonType> result = alert.showAndWait();
@@ -161,8 +170,8 @@ public class View extends BorderPane {
 	 */
 	public void showDialogSaveFileFailed(final LoanFile file, final String message) {
 		final Alert alert = new Alert(AlertType.ERROR);
-		alert.setTitle("Save file failed");
-		alert.setHeaderText("Save file failed");
+		alert.setTitle(I18nPropertiesHandler.getString(I18nPropertiesHandler.SAVE_FILE_FAILED_DIALOG_TITLE));
+		alert.setHeaderText(I18nPropertiesHandler.getString(I18nPropertiesHandler.SAVE_FILE_FAILED_DIALOG_HEADER_TEXT));
 		alert.setContentText(message);
 		alert.showAndWait();
 	}
@@ -175,13 +184,13 @@ public class View extends BorderPane {
 	 */
 	public void showDialogSaveFileSucceed(final LoanFile file) {
 		final Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("Information Dialog");
+		alert.setTitle(I18nPropertiesHandler.getString(I18nPropertiesHandler.SAVE_FILE_SUCCEED_DIALOG_TITLE));
 		alert.setHeaderText(null);
-		alert.setContentText("File successfully saved!");
+		alert.setContentText(I18nPropertiesHandler.getString(I18nPropertiesHandler.SAVE_FILE_SUCCEED_DIALOG_CONTENT_TEXT));
 
 		alert.showAndWait();
 
-		primaryStage.setTitle("Loan calculator: " + file.getName());
+		primaryStage.setTitle(I18nPropertiesHandler.getString(I18nPropertiesHandler.VIEW_TITLE) + file.getName());
 	}
 
 	/**
@@ -189,10 +198,11 @@ public class View extends BorderPane {
 	 */
 	public Path showDialogSaveNewFile() {
 		final FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Save file as");
-		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+		fileChooser.setTitle(I18nPropertiesHandler.getString(I18nPropertiesHandler.SAVE_NEW_FILE_DIALOG_TITLE));
+		fileChooser.setInitialDirectory(new File(System.getProperty(USER_HOME)));
 		fileChooser.setInitialFileName(new SimpleDateFormat("YYYY-MM-dd").format(new Date()) + "_LoanCalcutlation.ldf");
-		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Loan Data files", "*.ldf"));
+		fileChooser.getExtensionFilters().addAll(
+				new FileChooser.ExtensionFilter(I18nPropertiesHandler.getString(I18nPropertiesHandler.FILE_DESCRIPTION), FILE_EXTENSION));
 
 		File file = fileChooser.showSaveDialog(primaryStage);
 		if (!file.getName().endsWith(".ldf")) {
