@@ -16,6 +16,16 @@ public class I18nPropertiesHandler {
 	/** property key. */
 	public static final String FILE_DESCRIPTION = "file_description";
 	/** property key. */
+	public static final String MENU_FILE = "menu_file";
+	/** property key. */
+	public static final String MENU_FILE_EXIT = "menu_file_exit";
+	/** property key. */
+	public static final String MENU_FILE_NEW = "menu_file_new";
+	/** property key. */
+	public static final String MENU_FILE_OPEN = "menu_file_open";
+	/** property key. */
+	public static final String MENU_FILE_SAVE = "menu_file_save";
+	/** property key. */
 	public static final String OPEN_DIALOG_TITLE = "open_dialog_title";
 	/** property key. */
 	public static final String OPEN_FAILED_DIALOG_MESSAGE = "open_failed_dialog_message";

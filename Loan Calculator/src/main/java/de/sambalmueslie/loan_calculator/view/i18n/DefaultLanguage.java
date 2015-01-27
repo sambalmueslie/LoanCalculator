@@ -3,6 +3,8 @@
  */
 package de.sambalmueslie.loan_calculator.view.i18n;
 
+import static de.sambalmueslie.loan_calculator.view.i18n.I18nPropertiesHandler.*;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,24 +19,29 @@ public class DefaultLanguage {
 	 * Constructor.
 	 */
 	public DefaultLanguage() {
-		values.put(I18nPropertiesHandler.FILE_DESCRIPTION, "Loan Data files");
-		values.put(I18nPropertiesHandler.OPEN_DIALOG_TITLE, "Open file");
-		values.put(I18nPropertiesHandler.OPEN_FAILED_DIALOG_MESSAGE, "Open file failed");
-		values.put(I18nPropertiesHandler.OPEN_FAILED_DIALOG_TITLE, "Open file failed");
-		values.put(I18nPropertiesHandler.REFUSE_UNSAVED_CHANGES_DIALOG_CONTENT_TEXT, "Do you want to continue?");
-		values.put(I18nPropertiesHandler.REFUSE_UNSAVED_CHANGES_DIALOG_HEADER_TEXT, "There are unsaved changes.");
-		values.put(I18nPropertiesHandler.REFUSE_UNSAVED_CHANGES_DIALOG_TITLE, "Confirmation Dialog");
-		values.put(I18nPropertiesHandler.SAVE_FILE_FAILED_DIALOG_HEADER_TEXT, "Save file failed");
-		values.put(I18nPropertiesHandler.SAVE_FILE_FAILED_DIALOG_TITLE, "Save file failed");
-		values.put(I18nPropertiesHandler.SAVE_FILE_SUCCEED_DIALOG_CONTENT_TEXT, "File successfully saved!");
-		values.put(I18nPropertiesHandler.SAVE_FILE_SUCCEED_DIALOG_TITLE, "Information Dialog");
-		values.put(I18nPropertiesHandler.SAVE_NEW_FILE_DIALOG_TITLE, "Save file as");
-		values.put(I18nPropertiesHandler.VIEW_TITLE, "Loan calculator by sambalmueslie!");
+		values.put(FILE_DESCRIPTION, "Loan Data files");
+		values.put(OPEN_DIALOG_TITLE, "Open file");
+		values.put(OPEN_FAILED_DIALOG_MESSAGE, "Open file failed");
+		values.put(OPEN_FAILED_DIALOG_TITLE, "Open file failed");
+		values.put(REFUSE_UNSAVED_CHANGES_DIALOG_CONTENT_TEXT, "Do you want to continue?");
+		values.put(REFUSE_UNSAVED_CHANGES_DIALOG_HEADER_TEXT, "There are unsaved changes.");
+		values.put(REFUSE_UNSAVED_CHANGES_DIALOG_TITLE, "Confirmation Dialog");
+		values.put(SAVE_FILE_FAILED_DIALOG_HEADER_TEXT, "Save file failed");
+		values.put(SAVE_FILE_FAILED_DIALOG_TITLE, "Save file failed");
+		values.put(SAVE_FILE_SUCCEED_DIALOG_CONTENT_TEXT, "File successfully saved!");
+		values.put(SAVE_FILE_SUCCEED_DIALOG_TITLE, "Information Dialog");
+		values.put(SAVE_NEW_FILE_DIALOG_TITLE, "Save file as");
+		values.put(VIEW_TITLE, "Loan calculator by sambalmueslie!");
+		values.put(MENU_FILE, "File");
+		values.put(MENU_FILE_NEW, "New");
+		values.put(MENU_FILE_OPEN, "Open");
+		values.put(MENU_FILE_SAVE, "Save");
+		values.put(MENU_FILE_EXIT, "Exit");
 	}
 
 	/**
 	 * Get a {@link String} by key.
-	 * 
+	 *
 	 * @param key
 	 *            the key
 	 * @return the string
