@@ -14,6 +14,7 @@ import de.sambalmueslie.loan_calculator.view.component.CurrencyTextField;
 import de.sambalmueslie.loan_calculator.view.component.NumberTextField;
 import de.sambalmueslie.loan_calculator.view.component.PercentageTextField;
 import de.sambalmueslie.loan_calculator.view.component.SimpleTextField;
+import de.sambalmueslie.loan_calculator.view.i18n.I18n;
 
 /**
  * {@link Dialog} to add or update a {@link AnnuityLoan}.
@@ -22,11 +23,22 @@ import de.sambalmueslie.loan_calculator.view.component.SimpleTextField;
  */
 public class ModifyAnnuityLoanDialog extends Dialog<ButtonType> {
 
+	/** default value. */
+	private static final double DEFAULT_AMOUNT = 50000.0;
+	/** default value. */
+	private static final double DEFAULT_ESTIMATED_DEBIT_INTEREST = 5.00;
+	/** default value. */
+	private static final double DEFAULT_FIXED_DEBIT_INTEREST = 2.00;
+	/** default value. */
+	private static final int DEFAULT_FIXED_INTEREST_PERIOD = 100;
+	/** default value. */
+	private static final double DEFAULT_PAYMENT_RATE = 3.00;
+
 	/**
 	 * Constructor.
 	 */
 	public ModifyAnnuityLoanDialog(final AnnuityLoan loan) {
-		final String dialogTitle = (loan == null) ? "Add new loan." : "Update loan";
+		final String dialogTitle = (loan == null) ? I18n.get(I18n.ANNUITY_DIALOG_TITLE_NEW) : I18n.get(I18n.ANNUITY_DIALOG_TITLE_UPDATE);
 		setTitle(dialogTitle);
 
 		if (loan != null) {
@@ -46,22 +58,22 @@ public class ModifyAnnuityLoanDialog extends Dialog<ButtonType> {
 		content.setMaxWidth(Double.MAX_VALUE);
 		content.setAlignment(Pos.CENTER_LEFT);
 
-		content.add(new Label("Name"), 0, 0);
+		content.add(new Label(I18n.get(I18n.TEXT_NAME)), 0, 0);
 		content.add(name, 1, 0);
 
-		content.add(new Label("Amount"), 0, 1);
+		content.add(new Label(I18n.get(I18n.TEXT_AMOUNT)), 0, 1);
 		content.add(amount, 1, 1);
 
-		content.add(new Label("Payment rate"), 0, 2);
+		content.add(new Label(I18n.get(I18n.TEXT_PAYMENT_RATE)), 0, 2);
 		content.add(paymentRate, 1, 2);
 
-		content.add(new Label("Fixed debit interest"), 0, 3);
+		content.add(new Label(I18n.get(I18n.TEXT_FIXED_DEBIT_INTEREST)), 0, 3);
 		content.add(fixedDebitInterest, 1, 3);
 
-		content.add(new Label("Fixed interest period"), 0, 4);
+		content.add(new Label(I18n.get(I18n.TEXT_FIXED_INTEREST_PERIOD)), 0, 4);
 		content.add(fixedInterestPeriod, 1, 4);
 
-		content.add(new Label("Estimated debit interest"), 0, 5);
+		content.add(new Label(I18n.get(I18n.TEXT_ESTIMATED_DEBIT_INTEREST)), 0, 5);
 		content.add(estimatedDebitInterest, 1, 5);
 
 		getDialogPane().setContent(content);
@@ -116,16 +128,16 @@ public class ModifyAnnuityLoanDialog extends Dialog<ButtonType> {
 	}
 
 	/** the amount {@link CurrencyTextField}. */
-	private final CurrencyTextField amount = new CurrencyTextField(50000.0);
+	private final CurrencyTextField amount = new CurrencyTextField(DEFAULT_AMOUNT);
 	/** the estimated debit interest {@link PercentageTextField}. */
-	private final PercentageTextField estimatedDebitInterest = new PercentageTextField(5.00);
+	private final PercentageTextField estimatedDebitInterest = new PercentageTextField(DEFAULT_ESTIMATED_DEBIT_INTEREST);
 	/** the fixed debit interest {@link PercentageTextField}. */
-	private final PercentageTextField fixedDebitInterest = new PercentageTextField(2.00);
+	private final PercentageTextField fixedDebitInterest = new PercentageTextField(DEFAULT_FIXED_DEBIT_INTEREST);
 	/** the fixed interest {@link NumberTextField}. */
-	private final NumberTextField fixedInterestPeriod = new NumberTextField(100);
+	private final NumberTextField fixedInterestPeriod = new NumberTextField(DEFAULT_FIXED_INTEREST_PERIOD);
 	/** the name {@link SimpleTextField}. */
 	private final SimpleTextField name = new SimpleTextField();
 	/** the payment rate {@link PercentageTextField}. */
-	private final PercentageTextField paymentRate = new PercentageTextField(3.00);
+	private final PercentageTextField paymentRate = new PercentageTextField(DEFAULT_PAYMENT_RATE);
 
 }

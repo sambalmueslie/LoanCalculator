@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import de.sambalmueslie.loan_calculator.model.founding.Founding;
 import de.sambalmueslie.loan_calculator.view.component.SimpleTextField;
+import de.sambalmueslie.loan_calculator.view.i18n.I18n;
 
 /**
  * {@link Dialog} to add or modify a {@link Founding}.
@@ -23,7 +24,7 @@ public class ModifyFoundingDialog extends Dialog<ButtonType> {
 	 * Constructor.
 	 */
 	public ModifyFoundingDialog(final Founding founding) {
-		final String dialogTitle = (founding == null) ? "Add new founding." : "Update founding";
+		final String dialogTitle = (founding == null) ? I18n.get(I18n.FOUNDING_DIALOG_TITLE_NEW) : I18n.get(I18n.FOUNDING_DIALOG_TITLE_UPDATE);
 		setTitle(dialogTitle);
 
 		if (founding != null) {
@@ -39,10 +40,10 @@ public class ModifyFoundingDialog extends Dialog<ButtonType> {
 		content.setMaxWidth(Double.MAX_VALUE);
 		content.setAlignment(Pos.CENTER_LEFT);
 
-		content.add(new Label("Name"), 0, 0);
+		content.add(new Label(I18n.get(I18n.TEXT_NAME)), 0, 0);
 		content.add(name, 1, 0);
 
-		content.add(new Label("Bank Name"), 0, 1);
+		content.add(new Label(I18n.get(I18n.TEXT_BANK_NAME)), 0, 1);
 		content.add(bankName, 1, 1);
 
 		getDialogPane().setContent(content);

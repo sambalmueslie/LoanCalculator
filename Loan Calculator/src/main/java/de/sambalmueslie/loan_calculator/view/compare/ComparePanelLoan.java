@@ -28,7 +28,7 @@ import de.sambalmueslie.loan_calculator.view.chart.generic.GenericBarChart;
 import de.sambalmueslie.loan_calculator.view.chart.generic.GenericLineChart;
 import de.sambalmueslie.loan_calculator.view.chart.generic.GenericStackedBarChart;
 import de.sambalmueslie.loan_calculator.view.chart.loan.GenericAnnuityChart;
-import de.sambalmueslie.loan_calculator.view.i18n.I18nPropertiesHandler;
+import de.sambalmueslie.loan_calculator.view.i18n.I18n;
 
 /**
  * The compare panel for {@link Loan}s.
@@ -83,19 +83,19 @@ class ComparePanelLoan extends BaseComparePanel<Loan> {
 		final TilePane comparePane = new TilePane();
 		comparePane.getStyleClass().add(CLASS_PANEL);
 
-		comparePane.getChildren().add(addCompareFunction(I18nPropertiesHandler.getString(I18nPropertiesHandler.TEXT_TOTAL_PAYMENT), Loan::getTotalPayment));
-		comparePane.getChildren().add(addCompareFunction(I18nPropertiesHandler.getString(I18nPropertiesHandler.TEXT_TOTAL_INTEREST), Loan::getTotalInterest));
-		comparePane.getChildren().add(addCompareFunction(I18nPropertiesHandler.getString(I18nPropertiesHandler.TEXT_TOTAL_AMOUNT), Loan::getAmount));
-		comparePane.getChildren().add(addCompareFunction(I18nPropertiesHandler.getString(I18nPropertiesHandler.TEXT_TERM), Loan::getTerm));
-		comparePane.getChildren().add(addCompareFunction(I18nPropertiesHandler.getString(I18nPropertiesHandler.TEXT_RISK_CAPITAL), Loan::getRiskCapital));
+		comparePane.getChildren().add(addCompareFunction(I18n.get(I18n.TEXT_TOTAL_PAYMENT), Loan::getTotalPayment));
+		comparePane.getChildren().add(addCompareFunction(I18n.get(I18n.TEXT_TOTAL_INTEREST), Loan::getTotalInterest));
+		comparePane.getChildren().add(addCompareFunction(I18n.get(I18n.TEXT_TOTAL_AMOUNT), Loan::getAmount));
+		comparePane.getChildren().add(addCompareFunction(I18n.get(I18n.TEXT_TERM), Loan::getTerm));
+		comparePane.getChildren().add(addCompareFunction(I18n.get(I18n.TEXT_RISK_CAPITAL), Loan::getRiskCapital));
 
 		final Function<Loan, RedemptionPlanEntry> dataGetterFunction = (l -> l.getRedemptionPlan().get(1));
-		final SeriesDefinition<RedemptionPlanEntry, Double> sd1 = new SeriesDefinition<>(I18nPropertiesHandler.getString(I18nPropertiesHandler.TEXT_INTEREST),
+		final SeriesDefinition<RedemptionPlanEntry, Double> sd1 = new SeriesDefinition<>(I18n.get(I18n.TEXT_INTEREST),
 				RedemptionPlanEntry::getInterest);
 		final SeriesDefinition<RedemptionPlanEntry, Double> sd2 = new SeriesDefinition<>(
-				I18nPropertiesHandler.getString(I18nPropertiesHandler.TEXT_REDEMPTION), RedemptionPlanEntry::getRedemption);
+				I18n.get(I18n.TEXT_REDEMPTION), RedemptionPlanEntry::getRedemption);
 		final GenericAnnuityChart<Loan, RedemptionPlanEntry, Double> chart = new GenericAnnuityChart<>(
-				I18nPropertiesHandler.getString(I18nPropertiesHandler.ANNUITY_PLAN_CHART_TITLE), dataGetterFunction, loans, sd1, sd2);
+				I18n.get(I18n.ANNUITY_PLAN_CHART_TITLE), dataGetterFunction, loans, sd1, sd2);
 		comparePane.getChildren().add(chart);
 		setTop(comparePane);
 
@@ -143,19 +143,19 @@ class ComparePanelLoan extends BaseComparePanel<Loan> {
 		detailsPane.add(title, 0, 0, 2, 1);
 
 		final LineChartSeriesDefinition<Loan, RedemptionPlanEntry> s1 = new LineChartSeriesDefinition<>(
-				I18nPropertiesHandler.getString(I18nPropertiesHandler.TEXT_RESIDUAL_DEBT), RedemptionPlanEntry::getResidualDebt, Loan::getRedemptionPlan);
+				I18n.get(I18n.TEXT_RESIDUAL_DEBT), RedemptionPlanEntry::getResidualDebt, Loan::getRedemptionPlan);
 		final GenericLineChart<Loan, RedemptionPlanEntry> residualDebtChart = new GenericLineChart<>(
-				I18nPropertiesHandler.getString(I18nPropertiesHandler.REDEMPTION_PLAN_CHART_TITLE), s1);
+				I18n.get(I18n.REDEMPTION_PLAN_CHART_TITLE), s1);
 		residualDebtChart.setLegendVisible(false);
 		residualDebtChart.add(loan);
 		detailsPane.add(residualDebtChart, 0, 1);
 
 		final LineChartSeriesDefinition<Loan, RedemptionPlanEntry> s3 = new LineChartSeriesDefinition<>(
-				I18nPropertiesHandler.getString(I18nPropertiesHandler.TEXT_INTEREST), RedemptionPlanEntry::getInterest, Loan::getRedemptionPlan);
+				I18n.get(I18n.TEXT_INTEREST), RedemptionPlanEntry::getInterest, Loan::getRedemptionPlan);
 		final LineChartSeriesDefinition<Loan, RedemptionPlanEntry> s4 = new LineChartSeriesDefinition<>(
-				I18nPropertiesHandler.getString(I18nPropertiesHandler.TEXT_REDEMPTION), RedemptionPlanEntry::getRedemption, Loan::getRedemptionPlan);
+				I18n.get(I18n.TEXT_REDEMPTION), RedemptionPlanEntry::getRedemption, Loan::getRedemptionPlan);
 		final GenericStackedBarChart<Loan, RedemptionPlanEntry> annuityPlanChart = new GenericStackedBarChart<>(
-				I18nPropertiesHandler.getString(I18nPropertiesHandler.ANNUITY_PLAN_CHART_TITLE), true, s3, s4);
+				I18n.get(I18n.ANNUITY_PLAN_CHART_TITLE), true, s3, s4);
 		annuityPlanChart.add(loan);
 		detailsPane.add(annuityPlanChart, 0, 2);
 

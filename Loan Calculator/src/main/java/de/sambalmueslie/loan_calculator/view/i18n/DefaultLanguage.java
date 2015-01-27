@@ -3,7 +3,7 @@
  */
 package de.sambalmueslie.loan_calculator.view.i18n;
 
-import static de.sambalmueslie.loan_calculator.view.i18n.I18nPropertiesHandler.*;
+import static de.sambalmueslie.loan_calculator.view.i18n.I18n.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,8 +47,28 @@ public class DefaultLanguage {
 		values.put(TEXT_TOTAL_PAYMENT, "Total payment");
 		values.put(TEXT_TERM, "Term");
 		values.put(TEXT_RESIDUAL_DEBT, "Residual debt");
+		values.put(TEXT_NAME, "Name");
+		values.put(TEXT_AMOUNT, "Amount");
+		values.put(TEXT_PAYMENT_RATE, "Payment rate");
+		values.put(TEXT_FIXED_DEBIT_INTEREST, "Fixed debit interest");
+		values.put(TEXT_FIXED_INTEREST_PERIOD, "Fixed interest period");
+		values.put(TEXT_ESTIMATED_DEBIT_INTEREST, "Estimated debit interest");
 		values.put(CONTEXT_MENU_REMOVE_COMPARISON, "Remove comparison");
 		values.put(CONTEXT_MENU_REMOVE_ELEMENT, "Remove element");
+		values.put(ANNUITY_DIALOG_TITLE_NEW, "Add new loan.");
+		values.put(ANNUITY_DIALOG_TITLE_UPDATE, "Update loan.");
+		values.put(TEXT_AQUISITION_FEE, "Aquisition fee");
+		values.put(TEXT_REGULAR_SAVING_AMOUNT, "Regular saving amount");
+		values.put(TEXT_MINIMUM_SAVINGS, "Minimum savings");
+		values.put(TEXT_SAVING_DURATION, "Saving duration");
+		values.put(TEXT_DEBIT_INTEREST, "Debit interest");
+		values.put(TEXT_SAVING_PHASE_INTEREST, "Saving phase interest");
+		values.put(TEXT_CONTRIBUTION, "Contribution");
+		values.put(TEXT_BANK_NAME, "Bank name");
+		values.put(BUILDING_LOAN_AGREEMENT_DIALOG_TITLE_NEW, "Add new building loan agreement.");
+		values.put(BUILDING_LOAN_AGREEMENT_DIALOG_TITLE_UPDATE, "Update building loan agreement.");
+		values.put(FOUNDING_DIALOG_TITLE_NEW, "Add new founding.");
+		values.put(FOUNDING_DIALOG_TITLE_UPDATE, "Update founding.");
 	}
 
 	/**
