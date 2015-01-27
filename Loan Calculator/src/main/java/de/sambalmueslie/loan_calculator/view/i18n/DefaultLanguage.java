@@ -41,6 +41,14 @@ public class DefaultLanguage {
 		values.put(ANNUITY_PLAN_CHART_TITLE, "Annuity Plan");
 		values.put(TEXT_INTEREST, "interest");
 		values.put(TEXT_REDEMPTION, "redemption");
+		values.put(TEXT_RISK_CAPITAL, "Risk capital");
+		values.put(TEXT_TOTAL_AMOUNT, "Total amount");
+		values.put(TEXT_TOTAL_INTEREST, "Total interest");
+		values.put(TEXT_TOTAL_PAYMENT, "Total payment");
+		values.put(TEXT_TERM, "Term");
+		values.put(TEXT_RESIDUAL_DEBT, "Residual debt");
+		values.put(CONTEXT_MENU_REMOVE_COMPARISON, "Remove comparison");
+		values.put(CONTEXT_MENU_REMOVE_ELEMENT, "Remove element");
 	}
 
 	/**

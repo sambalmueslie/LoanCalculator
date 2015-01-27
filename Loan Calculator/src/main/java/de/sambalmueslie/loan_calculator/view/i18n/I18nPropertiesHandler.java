@@ -16,6 +16,10 @@ public class I18nPropertiesHandler {
 	/** property key. */
 	public static final String ANNUITY_PLAN_CHART_TITLE = "annuity_plan_chart_title";
 	/** property key. */
+	public static final String CONTEXT_MENU_REMOVE_COMPARISON = "context_menu_remove_comparison";
+	/** property key. */
+	public static final String CONTEXT_MENU_REMOVE_ELEMENT = "context_menu_remove_element";
+	/** property key. */
 	public static final String FILE_DESCRIPTION = "file_description";
 	/** property key. */
 	public static final String MENU_FILE = "menu_file";
@@ -55,6 +59,18 @@ public class I18nPropertiesHandler {
 	public static final String TEXT_INTEREST = "text_interest";
 	/** property key. */
 	public static final String TEXT_REDEMPTION = "text_redemption";
+	/** property key. */
+	public static final String TEXT_RESIDUAL_DEBT = "text_residual_debt";
+	/** property key. */
+	public static final String TEXT_RISK_CAPITAL = "text_risk_capital";
+	/** property key. */
+	public static final String TEXT_TERM = "text_term";
+	/** property key. */
+	public static final String TEXT_TOTAL_AMOUNT = "text_total_amount";
+	/** property key. */
+	public static final String TEXT_TOTAL_INTEREST = "text_total_interest";
+	/** property key. */
+	public static final String TEXT_TOTAL_PAYMENT = "text_total_payment";
 	/** property key. */
 	public static final String VIEW_TITLE = "view_title";
 

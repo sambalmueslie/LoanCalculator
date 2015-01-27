@@ -29,6 +29,7 @@ import de.sambalmueslie.loan_calculator.view.chart.founding.RedemptionPlanChart;
 import de.sambalmueslie.loan_calculator.view.chart.generic.GenericBarChart;
 import de.sambalmueslie.loan_calculator.view.chart.generic.GenericPieChart;
 import de.sambalmueslie.loan_calculator.view.chart.loan.GenericAnnuityChart;
+import de.sambalmueslie.loan_calculator.view.i18n.I18nPropertiesHandler;
 
 /**
  * The compare panel for {@link Loan}s.
@@ -84,14 +85,17 @@ class ComparePanelFounding extends BaseComparePanel<Founding> {
 		comparePane.getStyleClass().add(CLASS_PANEL);
 
 		comparePane.getChildren().add(addCompareFunction("Total payment", Founding::getTotalPayment));
-		comparePane.getChildren().add(addCompareFunction("Total interest", Founding::getTotalInterest));
-		comparePane.getChildren().add(addCompareFunction("Total Amount", Founding::getAmount));
-		comparePane.getChildren().add(addCompareFunction("Term", Founding::getTerm));
-		comparePane.getChildren().add(addCompareFunction("Risk capital", Founding::getRiskCapital));
+		comparePane.getChildren().add(
+				addCompareFunction(I18nPropertiesHandler.getString(I18nPropertiesHandler.TEXT_TOTAL_INTEREST), Founding::getTotalInterest));
+		comparePane.getChildren().add(addCompareFunction(I18nPropertiesHandler.getString(I18nPropertiesHandler.TEXT_TOTAL_AMOUNT), Founding::getAmount));
+		comparePane.getChildren().add(addCompareFunction(I18nPropertiesHandler.getString(I18nPropertiesHandler.TEXT_TERM), Founding::getTerm));
+		comparePane.getChildren().add(addCompareFunction(I18nPropertiesHandler.getString(I18nPropertiesHandler.TEXT_RISK_CAPITAL), Founding::getRiskCapital));
 
 		final Function<Founding, RedemptionPlanEntry> dataGetterFunction = (f -> f.getRedemptionPlan().get(1));
-		final SeriesDefinition<RedemptionPlanEntry, Double> sd1 = new SeriesDefinition<>("interest", RedemptionPlanEntry::getInterest);
-		final SeriesDefinition<RedemptionPlanEntry, Double> sd2 = new SeriesDefinition<>("redemption", RedemptionPlanEntry::getRedemption);
+		final SeriesDefinition<RedemptionPlanEntry, Double> sd1 = new SeriesDefinition<>(I18nPropertiesHandler.getString(I18nPropertiesHandler.TEXT_INTEREST),
+				RedemptionPlanEntry::getInterest);
+		final SeriesDefinition<RedemptionPlanEntry, Double> sd2 = new SeriesDefinition<>(
+				I18nPropertiesHandler.getString(I18nPropertiesHandler.TEXT_REDEMPTION), RedemptionPlanEntry::getRedemption);
 		final GenericAnnuityChart<Founding, RedemptionPlanEntry, Double> chart = new GenericAnnuityChart<>("Annuitity", dataGetterFunction, elements, sd1, sd2);
 		comparePane.getChildren().add(chart);
 
@@ -140,19 +144,22 @@ class ComparePanelFounding extends BaseComparePanel<Founding> {
 		detailsPane.add(new RedemptionPlanChart(founding), 0, 1);
 		detailsPane.add(new AnnuityPlanChart(founding), 0, 2);
 
-		final GenericPieChart<Founding, Loan> totalAmountChart = new GenericPieChart<>(Founding::getLoans, Loan::getAmount, "Total amount", founding);
+		final GenericPieChart<Founding, Loan> totalAmountChart = new GenericPieChart<>(Founding::getLoans, Loan::getAmount,
+				I18nPropertiesHandler.getString(I18nPropertiesHandler.TEXT_TOTAL_AMOUNT), founding);
 		detailsPane.add(totalAmountChart, 0, 3);
 
-		final GenericPieChart<Founding, Loan> totalPaymentChart = new GenericPieChart<>(Founding::getLoans, Loan::getTotalPayment, "Total payment", founding);
+		final GenericPieChart<Founding, Loan> totalPaymentChart = new GenericPieChart<>(Founding::getLoans, Loan::getTotalPayment,
+				I18nPropertiesHandler.getString(I18nPropertiesHandler.TEXT_TOTAL_PAYMENT), founding);
 		detailsPane.add(totalPaymentChart, 0, 4);
 
-		final GenericPieChart<Founding, Loan> totalInterestChart = new GenericPieChart<>(Founding::getLoans, Loan::getTotalInterest, "Total interest", founding);
+		final GenericPieChart<Founding, Loan> totalInterestChart = new GenericPieChart<>(Founding::getLoans, Loan::getTotalInterest,
+				I18nPropertiesHandler.getString(I18nPropertiesHandler.TEXT_TOTAL_INTEREST), founding);
 		detailsPane.add(totalInterestChart, 0, 5);
 
-		final GenericPieChart<Founding, Loan> riskCapitalChart = new GenericPieChart<>(Founding::getLoans, Loan::getRiskCapital, "Risk capital", founding);
+		final GenericPieChart<Founding, Loan> riskCapitalChart = new GenericPieChart<>(Founding::getLoans, Loan::getRiskCapital,
+				I18nPropertiesHandler.getString(I18nPropertiesHandler.TEXT_RISK_CAPITAL), founding);
 		detailsPane.add(riskCapitalChart, 0, 6);
 
 		return detailsPane;
 	}
-
 }
