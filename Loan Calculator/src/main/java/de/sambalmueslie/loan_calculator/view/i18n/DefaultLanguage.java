@@ -37,6 +37,10 @@ public class DefaultLanguage {
 		values.put(MENU_FILE_OPEN, "Open");
 		values.put(MENU_FILE_SAVE, "Save");
 		values.put(MENU_FILE_EXIT, "Exit");
+		values.put(REDEMPTION_PLAN_CHART_TITLE, "Redemption Plan");
+		values.put(ANNUITY_PLAN_CHART_TITLE, "Annuity Plan");
+		values.put(TEXT_INTEREST, "interest");
+		values.put(TEXT_REDEMPTION, "redemption");
 	}
 
 	/**

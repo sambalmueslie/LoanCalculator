@@ -14,6 +14,8 @@ import java.util.ResourceBundle;
 public class I18nPropertiesHandler {
 
 	/** property key. */
+	public static final String ANNUITY_PLAN_CHART_TITLE = "annuity_plan_chart_title";
+	/** property key. */
 	public static final String FILE_DESCRIPTION = "file_description";
 	/** property key. */
 	public static final String MENU_FILE = "menu_file";
@@ -32,6 +34,8 @@ public class I18nPropertiesHandler {
 	/** property key. */
 	public static final String OPEN_FAILED_DIALOG_TITLE = "open_failed_dialog_title";
 	/** property key. */
+	public static final String REDEMPTION_PLAN_CHART_TITLE = "redemption_plan_chart_title";
+	/** property key. */
 	public static final String REFUSE_UNSAVED_CHANGES_DIALOG_CONTENT_TEXT = "refuse_unsaved_changes_dialog_content_text";
 	/** property key. */
 	public static final String REFUSE_UNSAVED_CHANGES_DIALOG_HEADER_TEXT = "refuse_unsaved_changes_dialog_header_text";
@@ -47,6 +51,10 @@ public class I18nPropertiesHandler {
 	public static final String SAVE_FILE_SUCCEED_DIALOG_TITLE = "save_file_succeed_dialog_title";
 	/** property key. */
 	public static final String SAVE_NEW_FILE_DIALOG_TITLE = "save_new_file_dialog_title";
+	/** property key. */
+	public static final String TEXT_INTEREST = "text_interest";
+	/** property key. */
+	public static final String TEXT_REDEMPTION = "text_redemption";
 	/** property key. */
 	public static final String VIEW_TITLE = "view_title";
 

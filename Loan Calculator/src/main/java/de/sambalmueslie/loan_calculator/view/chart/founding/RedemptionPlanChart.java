@@ -10,6 +10,7 @@ import javafx.scene.chart.StackedAreaChart;
 import de.sambalmueslie.loan_calculator.model.founding.Founding;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
 import de.sambalmueslie.loan_calculator.model.loan.RedemptionPlanEntry;
+import de.sambalmueslie.loan_calculator.view.i18n.I18nPropertiesHandler;
 
 /**
  * The redemption plan {@link StackedAreaChart}.
@@ -29,7 +30,7 @@ public class RedemptionPlanChart extends StackedAreaChart<Number, Number> {
 
 		setStyle("-fx-border-color: lightgray;");
 
-		setTitle("Redemption Plan");
+		setTitle(I18nPropertiesHandler.getString(I18nPropertiesHandler.REDEMPTION_PLAN_CHART_TITLE));
 		setAnimated(false);
 		setLegendVisible(true);
 		setLegendSide(Side.BOTTOM);

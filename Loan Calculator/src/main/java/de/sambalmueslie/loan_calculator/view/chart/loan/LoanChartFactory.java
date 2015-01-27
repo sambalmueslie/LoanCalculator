@@ -12,6 +12,7 @@ import de.sambalmueslie.loan_calculator.model.loan.Loan;
 import de.sambalmueslie.loan_calculator.model.loan.RedemptionPlanEntry;
 import de.sambalmueslie.loan_calculator.view.chart.LineChartSeriesDefinition;
 import de.sambalmueslie.loan_calculator.view.chart.generic.GenericStackedBarChart;
+import de.sambalmueslie.loan_calculator.view.i18n.I18nPropertiesHandler;
 
 /**
  * A loan chart factory.
@@ -52,12 +53,15 @@ public class LoanChartFactory {
 		final Function<T, Collection<RedemptionPlanEntry>> dataGetter = T::getRedemptionPlan;
 
 		final Function<RedemptionPlanEntry, Number> interestGetter = RedemptionPlanEntry::getInterest;
-		final LineChartSeriesDefinition<T, RedemptionPlanEntry> interest = new LineChartSeriesDefinition<>("interest", interestGetter, dataGetter);
+		final LineChartSeriesDefinition<T, RedemptionPlanEntry> interest = new LineChartSeriesDefinition<>(
+				I18nPropertiesHandler.getString(I18nPropertiesHandler.TEXT_INTEREST), interestGetter, dataGetter);
 
 		final Function<RedemptionPlanEntry, Number> redemptionGetter = RedemptionPlanEntry::getRedemption;
-		final LineChartSeriesDefinition<T, RedemptionPlanEntry> redemption = new LineChartSeriesDefinition<>("redemption", redemptionGetter, dataGetter);
+		final LineChartSeriesDefinition<T, RedemptionPlanEntry> redemption = new LineChartSeriesDefinition<>(
+				I18nPropertiesHandler.getString(I18nPropertiesHandler.TEXT_REDEMPTION), redemptionGetter, dataGetter);
 
-		final GenericStackedBarChart<T, RedemptionPlanEntry> annuityPlanChart = new GenericStackedBarChart<>("Annuity plan", true, interest, redemption);
+		final GenericStackedBarChart<T, RedemptionPlanEntry> annuityPlanChart = new GenericStackedBarChart<>(
+				I18nPropertiesHandler.getString(I18nPropertiesHandler.ANNUITY_PLAN_CHART_TITLE), true, interest, redemption);
 		annuityPlanChart.add(entry);
 		return annuityPlanChart;
 	}
