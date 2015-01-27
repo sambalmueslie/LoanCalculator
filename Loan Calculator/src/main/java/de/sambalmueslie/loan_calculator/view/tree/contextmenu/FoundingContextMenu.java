@@ -17,6 +17,7 @@ import de.sambalmueslie.loan_calculator.model.founding.Founding;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
 import de.sambalmueslie.loan_calculator.view.ViewActionListener;
 import de.sambalmueslie.loan_calculator.view.dialog.ModifyFoundingDialog;
+import de.sambalmueslie.loan_calculator.view.i18n.I18n;
 import de.sambalmueslie.loan_calculator.view.icons.IconProvider;
 
 /**
@@ -39,16 +40,17 @@ public class FoundingContextMenu extends BaseContextMenu {
 	public FoundingContextMenu(final Founding founding, final ViewActionListener listener) {
 		super(listener);
 		this.listener = listener;
-		updateMenuItem = new MenuItem("Update " + founding.getName());
+		updateMenuItem = new MenuItem(I18n.get(I18n.CONTEXT_MENU_UPDATE) + " " + founding.getName());
 		updateMenuItem.setOnAction(e -> update(founding));
-		removeMenuItem = new MenuItem("Remove " + founding.getName());
+		removeMenuItem = new MenuItem(I18n.get(I18n.CONTEXT_MENU_REMOVE) + " " + founding.getName());
 		removeMenuItem.setOnAction(e -> remove(founding));
-		compareMenuItem = new MenuItem("Compare " + founding.getName(), IconProvider.createImageView(IconProvider.ICON_LIST_IMAGES));
+		compareMenuItem = new MenuItem(I18n.get(I18n.CONTEXT_MENU_COMPARE) + " " + founding.getName(),
+				IconProvider.createImageView(IconProvider.ICON_LIST_IMAGES));
 		compareMenuItem.setOnAction(e -> compare(founding));
 		getItems().addAll(new SeparatorMenuItem(), updateMenuItem, removeMenuItem, compareMenuItem, new SeparatorMenuItem());
 
 		final long foundingId = founding.getId();
-		final Menu remove = new Menu("Remove Element");
+		final Menu remove = new Menu(I18n.get(I18n.CONTEXT_MENU_REMOVE_ELEMENT));
 		for (final Loan loan : founding.getLoans()) {
 			final MenuItem menuItem = new MenuItem(loan.getName());
 			final long loanId = loan.getId();

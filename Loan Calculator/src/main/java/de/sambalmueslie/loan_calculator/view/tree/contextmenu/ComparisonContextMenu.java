@@ -11,6 +11,7 @@ import de.sambalmueslie.loan_calculator.model.founding.Founding;
 import de.sambalmueslie.loan_calculator.model.generic.GenericModelEntry;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
 import de.sambalmueslie.loan_calculator.view.ViewActionListener;
+import de.sambalmueslie.loan_calculator.view.i18n.I18n;
 
 /**
  * The context menu for a loan list cell loan.
@@ -33,7 +34,7 @@ public class ComparisonContextMenu extends BaseContextMenu {
 		getItems().add(new SeparatorMenuItem());
 
 		final long comparisonId = comparison.getId();
-		final Menu remove = new Menu("Remove Element");
+		final Menu remove = new Menu(I18n.get(I18n.CONTEXT_MENU_REMOVE_ELEMENT));
 		for (final GenericModelEntry entry : comparison.getElements()) {
 			final MenuItem menuItem = new MenuItem(entry.getName());
 			final long entryId = entry.getId();
@@ -46,7 +47,7 @@ public class ComparisonContextMenu extends BaseContextMenu {
 		}
 		getItems().add(remove);
 
-		final MenuItem close = new MenuItem("Remove comparison");
+		final MenuItem close = new MenuItem(I18n.get(I18n.CONTEXT_MENU_REMOVE_COMPARISON));
 		close.setOnAction(e -> listener.requestRemoveComparison(comparisonId));
 		getItems().add(close);
 	}

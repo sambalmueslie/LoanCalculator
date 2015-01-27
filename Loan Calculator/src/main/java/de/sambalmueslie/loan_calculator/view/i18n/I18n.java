@@ -23,9 +23,21 @@ public class I18n {
 	/** property key. */
 	public static final String BUILDING_LOAN_AGREEMENT_DIALOG_TITLE_UPDATE = "building_loan_agreement_dialog_title_update";
 	/** property key. */
+	public static final String CONTEXT_MENU_ADD_NEW_ANNUITY_LOAN = "context_menu_add_new_annuity_loan";
+	/** property key. */
+	public static final String CONTEXT_MENU_ADD_NEW_BUILDING_LOAN_AGREEMENT = "context_menu_add_new_building_loan_agreement";
+	/** property key. */
+	public static final String CONTEXT_MENU_ADD_NEW_FOUNDING = "context_menu_add_new_founding";
+	/** property key. */
+	public static final String CONTEXT_MENU_COMPARE = "context_menu_compare";
+	/** property key. */
+	public static final String CONTEXT_MENU_REMOVE = "context_menu_remove";
+	/** property key. */
 	public static final String CONTEXT_MENU_REMOVE_COMPARISON = "context_menu_remove_comparison";
 	/** property key. */
 	public static final String CONTEXT_MENU_REMOVE_ELEMENT = "context_menu_remove_element";
+	/** property key. */
+	public static final String CONTEXT_MENU_UPDATE = "context_menu_update";
 	/** property key. */
 	public static final String FILE_DESCRIPTION = "file_description";
 	/** property key. */
@@ -151,13 +163,8 @@ public class I18n {
 	 * Constructor.
 	 */
 	private I18n() {
-		try {
-			currentLocale = new Locale("en", "US");
-			messages = ResourceBundle.getBundle("i18n", currentLocale);
-		} catch (final RuntimeException e) {
-			e.printStackTrace();
-		}
-		defaultLanguage = new DefaultLanguage();
+		currentLocale = new Locale("en", "US");
+		messages = ResourceBundle.getBundle("i18n", currentLocale);
 	}
 
 	/**
@@ -168,16 +175,13 @@ public class I18n {
 	 * @return the string
 	 */
 	private String getString(final String key) {
-		if (messages == null) return defaultLanguage.getString(key);
 		final String value = messages.getString(key);
 		if (value == null) return "";
 		return value;
 	}
 
 	/** the current {@link Locale}. */
-	private Locale currentLocale;
-	/** the {@link DefaultLanguage}. */
-	private final DefaultLanguage defaultLanguage;
+	private final Locale currentLocale;
 	/** the {@link ResourceBundle}. */
-	private ResourceBundle messages;
+	private final ResourceBundle messages;
 }

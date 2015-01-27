@@ -19,6 +19,7 @@ import de.sambalmueslie.loan_calculator.view.ViewActionListener;
 import de.sambalmueslie.loan_calculator.view.dialog.ModifyAnnuityLoanDialog;
 import de.sambalmueslie.loan_calculator.view.dialog.ModifyBuildingLoanAgreementDialog;
 import de.sambalmueslie.loan_calculator.view.dialog.ModifyFoundingDialog;
+import de.sambalmueslie.loan_calculator.view.i18n.I18n;
 import de.sambalmueslie.loan_calculator.view.icons.IconProvider;
 
 /**
@@ -38,11 +39,12 @@ public class BaseContextMenu extends ContextMenu {
 	 */
 	public BaseContextMenu(final ViewActionListener listener) {
 		this.listener = listener;
-		addAnnuitiyLoanMenuItem = new MenuItem("Add new annuity loan", IconProvider.createImageView(IconProvider.ICON_PAGE_NEW));
+		addAnnuitiyLoanMenuItem = new MenuItem(I18n.get(I18n.CONTEXT_MENU_ADD_NEW_ANNUITY_LOAN), IconProvider.createImageView(IconProvider.ICON_PAGE_NEW));
 		addAnnuitiyLoanMenuItem.setOnAction(e -> addAnnuitiyLoan());
-		addBuildingLoanAgreementItem = new MenuItem("Add building loan agreement", IconProvider.createImageView(IconProvider.ICON_PAGE_NEW));
+		addBuildingLoanAgreementItem = new MenuItem(I18n.get(I18n.CONTEXT_MENU_ADD_NEW_BUILDING_LOAN_AGREEMENT),
+				IconProvider.createImageView(IconProvider.ICON_PAGE_NEW));
 		addBuildingLoanAgreementItem.setOnAction(e -> addBuildingLoanAgreement());
-		addFoundingMenuItem = new MenuItem("Add new founding", IconProvider.createImageView(IconProvider.ICON_FOLDER_NEW));
+		addFoundingMenuItem = new MenuItem(I18n.get(I18n.CONTEXT_MENU_ADD_NEW_FOUNDING), IconProvider.createImageView(IconProvider.ICON_FOLDER_NEW));
 		addFoundingMenuItem.setOnAction(e -> addFounding());
 		getItems().addAll(addAnnuitiyLoanMenuItem, addBuildingLoanAgreementItem, addFoundingMenuItem);
 	}
