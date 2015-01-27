@@ -69,6 +69,12 @@ public class I18n {
 	/** property key. */
 	public static final String TEXT_AMOUNT = "text_amount";
 	/** property key. */
+	public static final String TEXT_ANNUITY_INTEREST = "text_annuity_interest";
+	/** property key. */
+	public static final String TEXT_ANNUITY_REDEMPTION = "text_annuity_redemption";
+	/** property key. */
+	public static final String TEXT_ANNUITY_TOTAL = "text_annuity_total";
+	/** property key. */
 	public static final String TEXT_AQUISITION_FEE = "text_aquisition_fee";
 	/** property key. */
 	public static final String TEXT_BANK_NAME = "text_bank_name";
@@ -104,6 +110,8 @@ public class I18n {
 	public static final String TEXT_SAVING_DURATION = "text_saving_duration";
 	/** property key. */
 	public static final String TEXT_SAVING_PHASE_INTEREST = "text_saving_phase_interest";
+	/** property key. */
+	public static final String TEXT_SAVINGS = "text_savings";
 	/** property key. */
 	public static final String TEXT_TERM = "text_term";
 	/** property key. */

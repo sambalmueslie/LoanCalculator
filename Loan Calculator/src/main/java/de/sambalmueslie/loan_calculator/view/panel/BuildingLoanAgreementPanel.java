@@ -9,6 +9,7 @@ import de.sambalmueslie.loan_calculator.view.chart.LineChartSeriesDefinition;
 import de.sambalmueslie.loan_calculator.view.chart.generic.GenericLineChart;
 import de.sambalmueslie.loan_calculator.view.chart.loan.LoanChartFactory;
 import de.sambalmueslie.loan_calculator.view.component.TextFieldType;
+import de.sambalmueslie.loan_calculator.view.i18n.I18n;
 
 /**
  * The {@link LoanPanel} for an {@link BuildingLoanAgreement}.
@@ -25,18 +26,18 @@ public class BuildingLoanAgreementPanel extends LoanPanel<BuildingLoanAgreement>
 	public BuildingLoanAgreementPanel(final BuildingLoanAgreement buildingLoanAgreement) {
 		super(buildingLoanAgreement);
 
-		addInfo("Amount", buildingLoanAgreement.getAmount(), TextFieldType.CURRENCY);
-		addInfo("Credit interest", buildingLoanAgreement.getCreditInterest(), TextFieldType.PERCENTAGE);
-		addInfo("Regular saving amoung", buildingLoanAgreement.getRegularSavingAmount(), TextFieldType.PERCENTAGE);
-		addInfo("Minimum savings", buildingLoanAgreement.getMinimumSavings(), TextFieldType.PERCENTAGE);
-		addInfo("Saving duration", String.format("%d", buildingLoanAgreement.getSavingDuration()), TextFieldType.TEXT);
-		addInfo("Debit interest", buildingLoanAgreement.getDebitInterest(), TextFieldType.PERCENTAGE);
-		addInfo("Contribution", buildingLoanAgreement.getContribution(), TextFieldType.PERCENTAGE);
-		addInfo("Aquisiton fee", buildingLoanAgreement.getAquisitonFee(), TextFieldType.PERCENTAGE);
-		addInfo("Duration", String.format("%d", buildingLoanAgreement.getTerm()), TextFieldType.TEXT);
-		addInfo("Total amount", buildingLoanAgreement.getAmount(), TextFieldType.CURRENCY);
-		addInfo("Total interest", buildingLoanAgreement.getTotalInterest(), TextFieldType.CURRENCY);
-		addInfo("Total payment", buildingLoanAgreement.getTotalPayment(), TextFieldType.CURRENCY);
+		addInfo(I18n.get(I18n.TEXT_AMOUNT), buildingLoanAgreement.getAmount(), TextFieldType.CURRENCY);
+		addInfo(I18n.get(I18n.TEXT_CREDIT_INTERST), buildingLoanAgreement.getCreditInterest(), TextFieldType.PERCENTAGE);
+		addInfo(I18n.get(I18n.TEXT_REGULAR_SAVING_AMOUNT), buildingLoanAgreement.getRegularSavingAmount(), TextFieldType.PERCENTAGE);
+		addInfo(I18n.get(I18n.TEXT_MINIMUM_SAVINGS), buildingLoanAgreement.getMinimumSavings(), TextFieldType.PERCENTAGE);
+		addInfo(I18n.get(I18n.TEXT_SAVING_DURATION), String.format("%d", buildingLoanAgreement.getSavingDuration()), TextFieldType.TEXT);
+		addInfo(I18n.get(I18n.TEXT_DEBIT_INTEREST), buildingLoanAgreement.getDebitInterest(), TextFieldType.PERCENTAGE);
+		addInfo(I18n.get(I18n.TEXT_CONTRIBUTION), buildingLoanAgreement.getContribution(), TextFieldType.PERCENTAGE);
+		addInfo(I18n.get(I18n.TEXT_AQUISITION_FEE), buildingLoanAgreement.getAquisitonFee(), TextFieldType.PERCENTAGE);
+		addInfo(I18n.get(I18n.TEXT_TERM), String.format("%d", buildingLoanAgreement.getTerm()), TextFieldType.TEXT);
+		addInfo(I18n.get(I18n.TEXT_TOTAL_AMOUNT), buildingLoanAgreement.getAmount(), TextFieldType.CURRENCY);
+		addInfo(I18n.get(I18n.TEXT_TOTAL_INTEREST), buildingLoanAgreement.getTotalInterest(), TextFieldType.CURRENCY);
+		addInfo(I18n.get(I18n.TEXT_TOTAL_PAYMENT), buildingLoanAgreement.getTotalPayment(), TextFieldType.CURRENCY);
 
 		addRedemptionPlanChart();
 
@@ -48,20 +49,21 @@ public class BuildingLoanAgreementPanel extends LoanPanel<BuildingLoanAgreement>
 	protected void update() {
 		final BuildingLoanAgreement buildingLoanAgreement = getLoan();
 
-		updateInfo("Credit interest", buildingLoanAgreement.getCreditInterest());
-		updateInfo("Regular saving amoung", buildingLoanAgreement.getRegularSavingAmount());
-		updateInfo("Minimum savings", buildingLoanAgreement.getMinimumSavings());
-		updateInfo("Saving duration", String.format("%d", buildingLoanAgreement.getSavingDuration()));
+		updateInfo(I18n.get(I18n.TEXT_AMOUNT), buildingLoanAgreement.getAmount());
+		updateInfo(I18n.get(I18n.TEXT_CREDIT_INTERST), buildingLoanAgreement.getCreditInterest());
+		updateInfo(I18n.get(I18n.TEXT_REGULAR_SAVING_AMOUNT), buildingLoanAgreement.getRegularSavingAmount());
+		updateInfo(I18n.get(I18n.TEXT_MINIMUM_SAVINGS), buildingLoanAgreement.getMinimumSavings());
+		updateInfo(I18n.get(I18n.TEXT_SAVING_DURATION), String.format("%d", buildingLoanAgreement.getSavingDuration()));
 
-		updateInfo("Debit interest", buildingLoanAgreement.getDebitInterest());
-		updateInfo("Contribution", buildingLoanAgreement.getContribution());
-		updateInfo("Aquisiton fee", buildingLoanAgreement.getAquisitonFee());
+		updateInfo(I18n.get(I18n.TEXT_DEBIT_INTEREST), buildingLoanAgreement.getDebitInterest());
+		updateInfo(I18n.get(I18n.TEXT_CONTRIBUTION), buildingLoanAgreement.getContribution());
+		updateInfo(I18n.get(I18n.TEXT_AQUISITION_FEE), buildingLoanAgreement.getAquisitonFee());
 
-		updateInfo("Duration", String.format("%d", buildingLoanAgreement.getTerm()));
+		updateInfo(I18n.get(I18n.TEXT_TERM), String.format("%d", buildingLoanAgreement.getTerm()));
 
-		updateInfo("Total amount", buildingLoanAgreement.getAmount());
-		updateInfo("Total interest", buildingLoanAgreement.getTotalInterest());
-		updateInfo("Total payment", buildingLoanAgreement.getTotalPayment());
+		updateInfo(I18n.get(I18n.TEXT_TOTAL_AMOUNT), buildingLoanAgreement.getAmount());
+		updateInfo(I18n.get(I18n.TEXT_TOTAL_INTEREST), buildingLoanAgreement.getTotalInterest());
+		updateInfo(I18n.get(I18n.TEXT_TOTAL_PAYMENT), buildingLoanAgreement.getTotalPayment());
 
 		addRedemptionPlanChart();
 
@@ -74,11 +76,12 @@ public class BuildingLoanAgreementPanel extends LoanPanel<BuildingLoanAgreement>
 	 */
 	private void addRedemptionPlanChart() {
 		final BuildingLoanAgreement buildingLoanAgreement = getLoan();
-		final LineChartSeriesDefinition<BuildingLoanAgreement, RedemptionPlanEntry> s1 = new LineChartSeriesDefinition<>("residual debt",
+		final LineChartSeriesDefinition<BuildingLoanAgreement, RedemptionPlanEntry> s1 = new LineChartSeriesDefinition<>(I18n.get(I18n.TEXT_RESIDUAL_DEBT),
 				RedemptionPlanEntry::getResidualDebt, BuildingLoanAgreement::getRedemptionPlan);
-		final LineChartSeriesDefinition<BuildingLoanAgreement, RedemptionPlanEntry> s2 = new LineChartSeriesDefinition<>("savings",
+		final LineChartSeriesDefinition<BuildingLoanAgreement, RedemptionPlanEntry> s2 = new LineChartSeriesDefinition<>(I18n.get(I18n.TEXT_SAVINGS),
 				RedemptionPlanEntry::getResidualDebt, BuildingLoanAgreement::getSavingPhasePlan);
-		final GenericLineChart<BuildingLoanAgreement, RedemptionPlanEntry> planChart = new GenericLineChart<>("Plan", s1, s2);
+		final GenericLineChart<BuildingLoanAgreement, RedemptionPlanEntry> planChart = new GenericLineChart<>(I18n.get(I18n.REDEMPTION_PLAN_CHART_TITLE), s1,
+				s2);
 		planChart.add(buildingLoanAgreement);
 		addChart(planChart);
 	}

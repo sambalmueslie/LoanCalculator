@@ -20,6 +20,7 @@ import de.sambalmueslie.loan_calculator.view.chart.founding.RedemptionPlanChart;
 import de.sambalmueslie.loan_calculator.view.chart.generic.ChartPanel;
 import de.sambalmueslie.loan_calculator.view.chart.generic.GenericPieChart;
 import de.sambalmueslie.loan_calculator.view.component.TextFieldType;
+import de.sambalmueslie.loan_calculator.view.i18n.I18n;
 
 /**
  * The {@link Pane} to display a {@link Founding}.
@@ -65,8 +66,8 @@ public class FoundingPanel extends BorderPane {
 
 		chartPane.getChildren().add(new RedemptionPlanChart(founding));
 		chartPane.getChildren().add(new AnnuityPlanChart(founding));
-		chartPane.getChildren().add(addPieChartFunction("Total amount", Loan::getAmount));
-		chartPane.getChildren().add(addPieChartFunction("Total interest", Loan::getTotalInterest));
+		chartPane.getChildren().add(addPieChartFunction(I18n.get(I18n.TEXT_TOTAL_AMOUNT), Loan::getAmount));
+		chartPane.getChildren().add(addPieChartFunction(I18n.get(I18n.TEXT_TOTAL_INTEREST), Loan::getTotalInterest));
 
 		setCenter(chartPane);
 
@@ -91,12 +92,12 @@ public class FoundingPanel extends BorderPane {
 	 */
 	private void setupInfo() {
 		infoPanel = new InfoPanel();
-		infoPanel.add("Name", founding.getName(), TextFieldType.TEXT);
-		infoPanel.add("Bank Name", founding.getName(), TextFieldType.TEXT);
-		infoPanel.add("Total Amount", founding.getAmount(), TextFieldType.CURRENCY);
-		infoPanel.add("Total interest", founding.getTotalInterest(), TextFieldType.CURRENCY);
-		infoPanel.add("Total Payment", founding.getTotalPayment(), TextFieldType.CURRENCY);
-		infoPanel.add("Term", founding.getTerm(), TextFieldType.NUMBER);
+		infoPanel.add(I18n.get(I18n.TEXT_NAME), founding.getName(), TextFieldType.TEXT);
+		infoPanel.add(I18n.get(I18n.TEXT_BANK_NAME), founding.getName(), TextFieldType.TEXT);
+		infoPanel.add(I18n.get(I18n.TEXT_TOTAL_AMOUNT), founding.getAmount(), TextFieldType.CURRENCY);
+		infoPanel.add(I18n.get(I18n.TEXT_TOTAL_INTEREST), founding.getTotalInterest(), TextFieldType.CURRENCY);
+		infoPanel.add(I18n.get(I18n.TEXT_TOTAL_PAYMENT), founding.getTotalPayment(), TextFieldType.CURRENCY);
+		infoPanel.add(I18n.get(I18n.TEXT_TERM), founding.getTerm(), TextFieldType.NUMBER);
 		setLeft(infoPanel);
 	}
 
@@ -107,12 +108,12 @@ public class FoundingPanel extends BorderPane {
 	 *            the {@link Founding}
 	 */
 	private void update(final Founding founding) {
-		infoPanel.update("Name", founding.getName());
-		infoPanel.update("Bank Name", founding.getName());
-		infoPanel.update("Total Amount", founding.getAmount());
-		infoPanel.update("Total interest", founding.getTotalInterest());
-		infoPanel.update("Total Payment", founding.getTotalPayment());
-		infoPanel.update("Term", founding.getTerm());
+		infoPanel.update(I18n.get(I18n.TEXT_NAME), founding.getName());
+		infoPanel.update(I18n.get(I18n.TEXT_BANK_NAME), founding.getName());
+		infoPanel.update(I18n.get(I18n.TEXT_TOTAL_AMOUNT), founding.getAmount());
+		infoPanel.update(I18n.get(I18n.TEXT_TOTAL_INTEREST), founding.getTotalInterest());
+		infoPanel.update(I18n.get(I18n.TEXT_TOTAL_PAYMENT), founding.getTotalPayment());
+		infoPanel.update(I18n.get(I18n.TEXT_TERM), founding.getTerm());
 
 		setupCharts();
 	}

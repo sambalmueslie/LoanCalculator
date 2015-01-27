@@ -15,6 +15,7 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import de.sambalmueslie.loan_calculator.model.loan.Loan;
 import de.sambalmueslie.loan_calculator.view.component.TextFieldType;
+import de.sambalmueslie.loan_calculator.view.i18n.I18n;
 
 /**
  * A abstract {@link Loan} panel.
@@ -44,7 +45,7 @@ public abstract class LoanPanel<T extends Loan> extends VBox {
 		content.getStyleClass().add(CLASS_PANEL_EMPTY);
 
 		infoPanel = new InfoPanel();
-		infoPanel.add("Amount", loan.getAmount(), TextFieldType.CURRENCY);
+		infoPanel.add(I18n.get(I18n.TEXT_AMOUNT), loan.getAmount(), TextFieldType.CURRENCY);
 		content.getChildren().add(infoPanel);
 
 		chartPane = new TilePane();
@@ -122,11 +123,13 @@ public abstract class LoanPanel<T extends Loan> extends VBox {
 	 */
 	private void update(final T loan) {
 		chartPane.getChildren().clear();
-		updateInfo("Amount", loan.getAmount());
+		updateInfo(I18n.get(I18n.TEXT_AMOUNT), loan.getAmount());
 		update();
 	}
 
+	/** the chart pane. */
 	private final TilePane chartPane;
+	/** the {@link InfoPanel}. */
 	private final InfoPanel infoPanel;
 	/** the loan. */
 	private final T loan;

@@ -65,6 +65,10 @@ public class DefaultLanguage {
 		values.put(TEXT_SAVING_PHASE_INTEREST, "Saving phase interest");
 		values.put(TEXT_CONTRIBUTION, "Contribution");
 		values.put(TEXT_BANK_NAME, "Bank name");
+		values.put(TEXT_ANNUITY_INTEREST, "Annuity interest");
+		values.put(TEXT_ANNUITY_REDEMPTION, "Annuity redemption");
+		values.put(TEXT_ANNUITY_TOTAL, "Annuity total");
+		values.put(TEXT_SAVINGS, "Savings");
 		values.put(BUILDING_LOAN_AGREEMENT_DIALOG_TITLE_NEW, "Add new building loan agreement.");
 		values.put(BUILDING_LOAN_AGREEMENT_DIALOG_TITLE_UPDATE, "Update building loan agreement.");
 		values.put(FOUNDING_DIALOG_TITLE_NEW, "Add new founding.");

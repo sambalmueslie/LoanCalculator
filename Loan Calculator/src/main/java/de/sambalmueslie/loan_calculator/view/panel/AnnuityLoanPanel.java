@@ -9,6 +9,7 @@ import de.sambalmueslie.loan_calculator.view.chart.LineChartSeriesDefinition;
 import de.sambalmueslie.loan_calculator.view.chart.generic.GenericLineChart;
 import de.sambalmueslie.loan_calculator.view.chart.loan.LoanChartFactory;
 import de.sambalmueslie.loan_calculator.view.component.TextFieldType;
+import de.sambalmueslie.loan_calculator.view.i18n.I18n;
 
 /**
  * The {@link LoanPanel} for an {@link AnnuityLoan}.
@@ -23,25 +24,25 @@ public class AnnuityLoanPanel extends LoanPanel<AnnuityLoan> {
 	public AnnuityLoanPanel(final AnnuityLoan loan) {
 		super(loan);
 
-		addInfo("Payment rate", loan.getPaymentRate(), TextFieldType.PERCENTAGE);
-		addInfo("Fixed debit interest", loan.getFixedDebitInterest(), TextFieldType.PERCENTAGE);
-		addInfo("Fixed interest period", String.format("%d", loan.getFixedInterestPeriod()), TextFieldType.TEXT);
-		addInfo("Estimated debit interest", loan.getEstimatedDebitInterest(), TextFieldType.PERCENTAGE);
+		addInfo(I18n.get(I18n.TEXT_PAYMENT_RATE), loan.getPaymentRate(), TextFieldType.PERCENTAGE);
+		addInfo(I18n.get(I18n.TEXT_FIXED_DEBIT_INTEREST), loan.getFixedDebitInterest(), TextFieldType.PERCENTAGE);
+		addInfo(I18n.get(I18n.TEXT_FIXED_INTEREST_PERIOD), String.format("%d", loan.getFixedInterestPeriod()), TextFieldType.TEXT);
+		addInfo(I18n.get(I18n.TEXT_ESTIMATED_DEBIT_INTEREST), loan.getEstimatedDebitInterest(), TextFieldType.PERCENTAGE);
 
 		final RedemptionPlanEntry redemption = loan.getRedemptionPlan().get(1);
-		addInfo("Annuity interest", redemption.getInterest(), TextFieldType.CURRENCY);
-		addInfo("Annuity redemption", redemption.getRedemption(), TextFieldType.CURRENCY);
-		addInfo("Annuity total", redemption.getInterest() + redemption.getRedemption(), TextFieldType.CURRENCY);
+		addInfo(I18n.get(I18n.TEXT_ANNUITY_INTEREST), redemption.getInterest(), TextFieldType.CURRENCY);
+		addInfo(I18n.get(I18n.TEXT_ANNUITY_REDEMPTION), redemption.getRedemption(), TextFieldType.CURRENCY);
+		addInfo(I18n.get(I18n.TEXT_ANNUITY_TOTAL), redemption.getInterest() + redemption.getRedemption(), TextFieldType.CURRENCY);
 
-		addInfo("Duration", String.format("%d", loan.getRedemptionPlan().size() - 1), TextFieldType.TEXT);
+		addInfo(I18n.get(I18n.TEXT_TERM), String.format("%d", loan.getRedemptionPlan().size() - 1), TextFieldType.TEXT);
 
-		addInfo("Total amount", loan.getAmount(), TextFieldType.CURRENCY);
-		addInfo("Total interest", loan.getTotalInterest(), TextFieldType.CURRENCY);
-		addInfo("Total payment", loan.getTotalPayment(), TextFieldType.CURRENCY);
+		addInfo(I18n.get(I18n.TEXT_TOTAL_AMOUNT), loan.getAmount(), TextFieldType.CURRENCY);
+		addInfo(I18n.get(I18n.TEXT_TOTAL_INTEREST), loan.getTotalInterest(), TextFieldType.CURRENCY);
+		addInfo(I18n.get(I18n.TEXT_TOTAL_PAYMENT), loan.getTotalPayment(), TextFieldType.CURRENCY);
 
-		final LineChartSeriesDefinition<AnnuityLoan, RedemptionPlanEntry> s1 = new LineChartSeriesDefinition<>("residual debt",
+		final LineChartSeriesDefinition<AnnuityLoan, RedemptionPlanEntry> s1 = new LineChartSeriesDefinition<>(I18n.get(I18n.TEXT_RESIDUAL_DEBT),
 				RedemptionPlanEntry::getResidualDebt, AnnuityLoan::getRedemptionPlan);
-		final GenericLineChart<AnnuityLoan, RedemptionPlanEntry> residualDebtChart = new GenericLineChart<>("Redemption plan", s1);
+		final GenericLineChart<AnnuityLoan, RedemptionPlanEntry> residualDebtChart = new GenericLineChart<>(I18n.get(I18n.REDEMPTION_PLAN_CHART_TITLE), s1);
 		residualDebtChart.setLegendVisible(false);
 		residualDebtChart.add(loan);
 		addChart(residualDebtChart);
@@ -52,25 +53,25 @@ public class AnnuityLoanPanel extends LoanPanel<AnnuityLoan> {
 	@Override
 	protected void update() {
 		final AnnuityLoan loan = getLoan();
-		updateInfo("Payment rate", loan.getPaymentRate());
-		updateInfo("Fixed debit interest", loan.getFixedDebitInterest());
-		updateInfo("Fixed interest period", String.format("%d", loan.getFixedInterestPeriod()));
-		updateInfo("Estimated debit interest", loan.getEstimatedDebitInterest());
+		updateInfo(I18n.get(I18n.TEXT_PAYMENT_RATE), loan.getPaymentRate());
+		updateInfo(I18n.get(I18n.TEXT_FIXED_DEBIT_INTEREST), loan.getFixedDebitInterest());
+		updateInfo(I18n.get(I18n.TEXT_FIXED_INTEREST_PERIOD), String.format("%d", loan.getFixedInterestPeriod()));
+		updateInfo(I18n.get(I18n.TEXT_ESTIMATED_DEBIT_INTEREST), loan.getEstimatedDebitInterest());
 
 		final RedemptionPlanEntry redemption = loan.getRedemptionPlan().get(1);
-		updateInfo("Annuity interest", redemption.getInterest());
-		updateInfo("Annuity redemption", redemption.getRedemption());
-		updateInfo("Annuity total", redemption.getInterest() + redemption.getRedemption());
+		updateInfo(I18n.get(I18n.TEXT_ANNUITY_INTEREST), redemption.getInterest());
+		updateInfo(I18n.get(I18n.TEXT_ANNUITY_REDEMPTION), redemption.getRedemption());
+		updateInfo(I18n.get(I18n.TEXT_ANNUITY_TOTAL), redemption.getInterest() + redemption.getRedemption());
 
-		updateInfo("Duration", String.format("%d", loan.getRedemptionPlan().size() - 1));
+		updateInfo(I18n.get(I18n.TEXT_TERM), String.format("%d", loan.getRedemptionPlan().size() - 1));
 
-		updateInfo("Total amount", loan.getAmount());
-		updateInfo("Total interest", loan.getTotalInterest());
-		updateInfo("Total payment", loan.getTotalPayment());
+		updateInfo(I18n.get(I18n.TEXT_TOTAL_AMOUNT), loan.getAmount());
+		updateInfo(I18n.get(I18n.TEXT_TOTAL_INTEREST), loan.getTotalInterest());
+		updateInfo(I18n.get(I18n.TEXT_TOTAL_PAYMENT), loan.getTotalPayment());
 
-		final LineChartSeriesDefinition<AnnuityLoan, RedemptionPlanEntry> s1 = new LineChartSeriesDefinition<>("residual debt",
+		final LineChartSeriesDefinition<AnnuityLoan, RedemptionPlanEntry> s1 = new LineChartSeriesDefinition<>(I18n.get(I18n.TEXT_RESIDUAL_DEBT),
 				RedemptionPlanEntry::getResidualDebt, AnnuityLoan::getRedemptionPlan);
-		final GenericLineChart<AnnuityLoan, RedemptionPlanEntry> residualDebtChart = new GenericLineChart<>("Redemption plan", s1);
+		final GenericLineChart<AnnuityLoan, RedemptionPlanEntry> residualDebtChart = new GenericLineChart<>(I18n.get(I18n.REDEMPTION_PLAN_CHART_TITLE), s1);
 		residualDebtChart.setLegendVisible(false);
 		residualDebtChart.add(loan);
 		addChart(residualDebtChart);
