@@ -4,12 +4,15 @@
 package de.sambalmueslie.loan_calculator;
 
 import javafx.application.Application;
-import de.sambalmueslie.loan_calculator.controller.Controller;
+import javafx.stage.Stage;
+import de.sambalmueslie.loan_calculator.backend.Controller;
 
 /**
+ * The loan calculator.
+ *
  * @author sambalmueslie 2015
  */
-public class LoanCalculator {
+public class LoanCalculator extends Application {
 	/**
 	 * Main.
 	 *
@@ -17,6 +20,15 @@ public class LoanCalculator {
 	 *            the args
 	 */
 	public static void main(final String[] args) {
-		Application.launch(Controller.class, args);
+		Application.launch(args);
+	}
+
+	/**
+	 * @see javafx.application.Application#start(javafx.stage.Stage)
+	 */
+	@Override
+	public void start(final Stage primaryStage) throws Exception {
+		final Controller controller = new Controller();
+		controller.start(primaryStage);
 	}
 }
