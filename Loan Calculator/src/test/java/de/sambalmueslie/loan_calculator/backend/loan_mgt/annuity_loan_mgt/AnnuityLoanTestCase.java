@@ -8,13 +8,34 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.RedemptionPlanEntry;
-import de.sambalmueslie.loan_calculator.backend.loan_mgt.annuity_loan_mgt.AnnuityLoan;
-import de.sambalmueslie.loan_calculator.backend.loan_mgt.annuity_loan_mgt.BaseAnnuityLoan;
 
 /**
  * @author sambalmueslie 2015
  */
 public class AnnuityLoanTestCase {
+
+	/**
+	 * Test the calculation of a {@link AnnuityLoan}.
+	 */
+	@Test
+	public void testAnnuityLoanCalculation() {
+		final String name = "Name";
+		final double amount = 100000;
+		final double paymentRate = 3.00;
+		final double fixedDebitInterest = 2.00;
+		final int fixedInterestPeriod = 50;
+		final double estimatedDebitInterest = 5.00;
+		final AnnuityLoan loan = new BaseAnnuityLoan(0, name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
+
+		final RedemptionPlanEntry entry = loan.getRedemptionPlan().get(1);
+		assertEquals(2000, entry.getInterest(), 0.001);
+		assertEquals(3000, entry.getRedemption(), 0.001);
+
+		assertEquals(100000, loan.getAmount(), 0.001);
+		assertEquals(128987.28, loan.getTotalPayment(), 0.01);
+		assertEquals(28987.28, loan.getTotalInterest(), 0.01);
+		assertEquals(26, loan.getTerm());
+	}
 
 	/**
 	 * Test the creation of a {@link AnnuityLoan}.

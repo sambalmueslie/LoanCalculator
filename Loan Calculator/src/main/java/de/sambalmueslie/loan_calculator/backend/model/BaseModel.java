@@ -101,7 +101,7 @@ public class BaseModel implements Model {
 
 	/**
 	 * Add a {@link AnnuityLoan}.
-	 * 
+	 *
 	 * @param annuityLoan
 	 *            the annuityLoan
 	 */
@@ -111,7 +111,7 @@ public class BaseModel implements Model {
 
 	/**
 	 * Add a {@link BuildingLoanAgreement}.
-	 * 
+	 *
 	 * @param buildingLoanAgreement
 	 *            the buildingLoanAgreement
 	 */
@@ -121,7 +121,7 @@ public class BaseModel implements Model {
 
 	/**
 	 * Add a {@link Comparison}.
-	 * 
+	 *
 	 * @param comparison
 	 *            the comparison
 	 */
@@ -131,7 +131,7 @@ public class BaseModel implements Model {
 
 	/**
 	 * Add a {@link Founding}.
-	 * 
+	 *
 	 * @param founding
 	 *            the founding
 	 */

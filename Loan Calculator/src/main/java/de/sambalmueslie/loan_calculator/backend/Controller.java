@@ -182,6 +182,10 @@ public class Controller {
 			if (!view.showDialogRefuseUnsavedChanges()) return;
 		}
 
+		annuityLoanMgr = new AnnuityLoanMgr();
+		buildingLoanAgreementMgr = new BuildingLoanAgreementMgr();
+		foundingMgr = new FoundingMgr(annuityLoanMgr, buildingLoanAgreementMgr);
+		compareMgr = new CompareMgr(annuityLoanMgr, buildingLoanAgreementMgr, foundingMgr);
 		model = new BaseModel(annuityLoanMgr, buildingLoanAgreementMgr, foundingMgr, compareMgr);
 		final LoanFile file = fileController.createNewFile(model);
 		view.show(file);
@@ -199,9 +203,12 @@ public class Controller {
 		}
 		final Path path = view.ShowDialogOpenFile();
 		try {
-			final BaseModel m = new BaseModel(annuityLoanMgr, buildingLoanAgreementMgr, foundingMgr, compareMgr);
-			final LoanFile file = fileController.open(path, m);
-			model = m;
+			annuityLoanMgr = new AnnuityLoanMgr();
+			buildingLoanAgreementMgr = new BuildingLoanAgreementMgr();
+			foundingMgr = new FoundingMgr(annuityLoanMgr, buildingLoanAgreementMgr);
+			compareMgr = new CompareMgr(annuityLoanMgr, buildingLoanAgreementMgr, foundingMgr);
+			model = new BaseModel(annuityLoanMgr, buildingLoanAgreementMgr, foundingMgr, compareMgr);
+			final LoanFile file = fileController.open(path, model);
 			view.show(file);
 		} catch (final IOException e) {
 			logger.error("Cannot open file due to IOException " + e.getMessage());
@@ -222,22 +229,22 @@ public class Controller {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Handle request to save current file.");
 		}
-		// final LoanFile file = fileController.getCurrentFile();
-		// try {
-		// if (file.getPath() == null) {
-		// final Path path = view.showDialogSaveNewFile();
-		// fileController.saveAs(file, path);
-		// } else {
-		// fileController.save(file);
-		// }
-		// view.showDialogSaveFileSucceed(file);
-		// } catch (final IOException e) {
-		// logger.error("Cannot save file due to IOException " + e.getMessage());
-		// view.showDialogSaveFileFailed(file, e.getMessage());
-		// } catch (final JAXBException e) {
-		// logger.error("Cannot save file due to JAXBException " + e.getMessage());
-		// view.showDialogSaveFileFailed(file, e.getMessage());
-		// }
+		final LoanFile file = fileController.getCurrentFile();
+		try {
+			if (file.getPath() == null) {
+				final Path path = view.showDialogSaveNewFile();
+				fileController.saveAs(file, path);
+			} else {
+				fileController.save(file);
+			}
+			view.showDialogSaveFileSucceed(file);
+		} catch (final IOException e) {
+			logger.error("Cannot save file due to IOException " + e.getMessage());
+			view.showDialogSaveFileFailed(file, e.getMessage());
+		} catch (final JAXBException e) {
+			logger.error("Cannot save file due to JAXBException " + e.getMessage());
+			view.showDialogSaveFileFailed(file, e.getMessage());
+		}
 	}
 
 	/**
@@ -389,19 +396,19 @@ public class Controller {
 	}
 
 	/** the {@link AnnuityLoanMgr}. */
-	private final AnnuityLoanMgr annuityLoanMgr;
+	private AnnuityLoanMgr annuityLoanMgr;
 
 	/** the {@link BuildingLoanAgreementMgr}. */
-	private final BuildingLoanAgreementMgr buildingLoanAgreementMgr;
+	private BuildingLoanAgreementMgr buildingLoanAgreementMgr;
 
 	/** the {@link CompareMgr}. */
-	private final CompareMgr compareMgr;
+	private CompareMgr compareMgr;
 
 	/** the {@link FileController}. */
 	private final FileController fileController;
 
 	/** the {@link FoundingMgr}. */
-	private final FoundingMgr foundingMgr;
+	private FoundingMgr foundingMgr;
 
 	/** the {@link BaseModel}. */
 	private BaseModel model;

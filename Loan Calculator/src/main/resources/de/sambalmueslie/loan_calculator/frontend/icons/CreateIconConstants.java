@@ -1,7 +1,7 @@
 /**
  *
  */
-package de.sambalmueslie.loan_calculator.view.icons;
+package de.sambalmueslie.loan_calculator.frontend.icons;
 
 import java.io.File;
 import java.io.IOException;
