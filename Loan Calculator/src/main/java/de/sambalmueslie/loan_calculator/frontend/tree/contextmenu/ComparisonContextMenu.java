@@ -47,7 +47,7 @@ public class ComparisonContextMenu extends BaseContextMenu {
 		}
 		getItems().add(remove);
 
-		final MenuItem close = new MenuItem(I18n.get(I18n.CONTEXT_MENU_REMOVE_COMPARISON));
+		final MenuItem close = MenuItemFactory.createRemoveComparisonItem(comparison);
 		close.setOnAction(e -> listener.requestRemoveComparison(comparisonId));
 		getItems().add(close);
 	}

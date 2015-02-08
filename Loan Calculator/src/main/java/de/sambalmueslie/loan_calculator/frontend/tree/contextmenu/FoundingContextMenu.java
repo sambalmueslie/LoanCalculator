@@ -18,7 +18,6 @@ import de.sambalmueslie.loan_calculator.backend.loan_mgt.Loan;
 import de.sambalmueslie.loan_calculator.frontend.dialog.ModifyFoundingDialog;
 import de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener;
 import de.sambalmueslie.loan_calculator.frontend.i18n.I18n;
-import de.sambalmueslie.loan_calculator.frontend.icons.IconProvider;
 
 /**
  * The context menu for a loan list cell loan.
@@ -40,12 +39,11 @@ public class FoundingContextMenu extends BaseContextMenu {
 	public FoundingContextMenu(final Founding founding, final ViewActionListener listener) {
 		super(listener);
 		this.listener = listener;
-		updateMenuItem = new MenuItem(I18n.get(I18n.CONTEXT_MENU_UPDATE) + " " + founding.getName());
+		updateMenuItem = MenuItemFactory.createUpdateFoundingItem(founding);
 		updateMenuItem.setOnAction(e -> update(founding));
-		removeMenuItem = new MenuItem(I18n.get(I18n.CONTEXT_MENU_REMOVE) + " " + founding.getName());
+		removeMenuItem = MenuItemFactory.createRemoveFoundingItem(founding);
 		removeMenuItem.setOnAction(e -> remove(founding));
-		compareMenuItem = new MenuItem(I18n.get(I18n.CONTEXT_MENU_COMPARE) + " " + founding.getName(),
-				IconProvider.createImageView(IconProvider.ICON_LIST_IMAGES));
+		compareMenuItem = MenuItemFactory.createCompareFoundingItem(founding);
 		compareMenuItem.setOnAction(e -> compare(founding));
 		getItems().addAll(new SeparatorMenuItem(), updateMenuItem, removeMenuItem, compareMenuItem, new SeparatorMenuItem());
 
