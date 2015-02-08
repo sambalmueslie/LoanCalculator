@@ -9,13 +9,13 @@ package de.sambalmueslie.loan_calculator.backend.common;
  * @author sambalmueslie 2015
  */
 @FunctionalInterface
-public interface BusinessObjectChangeListener {
+public interface BusinessObjectChangeListener<T extends BusinessObject> {
 	/**
 	 * The {@link BusinessObject} has changed.
 	 *
 	 * @param businessObject
 	 *            the affected businessObject.
 	 */
-	void businessObjectChanged(BusinessObject businessObject);
+	void businessObjectChanged(T businessObject);
 
 }

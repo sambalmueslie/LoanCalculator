@@ -46,16 +46,17 @@ public abstract class BaseBusinessObject implements BusinessObject {
 	 * @see de.sambalmueslie.loan_calculator.backend.common.BusinessObject#register(de.sambalmueslie.loan_calculator.backend.common.BusinessObjectChangeListener)
 	 */
 	@Override
-	public final void register(final BusinessObjectChangeListener listener) {
+	@SuppressWarnings("unchecked")
+	public final void register(final BusinessObjectChangeListener<?> listener) {
 		if (listener == null || listeners.contains(listener)) return;
-		listeners.add(listener);
+		listeners.add((BusinessObjectChangeListener<BusinessObject>) listener);
 	}
 
 	/**
 	 * @see de.sambalmueslie.loan_calculator.backend.common.BusinessObject#unregister(de.sambalmueslie.loan_calculator.backend.common.BusinessObjectChangeListener)
 	 */
 	@Override
-	public final void unregister(final BusinessObjectChangeListener listener) {
+	public final void unregister(final BusinessObjectChangeListener<?> listener) {
 		if (listener == null) return;
 		listeners.remove(listener);
 	}
@@ -78,7 +79,7 @@ public abstract class BaseBusinessObject implements BusinessObject {
 	/** the id. */
 	private final long id;
 	/** the {@link GenericModelEntryChangeListener}s. */
-	private final List<BusinessObjectChangeListener> listeners = new LinkedList<>();
+	private final List<BusinessObjectChangeListener<BusinessObject>> listeners = new LinkedList<>();
 	/** the name. */
 	private String name;
 

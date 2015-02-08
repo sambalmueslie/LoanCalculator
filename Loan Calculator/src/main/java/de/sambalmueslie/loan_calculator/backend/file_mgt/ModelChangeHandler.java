@@ -17,7 +17,7 @@ import de.sambalmueslie.loan_calculator.backend.model.ModelChangeListener;
  *
  * @author sambalmueslie 2015
  */
-public class ModelChangeHandler implements ModelChangeListener, BusinessObjectChangeListener {
+public class ModelChangeHandler implements ModelChangeListener, BusinessObjectChangeListener<BusinessObject> {
 
 	/**
 	 * Constructor.

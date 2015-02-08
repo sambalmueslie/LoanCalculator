@@ -25,7 +25,7 @@ public interface BusinessObject {
 	 * @param listener
 	 *            the listener
 	 */
-	void register(BusinessObjectChangeListener listener);
+	void register(BusinessObjectChangeListener<?> listener);
 
 	/**
 	 * Unregister the {@link BusinessObjectChangeListener}.
@@ -33,5 +33,5 @@ public interface BusinessObject {
 	 * @param listener
 	 *            the listener
 	 */
-	void unregister(BusinessObjectChangeListener listener);
+	void unregister(BusinessObjectChangeListener<?> listener);
 }

@@ -12,7 +12,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import de.sambalmueslie.loan_calculator.backend.common.BusinessObject;
 import de.sambalmueslie.loan_calculator.backend.common.BusinessObjectChangeListener;
 import de.sambalmueslie.loan_calculator.backend.compare_mgt.Comparison;
 import de.sambalmueslie.loan_calculator.backend.file_mgt.LoanFile;
@@ -36,14 +35,14 @@ public class EntryTreePane extends BorderPane {
 	 *
 	 * @author sambalmueslie 2015
 	 */
-	private class ComparisonChangeHandler implements BusinessObjectChangeListener {
+	private class ComparisonChangeHandler implements BusinessObjectChangeListener<Comparison<?>> {
 
 		/**
 		 * @see de.sambalmueslie.loan_calculator.backend.common.BusinessObjectChangeListener#businessObjectChanged(de.sambalmueslie.loan_calculator.backend.common.BusinessObject)
 		 */
 		@Override
-		public void businessObjectChanged(final BusinessObject businessObject) {
-			handleChanged((Comparison<?>) businessObject);
+		public void businessObjectChanged(final Comparison<?> comparison) {
+			handleChanged(comparison);
 		}
 
 	}
@@ -53,14 +52,14 @@ public class EntryTreePane extends BorderPane {
 	 *
 	 * @author sambalmueslie 2015
 	 */
-	private class FoundingChangeHandler implements BusinessObjectChangeListener {
+	private class FoundingChangeHandler implements BusinessObjectChangeListener<Founding> {
 
 		/**
 		 * @see de.sambalmueslie.loan_calculator.backend.common.BusinessObjectChangeListener#businessObjectChanged(de.sambalmueslie.loan_calculator.backend.common.BusinessObject)
 		 */
 		@Override
-		public void businessObjectChanged(final BusinessObject businessObject) {
-			handleChanged((Founding) businessObject);
+		public void businessObjectChanged(final Founding founding) {
+			handleChanged(founding);
 		}
 
 	}
