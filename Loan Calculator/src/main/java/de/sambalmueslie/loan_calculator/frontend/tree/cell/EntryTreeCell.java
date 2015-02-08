@@ -8,7 +8,7 @@ import javafx.scene.control.TreeView;
 import de.sambalmueslie.loan_calculator.backend.compare_mgt.Comparison;
 import de.sambalmueslie.loan_calculator.backend.founding_mgt.Founding;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.Loan;
-import de.sambalmueslie.loan_calculator.frontend.ViewActionListener;
+import de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener;
 import de.sambalmueslie.loan_calculator.frontend.tabs.EntryTabPane;
 import de.sambalmueslie.loan_calculator.frontend.tree.EntryTreeContent;
 

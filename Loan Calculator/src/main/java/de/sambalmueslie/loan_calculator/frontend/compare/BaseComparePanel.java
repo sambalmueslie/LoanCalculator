@@ -15,7 +15,7 @@ import javafx.scene.layout.BorderPane;
 import de.sambalmueslie.loan_calculator.backend.common.BusinessObject;
 import de.sambalmueslie.loan_calculator.backend.compare_mgt.Comparison;
 import de.sambalmueslie.loan_calculator.backend.model.Model;
-import de.sambalmueslie.loan_calculator.frontend.ViewActionListener;
+import de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener;
 
 /**
  * A base {@link ComparePanel}.

@@ -19,7 +19,7 @@ import de.sambalmueslie.loan_calculator.backend.file_mgt.LoanFile;
 import de.sambalmueslie.loan_calculator.backend.founding_mgt.Founding;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.Loan;
 import de.sambalmueslie.loan_calculator.backend.model.Model;
-import de.sambalmueslie.loan_calculator.frontend.ViewActionListener;
+import de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener;
 import de.sambalmueslie.loan_calculator.frontend.tabs.EntryTabPane;
 import de.sambalmueslie.loan_calculator.frontend.tree.cell.EntryTreeCell;
 import de.sambalmueslie.loan_calculator.frontend.tree.contextmenu.BaseContextMenu;

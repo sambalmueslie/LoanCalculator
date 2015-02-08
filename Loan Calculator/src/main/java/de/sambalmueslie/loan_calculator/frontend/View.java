@@ -21,6 +21,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import de.sambalmueslie.loan_calculator.backend.file_mgt.LoanFile;
+import de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener;
 import de.sambalmueslie.loan_calculator.frontend.i18n.I18n;
 import de.sambalmueslie.loan_calculator.frontend.menu.MainMenu;
 import de.sambalmueslie.loan_calculator.frontend.tabs.EntryTabPane;

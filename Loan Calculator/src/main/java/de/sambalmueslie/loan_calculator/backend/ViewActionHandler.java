@@ -3,7 +3,7 @@
  */
 package de.sambalmueslie.loan_calculator.backend;
 
-import de.sambalmueslie.loan_calculator.frontend.ViewActionListener;
+import de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener;
 
 /**
  * The handler for the {@link ViewActionListener}.
@@ -23,7 +23,7 @@ public class ViewActionHandler implements ViewActionListener {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.frontend.ViewActionListener#requestAddAnnuityLoan(java.lang.String, double, double, double, int,
+	 * @see de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener#requestAddAnnuityLoan(java.lang.String, double, double, double, int,
 	 *      double)
 	 */
 	@Override
@@ -33,7 +33,7 @@ public class ViewActionHandler implements ViewActionListener {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.frontend.ViewActionListener#requestAddBuildingLoanAgreement(String, double, double, double, double,
+	 * @see de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener#requestAddBuildingLoanAgreement(String, double, double, double, double,
 	 *      int, double, double, double, double)
 	 */
 	@Override
@@ -45,7 +45,7 @@ public class ViewActionHandler implements ViewActionListener {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.frontend.ViewActionListener#requestAddComparisonFounding(long)
+	 * @see de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener#requestAddComparisonFounding(long)
 	 */
 	@Override
 	public void requestAddComparisonFounding(final long foundingId) {
@@ -54,7 +54,7 @@ public class ViewActionHandler implements ViewActionListener {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.frontend.ViewActionListener#requestAddComparisonLoan(long)
+	 * @see de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener#requestAddComparisonLoan(long)
 	 */
 	@Override
 	public void requestAddComparisonLoan(final long loanId) {
@@ -62,7 +62,7 @@ public class ViewActionHandler implements ViewActionListener {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.frontend.ViewActionListener#requestAddFounding(java.lang.String, java.lang.String)
+	 * @see de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener#requestAddFounding(java.lang.String, java.lang.String)
 	 */
 	@Override
 	public void requestAddFounding(final String name, final String bankName) {
@@ -70,7 +70,7 @@ public class ViewActionHandler implements ViewActionListener {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.frontend.ViewActionListener#requestComparisonAddFounding(long, long)
+	 * @see de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener#requestComparisonAddFounding(long, long)
 	 */
 	@Override
 	public void requestComparisonAddFounding(final long comparisonId, final long foundingId) {
@@ -78,7 +78,7 @@ public class ViewActionHandler implements ViewActionListener {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.frontend.ViewActionListener#requestComparisonAddLoan(long, long)
+	 * @see de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener#requestComparisonAddLoan(long, long)
 	 */
 	@Override
 	public void requestComparisonAddLoan(final long comparisonId, final long loanId) {
@@ -86,7 +86,7 @@ public class ViewActionHandler implements ViewActionListener {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.frontend.ViewActionListener#requestComparisonRemoveFounding(long, long)
+	 * @see de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener#requestComparisonRemoveFounding(long, long)
 	 */
 	@Override
 	public void requestComparisonRemoveFounding(final long comparisonId, final long foundingId) {
@@ -94,7 +94,7 @@ public class ViewActionHandler implements ViewActionListener {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.frontend.ViewActionListener#requestComparisonRemoveLoan(long, long)
+	 * @see de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener#requestComparisonRemoveLoan(long, long)
 	 */
 	@Override
 	public void requestComparisonRemoveLoan(final long comparisonId, final long loanId) {
@@ -102,7 +102,7 @@ public class ViewActionHandler implements ViewActionListener {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.frontend.ViewActionListener#requestFileNew()
+	 * @see de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener#requestFileNew()
 	 */
 	@Override
 	public void requestFileNew() {
@@ -110,7 +110,7 @@ public class ViewActionHandler implements ViewActionListener {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.frontend.ViewActionListener#requestFileOpen()
+	 * @see de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener#requestFileOpen()
 	 */
 	@Override
 	public void requestFileOpen() {
@@ -118,7 +118,7 @@ public class ViewActionHandler implements ViewActionListener {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.frontend.ViewActionListener#requestFileSave()
+	 * @see de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener#requestFileSave()
 	 */
 	@Override
 	public void requestFileSave() {
@@ -126,7 +126,7 @@ public class ViewActionHandler implements ViewActionListener {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.frontend.ViewActionListener#requestFoundingAddLoan(long, long)
+	 * @see de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener#requestFoundingAddLoan(long, long)
 	 */
 	@Override
 	public void requestFoundingAddLoan(final long foundingId, final long loanId) {
@@ -134,7 +134,7 @@ public class ViewActionHandler implements ViewActionListener {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.frontend.ViewActionListener#requestFoundingRemoveLoan(long, long)
+	 * @see de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener#requestFoundingRemoveLoan(long, long)
 	 */
 	@Override
 	public void requestFoundingRemoveLoan(final long foundingId, final long loanId) {
@@ -142,7 +142,7 @@ public class ViewActionHandler implements ViewActionListener {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.frontend.ViewActionListener#requestProgrammExit()
+	 * @see de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener#requestProgrammExit()
 	 */
 	@Override
 	public void requestProgrammExit() {
@@ -150,7 +150,7 @@ public class ViewActionHandler implements ViewActionListener {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.frontend.ViewActionListener#requestRemoveComparison(long)
+	 * @see de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener#requestRemoveComparison(long)
 	 */
 	@Override
 	public void requestRemoveComparison(final long comparisonId) {
@@ -158,7 +158,7 @@ public class ViewActionHandler implements ViewActionListener {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.frontend.ViewActionListener#requestRemoveFounding(long)
+	 * @see de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener#requestRemoveFounding(long)
 	 */
 	@Override
 	public void requestRemoveFounding(final long foundingId) {
@@ -166,7 +166,7 @@ public class ViewActionHandler implements ViewActionListener {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.frontend.ViewActionListener#requestRemoveLoan(long)
+	 * @see de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener#requestRemoveLoan(long)
 	 */
 	@Override
 	public void requestRemoveLoan(final long loanId) {
@@ -174,7 +174,7 @@ public class ViewActionHandler implements ViewActionListener {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.frontend.ViewActionListener#requestUpdateAnnuityLoan(long, java.lang.String, double, double,
+	 * @see de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener#requestUpdateAnnuityLoan(long, java.lang.String, double, double,
 	 *      double, int, double)
 	 */
 	@Override
@@ -184,7 +184,7 @@ public class ViewActionHandler implements ViewActionListener {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.frontend.ViewActionListener#requestUpdateBuildingLoanAgreement(long, java.lang.String, double,
+	 * @see de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener#requestUpdateBuildingLoanAgreement(long, java.lang.String, double,
 	 *      double, double, double, int, double, double, double, double)
 	 */
 	@Override
@@ -196,7 +196,7 @@ public class ViewActionHandler implements ViewActionListener {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.frontend.ViewActionListener#requestUpdateFounding(long, java.lang.String, java.lang.String)
+	 * @see de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener#requestUpdateFounding(long, java.lang.String, java.lang.String)
 	 */
 	@Override
 	public void requestUpdateFounding(final long foundingId, final String name, final String bankName) {

@@ -24,7 +24,7 @@ import de.sambalmueslie.loan_calculator.backend.loan_mgt.annuity_loan_mgt.Annuit
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.building_loan_agreement_mgt.BuildingLoanAgreementMgr;
 import de.sambalmueslie.loan_calculator.backend.model.BaseModel;
 import de.sambalmueslie.loan_calculator.frontend.View;
-import de.sambalmueslie.loan_calculator.frontend.ViewActionListener;
+import de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener;
 
 /**
  * The controller.

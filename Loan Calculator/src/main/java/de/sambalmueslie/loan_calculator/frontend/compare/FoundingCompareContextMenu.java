@@ -6,7 +6,7 @@ package de.sambalmueslie.loan_calculator.frontend.compare;
 import javafx.scene.control.ContextMenu;
 import de.sambalmueslie.loan_calculator.backend.compare_mgt.Comparison;
 import de.sambalmueslie.loan_calculator.backend.founding_mgt.Founding;
-import de.sambalmueslie.loan_calculator.frontend.ViewActionListener;
+import de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener;
 
 /**
  * The compare {@link ContextMenu}.
@@ -28,7 +28,7 @@ public class FoundingCompareContextMenu extends BaseCompareContextMenu<Founding>
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.frontend.compare.BaseCompareContextMenu#handleElementRemoveAction(de.sambalmueslie.loan_calculator.frontend.ViewActionListener,
+	 * @see de.sambalmueslie.loan_calculator.frontend.compare.BaseCompareContextMenu#handleElementRemoveAction(de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener,
 	 *      long, long)
 	 */
 	@Override

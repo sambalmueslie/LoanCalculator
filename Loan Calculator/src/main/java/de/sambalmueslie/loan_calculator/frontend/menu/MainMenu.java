@@ -5,7 +5,7 @@ package de.sambalmueslie.loan_calculator.frontend.menu;
 
 import javafx.scene.control.*;
 import de.sambalmueslie.loan_calculator.frontend.View;
-import de.sambalmueslie.loan_calculator.frontend.ViewActionListener;
+import de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener;
 import de.sambalmueslie.loan_calculator.frontend.i18n.I18n;
 
 /**

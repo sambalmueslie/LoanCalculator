@@ -14,7 +14,7 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.Loan;
-import de.sambalmueslie.loan_calculator.frontend.ViewActionListener;
+import de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener;
 import de.sambalmueslie.loan_calculator.frontend.icons.IconProvider;
 import de.sambalmueslie.loan_calculator.frontend.tree.contextmenu.LoanContextMenu;
 

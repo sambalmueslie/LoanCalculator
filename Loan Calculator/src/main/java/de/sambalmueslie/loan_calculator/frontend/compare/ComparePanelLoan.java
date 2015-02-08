@@ -21,13 +21,13 @@ import de.sambalmueslie.loan_calculator.backend.compare_mgt.Comparison;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.Loan;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.RedemptionPlanEntry;
 import de.sambalmueslie.loan_calculator.backend.model.Model;
-import de.sambalmueslie.loan_calculator.frontend.ViewActionListener;
 import de.sambalmueslie.loan_calculator.frontend.chart.LineChartSeriesDefinition;
 import de.sambalmueslie.loan_calculator.frontend.chart.SeriesDefinition;
 import de.sambalmueslie.loan_calculator.frontend.chart.generic.GenericBarChart;
 import de.sambalmueslie.loan_calculator.frontend.chart.generic.GenericLineChart;
 import de.sambalmueslie.loan_calculator.frontend.chart.generic.GenericStackedBarChart;
 import de.sambalmueslie.loan_calculator.frontend.chart.loan.GenericAnnuityChart;
+import de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener;
 import de.sambalmueslie.loan_calculator.frontend.i18n.I18n;
 
 /**

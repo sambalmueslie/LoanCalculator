@@ -15,9 +15,9 @@ import org.apache.logging.log4j.Logger;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.Loan;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.annuity_loan_mgt.AnnuityLoan;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.building_loan_agreement_mgt.BuildingLoanAgreement;
-import de.sambalmueslie.loan_calculator.frontend.ViewActionListener;
 import de.sambalmueslie.loan_calculator.frontend.dialog.ModifyAnnuityLoanDialog;
 import de.sambalmueslie.loan_calculator.frontend.dialog.ModifyBuildingLoanAgreementDialog;
+import de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener;
 import de.sambalmueslie.loan_calculator.frontend.i18n.I18n;
 import de.sambalmueslie.loan_calculator.frontend.icons.IconProvider;
 

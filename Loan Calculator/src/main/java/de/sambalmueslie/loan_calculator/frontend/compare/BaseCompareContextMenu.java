@@ -8,7 +8,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import de.sambalmueslie.loan_calculator.backend.common.BusinessObject;
 import de.sambalmueslie.loan_calculator.backend.compare_mgt.Comparison;
-import de.sambalmueslie.loan_calculator.frontend.ViewActionListener;
+import de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener;
 import de.sambalmueslie.loan_calculator.frontend.i18n.I18n;
 
 /**
