@@ -5,6 +5,7 @@ package de.sambalmueslie.loan_calculator.frontend.tree.contextmenu;
 
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
+import de.sambalmueslie.loan_calculator.backend.common.BusinessObject;
 import de.sambalmueslie.loan_calculator.backend.compare_mgt.Comparison;
 import de.sambalmueslie.loan_calculator.backend.founding_mgt.Founding;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.Loan;
@@ -41,6 +42,30 @@ public class MenuItemFactory {
 	public static MenuItem createCompareLoanItem(final Loan loan) {
 		final String text = I18n.get(I18n.CONTEXT_MENU_COMPARE) + " " + loan.getName();
 		final ImageView icon = IconProvider.createImageView(IconProvider.ICON_PAGE_COMPONENT);
+		return new MenuItem(text, icon);
+	}
+
+	/**
+	 * Create a remove {@link MenuItem} for a {@link Comparison}.
+	 *
+	 * @param entry
+	 *            the entry
+	 * @return the {@link MenuItem}
+	 */
+	public static MenuItem createComparisonRemoveEntryItem(final BusinessObject entry) {
+		return new MenuItem(entry.getName());
+	}
+
+	/**
+	 * Create a remove {@link MenuItem} for a {@link Founding}.
+	 *
+	 * @param loan
+	 *            the {@link Loan}
+	 * @return the {@link MenuItem}
+	 */
+	public static MenuItem createFoundingRemoveLoanItem(final Loan loan) {
+		final ImageView icon = IconProvider.createImageView(IconProvider.ICON_NOTE);
+		final String text = loan.getName();
 		return new MenuItem(text, icon);
 	}
 

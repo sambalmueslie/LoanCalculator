@@ -50,7 +50,7 @@ public class FoundingContextMenu extends BaseContextMenu {
 		final long foundingId = founding.getId();
 		final Menu remove = new Menu(I18n.get(I18n.CONTEXT_MENU_REMOVE_ELEMENT));
 		for (final Loan loan : founding.getLoans()) {
-			final MenuItem menuItem = new MenuItem(loan.getName());
+			final MenuItem menuItem = MenuItemFactory.createFoundingRemoveLoanItem(loan);
 			final long loanId = loan.getId();
 			menuItem.setOnAction(event -> listener.requestFoundingRemoveLoan(foundingId, loanId));
 			remove.getItems().add(menuItem);

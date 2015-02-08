@@ -36,7 +36,7 @@ public class ComparisonContextMenu extends BaseContextMenu {
 		final long comparisonId = comparison.getId();
 		final Menu remove = new Menu(I18n.get(I18n.CONTEXT_MENU_REMOVE_ELEMENT));
 		for (final BusinessObject entry : comparison.getElements()) {
-			final MenuItem menuItem = new MenuItem(entry.getName());
+			final MenuItem menuItem = MenuItemFactory.createComparisonRemoveEntryItem(entry);
 			final long entryId = entry.getId();
 			if (comparison.getType().equals(Founding.class)) {
 				menuItem.setOnAction(e -> listener.requestComparisonRemoveFounding(comparisonId, entryId));
