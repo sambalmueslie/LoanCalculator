@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -120,6 +121,7 @@ public class XMLParser {
 		xmlAnnuityLoan.setEstimatedDebitInterest(annuityLoan.getEstimatedDebitInterest());
 		xmlAnnuityLoan.setFixedDebitInterest(annuityLoan.getFixedDebitInterest());
 		xmlAnnuityLoan.setFixedInterestPeriod(annuityLoan.getFixedInterestPeriod());
+		xmlAnnuityLoan.setStartDate(parse(annuityLoan.getStartDate()));
 		return xmlAnnuityLoan;
 	}
 
@@ -146,6 +148,7 @@ public class XMLParser {
 		xmlBuildingLoanAgreement.setRegularSavingAmount(buildingLoanAgreement.getRegularSavingAmount());
 		xmlBuildingLoanAgreement.setSavingDuration(buildingLoanAgreement.getSavingDuration());
 		xmlBuildingLoanAgreement.setSavingPhaseInterest(buildingLoanAgreement.getSavingPhaseInterest());
+		xmlBuildingLoanAgreement.setStartDate(parse(buildingLoanAgreement.getStartDate()));
 		return xmlBuildingLoanAgreement;
 	}
 
@@ -188,6 +191,17 @@ public class XMLParser {
 	}
 
 	/**
+	 * Parse the {@link LocalDate} into a {@link String}.
+	 *
+	 * @param startDate
+	 *            the value
+	 * @return the result
+	 */
+	private String parse(final LocalDate startDate) {
+		return startDate.toString();
+	}
+
+	/**
 	 * Parse a {@link XMLModel} from a {@link Model}.
 	 *
 	 * @param model
@@ -215,6 +229,18 @@ public class XMLParser {
 	}
 
 	/**
+	 * Parse a {@link LocalDate} from a {@link String}.
+	 *
+	 * @param value
+	 *            the value
+	 * @return the {@link LocalDate}
+	 */
+	private LocalDate parse(final String value) {
+		if (value == null) return null;
+		return LocalDate.parse(value);
+	}
+
+	/**
 	 * Parse a {@link AnnuityLoan} from a {@link XMLAnnuityLoan}.
 	 *
 	 * @param xmlAnnuityLoan
@@ -232,7 +258,8 @@ public class XMLParser {
 		final double fixedDebitInterest = xmlAnnuityLoan.getFixedDebitInterest();
 		final int fixedInterestPeriod = xmlAnnuityLoan.getFixedInterestPeriod();
 		final double estimatedDebitInterest = xmlAnnuityLoan.getEstimatedDebitInterest();
-		return new BaseAnnuityLoan(id, name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
+		final LocalDate startDate = parse(xmlAnnuityLoan.getStartDate());
+		return new BaseAnnuityLoan(id, name, amount, startDate, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
 	}
 
 	/**
@@ -257,8 +284,9 @@ public class XMLParser {
 		final double debitInterest = xmlBuildingLoanAgreement.getDebitInterest();
 		final double contribution = xmlBuildingLoanAgreement.getContribution();
 		final double aquisitonFee = xmlBuildingLoanAgreement.getAquisitonFee();
-		return new BaseBuildingLoanAgreement(id, name, amount, creditInterest, regularSavingAmount, minimumSavings, savingDuration, savingPhaseInterest,
-				debitInterest, contribution, aquisitonFee);
+		final LocalDate startDate = parse(xmlBuildingLoanAgreement.getStartDate());
+		return new BaseBuildingLoanAgreement(id, name, amount, startDate, creditInterest, regularSavingAmount, minimumSavings, savingDuration,
+				savingPhaseInterest, debitInterest, contribution, aquisitonFee);
 	}
 
 	/**

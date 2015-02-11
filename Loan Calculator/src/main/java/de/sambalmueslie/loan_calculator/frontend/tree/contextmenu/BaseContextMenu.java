@@ -3,6 +3,7 @@
  */
 package de.sambalmueslie.loan_calculator.frontend.tree.contextmenu;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import javafx.scene.control.ButtonType;
@@ -63,8 +64,9 @@ public class BaseContextMenu extends ContextMenu {
 			final double fixedDebitInterest = dialog.getFixedDebitInterest();
 			final int fixedInterestPeriod = dialog.getFixedInterestPeriod();
 			final double estimatedDebitInterest = dialog.getEstimatedDebitInterest();
+			final LocalDate startDate = dialog.getStartDate();
 
-			listener.requestAddAnnuityLoan(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
+			listener.requestAddAnnuityLoan(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest, startDate);
 		}
 	}
 
@@ -88,8 +90,10 @@ public class BaseContextMenu extends ContextMenu {
 			final double debitInterest = dialog.getDebitInterest();
 			final double contribution = dialog.getContribution();
 			final double aquisitonFee = dialog.getAquisitionFee();
+			final LocalDate startDate = dialog.getStartDate();
+
 			listener.requestAddBuildingLoanAgreement(name, amount, creditInterest, regularSavingAmount, minimumSavings, savingDuration, savingPhaseInterest,
-					debitInterest, contribution, aquisitonFee);
+					debitInterest, contribution, aquisitonFee, startDate);
 		}
 	}
 

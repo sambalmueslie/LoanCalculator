@@ -3,11 +3,10 @@
  */
 package de.sambalmueslie.loan_calculator.frontend.dialog;
 
+import java.time.LocalDate;
+
 import javafx.geometry.Pos;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.DialogPane;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.building_loan_agreement_mgt.BuildingLoanAgreement;
 import de.sambalmueslie.loan_calculator.frontend.component.CurrencyTextField;
@@ -61,6 +60,7 @@ public class ModifyBuildingLoanAgreementDialog extends Dialog<ButtonType> {
 			regularSavingAmount.setValue(loan.getRegularSavingAmount());
 			savingDuration.setValue(loan.getSavingDuration());
 			savingPhaseInterest.setValue(loan.getSavingPhaseInterest());
+			startDatePicker.setValue(loan.getStartDate());
 		}
 
 		final DialogPane dialogPane = getDialogPane();
@@ -100,6 +100,9 @@ public class ModifyBuildingLoanAgreementDialog extends Dialog<ButtonType> {
 
 		content.add(new Label(I18n.get(I18n.TEXT_AQUISITION_FEE)), 0, 9);
 		content.add(aquisitonFee, 1, 9);
+
+		content.add(new Label(I18n.get(I18n.TEXT_START_DATE)), 0, 10);
+		content.add(startDatePicker, 1, 10);
 
 		getDialogPane().setContent(content);
 
@@ -180,6 +183,14 @@ public class ModifyBuildingLoanAgreementDialog extends Dialog<ButtonType> {
 		return savingPhaseInterest.getValue();
 	}
 
+	/**
+	 * @return the start date.
+	 */
+	public LocalDate getStartDate() {
+		final LocalDate startDate = startDatePicker.getValue();
+		return (startDate == null) ? LocalDate.now() : startDate;
+	}
+
 	/** the amount {@link CurrencyTextField}. */
 	private final CurrencyTextField amount = new CurrencyTextField(DEFAULT_AMOUNT);
 	/** the acquisition fee {@link PercentageTextField}. */
@@ -200,5 +211,7 @@ public class ModifyBuildingLoanAgreementDialog extends Dialog<ButtonType> {
 	private final NumberTextField savingDuration = new NumberTextField(DEFAULT_SAVING_DURATION);
 	/** the saving phase interest {@link PercentageTextField}. */
 	private final PercentageTextField savingPhaseInterest = new PercentageTextField(DEFAULT_SAVING_PHASE_INTEREST);
+	/** the start {@link DatePicker}. */
+	private final DatePicker startDatePicker = new DatePicker();
 
 }

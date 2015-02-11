@@ -3,6 +3,8 @@
  */
 package de.sambalmueslie.loan_calculator.backend;
 
+import java.time.LocalDate;
+
 import de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener;
 
 /**
@@ -23,25 +25,25 @@ public class ViewActionHandler implements ViewActionListener {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener#requestAddAnnuityLoan(java.lang.String, double, double, double, int,
-	 *      double)
+	 * @see de.sambalmueslie.loan_calculator.frontend.external.LoanActionListener#requestAddAnnuityLoan(java.lang.String, double, double,
+	 *      double, int, double, java.time.LocalDate)
 	 */
 	@Override
 	public void requestAddAnnuityLoan(final String name, final double amount, final double paymentRate, final double fixedDebitInterest,
-			final int fixedInterestPeriod, final double estimatedDebitInterest) {
-		controller.handleRequestAddAnnuityLoan(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
+			final int fixedInterestPeriod, final double estimatedDebitInterest, final LocalDate startDate) {
+		controller.handleRequestAddAnnuityLoan(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest, startDate);
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener#requestAddBuildingLoanAgreement(String, double, double, double, double,
-	 *      int, double, double, double, double)
+	 * @see de.sambalmueslie.loan_calculator.frontend.external.LoanActionListener#requestAddBuildingLoanAgreement(java.lang.String, double,
+	 *      double, double, double, int, double, double, double, double, java.time.LocalDate)
 	 */
 	@Override
 	public void requestAddBuildingLoanAgreement(final String name, final double amount, final double creditInterest, final double regularSavingAmount,
 			final double minimumSavings, final int savingDuration, final double savingPhaseInterest, final double debitInterest, final double contribution,
-			final double aquisitonFee) {
+			final double aquisitonFee, final LocalDate startDate) {
 		controller.handleRequestAddBuildingLoanAgreement(name, amount, creditInterest, regularSavingAmount, minimumSavings, savingDuration,
-				savingPhaseInterest, debitInterest, contribution, aquisitonFee);
+				savingPhaseInterest, debitInterest, contribution, aquisitonFee, startDate);
 	}
 
 	/**
@@ -174,29 +176,31 @@ public class ViewActionHandler implements ViewActionListener {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener#requestUpdateAnnuityLoan(long, java.lang.String, double, double,
-	 *      double, int, double)
+	 * @see de.sambalmueslie.loan_calculator.frontend.external.LoanActionListener#requestUpdateAnnuityLoan(long, java.lang.String, double,
+	 *      double, double, int, double, java.time.LocalDate)
 	 */
 	@Override
 	public void requestUpdateAnnuityLoan(final long loanId, final String name, final double amount, final double paymentRate, final double fixedDebitInterest,
-			final int fixedInterestPeriod, final double estimatedDebitInterest) {
-		controller.handleRequestUpdateAnnuityLoan(loanId, name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
+			final int fixedInterestPeriod, final double estimatedDebitInterest, final LocalDate startDate) {
+		controller
+				.handleRequestUpdateAnnuityLoan(loanId, name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest, startDate);
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener#requestUpdateBuildingLoanAgreement(long, java.lang.String, double,
-	 *      double, double, double, int, double, double, double, double)
+	 * @see de.sambalmueslie.loan_calculator.frontend.external.LoanActionListener#requestUpdateBuildingLoanAgreement(long, java.lang.String,
+	 *      double, double, double, double, int, double, double, double, double, java.time.LocalDate)
 	 */
 	@Override
 	public void requestUpdateBuildingLoanAgreement(final long loanId, final String name, final double amount, final double creditInterest,
 			final double regularSavingAmount, final double minimumSavings, final int savingDuration, final double savingPhaseInterest,
-			final double debitInterest, final double contribution, final double aquisitonFee) {
+			final double debitInterest, final double contribution, final double aquisitonFee, final LocalDate startDate) {
 		controller.handleRequestUpdateBuildingLoanAgreement(loanId, name, amount, creditInterest, regularSavingAmount, minimumSavings, savingDuration,
-				savingPhaseInterest, debitInterest, contribution, aquisitonFee);
+				savingPhaseInterest, debitInterest, contribution, aquisitonFee, startDate);
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener#requestUpdateFounding(long, java.lang.String, java.lang.String)
+	 * @see de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener#requestUpdateFounding(long, java.lang.String,
+	 *      java.lang.String)
 	 */
 	@Override
 	public void requestUpdateFounding(final long foundingId, final String name, final String bankName) {

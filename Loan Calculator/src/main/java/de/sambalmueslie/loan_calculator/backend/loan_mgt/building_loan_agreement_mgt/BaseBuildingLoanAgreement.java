@@ -3,6 +3,8 @@
  */
 package de.sambalmueslie.loan_calculator.backend.loan_mgt.building_loan_agreement_mgt;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -25,6 +27,8 @@ public class BaseBuildingLoanAgreement extends BaseLoan implements BuildingLoanA
 	 *            {@link BaseLoan#getName()}
 	 * @param amount
 	 *            {@link BaseLoan#getAmount()}
+	 * @param startDate
+	 *            {@link BaseLoan#getStartDate()}
 	 * @param creditInterest
 	 *            {@link #creditInterest}
 	 * @param regularSavingAmount
@@ -42,11 +46,11 @@ public class BaseBuildingLoanAgreement extends BaseLoan implements BuildingLoanA
 	 * @param aquisitonFee
 	 *            {@link #aquisitonFee}
 	 */
-	public BaseBuildingLoanAgreement(final long id, final String name, final double amount, final double creditInterest, final double regularSavingAmount,
-			final double minimumSavings, final int savingDuration, final double savingPhaseInterest, final double debitInterest, final double contribution,
-			final double aquisitonFee) {
-		super(id, name, amount);
-		update(name, amount, creditInterest, regularSavingAmount, minimumSavings, savingDuration, savingPhaseInterest, debitInterest, contribution,
+	public BaseBuildingLoanAgreement(final long id, final String name, final double amount, final LocalDate startDate, final double creditInterest,
+			final double regularSavingAmount, final double minimumSavings, final int savingDuration, final double savingPhaseInterest,
+			final double debitInterest, final double contribution, final double aquisitonFee) {
+		super(id, name, amount, startDate);
+		update(name, amount, startDate, creditInterest, regularSavingAmount, minimumSavings, savingDuration, savingPhaseInterest, debitInterest, contribution,
 				aquisitonFee);
 	}
 
@@ -190,6 +194,7 @@ public class BaseBuildingLoanAgreement extends BaseLoan implements BuildingLoanA
 	 *            {@link BaseLoan#getName()}
 	 * @param amount
 	 *            {@link BaseLoan#getAmount()}
+	 * @param startDate
 	 * @param creditInterest
 	 *            {@link #creditInterest}
 	 * @param regularSavingAmount
@@ -205,10 +210,12 @@ public class BaseBuildingLoanAgreement extends BaseLoan implements BuildingLoanA
 	 * @param aquisitonFee
 	 *            {@link #aquisitonFee}
 	 */
-	void update(final String name, final double amount, final double creditInterest, final double regularSavingAmount, final double minimumSavings,
-			final int savingDuration, final double savingPhaseInterest, final double debitInterest, final double contribution, final double aquisitonFee) {
+	void update(final String name, final double amount, final LocalDate startDate, final double creditInterest, final double regularSavingAmount,
+			final double minimumSavings, final int savingDuration, final double savingPhaseInterest, final double debitInterest, final double contribution,
+			final double aquisitonFee) {
 		setName(name);
 		setAmount(amount);
+		setStartDate(startDate);
 		this.creditInterest = creditInterest;
 		this.regularSavingAmount = regularSavingAmount;
 		this.minimumSavings = minimumSavings;
@@ -262,6 +269,11 @@ public class BaseBuildingLoanAgreement extends BaseLoan implements BuildingLoanA
 		totalInterest += getAmount() * aquisitonFee / 100;
 		term = redemptionPlan.size() - 1;
 		totalPayment = totalInterest + getAmount();
+
+		final LocalDate startDate = getStartDate();
+		final LocalDate endDate = startDate.plus(getTerm(), ChronoUnit.YEARS);
+		setEndDate(endDate);
+
 		notifyChanged();
 	}
 

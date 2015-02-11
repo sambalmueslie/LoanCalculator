@@ -99,6 +99,8 @@ public class I18n {
 	/** property key. */
 	public static final String TEXT_DEBIT_INTEREST = "text_debit_interest";
 	/** property key. */
+	public static final String TEXT_END_DATE = "text_end_date";
+	/** property key. */
 	public static final String TEXT_ESTIMATED_DEBIT_INTEREST = "text_estimated_debit_interest";
 	/** property key. */
 	public static final String TEXT_FIXED_DEBIT_INTEREST = "text_fixed_debit_interest";
@@ -126,6 +128,8 @@ public class I18n {
 	public static final String TEXT_SAVING_PHASE_INTEREST = "text_saving_phase_interest";
 	/** property key. */
 	public static final String TEXT_SAVINGS = "text_savings";
+	/** property key. */
+	public static final String TEXT_START_DATE = "text_start_date";
 	/** property key. */
 	public static final String TEXT_TERM = "text_term";
 	/** property key. */
@@ -163,7 +167,7 @@ public class I18n {
 
 	/**
 	 * Set the locale.
-	 * 
+	 *
 	 * @param language
 	 *            the language
 	 * @param country

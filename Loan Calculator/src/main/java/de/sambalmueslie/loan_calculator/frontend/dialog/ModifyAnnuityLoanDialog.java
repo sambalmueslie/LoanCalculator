@@ -3,11 +3,10 @@
  */
 package de.sambalmueslie.loan_calculator.frontend.dialog;
 
+import java.time.LocalDate;
+
 import javafx.geometry.Pos;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.DialogPane;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.annuity_loan_mgt.AnnuityLoan;
 import de.sambalmueslie.loan_calculator.frontend.component.CurrencyTextField;
@@ -48,6 +47,7 @@ public class ModifyAnnuityLoanDialog extends Dialog<ButtonType> {
 			fixedDebitInterest.setValue(loan.getFixedDebitInterest());
 			fixedInterestPeriod.setValue(loan.getFixedInterestPeriod());
 			estimatedDebitInterest.setValue(loan.getEstimatedDebitInterest());
+			startDatePicker.setValue(loan.getStartDate());
 		}
 
 		final DialogPane dialogPane = getDialogPane();
@@ -75,6 +75,9 @@ public class ModifyAnnuityLoanDialog extends Dialog<ButtonType> {
 
 		content.add(new Label(I18n.get(I18n.TEXT_ESTIMATED_DEBIT_INTEREST)), 0, 5);
 		content.add(estimatedDebitInterest, 1, 5);
+
+		content.add(new Label(I18n.get(I18n.TEXT_START_DATE)), 0, 6);
+		content.add(startDatePicker, 1, 6);
 
 		getDialogPane().setContent(content);
 
@@ -127,6 +130,14 @@ public class ModifyAnnuityLoanDialog extends Dialog<ButtonType> {
 		return paymentRate.getValue();
 	}
 
+	/**
+	 * @return the start date.
+	 */
+	public LocalDate getStartDate() {
+		final LocalDate startDate = startDatePicker.getValue();
+		return (startDate == null) ? LocalDate.now() : startDate;
+	}
+
 	/** the amount {@link CurrencyTextField}. */
 	private final CurrencyTextField amount = new CurrencyTextField(DEFAULT_AMOUNT);
 	/** the estimated debit interest {@link PercentageTextField}. */
@@ -139,5 +150,7 @@ public class ModifyAnnuityLoanDialog extends Dialog<ButtonType> {
 	private final SimpleTextField name = new SimpleTextField();
 	/** the payment rate {@link PercentageTextField}. */
 	private final PercentageTextField paymentRate = new PercentageTextField(DEFAULT_PAYMENT_RATE);
+	/** the start {@link DatePicker}. */
+	private final DatePicker startDatePicker = new DatePicker();
 
 }

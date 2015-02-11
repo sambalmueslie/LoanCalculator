@@ -3,6 +3,7 @@
  */
 package de.sambalmueslie.loan_calculator.backend.loan_mgt;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import de.sambalmueslie.loan_calculator.backend.common.BusinessObject;
@@ -20,6 +21,11 @@ public interface Loan extends BusinessObject {
 	double getAmount();
 
 	/**
+	 * @return the end {@link LocalDate}.
+	 */
+	LocalDate getEndDate();
+
+	/**
 	 * @return the redemption plan.
 	 */
 	List<RedemptionPlanEntry> getRedemptionPlan();
@@ -28,6 +34,11 @@ public interface Loan extends BusinessObject {
 	 * @return the risk capital of not fixed interest.
 	 */
 	double getRiskCapital();
+
+	/**
+	 * @return the start {@link LocalDate}.
+	 */
+	LocalDate getStartDate();
 
 	/**
 	 * @return the term in months.

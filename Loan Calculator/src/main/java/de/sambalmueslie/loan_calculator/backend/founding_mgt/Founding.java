@@ -3,6 +3,7 @@
  */
 package de.sambalmueslie.loan_calculator.backend.founding_mgt;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import de.sambalmueslie.loan_calculator.backend.common.BusinessObject;
@@ -54,5 +55,15 @@ public interface Founding extends BusinessObject {
 	 * @return the total payment (interest and amount).
 	 */
 	double getTotalPayment();
+
+	/**
+	 * @return the end {@link LocalDate}.
+	 */
+	LocalDate getEndDate();
+
+	/**
+	 * @return the start {@link LocalDate}.
+	 */
+	LocalDate getStartDate();
 
 }

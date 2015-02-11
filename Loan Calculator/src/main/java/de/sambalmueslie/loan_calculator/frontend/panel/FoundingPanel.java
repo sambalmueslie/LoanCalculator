@@ -98,6 +98,9 @@ public class FoundingPanel extends BorderPane {
 		infoPanel.add(I18n.get(I18n.TEXT_TOTAL_INTEREST), founding.getTotalInterest(), TextFieldType.CURRENCY);
 		infoPanel.add(I18n.get(I18n.TEXT_TOTAL_PAYMENT), founding.getTotalPayment(), TextFieldType.CURRENCY);
 		infoPanel.add(I18n.get(I18n.TEXT_TERM), founding.getTerm(), TextFieldType.NUMBER);
+
+		infoPanel.add(I18n.get(I18n.TEXT_START_DATE), founding.getStartDate(), TextFieldType.DATE);
+		infoPanel.add(I18n.get(I18n.TEXT_END_DATE), founding.getEndDate(), TextFieldType.DATE);
 		setLeft(infoPanel);
 	}
 
@@ -114,6 +117,8 @@ public class FoundingPanel extends BorderPane {
 		infoPanel.update(I18n.get(I18n.TEXT_TOTAL_INTEREST), founding.getTotalInterest());
 		infoPanel.update(I18n.get(I18n.TEXT_TOTAL_PAYMENT), founding.getTotalPayment());
 		infoPanel.update(I18n.get(I18n.TEXT_TERM), founding.getTerm());
+		infoPanel.update(I18n.get(I18n.TEXT_START_DATE), founding.getStartDate());
+		infoPanel.update(I18n.get(I18n.TEXT_END_DATE), founding.getEndDate());
 
 		setupCharts();
 	}

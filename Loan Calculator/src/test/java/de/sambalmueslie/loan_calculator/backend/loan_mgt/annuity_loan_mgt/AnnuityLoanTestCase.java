@@ -25,7 +25,7 @@ public class AnnuityLoanTestCase {
 		final double fixedDebitInterest = 2.00;
 		final int fixedInterestPeriod = 50;
 		final double estimatedDebitInterest = 5.00;
-		final AnnuityLoan loan = new BaseAnnuityLoan(0, name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
+		final AnnuityLoan loan = new BaseAnnuityLoan(0, name, amount, null, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
 
 		final RedemptionPlanEntry entry = loan.getRedemptionPlan().get(1);
 		assertEquals(2000, entry.getInterest(), 0.001);
@@ -48,7 +48,7 @@ public class AnnuityLoanTestCase {
 		final double fixedDebitInterest = 2.00;
 		final int fixedInterestPeriod = 10;
 		final double estimatedDebitInterest = 5.00;
-		final AnnuityLoan loan = new BaseAnnuityLoan(0, name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
+		final AnnuityLoan loan = new BaseAnnuityLoan(0, name, amount, null, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
 		assertEquals(name, loan.getName());
 		assertEquals(amount, loan.getAmount(), 0.01);
 		assertEquals(paymentRate, loan.getPaymentRate(), 0.01);
@@ -81,14 +81,14 @@ public class AnnuityLoanTestCase {
 		double fixedDebitInterest = 2.00;
 		int fixedInterestPeriod = 10;
 		double estimatedDebitInterest = 5.00;
-		final BaseAnnuityLoan loan = new BaseAnnuityLoan(0, name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
+		final BaseAnnuityLoan loan = new BaseAnnuityLoan(0, name, amount, null, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
 		name = "New-Name";
 		amount = 50000;
 		paymentRate = 4.00;
 		fixedDebitInterest = 3.00;
 		fixedInterestPeriod = 15;
 		estimatedDebitInterest = 6.00;
-		loan.update(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
+		loan.update(name, amount, null, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
 		assertEquals(name, loan.getName());
 		assertEquals(amount, loan.getAmount(), 0.01);
 		assertEquals(paymentRate, loan.getPaymentRate(), 0.01);

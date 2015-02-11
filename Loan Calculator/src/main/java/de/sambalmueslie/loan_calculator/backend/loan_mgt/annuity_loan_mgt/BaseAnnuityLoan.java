@@ -3,6 +3,8 @@
  */
 package de.sambalmueslie.loan_calculator.backend.loan_mgt.annuity_loan_mgt;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,11 +23,13 @@ public class BaseAnnuityLoan extends BaseLoan implements AnnuityLoan {
 	/**
 	 * Constructor.
 	 *
-	 * @param {@link BaseLoan#getId()}
+	 * @param id
+	 *            {@link BaseLoan#getId()}
 	 * @param name
 	 *            {@link BaseLoan#getName()}
 	 * @param amount
 	 *            {@link BaseLoan#getAmount()}
+	 * @param localDate
 	 * @param paymentRate
 	 *            {@link #paymentRate}
 	 * @param fixedDebitInterest
@@ -35,10 +39,10 @@ public class BaseAnnuityLoan extends BaseLoan implements AnnuityLoan {
 	 * @param estimatedDebitInterest
 	 *            {@link #estimatedDebitInterest}
 	 */
-	public BaseAnnuityLoan(final long id, final String name, final double amount, final double paymentRate, final double fixedDebitInterest,
-			final int fixedInterestPeriod, final double estimatedDebitInterest) throws IllegalArgumentException {
-		super(id, name, amount);
-		update(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
+	public BaseAnnuityLoan(final long id, final String name, final double amount, final LocalDate localDate, final double paymentRate,
+			final double fixedDebitInterest, final int fixedInterestPeriod, final double estimatedDebitInterest) {
+		super(id, name, amount, localDate);
+		update(name, amount, localDate, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
 	}
 
 	/**
@@ -159,10 +163,11 @@ public class BaseAnnuityLoan extends BaseLoan implements AnnuityLoan {
 	 * @param estimatedDebitInterest
 	 *            {@link #estimatedDebitInterest}
 	 */
-	void update(final String name, final double amount, final double paymentRate, final double fixedDebitInterest, final int fixedInterestPeriod,
-			final double estimatedDebitInterest) {
+	void update(final String name, final double amount, final LocalDate startDate, final double paymentRate, final double fixedDebitInterest,
+			final int fixedInterestPeriod, final double estimatedDebitInterest) {
 		setName(name);
 		setAmount(amount);
+		setStartDate(startDate);
 		this.paymentRate = paymentRate;
 		this.fixedDebitInterest = fixedDebitInterest;
 		this.fixedInterestPeriod = fixedInterestPeriod;
@@ -203,6 +208,11 @@ public class BaseAnnuityLoan extends BaseLoan implements AnnuityLoan {
 
 		term = redemptionPlan.size() - 1;
 		totalPayment = totalInterest + getAmount();
+
+		final LocalDate startDate = getStartDate();
+		final LocalDate endDate = startDate.plus(getTerm(), ChronoUnit.YEARS);
+		setEndDate(endDate);
+
 		notifyChanged();
 	}
 

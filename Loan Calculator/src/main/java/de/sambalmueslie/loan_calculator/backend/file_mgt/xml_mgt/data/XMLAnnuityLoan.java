@@ -58,6 +58,13 @@ public class XMLAnnuityLoan {
 	}
 
 	/**
+	 * @return the {@link #startDate}
+	 */
+	public String getStartDate() {
+		return startDate;
+	}
+
+	/**
 	 * @param amount
 	 *            the amount to set
 	 */
@@ -113,6 +120,14 @@ public class XMLAnnuityLoan {
 		this.paymentRate = paymentRate;
 	}
 
+	/**
+	 * @param startDate
+	 *            the startDate to set
+	 */
+	public void setStartDate(final String startDate) {
+		this.startDate = startDate;
+	}
+
 	/** the amount. */
 	private double amount;
 	/** the estimated debit interest (geschaetzter Sollzins nach Bindungsende). */
@@ -127,4 +142,6 @@ public class XMLAnnuityLoan {
 	private String name;
 	/** the payment rate (Tilgung in Prozent). */
 	private double paymentRate;
+	/** the start date. */
+	private String startDate;
 }

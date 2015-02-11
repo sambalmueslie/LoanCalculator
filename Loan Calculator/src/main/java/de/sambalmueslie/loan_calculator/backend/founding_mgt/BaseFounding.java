@@ -3,6 +3,7 @@
  */
 package de.sambalmueslie.loan_calculator.backend.founding_mgt;
 
+import java.time.LocalDate;
 import java.util.*;
 
 import de.sambalmueslie.loan_calculator.backend.common.BaseBusinessObject;
@@ -62,6 +63,14 @@ public class BaseFounding extends BaseBusinessObject implements Founding {
 	}
 
 	/**
+	 * @see de.sambalmueslie.loan_calculator.backend.founding_mgt.Founding#getEndDate()
+	 */
+	@Override
+	public LocalDate getEndDate() {
+		return endDate;
+	}
+
+	/**
 	 * @see de.sambalmueslie.loan_calculator.model.founding.Founding#getLoans()
 	 */
 	@Override
@@ -83,6 +92,14 @@ public class BaseFounding extends BaseBusinessObject implements Founding {
 	@Override
 	public double getRiskCapital() {
 		return riskCapital;
+	}
+
+	/**
+	 * @see de.sambalmueslie.loan_calculator.backend.founding_mgt.Founding#getStartDate()
+	 */
+	@Override
+	public LocalDate getStartDate() {
+		return startDate;
 	}
 
 	/**
@@ -145,6 +162,7 @@ public class BaseFounding extends BaseBusinessObject implements Founding {
 		totalPayment = 0;
 		riskCapital = 0;
 		redemptionPlan = new LinkedList<>();
+		startDate = LocalDate.now();
 
 		for (final Loan loan : loans.values()) {
 			amount += loan.getAmount();
@@ -170,6 +188,12 @@ public class BaseFounding extends BaseBusinessObject implements Founding {
 					redemptionPlan.set(i, merge);
 				}
 			}
+			if (loan.getStartDate().isBefore(startDate)) {
+				startDate = loan.getStartDate();
+			}
+			if (endDate == null || loan.getEndDate().isAfter(endDate)) {
+				endDate = loan.getEndDate();
+			}
 		}
 		notifyChanged();
 	}
@@ -188,12 +212,16 @@ public class BaseFounding extends BaseBusinessObject implements Founding {
 	private double amount;
 	/** the name of the bank. */
 	private String bankName;
+	/** the end {@link LocalDate}. */
+	private LocalDate endDate;
 	/** the {@link Loan} by id. */
 	private final Map<Long, Loan> loans = new LinkedHashMap<>();
 	/** the {@link List} if {@link RedemptionPlanEntry}s. */
 	private List<RedemptionPlanEntry> redemptionPlan = new LinkedList<>();
 	/** the risk capital. */
 	private double riskCapital;
+	/** the start {@link LocalDate}. */
+	private LocalDate startDate;
 	/** the term. */
 	private int term;
 	/** the total interest. */

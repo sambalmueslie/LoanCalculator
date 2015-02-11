@@ -24,7 +24,7 @@ class InfoPanel extends TilePane {
 	 */
 	InfoPanel() {
 		getStyleClass().add(Constants.CLASS_PANEL_BORDER);
-		setPrefColumns(1);
+		setPrefColumns(2);
 	}
 
 	/**
@@ -80,6 +80,8 @@ class InfoPanel extends TilePane {
 			return new PercentageTextField();
 		case NUMBER:
 			return new NumberTextField();
+		case DATE:
+			return new DateTextField();
 		}
 	}
 

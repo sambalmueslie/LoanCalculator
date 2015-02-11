@@ -3,6 +3,8 @@
  */
 package de.sambalmueslie.loan_calculator.backend.loan_mgt.annuity_loan_mgt;
 
+import java.time.LocalDate;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,14 +20,14 @@ public class AnnuityLoanMgr extends BaseBusinessObjectMgr<AnnuityLoan> {
 	/** the logger. */
 	private static final Logger logger = LogManager.getLogger(AnnuityLoanMgr.class);
 
-	public AnnuityLoan add(final String name, final double amount, final double paymentRate, final double fixedDebitInterest, final int fixedInterestPeriod,
-			final double estimatedDebitInterest) {
+	public AnnuityLoan add(final String name, final double amount, final LocalDate startDate, final double paymentRate, final double fixedDebitInterest,
+			final int fixedInterestPeriod, final double estimatedDebitInterest) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("Handle request to add loan " + name + ", " + amount + ", " + paymentRate + ", " + fixedDebitInterest + ", " + fixedInterestPeriod
-					+ ", " + estimatedDebitInterest);
+			logger.debug("Handle request to add loan " + name + ", " + amount + ", " + startDate + ", " + paymentRate + ", " + fixedDebitInterest + ", "
+					+ fixedInterestPeriod + ", " + estimatedDebitInterest);
 		}
 		if (!isInputValid(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest)) return null;
-		final AnnuityLoan annuityLoan = new BaseAnnuityLoan(createNewId(), name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod,
+		final AnnuityLoan annuityLoan = new BaseAnnuityLoan(createNewId(), name, amount, startDate, paymentRate, fixedDebitInterest, fixedInterestPeriod,
 				estimatedDebitInterest);
 		add(annuityLoan);
 		return annuityLoan;
@@ -40,17 +42,17 @@ public class AnnuityLoanMgr extends BaseBusinessObjectMgr<AnnuityLoan> {
 		remove(loan);
 	}
 
-	public AnnuityLoan update(final long loanId, final String name, final double amount, final double paymentRate, final double fixedDebitInterest,
-			final int fixedInterestPeriod, final double estimatedDebitInterest) {
+	public AnnuityLoan update(final long loanId, final String name, final double amount, final LocalDate startDate, final double paymentRate,
+			final double fixedDebitInterest, final int fixedInterestPeriod, final double estimatedDebitInterest) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("Handle request to update loan " + loanId + ", " + name + ", " + amount + ", " + paymentRate + ", " + fixedDebitInterest + ", "
-					+ fixedInterestPeriod + ", " + estimatedDebitInterest);
+			logger.debug("Handle request to update loan " + loanId + ", " + name + ", " + amount + ", " + startDate + ", " + paymentRate + ", "
+					+ fixedDebitInterest + ", " + fixedInterestPeriod + ", " + estimatedDebitInterest);
 		}
 		if (!isInputValid(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest)) return null;
 		final AnnuityLoan loan = get(loanId);
 		if (loan == null) return null;
 		final BaseAnnuityLoan annuityLoan = (BaseAnnuityLoan) loan;
-		annuityLoan.update(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
+		annuityLoan.update(name, amount, startDate, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
 		return annuityLoan;
 	}
 

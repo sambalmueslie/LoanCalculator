@@ -3,6 +3,8 @@
  */
 package de.sambalmueslie.loan_calculator.frontend.external;
 
+import java.time.LocalDate;
+
 /**
  * The loan action listener.
  *
@@ -25,9 +27,11 @@ public interface LoanActionListener {
 	 *            the fixed interest period
 	 * @param estimatedDebitInterest
 	 *            the estimated debit interest
+	 * @param startDate
+	 *            the start {@link LocalDate}
 	 */
 	void requestAddAnnuityLoan(final String name, final double amount, final double paymentRate, final double fixedDebitInterest,
-			final int fixedInterestPeriod, final double estimatedDebitInterest);
+			final int fixedInterestPeriod, final double estimatedDebitInterest, LocalDate startDate);
 
 	/**
 	 * Request to add a building loan agreement.
@@ -52,10 +56,12 @@ public interface LoanActionListener {
 	 *            the contribution. (zins und tilgungsbeitrag mtl in promille).
 	 * @param aquisitonFee
 	 *            the aquisition fee (abschlussgebuehr in prozent).
+	 * @param startDate
+	 *            the start {@link LocalDate}
 	 */
 	void requestAddBuildingLoanAgreement(String name, double amount, final double creditInterest, final double regularSavingAmount,
 			final double minimumSavings, final int savingDuration, final double savingPhaseInterest, final double debitInterest, final double contribution,
-			final double aquisitonFee);
+			final double aquisitonFee, LocalDate startDate);
 
 	/**
 	 * Request to remove a loan.
@@ -82,9 +88,11 @@ public interface LoanActionListener {
 	 *            the fixed interest period
 	 * @param estimatedDebitInterest
 	 *            the estimated debit interest
+	 * @param startDate
+	 *            the start {@link LocalDate}
 	 */
 	void requestUpdateAnnuityLoan(long loanId, final String name, final double amount, final double paymentRate, final double fixedDebitInterest,
-			final int fixedInterestPeriod, final double estimatedDebitInterest);
+			final int fixedInterestPeriod, final double estimatedDebitInterest, LocalDate startDate);
 
 	/**
 	 * Request to update a building loan agreement.
@@ -111,9 +119,11 @@ public interface LoanActionListener {
 	 *            the contribution. (zins und tilgungsbeitrag mtl in promille).
 	 * @param aquisitonFee
 	 *            the aquisition fee (abschlussgebuehr in prozent).
+	 * @param startDate
+	 *            the start {@link LocalDate}
 	 */
 	void requestUpdateBuildingLoanAgreement(long loanId, String name, double amount, final double creditInterest, final double regularSavingAmount,
 			final double minimumSavings, final int savingDuration, final double savingPhaseInterest, final double debitInterest, final double contribution,
-			final double aquisitonFee);
+			final double aquisitonFee, LocalDate startDate);
 
 }

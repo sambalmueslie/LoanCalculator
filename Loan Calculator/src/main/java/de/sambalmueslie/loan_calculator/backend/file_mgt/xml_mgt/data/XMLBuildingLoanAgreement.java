@@ -88,6 +88,13 @@ public class XMLBuildingLoanAgreement {
 	}
 
 	/**
+	 * @return the {@link #startDate}
+	 */
+	public String getStartDate() {
+		return startDate;
+	}
+
+	/**
 	 * @param amount
 	 *            the amount to set
 	 */
@@ -175,6 +182,14 @@ public class XMLBuildingLoanAgreement {
 		this.savingPhaseInterest = savingPhaseInterest;
 	}
 
+	/**
+	 * @param startDate
+	 *            the startDate to set
+	 */
+	public void setStartDate(final String startDate) {
+		this.startDate = startDate;
+	}
+
 	/** the amount. */
 	private double amount;
 	/** the aquisition fee (abschlussgebuehr in prozent) */
@@ -187,20 +202,17 @@ public class XMLBuildingLoanAgreement {
 	private double debitInterest;
 	/** the id. */
 	private long id;
-
 	/** the minimum savings (mindestsparguthaben in prozent) */
 	private double minimumSavings;
-
 	/** the title. */
 	private String name;
-
 	/** the regular saving amount. (monatlicher regelsparbetrag in promille) */
 	private double regularSavingAmount;
-
 	/** the saving duration (spardauer). */
 	private int savingDuration;
-
 	/** the interest to pay for getting the money, while beeing in saving phase (zins für uebergangsdarlehen). */
 	private double savingPhaseInterest;
+	/** the start date. */
+	private String startDate;
 
 }

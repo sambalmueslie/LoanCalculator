@@ -3,6 +3,8 @@
  */
 package de.sambalmueslie.loan_calculator.backend.loan_mgt.building_loan_agreement_mgt;
 
+import java.time.LocalDate;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,16 +19,16 @@ public class BuildingLoanAgreementMgr extends BaseBusinessObjectMgr<BuildingLoan
 	/** the logger. */
 	private static final Logger logger = LogManager.getLogger(BuildingLoanAgreementMgr.class);
 
-	public BuildingLoanAgreement add(final String name, final double amount, final double creditInterest, final double regularSavingAmount,
-			final double minimumSavings, final int savingDuration, final double savingPhaseInterest, final double debitInterest, final double contribution,
-			final double aquisitonFee) {
+	public BuildingLoanAgreement add(final String name, final double amount, final LocalDate startDate, final double creditInterest,
+			final double regularSavingAmount, final double minimumSavings, final int savingDuration, final double savingPhaseInterest,
+			final double debitInterest, final double contribution, final double aquisitonFee) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Handle request to add building loan agreement " + name + ", " + amount + ", " + creditInterest + ", " + regularSavingAmount + ", "
 					+ minimumSavings + ", " + savingDuration + ", " + savingPhaseInterest + ", " + debitInterest + ", " + contribution + ", " + aquisitonFee);
 		}
 		if (!isInputValid(name, amount, creditInterest, regularSavingAmount, minimumSavings, savingDuration, savingPhaseInterest, debitInterest, contribution,
 				aquisitonFee)) return null;
-		final BaseBuildingLoanAgreement baseBuildingLoanAgreement = new BaseBuildingLoanAgreement(createNewId(), name, amount, creditInterest,
+		final BaseBuildingLoanAgreement baseBuildingLoanAgreement = new BaseBuildingLoanAgreement(createNewId(), name, amount, startDate, creditInterest,
 				regularSavingAmount, minimumSavings, savingDuration, savingPhaseInterest, debitInterest, contribution, aquisitonFee);
 		add(baseBuildingLoanAgreement);
 		return baseBuildingLoanAgreement;
@@ -41,7 +43,7 @@ public class BuildingLoanAgreementMgr extends BaseBusinessObjectMgr<BuildingLoan
 		remove(loan);
 	}
 
-	public BuildingLoanAgreement update(final long loanId, final String name, final double amount, final double creditInterest,
+	public BuildingLoanAgreement update(final long loanId, final String name, final double amount, final LocalDate startDate, final double creditInterest,
 			final double regularSavingAmount, final double minimumSavings, final int savingDuration, final double savingPhaseInterest,
 			final double debitInterest, final double contribution, final double aquisitonFee) {
 		if (logger.isDebugEnabled()) {
@@ -54,8 +56,8 @@ public class BuildingLoanAgreementMgr extends BaseBusinessObjectMgr<BuildingLoan
 		final BuildingLoanAgreement loan = get(loanId);
 		if (loan == null) return null;
 		final BaseBuildingLoanAgreement buildingLoanAgreement = (BaseBuildingLoanAgreement) loan;
-		buildingLoanAgreement.update(name, amount, creditInterest, regularSavingAmount, minimumSavings, savingDuration, savingPhaseInterest, debitInterest,
-				contribution, aquisitonFee);
+		buildingLoanAgreement.update(name, amount, startDate, creditInterest, regularSavingAmount, minimumSavings, savingDuration, savingPhaseInterest,
+				debitInterest, contribution, aquisitonFee);
 		return buildingLoanAgreement;
 	}
 

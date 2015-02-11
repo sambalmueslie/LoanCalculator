@@ -38,6 +38,8 @@ public class BuildingLoanAgreementPanel extends LoanPanel<BuildingLoanAgreement>
 		addInfo(I18n.get(I18n.TEXT_TOTAL_AMOUNT), buildingLoanAgreement.getAmount(), TextFieldType.CURRENCY);
 		addInfo(I18n.get(I18n.TEXT_TOTAL_INTEREST), buildingLoanAgreement.getTotalInterest(), TextFieldType.CURRENCY);
 		addInfo(I18n.get(I18n.TEXT_TOTAL_PAYMENT), buildingLoanAgreement.getTotalPayment(), TextFieldType.CURRENCY);
+		addInfo(I18n.get(I18n.TEXT_START_DATE), buildingLoanAgreement.getStartDate(), TextFieldType.DATE);
+		addInfo(I18n.get(I18n.TEXT_END_DATE), buildingLoanAgreement.getEndDate(), TextFieldType.DATE);
 
 		addRedemptionPlanChart();
 
@@ -64,6 +66,9 @@ public class BuildingLoanAgreementPanel extends LoanPanel<BuildingLoanAgreement>
 		updateInfo(I18n.get(I18n.TEXT_TOTAL_AMOUNT), buildingLoanAgreement.getAmount());
 		updateInfo(I18n.get(I18n.TEXT_TOTAL_INTEREST), buildingLoanAgreement.getTotalInterest());
 		updateInfo(I18n.get(I18n.TEXT_TOTAL_PAYMENT), buildingLoanAgreement.getTotalPayment());
+
+		updateInfo(I18n.get(I18n.TEXT_START_DATE), buildingLoanAgreement.getStartDate());
+		updateInfo(I18n.get(I18n.TEXT_END_DATE), buildingLoanAgreement.getEndDate());
 
 		addRedemptionPlanChart();
 

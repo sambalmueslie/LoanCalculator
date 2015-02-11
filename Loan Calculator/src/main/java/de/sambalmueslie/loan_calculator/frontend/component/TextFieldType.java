@@ -16,5 +16,7 @@ public enum TextFieldType {
 	/** a percentage type. */
 	PERCENTAGE,
 	/** the simple text type. */
-	TEXT
+	TEXT,
+	/** a timestamp type. */
+	DATE
 }

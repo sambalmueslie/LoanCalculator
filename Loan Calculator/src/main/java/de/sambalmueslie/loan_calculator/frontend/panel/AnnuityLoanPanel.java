@@ -40,6 +40,9 @@ public class AnnuityLoanPanel extends LoanPanel<AnnuityLoan> {
 		addInfo(I18n.get(I18n.TEXT_TOTAL_INTEREST), loan.getTotalInterest(), TextFieldType.CURRENCY);
 		addInfo(I18n.get(I18n.TEXT_TOTAL_PAYMENT), loan.getTotalPayment(), TextFieldType.CURRENCY);
 
+		addInfo(I18n.get(I18n.TEXT_START_DATE), loan.getStartDate(), TextFieldType.DATE);
+		addInfo(I18n.get(I18n.TEXT_END_DATE), loan.getEndDate(), TextFieldType.DATE);
+
 		final LineChartSeriesDefinition<AnnuityLoan, RedemptionPlanEntry> s1 = new LineChartSeriesDefinition<>(I18n.get(I18n.TEXT_RESIDUAL_DEBT),
 				RedemptionPlanEntry::getResidualDebt, AnnuityLoan::getRedemptionPlan);
 		final GenericLineChart<AnnuityLoan, RedemptionPlanEntry> residualDebtChart = new GenericLineChart<>(I18n.get(I18n.REDEMPTION_PLAN_CHART_TITLE), s1);
@@ -68,6 +71,9 @@ public class AnnuityLoanPanel extends LoanPanel<AnnuityLoan> {
 		updateInfo(I18n.get(I18n.TEXT_TOTAL_AMOUNT), loan.getAmount());
 		updateInfo(I18n.get(I18n.TEXT_TOTAL_INTEREST), loan.getTotalInterest());
 		updateInfo(I18n.get(I18n.TEXT_TOTAL_PAYMENT), loan.getTotalPayment());
+
+		updateInfo(I18n.get(I18n.TEXT_START_DATE), loan.getStartDate());
+		updateInfo(I18n.get(I18n.TEXT_END_DATE), loan.getEndDate());
 
 		final LineChartSeriesDefinition<AnnuityLoan, RedemptionPlanEntry> s1 = new LineChartSeriesDefinition<>(I18n.get(I18n.TEXT_RESIDUAL_DEBT),
 				RedemptionPlanEntry::getResidualDebt, AnnuityLoan::getRedemptionPlan);
