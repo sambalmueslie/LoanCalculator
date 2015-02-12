@@ -32,4 +32,9 @@ public interface AnnuityLoan extends Loan {
 	 */
 	double getPaymentRate();
 
+	/**
+	 * @return the unscheduled repayment.
+	 */
+	double getUnscheduledRepayment();
+
 }

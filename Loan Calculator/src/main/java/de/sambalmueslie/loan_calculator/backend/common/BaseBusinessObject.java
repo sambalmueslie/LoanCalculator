@@ -65,7 +65,7 @@ public abstract class BaseBusinessObject implements BusinessObject {
 	 * Notify that the {@link BusinessObject} has changed.
 	 */
 	protected void notifyChanged() {
-		listeners.forEach(l -> l.businessObjectChanged(this));
+		new LinkedList<>(listeners).forEach(l -> l.businessObjectChanged(this));
 	}
 
 	/**

@@ -9,6 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.building_loan_agreement_mgt.BuildingLoanAgreement;
+import de.sambalmueslie.loan_calculator.backend.loan_mgt.building_loan_agreement_mgt.BuildingLoanAgreementSettings;
 import de.sambalmueslie.loan_calculator.frontend.component.CurrencyTextField;
 import de.sambalmueslie.loan_calculator.frontend.component.NumberTextField;
 import de.sambalmueslie.loan_calculator.frontend.component.PercentageTextField;
@@ -114,79 +115,87 @@ public class ModifyBuildingLoanAgreementDialog extends Dialog<ButtonType> {
 	}
 
 	/**
+	 * @return the {@link BuildingLoanAgreementSettings}.
+	 */
+	public BuildingLoanAgreementSettings getSettings() {
+		return new BuildingLoanAgreementSettings(getName(), getAmount(), getStartDate(), getCreditInterest(), getRegularSavingAmount(), getMinimumSavings(),
+				getSavingDuration(), getSavingPhaseInterest(), getDebitInterest(), getContribution(), getAquisitionFee());
+	}
+
+	/**
 	 * @return the amount.
 	 */
-	public double getAmount() {
+	private double getAmount() {
 		return amount.getValue();
 	}
 
 	/**
 	 * @return the aquisition feed.
 	 */
-	public double getAquisitionFee() {
+	private double getAquisitionFee() {
 		return aquisitonFee.getValue();
 	}
 
 	/**
 	 * @return the contribution.
 	 */
-	public double getContribution() {
+	private double getContribution() {
 		return contribution.getValue();
 	}
 
 	/**
 	 * @return the credit interest.
 	 */
-	public double getCreditInterest() {
+	private double getCreditInterest() {
 		return creditInterest.getValue();
 	}
 
 	/**
 	 * @return the debit interest.
 	 */
-	public double getDebitInterest() {
+	private double getDebitInterest() {
 		return debitInterest.getValue();
 	}
 
 	/**
 	 * @return the minimum savings.
 	 */
-	public double getMinimumSavings() {
+	private double getMinimumSavings() {
 		return minimumSavings.getValue();
 	}
 
 	/**
 	 * @return the name.
 	 */
-	public String getName() {
+	private String getName() {
 		return name.getValue();
 	}
 
 	/**
 	 * @return the regular saving amount.
 	 */
-	public double getRegularSavingAmount() {
+	private double getRegularSavingAmount() {
 		return regularSavingAmount.getValue();
 	}
 
 	/**
 	 * @return the saving duration.
 	 */
-	public int getSavingDuration() {
+	private int getSavingDuration() {
 		return savingDuration.getValue();
 	}
 
 	/**
 	 * @return the saving phase interest.
 	 */
-	public double getSavingPhaseInterest() {
+	private double getSavingPhaseInterest() {
 		return savingPhaseInterest.getValue();
 	}
 
 	/**
 	 * @return the start date.
 	 */
-	public LocalDate getStartDate() {
+	private LocalDate getStartDate() {
 		final LocalDate startDate = startDatePicker.getValue();
 		return (startDate == null) ? LocalDate.now() : startDate;
 	}

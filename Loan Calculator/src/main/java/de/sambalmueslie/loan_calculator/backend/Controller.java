@@ -22,7 +22,9 @@ import de.sambalmueslie.loan_calculator.backend.founding_mgt.Founding;
 import de.sambalmueslie.loan_calculator.backend.founding_mgt.FoundingMgr;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.Loan;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.annuity_loan_mgt.AnnuityLoanMgr;
+import de.sambalmueslie.loan_calculator.backend.loan_mgt.annuity_loan_mgt.AnnuityLoanSettings;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.building_loan_agreement_mgt.BuildingLoanAgreementMgr;
+import de.sambalmueslie.loan_calculator.backend.loan_mgt.building_loan_agreement_mgt.BuildingLoanAgreementSettings;
 import de.sambalmueslie.loan_calculator.backend.model.BaseModel;
 import de.sambalmueslie.loan_calculator.frontend.View;
 import de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener;
@@ -62,29 +64,16 @@ public class Controller {
 	/**
 	 * @see ViewActionListener#requestAddAnnuityLoan(String, double, double, double, int, double, LocalDate)
 	 */
-	Loan handleRequestAddAnnuityLoan(final String name, final double amount, final double paymentRate, final double fixedDebitInterest,
-			final int fixedInterestPeriod, final double estimatedDebitInterest, final LocalDate startDate) {
-		if (logger.isDebugEnabled()) {
-			logger.debug("Handle request to add loan " + name + ", " + amount + ", " + paymentRate + ", " + fixedDebitInterest + ", " + fixedInterestPeriod
-					+ ", " + estimatedDebitInterest + ", " + startDate);
-		}
-		return annuityLoanMgr.add(name, amount, startDate, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
+	Loan handleRequestAdd(final AnnuityLoanSettings settings) {
+		return annuityLoanMgr.add(settings);
 	}
 
 	/**
 	 * @see ViewActionListener#requestAddBuildingLoanAgreement(String, double, double, double, double, int, double, double, double, double,
 	 *      LocalDate)
 	 */
-	Loan handleRequestAddBuildingLoanAgreement(final String name, final double amount, final double creditInterest, final double regularSavingAmount,
-			final double minimumSavings, final int savingDuration, final double savingPhaseInterest, final double debitInterest, final double contribution,
-			final double aquisitonFee, final LocalDate startDate) {
-		if (logger.isDebugEnabled()) {
-			logger.debug("Handle request to add building loan agreement " + name + ", " + amount + ", " + creditInterest + ", " + regularSavingAmount + ", "
-					+ minimumSavings + ", " + savingDuration + ", " + savingPhaseInterest + ", " + debitInterest + ", " + contribution + ", " + aquisitonFee
-					+ ", " + startDate);
-		}
-		return buildingLoanAgreementMgr.add(name, amount, startDate, creditInterest, regularSavingAmount, minimumSavings, savingDuration, savingPhaseInterest,
-				debitInterest, contribution, aquisitonFee);
+	Loan handleRequestAdd(final BuildingLoanAgreementSettings settings) {
+		return buildingLoanAgreementMgr.add(settings);
 	}
 
 	/**
@@ -321,29 +310,16 @@ public class Controller {
 	/**
 	 * @see ViewActionListener#requestUpdateAnnuityLoan(long, String, double, double, double, int, double, LocalDate)
 	 */
-	void handleRequestUpdateAnnuityLoan(final long loanId, final String name, final double amount, final double paymentRate, final double fixedDebitInterest,
-			final int fixedInterestPeriod, final double estimatedDebitInterest, final LocalDate startDate) {
-		if (logger.isDebugEnabled()) {
-			logger.debug("Handle request to update loan " + loanId + ", " + name + ", " + amount + ", " + startDate + ", " + paymentRate + ", "
-					+ fixedDebitInterest + ", " + fixedInterestPeriod + ", " + estimatedDebitInterest);
-		}
-		annuityLoanMgr.update(loanId, name, amount, startDate, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
+	void handleRequestUpdate(final long loanId, final AnnuityLoanSettings settings) {
+		annuityLoanMgr.update(loanId, settings);
 	}
 
 	/**
 	 * @see ViewActionListener#requestUpdateBuildingLoanAgreement(long, String, double, double, double, double, int, double, double, double,
 	 *      double, LocalDate)
 	 */
-	void handleRequestUpdateBuildingLoanAgreement(final long loanId, final String name, final double amount, final double creditInterest,
-			final double regularSavingAmount, final double minimumSavings, final int savingDuration, final double savingPhaseInterest,
-			final double debitInterest, final double contribution, final double aquisitonFee, final LocalDate startDate) {
-		if (logger.isDebugEnabled()) {
-			logger.debug("Handle request to update building loan agreement " + loanId + ", " + name + ", " + amount + ", " + creditInterest + ", "
-					+ regularSavingAmount + ", " + minimumSavings + ", " + savingDuration + ", " + savingPhaseInterest + ", " + debitInterest + ", "
-					+ contribution + ", " + aquisitonFee);
-		}
-		buildingLoanAgreementMgr.update(loanId, name, amount, startDate, creditInterest, regularSavingAmount, minimumSavings, savingDuration,
-				savingPhaseInterest, debitInterest, contribution, aquisitonFee);
+	void handleRequestUpdate(final long loanId, final BuildingLoanAgreementSettings settings) {
+		buildingLoanAgreementMgr.update(loanId, settings);
 	}
 
 	/**
@@ -366,13 +342,13 @@ public class Controller {
 	 * Create some example data.
 	 */
 	private void setupExampleData() {
-		final Loan l1 = handleRequestAddAnnuityLoan("2,5% komplett fest", 100000, 3.0, 2.5, 100, 2.5, null);
-		final Loan l2 = handleRequestAddAnnuityLoan("2,5% 10 Jahre fest", 100000, 3.0, 2.5, 10, 5.0, null);
-		final Loan l3 = handleRequestAddAnnuityLoan("2,5% 15 Jahre fest", 100000, 3.0, 2.5, 15, 5.0, null);
+		final Loan l1 = handleRequestAdd(new AnnuityLoanSettings("2,5% komplett fest", 100000, LocalDate.now(), 3.0, 2.5, 100, 2.5, 5.0));
+		final Loan l2 = handleRequestAdd(new AnnuityLoanSettings("2,5% 10 Jahre fest", 100000, LocalDate.now(), 3.0, 2.5, 10, 5.0, 5.0));
+		final Loan l3 = handleRequestAdd(new AnnuityLoanSettings("2,5% 15 Jahre fest", 100000, LocalDate.now(), 3.0, 2.5, 15, 5.0, 5.0));
 
-		handleRequestAddAnnuityLoan("5,0% komplett fest", 100000, 3.0, 5.0, 100, 5.0, null);
-		handleRequestAddAnnuityLoan("5,0% 10 Jahre fest", 100000, 3.0, 5.0, 10, 7.5, null);
-		handleRequestAddAnnuityLoan("5,0% 15 Jahre fest", 100000, 3.0, 5.0, 15, 7.5, null);
+		handleRequestAdd(new AnnuityLoanSettings("5,0% komplett fest", 100000, LocalDate.now(), 3.0, 5.0, 100, 5.0, 5.0));
+		handleRequestAdd(new AnnuityLoanSettings("5,0% 10 Jahre fest", 100000, LocalDate.now(), 3.0, 5.0, 10, 7.5, 5.0));
+		handleRequestAdd(new AnnuityLoanSettings("5,0% 15 Jahre fest", 100000, LocalDate.now(), 3.0, 5.0, 15, 7.5, 5.0));
 
 		final Founding f1 = handleRequestAddFounding("Test founding 1", "Testbank");
 		final long f1Id = f1.getId();
@@ -380,9 +356,9 @@ public class Controller {
 		handleRequestFoundingAddLoan(f1Id, l2.getId());
 		handleRequestFoundingAddLoan(f1Id, l3.getId());
 
-		final Loan l4 = handleRequestAddAnnuityLoan("3,0% komplett fest", 100000, 3.0, 3.0, 100, 3.0, null);
-		final Loan l5 = handleRequestAddAnnuityLoan("3,0% 10 Jahre fest", 100000, 3.0, 3.0, 10, 5.0, null);
-		final Loan l6 = handleRequestAddAnnuityLoan("3,0% 15 Jahre fest", 100000, 3.0, 3.0, 15, 5.0, null);
+		final Loan l4 = handleRequestAdd(new AnnuityLoanSettings("3,0% komplett fest", 100000, LocalDate.now(), 3.0, 3.0, 100, 3.0, 5.0));
+		final Loan l5 = handleRequestAdd(new AnnuityLoanSettings("3,0% 10 Jahre fest", 100000, LocalDate.now(), 3.0, 3.0, 10, 5.0, 5.0));
+		final Loan l6 = handleRequestAdd(new AnnuityLoanSettings("3,0% 15 Jahre fest", 100000, LocalDate.now(), 3.0, 3.0, 15, 5.0, 5.0));
 
 		final Founding f2 = handleRequestAddFounding("Test founding 2", "Testbank");
 		final long f2Id = f2.getId();
@@ -394,8 +370,7 @@ public class Controller {
 		final long comparisonId = comparison.getId();
 		handleRequestComparisonAddFounding(comparisonId, f2Id);
 
-		handleRequestAddBuildingLoanAgreement("Eigenheim Rente", 100000, 0.25, 5.0, 25.0, 10, 1.5, 1.5, 7.0, 1.0, null);
-
+		handleRequestAdd(new BuildingLoanAgreementSettings("Eigenheim Rente", 100000, LocalDate.now(), 0.25, 5.0, 25.0, 10, 1.5, 1.5, 7.0, 1.0));
 	}
 
 	/** the {@link AnnuityLoanMgr}. */

@@ -9,6 +9,9 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.BaseLoan;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.BaseRedemptionPlanEntry;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.RedemptionPlanEntry;
@@ -25,24 +28,12 @@ public class BaseAnnuityLoan extends BaseLoan implements AnnuityLoan {
 	 *
 	 * @param id
 	 *            {@link BaseLoan#getId()}
-	 * @param name
-	 *            {@link BaseLoan#getName()}
-	 * @param amount
-	 *            {@link BaseLoan#getAmount()}
-	 * @param localDate
-	 * @param paymentRate
-	 *            {@link #paymentRate}
-	 * @param fixedDebitInterest
-	 *            {@link #fixedDebitInterest}
-	 * @param fixedInterestPeriod
-	 *            {@link #fixedInterestPeriod}
-	 * @param estimatedDebitInterest
-	 *            {@link #estimatedDebitInterest}
+	 * @param settings
+	 *            the {@link AnnuityLoanSettings}
 	 */
-	public BaseAnnuityLoan(final long id, final String name, final double amount, final LocalDate localDate, final double paymentRate,
-			final double fixedDebitInterest, final int fixedInterestPeriod, final double estimatedDebitInterest) {
-		super(id, name, amount, localDate);
-		update(name, amount, localDate, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
+	public BaseAnnuityLoan(final long id, final AnnuityLoanSettings settings) {
+		super(id, settings.getName());
+		update(settings);
 	}
 
 	/**
@@ -118,60 +109,35 @@ public class BaseAnnuityLoan extends BaseLoan implements AnnuityLoan {
 	}
 
 	/**
+	 * @see de.sambalmueslie.loan_calculator.backend.loan_mgt.annuity_loan_mgt.AnnuityLoan#getUnscheduledRepayment()
+	 */
+	@Override
+	public double getUnscheduledRepayment() {
+		return unscheduledRepayment;
+	}
+
+	/**
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		final StringBuilder builder = new StringBuilder();
-		builder.append("AnnuityLoan [getId()=");
-		builder.append(getId());
-		builder.append(", getTitle()=");
-		builder.append(getName());
-		builder.append(", getAmount()=");
-		builder.append(getAmount());
-		builder.append(", estimatedDebitInterest=");
-		builder.append(estimatedDebitInterest);
-		builder.append(", fixedDebitInterest=");
-		builder.append(fixedDebitInterest);
-		builder.append(", fixedInterestPeriod=");
-		builder.append(fixedInterestPeriod);
-		builder.append(", paymentRate=");
-		builder.append(paymentRate);
-		builder.append(", term=");
-		builder.append(term);
-		builder.append(", totalInterest=");
-		builder.append(totalInterest);
-		builder.append(", totalPayment=");
-		builder.append(totalPayment);
-		builder.append("]");
-		return builder.toString();
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 
 	/**
 	 * Update.
 	 *
-	 * @param name
-	 *            {@link BaseLoan#getName()}
-	 * @param amount
-	 *            {@link BaseLoan#getAmount()}
-	 * @param paymentRate
-	 *            {@link #paymentRate}
-	 * @param fixedDebitInterest
-	 *            {@link #fixedDebitInterest}
-	 * @param fixedInterestPeriod
-	 *            {@link #fixedInterestPeriod}
-	 * @param estimatedDebitInterest
-	 *            {@link #estimatedDebitInterest}
+	 * @param settings
+	 *            the {@link AnnuityLoanSettings}
 	 */
-	void update(final String name, final double amount, final LocalDate startDate, final double paymentRate, final double fixedDebitInterest,
-			final int fixedInterestPeriod, final double estimatedDebitInterest) {
-		setName(name);
-		setAmount(amount);
-		setStartDate(startDate);
-		this.paymentRate = paymentRate;
-		this.fixedDebitInterest = fixedDebitInterest;
-		this.fixedInterestPeriod = fixedInterestPeriod;
-		this.estimatedDebitInterest = estimatedDebitInterest;
+	void update(final AnnuityLoanSettings settings) {
+		setName(settings.getName());
+		setSettings(settings);
+		paymentRate = settings.getPaymentRate();
+		fixedDebitInterest = settings.getFixedDebitInterest();
+		fixedInterestPeriod = settings.getFixedInterestPeriod();
+		estimatedDebitInterest = settings.getEstimatedDebitInterest();
+		unscheduledRepayment = settings.getUnscheduledRepayment();
 		calculateValues();
 	}
 
@@ -184,6 +150,7 @@ public class BaseAnnuityLoan extends BaseLoan implements AnnuityLoan {
 		double residualDebt = getAmount();
 		totalInterest = 0;
 		riskCapital = 0;
+		final double repayment = getAmount() * unscheduledRepayment / 100;
 		final double annuity = getAmount() * (paymentRate + fixedDebitInterest) / 100;
 		redemptionPlan.add(new BaseRedemptionPlanEntry(residualDebt));
 
@@ -193,7 +160,7 @@ public class BaseAnnuityLoan extends BaseLoan implements AnnuityLoan {
 			final double interest = residualDebt * debitInterest;
 			totalInterest += interest;
 
-			final double redemption = annuity - interest;
+			final double redemption = annuity - interest + repayment;
 			if (redemption >= residualDebt) {
 				riskCapital += (noRisk) ? 0 : residualDebt;
 				residualDebt = 0;
@@ -234,5 +201,7 @@ public class BaseAnnuityLoan extends BaseLoan implements AnnuityLoan {
 	private double totalInterest;
 	/** the total payment (Zins + Finanzmittel). */
 	private double totalPayment;
+	/** the unscheduled repayment (sondertilgung jährlich). */
+	private double unscheduledRepayment;
 
 }

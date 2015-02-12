@@ -9,6 +9,9 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.BaseLoan;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.BaseRedemptionPlanEntry;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.RedemptionPlanEntry;
@@ -46,12 +49,9 @@ public class BaseBuildingLoanAgreement extends BaseLoan implements BuildingLoanA
 	 * @param aquisitonFee
 	 *            {@link #aquisitonFee}
 	 */
-	public BaseBuildingLoanAgreement(final long id, final String name, final double amount, final LocalDate startDate, final double creditInterest,
-			final double regularSavingAmount, final double minimumSavings, final int savingDuration, final double savingPhaseInterest,
-			final double debitInterest, final double contribution, final double aquisitonFee) {
-		super(id, name, amount, startDate);
-		update(name, amount, startDate, creditInterest, regularSavingAmount, minimumSavings, savingDuration, savingPhaseInterest, debitInterest, contribution,
-				aquisitonFee);
+	public BaseBuildingLoanAgreement(final long id, final BuildingLoanAgreementSettings settings) {
+		super(id, settings.getName());
+		update(settings);
 	}
 
 	/**
@@ -171,20 +171,7 @@ public class BaseBuildingLoanAgreement extends BaseLoan implements BuildingLoanA
 	 */
 	@Override
 	public String toString() {
-		final StringBuilder builder = new StringBuilder();
-		builder.append("BaseBuildingLoanAgreement [aquisitonFee=" + aquisitonFee);
-		builder.append(", contribution=" + contribution);
-		builder.append(", creditInterest=" + creditInterest);
-		builder.append(", debitInterest=" + debitInterest);
-		builder.append(", minimumSavings=" + minimumSavings);
-		builder.append(", regularSavingAmount=" + regularSavingAmount);
-		builder.append(", savingDuration=" + savingDuration);
-		builder.append(", savingPhaseInterest=" + savingPhaseInterest);
-		builder.append(", term=" + term);
-		builder.append(", totalInterest=" + totalInterest);
-		builder.append(", totalPayment=" + totalPayment);
-		builder.append("]");
-		return builder.toString();
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 
 	/**
@@ -210,20 +197,17 @@ public class BaseBuildingLoanAgreement extends BaseLoan implements BuildingLoanA
 	 * @param aquisitonFee
 	 *            {@link #aquisitonFee}
 	 */
-	void update(final String name, final double amount, final LocalDate startDate, final double creditInterest, final double regularSavingAmount,
-			final double minimumSavings, final int savingDuration, final double savingPhaseInterest, final double debitInterest, final double contribution,
-			final double aquisitonFee) {
-		setName(name);
-		setAmount(amount);
-		setStartDate(startDate);
-		this.creditInterest = creditInterest;
-		this.regularSavingAmount = regularSavingAmount;
-		this.minimumSavings = minimumSavings;
-		this.savingDuration = savingDuration;
-		this.savingPhaseInterest = savingPhaseInterest;
-		this.debitInterest = debitInterest;
-		this.contribution = contribution;
-		this.aquisitonFee = aquisitonFee;
+	void update(final BuildingLoanAgreementSettings settings) {
+		setName(settings.getName());
+		setSettings(settings);
+		this.creditInterest = settings.getCreditInterest();
+		this.regularSavingAmount = settings.getRegularSavingAmount();
+		this.minimumSavings = settings.getMinimumSavings();
+		this.savingDuration = settings.getSavingDuration();
+		this.savingPhaseInterest = settings.getSavingPhaseInterest();
+		this.debitInterest = settings.getDebitInterest();
+		this.contribution = settings.getContribution();
+		this.aquisitonFee = settings.getAquisitonFee();
 		calculateValues();
 	}
 

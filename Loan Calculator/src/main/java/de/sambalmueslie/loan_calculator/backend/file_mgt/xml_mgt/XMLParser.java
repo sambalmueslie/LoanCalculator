@@ -32,9 +32,11 @@ import de.sambalmueslie.loan_calculator.backend.founding_mgt.BaseFounding;
 import de.sambalmueslie.loan_calculator.backend.founding_mgt.Founding;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.Loan;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.annuity_loan_mgt.AnnuityLoan;
+import de.sambalmueslie.loan_calculator.backend.loan_mgt.annuity_loan_mgt.AnnuityLoanSettings;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.annuity_loan_mgt.BaseAnnuityLoan;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.building_loan_agreement_mgt.BaseBuildingLoanAgreement;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.building_loan_agreement_mgt.BuildingLoanAgreement;
+import de.sambalmueslie.loan_calculator.backend.loan_mgt.building_loan_agreement_mgt.BuildingLoanAgreementSettings;
 import de.sambalmueslie.loan_calculator.backend.model.BaseModel;
 import de.sambalmueslie.loan_calculator.backend.model.Model;
 
@@ -122,6 +124,7 @@ public class XMLParser {
 		xmlAnnuityLoan.setFixedDebitInterest(annuityLoan.getFixedDebitInterest());
 		xmlAnnuityLoan.setFixedInterestPeriod(annuityLoan.getFixedInterestPeriod());
 		xmlAnnuityLoan.setStartDate(parse(annuityLoan.getStartDate()));
+		xmlAnnuityLoan.setUnscheduledRepayment(annuityLoan.getUnscheduledRepayment());
 		return xmlAnnuityLoan;
 	}
 
@@ -259,7 +262,10 @@ public class XMLParser {
 		final int fixedInterestPeriod = xmlAnnuityLoan.getFixedInterestPeriod();
 		final double estimatedDebitInterest = xmlAnnuityLoan.getEstimatedDebitInterest();
 		final LocalDate startDate = parse(xmlAnnuityLoan.getStartDate());
-		return new BaseAnnuityLoan(id, name, amount, startDate, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
+		final double unscheduledRepayment = xmlAnnuityLoan.getUnscheduledRepayment();
+		final AnnuityLoanSettings settings = new AnnuityLoanSettings(name, amount, startDate, paymentRate, fixedDebitInterest, fixedInterestPeriod,
+				estimatedDebitInterest, unscheduledRepayment);
+		return new BaseAnnuityLoan(id, settings);
 	}
 
 	/**
@@ -285,8 +291,9 @@ public class XMLParser {
 		final double contribution = xmlBuildingLoanAgreement.getContribution();
 		final double aquisitonFee = xmlBuildingLoanAgreement.getAquisitonFee();
 		final LocalDate startDate = parse(xmlBuildingLoanAgreement.getStartDate());
-		return new BaseBuildingLoanAgreement(id, name, amount, startDate, creditInterest, regularSavingAmount, minimumSavings, savingDuration,
-				savingPhaseInterest, debitInterest, contribution, aquisitonFee);
+		final BuildingLoanAgreementSettings settings = new BuildingLoanAgreementSettings(name, amount, startDate, creditInterest, regularSavingAmount,
+				minimumSavings, savingDuration, savingPhaseInterest, debitInterest, contribution, aquisitonFee);
+		return new BaseBuildingLoanAgreement(id, settings);
 	}
 
 	/**

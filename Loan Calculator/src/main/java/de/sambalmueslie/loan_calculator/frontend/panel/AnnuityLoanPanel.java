@@ -28,6 +28,7 @@ public class AnnuityLoanPanel extends LoanPanel<AnnuityLoan> {
 		addInfo(I18n.get(I18n.TEXT_FIXED_DEBIT_INTEREST), loan.getFixedDebitInterest(), TextFieldType.PERCENTAGE);
 		addInfo(I18n.get(I18n.TEXT_FIXED_INTEREST_PERIOD), String.format("%d", loan.getFixedInterestPeriod()), TextFieldType.TEXT);
 		addInfo(I18n.get(I18n.TEXT_ESTIMATED_DEBIT_INTEREST), loan.getEstimatedDebitInterest(), TextFieldType.PERCENTAGE);
+		addInfo(I18n.get(I18n.TEXT_UNSCHEDULED_REPAYMENT), loan.getUnscheduledRepayment(), TextFieldType.PERCENTAGE);
 
 		final RedemptionPlanEntry redemption = loan.getRedemptionPlan().get(1);
 		addInfo(I18n.get(I18n.TEXT_ANNUITY_INTEREST), redemption.getInterest(), TextFieldType.CURRENCY);
@@ -60,6 +61,7 @@ public class AnnuityLoanPanel extends LoanPanel<AnnuityLoan> {
 		updateInfo(I18n.get(I18n.TEXT_FIXED_DEBIT_INTEREST), loan.getFixedDebitInterest());
 		updateInfo(I18n.get(I18n.TEXT_FIXED_INTEREST_PERIOD), String.format("%d", loan.getFixedInterestPeriod()));
 		updateInfo(I18n.get(I18n.TEXT_ESTIMATED_DEBIT_INTEREST), loan.getEstimatedDebitInterest());
+		updateInfo(I18n.get(I18n.TEXT_UNSCHEDULED_REPAYMENT), loan.getUnscheduledRepayment());
 
 		final RedemptionPlanEntry redemption = loan.getRedemptionPlan().get(1);
 		updateInfo(I18n.get(I18n.TEXT_ANNUITY_INTEREST), redemption.getInterest());

@@ -9,6 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.annuity_loan_mgt.AnnuityLoan;
+import de.sambalmueslie.loan_calculator.backend.loan_mgt.annuity_loan_mgt.AnnuityLoanSettings;
 import de.sambalmueslie.loan_calculator.frontend.component.CurrencyTextField;
 import de.sambalmueslie.loan_calculator.frontend.component.NumberTextField;
 import de.sambalmueslie.loan_calculator.frontend.component.PercentageTextField;
@@ -32,6 +33,8 @@ public class ModifyAnnuityLoanDialog extends Dialog<ButtonType> {
 	private static final int DEFAULT_FIXED_INTEREST_PERIOD = 100;
 	/** default value. */
 	private static final double DEFAULT_PAYMENT_RATE = 3.00;
+	/** default value. */
+	private static final double DEFAULT_UNSCHEDULED_REPAYMENT = 0.00;
 
 	/**
 	 * Constructor.
@@ -48,6 +51,7 @@ public class ModifyAnnuityLoanDialog extends Dialog<ButtonType> {
 			fixedInterestPeriod.setValue(loan.getFixedInterestPeriod());
 			estimatedDebitInterest.setValue(loan.getEstimatedDebitInterest());
 			startDatePicker.setValue(loan.getStartDate());
+			unscheduledRepayment.setValue(loan.getUnscheduledRepayment());
 		}
 
 		final DialogPane dialogPane = getDialogPane();
@@ -76,8 +80,11 @@ public class ModifyAnnuityLoanDialog extends Dialog<ButtonType> {
 		content.add(new Label(I18n.get(I18n.TEXT_ESTIMATED_DEBIT_INTEREST)), 0, 5);
 		content.add(estimatedDebitInterest, 1, 5);
 
-		content.add(new Label(I18n.get(I18n.TEXT_START_DATE)), 0, 6);
-		content.add(startDatePicker, 1, 6);
+		content.add(new Label(I18n.get(I18n.TEXT_UNSCHEDULED_REPAYMENT)), 0, 6);
+		content.add(unscheduledRepayment, 1, 6);
+
+		content.add(new Label(I18n.get(I18n.TEXT_START_DATE)), 0, 7);
+		content.add(startDatePicker, 1, 7);
 
 		getDialogPane().setContent(content);
 
@@ -89,53 +96,68 @@ public class ModifyAnnuityLoanDialog extends Dialog<ButtonType> {
 	}
 
 	/**
+	 * @return the {@link AnnuityLoanSettings}.
+	 */
+	public AnnuityLoanSettings getSettings() {
+		return new AnnuityLoanSettings(getName(), getAmount(), getStartDate(), getPaymentRate(), getFixedDebitInterest(), getFixedInterestPeriod(),
+				getEstimatedDebitInterest(), getUnscheduledRepayment());
+	}
+
+	/**
 	 * @return the amount.
 	 */
-	public double getAmount() {
+	private double getAmount() {
 		return amount.getValue();
 	}
 
 	/**
 	 * @return the estimated debit interest.
 	 */
-	public double getEstimatedDebitInterest() {
+	private double getEstimatedDebitInterest() {
 		return estimatedDebitInterest.getValue();
 	}
 
 	/**
 	 * @return the fixed debit interest.
 	 */
-	public double getFixedDebitInterest() {
+	private double getFixedDebitInterest() {
 		return fixedDebitInterest.getValue();
 	}
 
 	/**
 	 * @return the fixed interest period.
 	 */
-	public int getFixedInterestPeriod() {
+	private int getFixedInterestPeriod() {
 		return fixedInterestPeriod.getValue();
 	}
 
 	/**
 	 * @return the name.
 	 */
-	public String getName() {
+	private String getName() {
 		return name.getValue();
 	}
 
 	/**
 	 * @return the payment rate.
 	 */
-	public double getPaymentRate() {
+	private double getPaymentRate() {
 		return paymentRate.getValue();
 	}
 
 	/**
 	 * @return the start date.
 	 */
-	public LocalDate getStartDate() {
+	private LocalDate getStartDate() {
 		final LocalDate startDate = startDatePicker.getValue();
 		return (startDate == null) ? LocalDate.now() : startDate;
+	}
+
+	/**
+	 * @return the unscheduled repayment.
+	 */
+	private double getUnscheduledRepayment() {
+		return unscheduledRepayment.getValue();
 	}
 
 	/** the amount {@link CurrencyTextField}. */
@@ -152,5 +174,7 @@ public class ModifyAnnuityLoanDialog extends Dialog<ButtonType> {
 	private final PercentageTextField paymentRate = new PercentageTextField(DEFAULT_PAYMENT_RATE);
 	/** the start {@link DatePicker}. */
 	private final DatePicker startDatePicker = new DatePicker();
+	/** the unscheduled repayment {@link PercentageTextField}. */
+	private final PercentageTextField unscheduledRepayment = new PercentageTextField(DEFAULT_UNSCHEDULED_REPAYMENT);
 
 }

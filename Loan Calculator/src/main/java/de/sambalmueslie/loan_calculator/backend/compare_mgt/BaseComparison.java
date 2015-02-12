@@ -9,6 +9,7 @@ import java.util.Set;
 
 import de.sambalmueslie.loan_calculator.backend.common.BaseBusinessObject;
 import de.sambalmueslie.loan_calculator.backend.common.BusinessObject;
+import de.sambalmueslie.loan_calculator.backend.common.BusinessObjectChangeListener;
 
 /**
  * A base {@link Comparison}.
@@ -18,6 +19,21 @@ import de.sambalmueslie.loan_calculator.backend.common.BusinessObject;
  *            the {@link BusinessObject} type
  */
 public class BaseComparison<T extends BusinessObject> extends BaseBusinessObject implements Comparison<T> {
+
+	/**
+	 * The handler for the {@link BusinessObjectChangeListener}.
+	 *
+	 * @author sambalmueslie 2015
+	 */
+	private class BusinessObjectChangeHandler implements BusinessObjectChangeListener<T> {
+		/**
+		 * @see de.sambalmueslie.loan_calculator.backend.common.BusinessObjectChangeListener#businessObjectChanged(de.sambalmueslie.loan_calculator.backend.common.BusinessObject)
+		 */
+		@Override
+		public void businessObjectChanged(final T businessObject) {
+			notifyChanged();
+		}
+	}
 
 	/**
 	 * Constructor.
@@ -32,6 +48,7 @@ public class BaseComparison<T extends BusinessObject> extends BaseBusinessObject
 	public BaseComparison(final long id, final String name, final Class<T> type) {
 		super(id, name);
 		this.type = type;
+		changeHandler = new BusinessObjectChangeHandler();
 	}
 
 	/**
@@ -44,6 +61,7 @@ public class BaseComparison<T extends BusinessObject> extends BaseBusinessObject
 		if (element == null) return;
 		elements.add(element);
 		notifyChanged();
+		element.register(changeHandler);
 	}
 
 	/**
@@ -72,8 +90,11 @@ public class BaseComparison<T extends BusinessObject> extends BaseBusinessObject
 		if (element == null) return;
 		elements.remove(element);
 		notifyChanged();
+		element.unregister(changeHandler);
 	}
 
+	/** the {@link BusinessObjectChangeHandler}. */
+	private final BusinessObjectChangeHandler changeHandler;
 	/** the elements. */
 	private final Set<T> elements = new LinkedHashSet<>();
 	/** the type. */

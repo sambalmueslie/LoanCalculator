@@ -3,7 +3,6 @@
  */
 package de.sambalmueslie.loan_calculator.frontend.tree.contextmenu;
 
-import java.time.LocalDate;
 import java.util.Optional;
 
 import javafx.scene.control.ButtonType;
@@ -15,7 +14,9 @@ import org.apache.logging.log4j.Logger;
 
 import de.sambalmueslie.loan_calculator.backend.founding_mgt.Founding;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.Loan;
+import de.sambalmueslie.loan_calculator.backend.loan_mgt.annuity_loan_mgt.AnnuityLoanSettings;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.building_loan_agreement_mgt.BuildingLoanAgreement;
+import de.sambalmueslie.loan_calculator.backend.loan_mgt.building_loan_agreement_mgt.BuildingLoanAgreementSettings;
 import de.sambalmueslie.loan_calculator.frontend.dialog.ModifyAnnuityLoanDialog;
 import de.sambalmueslie.loan_calculator.frontend.dialog.ModifyBuildingLoanAgreementDialog;
 import de.sambalmueslie.loan_calculator.frontend.dialog.ModifyFoundingDialog;
@@ -57,16 +58,8 @@ public class BaseContextMenu extends ContextMenu {
 		final ModifyAnnuityLoanDialog dialog = new ModifyAnnuityLoanDialog(null);
 		final Optional<ButtonType> type = dialog.showAndWait();
 		if (type.isPresent() && type.get() == ButtonType.OK) {
-
-			final String name = dialog.getName();
-			final double amount = dialog.getAmount();
-			final double paymentRate = dialog.getPaymentRate();
-			final double fixedDebitInterest = dialog.getFixedDebitInterest();
-			final int fixedInterestPeriod = dialog.getFixedInterestPeriod();
-			final double estimatedDebitInterest = dialog.getEstimatedDebitInterest();
-			final LocalDate startDate = dialog.getStartDate();
-
-			listener.requestAddAnnuityLoan(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest, startDate);
+			final AnnuityLoanSettings settings = dialog.getSettings();
+			listener.requestAddAnnuityLoan(settings);
 		}
 	}
 
@@ -80,20 +73,8 @@ public class BaseContextMenu extends ContextMenu {
 		final ModifyBuildingLoanAgreementDialog dialog = new ModifyBuildingLoanAgreementDialog(null);
 		final Optional<ButtonType> type = dialog.showAndWait();
 		if (type.isPresent() && type.get() == ButtonType.OK) {
-			final String name = dialog.getName();
-			final double amount = dialog.getAmount();
-			final double creditInterest = dialog.getCreditInterest();
-			final double regularSavingAmount = dialog.getRegularSavingAmount();
-			final double minimumSavings = dialog.getMinimumSavings();
-			final int savingDuration = dialog.getSavingDuration();
-			final double savingPhaseInterest = dialog.getSavingPhaseInterest();
-			final double debitInterest = dialog.getDebitInterest();
-			final double contribution = dialog.getContribution();
-			final double aquisitonFee = dialog.getAquisitionFee();
-			final LocalDate startDate = dialog.getStartDate();
-
-			listener.requestAddBuildingLoanAgreement(name, amount, creditInterest, regularSavingAmount, minimumSavings, savingDuration, savingPhaseInterest,
-					debitInterest, contribution, aquisitonFee, startDate);
+			final BuildingLoanAgreementSettings settings = dialog.getSettings();
+			listener.requestAddBuildingLoanAgreement(settings);
 		}
 	}
 

@@ -3,8 +3,6 @@
  */
 package de.sambalmueslie.loan_calculator.backend.loan_mgt.annuity_loan_mgt;
 
-import java.time.LocalDate;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,15 +18,12 @@ public class AnnuityLoanMgr extends BaseBusinessObjectMgr<AnnuityLoan> {
 	/** the logger. */
 	private static final Logger logger = LogManager.getLogger(AnnuityLoanMgr.class);
 
-	public AnnuityLoan add(final String name, final double amount, final LocalDate startDate, final double paymentRate, final double fixedDebitInterest,
-			final int fixedInterestPeriod, final double estimatedDebitInterest) {
+	public AnnuityLoan add(final AnnuityLoanSettings settings) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("Handle request to add loan " + name + ", " + amount + ", " + startDate + ", " + paymentRate + ", " + fixedDebitInterest + ", "
-					+ fixedInterestPeriod + ", " + estimatedDebitInterest);
+			logger.debug("Handle request to add loan " + settings);
 		}
-		if (!isInputValid(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest)) return null;
-		final AnnuityLoan annuityLoan = new BaseAnnuityLoan(createNewId(), name, amount, startDate, paymentRate, fixedDebitInterest, fixedInterestPeriod,
-				estimatedDebitInterest);
+		if (!isInputValid(settings)) return null;
+		final AnnuityLoan annuityLoan = new BaseAnnuityLoan(createNewId(), settings);
 		add(annuityLoan);
 		return annuityLoan;
 	}
@@ -42,45 +37,27 @@ public class AnnuityLoanMgr extends BaseBusinessObjectMgr<AnnuityLoan> {
 		remove(loan);
 	}
 
-	public AnnuityLoan update(final long loanId, final String name, final double amount, final LocalDate startDate, final double paymentRate,
-			final double fixedDebitInterest, final int fixedInterestPeriod, final double estimatedDebitInterest) {
+	public AnnuityLoan update(final long loanId, final AnnuityLoanSettings settings) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("Handle request to update loan " + loanId + ", " + name + ", " + amount + ", " + startDate + ", " + paymentRate + ", "
-					+ fixedDebitInterest + ", " + fixedInterestPeriod + ", " + estimatedDebitInterest);
+			logger.debug("Handle request to update loan " + loanId + ", " + settings);
 		}
-		if (!isInputValid(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest)) return null;
+		if (!isInputValid(settings)) return null;
 		final AnnuityLoan loan = get(loanId);
 		if (loan == null) return null;
 		final BaseAnnuityLoan annuityLoan = (BaseAnnuityLoan) loan;
-		annuityLoan.update(name, amount, startDate, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest);
+		annuityLoan.update(settings);
 		return annuityLoan;
 	}
 
-	/**
-	 * Validate the input.
-	 *
-	 * @param name
-	 *            the name
-	 * @param amount
-	 *            the amount
-	 * @param paymentRate
-	 *            the payment rate
-	 * @param fixedDebitInterest
-	 *            the fixed debit interest
-	 * @param fixedInterestPeriod
-	 *            the fixed interest period
-	 * @param estimatedDebitInterest
-	 *            the estimated debit interest
-	 * @return <code>true</code> if valid, otherwise false
-	 */
-	private boolean isInputValid(final String name, final double amount, final double paymentRate, final double fixedDebitInterest,
-			final int fixedInterestPeriod, final double estimatedDebitInterest) {
-		if (name == null || name.isEmpty()) return false;
-		if (amount <= 0) return false;
-		if (paymentRate <= 0 || paymentRate >= 100) return false;
-		if (fixedDebitInterest < 0 || fixedDebitInterest >= 100) return false;
-		if (fixedInterestPeriod < 0) return false;
-		if (estimatedDebitInterest < 0 || estimatedDebitInterest >= 100) return false;
+	private boolean isInputValid(final AnnuityLoanSettings settings) {
+		if (settings.getName() == null || settings.getName().isEmpty()) return false;
+		if (settings.getAmount() <= 0) return false;
+		if (settings.getPaymentRate() <= 0 || settings.getPaymentRate() >= 100) return false;
+		if (settings.getFixedDebitInterest() < 0 || settings.getFixedDebitInterest() >= 100) return false;
+		if (settings.getFixedInterestPeriod() < 0) return false;
+		if (settings.getEstimatedDebitInterest() < 0 || settings.getEstimatedDebitInterest() >= 100) return false;
+		if (settings.getStartDate() == null) return false;
+		if (settings.getUnscheduledRepayment() < 0 || settings.getUnscheduledRepayment() >= 100) return false;
 		return true;
 	}
 

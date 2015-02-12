@@ -3,8 +3,6 @@
  */
 package de.sambalmueslie.loan_calculator.backend.loan_mgt.building_loan_agreement_mgt;
 
-import java.time.LocalDate;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,17 +17,12 @@ public class BuildingLoanAgreementMgr extends BaseBusinessObjectMgr<BuildingLoan
 	/** the logger. */
 	private static final Logger logger = LogManager.getLogger(BuildingLoanAgreementMgr.class);
 
-	public BuildingLoanAgreement add(final String name, final double amount, final LocalDate startDate, final double creditInterest,
-			final double regularSavingAmount, final double minimumSavings, final int savingDuration, final double savingPhaseInterest,
-			final double debitInterest, final double contribution, final double aquisitonFee) {
+	public BuildingLoanAgreement add(final BuildingLoanAgreementSettings settings) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("Handle request to add building loan agreement " + name + ", " + amount + ", " + creditInterest + ", " + regularSavingAmount + ", "
-					+ minimumSavings + ", " + savingDuration + ", " + savingPhaseInterest + ", " + debitInterest + ", " + contribution + ", " + aquisitonFee);
+			logger.debug("Handle request to add building loan agreement " + settings);
 		}
-		if (!isInputValid(name, amount, creditInterest, regularSavingAmount, minimumSavings, savingDuration, savingPhaseInterest, debitInterest, contribution,
-				aquisitonFee)) return null;
-		final BaseBuildingLoanAgreement baseBuildingLoanAgreement = new BaseBuildingLoanAgreement(createNewId(), name, amount, startDate, creditInterest,
-				regularSavingAmount, minimumSavings, savingDuration, savingPhaseInterest, debitInterest, contribution, aquisitonFee);
+		if (!isInputValid(settings)) return null;
+		final BaseBuildingLoanAgreement baseBuildingLoanAgreement = new BaseBuildingLoanAgreement(createNewId(), settings);
 		add(baseBuildingLoanAgreement);
 		return baseBuildingLoanAgreement;
 	}
@@ -43,37 +36,30 @@ public class BuildingLoanAgreementMgr extends BaseBusinessObjectMgr<BuildingLoan
 		remove(loan);
 	}
 
-	public BuildingLoanAgreement update(final long loanId, final String name, final double amount, final LocalDate startDate, final double creditInterest,
-			final double regularSavingAmount, final double minimumSavings, final int savingDuration, final double savingPhaseInterest,
-			final double debitInterest, final double contribution, final double aquisitonFee) {
+	public BuildingLoanAgreement update(final long loanId, final BuildingLoanAgreementSettings settings) {
 		if (logger.isDebugEnabled()) {
-			logger.debug("Handle request to update building loan agreement " + loanId + ", " + name + ", " + amount + ", " + creditInterest + ", "
-					+ regularSavingAmount + ", " + minimumSavings + ", " + savingDuration + ", " + savingPhaseInterest + ", " + debitInterest + ", "
-					+ contribution + ", " + aquisitonFee);
+			logger.debug("Handle request to update building loan agreement " + loanId + ", " + settings);
 		}
-		if (!isInputValid(name, amount, creditInterest, regularSavingAmount, minimumSavings, savingDuration, savingPhaseInterest, debitInterest, contribution,
-				aquisitonFee)) return null;
+		if (!isInputValid(settings)) return null;
 		final BuildingLoanAgreement loan = get(loanId);
 		if (loan == null) return null;
 		final BaseBuildingLoanAgreement buildingLoanAgreement = (BaseBuildingLoanAgreement) loan;
-		buildingLoanAgreement.update(name, amount, startDate, creditInterest, regularSavingAmount, minimumSavings, savingDuration, savingPhaseInterest,
-				debitInterest, contribution, aquisitonFee);
+		buildingLoanAgreement.update(settings);
 		return buildingLoanAgreement;
 	}
 
-	private boolean isInputValid(final String name, final double amount, final double creditInterest, final double regularSavingAmount,
-			final double minimumSavings, final int savingDuration, final double savingPhaseInterest, final double debitInterest, final double contribution,
-			final double aquisitonFee) {
-		if (name == null || name.isEmpty()) return false;
-		if (amount <= 0) return false;
-		if (creditInterest <= 0 || creditInterest >= 100) return false;
-		if (regularSavingAmount <= 0 || regularSavingAmount >= 100) return false;
-		if (minimumSavings <= 0 || minimumSavings >= 100) return false;
-		if (savingDuration < 0) return false;
-		if (savingPhaseInterest <= 0 || savingPhaseInterest >= 100) return false;
-		if (debitInterest <= 0 || debitInterest >= 100) return false;
-		if (contribution <= 0 || contribution >= 100) return false;
-		if (aquisitonFee < 0 || aquisitonFee >= 100) return false;
+	private boolean isInputValid(final BuildingLoanAgreementSettings settings) {
+		if (settings.getName() == null || settings.getName().isEmpty()) return false;
+		if (settings.getAmount() <= 0) return false;
+		if (settings.getCreditInterest() <= 0 || settings.getCreditInterest() >= 100) return false;
+		if (settings.getRegularSavingAmount() <= 0 || settings.getRegularSavingAmount() >= 100) return false;
+		if (settings.getMinimumSavings() <= 0 || settings.getMinimumSavings() >= 100) return false;
+		if (settings.getSavingDuration() < 0) return false;
+		if (settings.getSavingPhaseInterest() <= 0 || settings.getSavingPhaseInterest() >= 100) return false;
+		if (settings.getDebitInterest() <= 0 || settings.getDebitInterest() >= 100) return false;
+		if (settings.getContribution() <= 0 || settings.getContribution() >= 100) return false;
+		if (settings.getAquisitonFee() < 0 || settings.getAquisitonFee() >= 100) return false;
+		if (settings.getStartDate() == null) return false;
 		return true;
 	}
 

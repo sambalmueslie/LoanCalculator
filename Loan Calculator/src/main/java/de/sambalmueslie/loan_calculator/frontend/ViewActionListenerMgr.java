@@ -3,10 +3,11 @@
  */
 package de.sambalmueslie.loan_calculator.frontend;
 
-import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
+import de.sambalmueslie.loan_calculator.backend.loan_mgt.annuity_loan_mgt.AnnuityLoanSettings;
+import de.sambalmueslie.loan_calculator.backend.loan_mgt.building_loan_agreement_mgt.BuildingLoanAgreementSettings;
 import de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener;
 
 /**
@@ -17,25 +18,19 @@ import de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener;
 public class ViewActionListenerMgr implements ViewActionListener {
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.frontend.external.LoanActionListener#requestAddAnnuityLoan(java.lang.String, double, double,
-	 *      double, int, double, java.time.LocalDate)
+	 * @see de.sambalmueslie.loan_calculator.frontend.external.LoanActionListener#requestAddAnnuityLoan(de.sambalmueslie.loan_calculator.backend.loan_mgt.annuity_loan_mgt.AnnuityLoanSettings)
 	 */
 	@Override
-	public void requestAddAnnuityLoan(final String name, final double amount, final double paymentRate, final double fixedDebitInterest,
-			final int fixedInterestPeriod, final double estimatedDebitInterest, final LocalDate startDate) {
-		listeners.forEach(l -> l.requestAddAnnuityLoan(name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest, startDate));
+	public void requestAddAnnuityLoan(final AnnuityLoanSettings settings) {
+		listeners.forEach(l -> l.requestAddAnnuityLoan(settings));
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.frontend.external.LoanActionListener#requestAddBuildingLoanAgreement(java.lang.String, double,
-	 *      double, double, double, int, double, double, double, double, java.time.LocalDate)
+	 * @see de.sambalmueslie.loan_calculator.frontend.external.LoanActionListener#requestAddBuildingLoanAgreement(de.sambalmueslie.loan_calculator.backend.loan_mgt.building_loan_agreement_mgt.BuildingLoanAgreementSettings)
 	 */
 	@Override
-	public void requestAddBuildingLoanAgreement(final String name, final double amount, final double creditInterest, final double regularSavingAmount,
-			final double minimumSavings, final int savingDuration, final double savingPhaseInterest, final double debitInterest, final double contribution,
-			final double aquisitonFee, final LocalDate startDate) {
-		listeners.forEach(l -> l.requestAddBuildingLoanAgreement(name, amount, creditInterest, regularSavingAmount, minimumSavings, savingDuration,
-				savingPhaseInterest, debitInterest, contribution, aquisitonFee, startDate));
+	public void requestAddBuildingLoanAgreement(final BuildingLoanAgreementSettings settings) {
+		listeners.forEach(l -> l.requestAddBuildingLoanAgreement(settings));
 	}
 
 	/**
@@ -167,26 +162,21 @@ public class ViewActionListenerMgr implements ViewActionListener {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.frontend.external.LoanActionListener#requestUpdateAnnuityLoan(long, java.lang.String, double,
-	 *      double, double, int, double, java.time.LocalDate)
+	 * @see de.sambalmueslie.loan_calculator.frontend.external.LoanActionListener#requestUpdateAnnuityLoan(long,
+	 *      de.sambalmueslie.loan_calculator.backend.loan_mgt.annuity_loan_mgt.AnnuityLoanSettings)
 	 */
 	@Override
-	public void requestUpdateAnnuityLoan(final long loanId, final String name, final double amount, final double paymentRate, final double fixedDebitInterest,
-			final int fixedInterestPeriod, final double estimatedDebitInterest, final LocalDate startDate) {
-		listeners.forEach(l -> l.requestUpdateAnnuityLoan(loanId, name, amount, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest,
-				startDate));
+	public void requestUpdateAnnuityLoan(final long loanId, final AnnuityLoanSettings settings) {
+		listeners.forEach(l -> l.requestUpdateAnnuityLoan(loanId, settings));
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.frontend.external.LoanActionListener#requestUpdateBuildingLoanAgreement(long, java.lang.String,
-	 *      double, double, double, double, int, double, double, double, double, java.time.LocalDate)
+	 * @see de.sambalmueslie.loan_calculator.frontend.external.LoanActionListener#requestUpdateBuildingLoanAgreement(long,
+	 *      de.sambalmueslie.loan_calculator.backend.loan_mgt.building_loan_agreement_mgt.BuildingLoanAgreementSettings)
 	 */
 	@Override
-	public void requestUpdateBuildingLoanAgreement(final long loanId, final String name, final double amount, final double creditInterest,
-			final double regularSavingAmount, final double minimumSavings, final int savingDuration, final double savingPhaseInterest,
-			final double debitInterest, final double contribution, final double aquisitonFee, final LocalDate startDate) {
-		listeners.forEach(l -> l.requestUpdateBuildingLoanAgreement(loanId, name, amount, creditInterest, regularSavingAmount, minimumSavings, savingDuration,
-				savingPhaseInterest, debitInterest, contribution, aquisitonFee, startDate));
+	public void requestUpdateBuildingLoanAgreement(final long loanId, final BuildingLoanAgreementSettings settings) {
+		listeners.forEach(l -> l.requestUpdateBuildingLoanAgreement(loanId, settings));
 	}
 
 	/**

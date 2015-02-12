@@ -3,7 +3,9 @@
  */
 package de.sambalmueslie.loan_calculator.frontend.external;
 
-import java.time.LocalDate;
+import de.sambalmueslie.loan_calculator.backend.loan_mgt.annuity_loan_mgt.AnnuityLoanSettings;
+import de.sambalmueslie.loan_calculator.backend.loan_mgt.building_loan_agreement_mgt.BuildingLoanAgreementSettings;
+
 
 /**
  * The loan action listener.
@@ -15,53 +17,18 @@ public interface LoanActionListener {
 	/**
 	 * Request to add a loan.
 	 *
-	 * @param name
-	 *            the name
-	 * @param amount
-	 *            the amount
-	 * @param paymentRate
-	 *            the payment rate
-	 * @param fixedDebitInterest
-	 *            the fixed debit interest
-	 * @param fixedInterestPeriod
-	 *            the fixed interest period
-	 * @param estimatedDebitInterest
-	 *            the estimated debit interest
-	 * @param startDate
-	 *            the start {@link LocalDate}
+	 * @param settings
+	 *            the {@link AnnuityLoanSettings}
 	 */
-	void requestAddAnnuityLoan(final String name, final double amount, final double paymentRate, final double fixedDebitInterest,
-			final int fixedInterestPeriod, final double estimatedDebitInterest, LocalDate startDate);
+	void requestAddAnnuityLoan(AnnuityLoanSettings settings);
 
 	/**
 	 * Request to add a building loan agreement.
 	 *
-	 * @param name
-	 *            the name
-	 * @param amount
-	 *            the amount
-	 * @param creditInterest
-	 *            the credit interest (guthabenszins).
-	 * @param regularSavingAmount
-	 *            the regular saving amount. (monatlicher regelsparbetrag in promille).
-	 * @param minimumSavings
-	 *            the minimum savings (mindestsparguthaben in prozent).
-	 * @param savingDuration
-	 *            the saving duration (spardauer).
-	 * @param savingPhaseInterest
-	 *            the interest to pay for getting the money, while beeing in saving phase (zins für uebergangsdarlehen).
-	 * @param debitInterest
-	 *            the debit interest (sollzins ab zuteilung).
-	 * @param contribution
-	 *            the contribution. (zins und tilgungsbeitrag mtl in promille).
-	 * @param aquisitonFee
-	 *            the aquisition fee (abschlussgebuehr in prozent).
-	 * @param startDate
-	 *            the start {@link LocalDate}
+	 * @param settings
+	 *            the {@link BuildingLoanAgreementSettings}
 	 */
-	void requestAddBuildingLoanAgreement(String name, double amount, final double creditInterest, final double regularSavingAmount,
-			final double minimumSavings, final int savingDuration, final double savingPhaseInterest, final double debitInterest, final double contribution,
-			final double aquisitonFee, LocalDate startDate);
+	void requestAddBuildingLoanAgreement(BuildingLoanAgreementSettings settings);
 
 	/**
 	 * Request to remove a loan.
@@ -76,54 +43,19 @@ public interface LoanActionListener {
 	 *
 	 * @param loanId
 	 *            the loan id
-	 * @param name
-	 *            the name
-	 * @param amount
-	 *            the amount
-	 * @param paymentRate
-	 *            the payment rate
-	 * @param fixedDebitInterest
-	 *            the fixed debit interest
-	 * @param fixedInterestPeriod
-	 *            the fixed interest period
-	 * @param estimatedDebitInterest
-	 *            the estimated debit interest
-	 * @param startDate
-	 *            the start {@link LocalDate}
+	 * @param settings
+	 *            the {@link AnnuityLoanSettings}
 	 */
-	void requestUpdateAnnuityLoan(long loanId, final String name, final double amount, final double paymentRate, final double fixedDebitInterest,
-			final int fixedInterestPeriod, final double estimatedDebitInterest, LocalDate startDate);
+	void requestUpdateAnnuityLoan(long loanId, AnnuityLoanSettings settings);
 
 	/**
 	 * Request to update a building loan agreement.
 	 *
 	 * @param loanId
 	 *            the loan id
-	 * @param name
-	 *            the name
-	 * @param amount
-	 *            the amount
-	 * @param creditInterest
-	 *            the credit interest (guthabenszins).
-	 * @param regularSavingAmount
-	 *            the regular saving amount. (monatlicher regelsparbetrag in promille).
-	 * @param minimumSavings
-	 *            the minimum savings (mindestsparguthaben in prozent).
-	 * @param savingDuration
-	 *            the saving duration (spardauer).
-	 * @param savingPhaseInterest
-	 *            the interest to pay for getting the money, while beeing in saving phase (zins für uebergangsdarlehen).
-	 * @param debitInterest
-	 *            the debit interest (sollzins ab zuteilung).
-	 * @param contribution
-	 *            the contribution. (zins und tilgungsbeitrag mtl in promille).
-	 * @param aquisitonFee
-	 *            the aquisition fee (abschlussgebuehr in prozent).
-	 * @param startDate
-	 *            the start {@link LocalDate}
+	 * @param settings
+	 *            the {@link BuildingLoanAgreementSettings}
 	 */
-	void requestUpdateBuildingLoanAgreement(long loanId, String name, double amount, final double creditInterest, final double regularSavingAmount,
-			final double minimumSavings, final int savingDuration, final double savingPhaseInterest, final double debitInterest, final double contribution,
-			final double aquisitonFee, LocalDate startDate);
+	void requestUpdateBuildingLoanAgreement(long loanId, BuildingLoanAgreementSettings settings);
 
 }

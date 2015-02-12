@@ -138,6 +138,8 @@ public class I18n {
 	public static final String TEXT_TOTAL_INTEREST = "text_total_interest";
 	/** property key. */
 	public static final String TEXT_TOTAL_PAYMENT = "text_total_payment";
+	/** the unscheduled repayment. */
+	public static final String TEXT_UNSCHEDULED_REPAYMENT = "text_unscheduled_repayment";
 	/** property key. */
 	public static final String VIEW_TITLE = "view_title";
 

@@ -65,6 +65,13 @@ public class XMLAnnuityLoan {
 	}
 
 	/**
+	 * @return the {@link #unscheduledRepayment}
+	 */
+	public double getUnscheduledRepayment() {
+		return unscheduledRepayment;
+	}
+
+	/**
 	 * @param amount
 	 *            the amount to set
 	 */
@@ -128,6 +135,14 @@ public class XMLAnnuityLoan {
 		this.startDate = startDate;
 	}
 
+	/**
+	 * @param unscheduledRepayment
+	 *            the unscheduledRepayment to set
+	 */
+	public void setUnscheduledRepayment(final double unscheduledRepayment) {
+		this.unscheduledRepayment = unscheduledRepayment;
+	}
+
 	/** the amount. */
 	private double amount;
 	/** the estimated debit interest (geschaetzter Sollzins nach Bindungsende). */
@@ -144,4 +159,6 @@ public class XMLAnnuityLoan {
 	private double paymentRate;
 	/** the start date. */
 	private String startDate;
+	/** the unscheduled repayment per year (jährliche sondertilgung). */
+	private double unscheduledRepayment;
 }

@@ -14,7 +14,6 @@ import de.sambalmueslie.loan_calculator.backend.common.BusinessObject;
  * @author sambalmueslie 2015
  */
 public interface Loan extends BusinessObject {
-
 	/**
 	 * @return the amount of the loan (kredit).
 	 */
@@ -34,6 +33,11 @@ public interface Loan extends BusinessObject {
 	 * @return the risk capital of not fixed interest.
 	 */
 	double getRiskCapital();
+
+	/**
+	 * @return the {@link LoanSettings}.
+	 */
+	LoanSettings getSettings();
 
 	/**
 	 * @return the start {@link LocalDate}.
