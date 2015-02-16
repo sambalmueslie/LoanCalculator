@@ -3,12 +3,16 @@
  */
 package de.sambalmueslie.loan_calculator.frontend.panel;
 
+import java.time.LocalDate;
+
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.RedemptionPlanEntry;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.building_loan_agreement_mgt.BuildingLoanAgreement;
+import de.sambalmueslie.loan_calculator.backend.loan_mgt.building_loan_agreement_mgt.BuildingLoanAgreementSettings;
 import de.sambalmueslie.loan_calculator.frontend.chart.LineChartSeriesDefinition;
 import de.sambalmueslie.loan_calculator.frontend.chart.generic.GenericLineChart;
 import de.sambalmueslie.loan_calculator.frontend.chart.loan.LoanChartFactory;
 import de.sambalmueslie.loan_calculator.frontend.component.TextFieldType;
+import de.sambalmueslie.loan_calculator.frontend.external.LoanActionListener;
 import de.sambalmueslie.loan_calculator.frontend.i18n.I18n;
 
 /**
@@ -23,17 +27,18 @@ public class BuildingLoanAgreementPanel extends LoanPanel<BuildingLoanAgreement>
 	 *
 	 * @param buildingLoanAgreement
 	 */
-	public BuildingLoanAgreementPanel(final BuildingLoanAgreement buildingLoanAgreement) {
+	public BuildingLoanAgreementPanel(final BuildingLoanAgreement buildingLoanAgreement, final LoanActionListener actionListener) {
 		super(buildingLoanAgreement);
+		this.actionListener = actionListener;
 
-		addInfo(I18n.get(I18n.TEXT_AMOUNT), buildingLoanAgreement.getAmount(), TextFieldType.CURRENCY);
-		addInfo(I18n.get(I18n.TEXT_CREDIT_INTERST), buildingLoanAgreement.getCreditInterest(), TextFieldType.PERCENTAGE);
-		addInfo(I18n.get(I18n.TEXT_REGULAR_SAVING_AMOUNT), buildingLoanAgreement.getRegularSavingAmount(), TextFieldType.PERCENTAGE);
-		addInfo(I18n.get(I18n.TEXT_MINIMUM_SAVINGS), buildingLoanAgreement.getMinimumSavings(), TextFieldType.PERCENTAGE);
-		addInfo(I18n.get(I18n.TEXT_SAVING_DURATION), String.format("%d", buildingLoanAgreement.getSavingDuration()), TextFieldType.TEXT);
-		addInfo(I18n.get(I18n.TEXT_DEBIT_INTEREST), buildingLoanAgreement.getDebitInterest(), TextFieldType.PERCENTAGE);
-		addInfo(I18n.get(I18n.TEXT_CONTRIBUTION), buildingLoanAgreement.getContribution(), TextFieldType.PERCENTAGE);
-		addInfo(I18n.get(I18n.TEXT_AQUISITION_FEE), buildingLoanAgreement.getAquisitonFee(), TextFieldType.PERCENTAGE);
+		addInputInfo(I18n.get(I18n.TEXT_CREDIT_INTERST), buildingLoanAgreement.getCreditInterest(), TextFieldType.PERCENTAGE);
+		addInputInfo(I18n.get(I18n.TEXT_REGULAR_SAVING_AMOUNT), buildingLoanAgreement.getRegularSavingAmount(), TextFieldType.PERCENTAGE);
+		addInputInfo(I18n.get(I18n.TEXT_MINIMUM_SAVINGS), buildingLoanAgreement.getMinimumSavings(), TextFieldType.PERCENTAGE);
+		addInputInfo(I18n.get(I18n.TEXT_SAVING_DURATION), buildingLoanAgreement.getSavingDuration(), TextFieldType.NUMBER);
+		addInputInfo(I18n.get(I18n.TEXT_SAVING_PHASE_INTEREST), buildingLoanAgreement.getSavingPhaseInterest(), TextFieldType.PERCENTAGE);
+		addInputInfo(I18n.get(I18n.TEXT_DEBIT_INTEREST), buildingLoanAgreement.getDebitInterest(), TextFieldType.PERCENTAGE);
+		addInputInfo(I18n.get(I18n.TEXT_CONTRIBUTION), buildingLoanAgreement.getContribution(), TextFieldType.PERCENTAGE);
+		addInputInfo(I18n.get(I18n.TEXT_AQUISITION_FEE), buildingLoanAgreement.getAquisitonFee(), TextFieldType.PERCENTAGE);
 		addInfo(I18n.get(I18n.TEXT_TERM), String.format("%d", buildingLoanAgreement.getTerm()), TextFieldType.TEXT);
 		addInfo(I18n.get(I18n.TEXT_TOTAL_AMOUNT), buildingLoanAgreement.getAmount(), TextFieldType.CURRENCY);
 		addInfo(I18n.get(I18n.TEXT_TOTAL_INTEREST), buildingLoanAgreement.getTotalInterest(), TextFieldType.CURRENCY);
@@ -47,6 +52,29 @@ public class BuildingLoanAgreementPanel extends LoanPanel<BuildingLoanAgreement>
 
 	}
 
+	/**
+	 * @see de.sambalmueslie.loan_calculator.frontend.panel.LoanPanel#handleValueChanged()
+	 */
+	@Override
+	protected void handleValueChanged() {
+		final long loanId = getLoan().getId();
+		final String name = getLoan().getName();
+		final double amount = getInfoValue(I18n.get(I18n.TEXT_AMOUNT));
+		final LocalDate startDate = getInfoValue(I18n.get(I18n.TEXT_START_DATE));
+		final double creditInterest = getInfoValue(I18n.get(I18n.TEXT_CREDIT_INTERST));
+		final double regularSavingAmount = getInfoValue(I18n.get(I18n.TEXT_REGULAR_SAVING_AMOUNT));
+		final double minimumSavings = getInfoValue(I18n.get(I18n.TEXT_MINIMUM_SAVINGS));
+		final int savingDuration = getInfoValue(I18n.get(I18n.TEXT_SAVING_DURATION));
+		final double savingPhaseInterest = getInfoValue(I18n.get(I18n.TEXT_SAVING_PHASE_INTEREST));
+		final double debitInterest = getInfoValue(I18n.get(I18n.TEXT_DEBIT_INTEREST));
+		final double contribution = getInfoValue(I18n.get(I18n.TEXT_CONTRIBUTION));
+		final double aquisitonFee = getInfoValue(I18n.get(I18n.TEXT_AQUISITION_FEE));
+
+		final BuildingLoanAgreementSettings settings = new BuildingLoanAgreementSettings(name, amount, startDate, creditInterest, regularSavingAmount,
+				minimumSavings, savingDuration, savingPhaseInterest, debitInterest, contribution, aquisitonFee);
+		actionListener.requestUpdateBuildingLoanAgreement(loanId, settings);
+	}
+
 	@Override
 	protected void update() {
 		final BuildingLoanAgreement buildingLoanAgreement = getLoan();
@@ -55,7 +83,8 @@ public class BuildingLoanAgreementPanel extends LoanPanel<BuildingLoanAgreement>
 		updateInfo(I18n.get(I18n.TEXT_CREDIT_INTERST), buildingLoanAgreement.getCreditInterest());
 		updateInfo(I18n.get(I18n.TEXT_REGULAR_SAVING_AMOUNT), buildingLoanAgreement.getRegularSavingAmount());
 		updateInfo(I18n.get(I18n.TEXT_MINIMUM_SAVINGS), buildingLoanAgreement.getMinimumSavings());
-		updateInfo(I18n.get(I18n.TEXT_SAVING_DURATION), String.format("%d", buildingLoanAgreement.getSavingDuration()));
+		updateInfo(I18n.get(I18n.TEXT_SAVING_DURATION), buildingLoanAgreement.getSavingDuration());
+		updateInfo(I18n.get(I18n.TEXT_SAVING_PHASE_INTEREST), buildingLoanAgreement.getSavingPhaseInterest());
 
 		updateInfo(I18n.get(I18n.TEXT_DEBIT_INTEREST), buildingLoanAgreement.getDebitInterest());
 		updateInfo(I18n.get(I18n.TEXT_CONTRIBUTION), buildingLoanAgreement.getContribution());
@@ -90,4 +119,7 @@ public class BuildingLoanAgreementPanel extends LoanPanel<BuildingLoanAgreement>
 		planChart.add(buildingLoanAgreement);
 		addChart(planChart);
 	}
+
+	/** the {@link LoanActionListener}. */
+	private final LoanActionListener actionListener;
 }

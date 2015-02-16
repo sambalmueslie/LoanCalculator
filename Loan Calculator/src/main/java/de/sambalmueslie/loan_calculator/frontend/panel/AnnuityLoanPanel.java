@@ -3,12 +3,16 @@
  */
 package de.sambalmueslie.loan_calculator.frontend.panel;
 
+import java.time.LocalDate;
+
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.RedemptionPlanEntry;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.annuity_loan_mgt.AnnuityLoan;
+import de.sambalmueslie.loan_calculator.backend.loan_mgt.annuity_loan_mgt.AnnuityLoanSettings;
 import de.sambalmueslie.loan_calculator.frontend.chart.LineChartSeriesDefinition;
 import de.sambalmueslie.loan_calculator.frontend.chart.generic.GenericLineChart;
 import de.sambalmueslie.loan_calculator.frontend.chart.loan.LoanChartFactory;
 import de.sambalmueslie.loan_calculator.frontend.component.TextFieldType;
+import de.sambalmueslie.loan_calculator.frontend.external.LoanActionListener;
 import de.sambalmueslie.loan_calculator.frontend.i18n.I18n;
 
 /**
@@ -21,14 +25,15 @@ public class AnnuityLoanPanel extends LoanPanel<AnnuityLoan> {
 	/**
 	 * Constructor.
 	 */
-	public AnnuityLoanPanel(final AnnuityLoan loan) {
+	public AnnuityLoanPanel(final AnnuityLoan loan, final LoanActionListener actionListener) {
 		super(loan);
+		this.actionListener = actionListener;
 
-		addInfo(I18n.get(I18n.TEXT_PAYMENT_RATE), loan.getPaymentRate(), TextFieldType.PERCENTAGE);
-		addInfo(I18n.get(I18n.TEXT_FIXED_DEBIT_INTEREST), loan.getFixedDebitInterest(), TextFieldType.PERCENTAGE);
-		addInfo(I18n.get(I18n.TEXT_FIXED_INTEREST_PERIOD), String.format("%d", loan.getFixedInterestPeriod()), TextFieldType.TEXT);
-		addInfo(I18n.get(I18n.TEXT_ESTIMATED_DEBIT_INTEREST), loan.getEstimatedDebitInterest(), TextFieldType.PERCENTAGE);
-		addInfo(I18n.get(I18n.TEXT_UNSCHEDULED_REPAYMENT), loan.getUnscheduledRepayment(), TextFieldType.PERCENTAGE);
+		addInputInfo(I18n.get(I18n.TEXT_PAYMENT_RATE), loan.getPaymentRate(), TextFieldType.PERCENTAGE);
+		addInputInfo(I18n.get(I18n.TEXT_FIXED_DEBIT_INTEREST), loan.getFixedDebitInterest(), TextFieldType.PERCENTAGE);
+		addInputInfo(I18n.get(I18n.TEXT_FIXED_INTEREST_PERIOD), loan.getFixedInterestPeriod(), TextFieldType.NUMBER);
+		addInputInfo(I18n.get(I18n.TEXT_ESTIMATED_DEBIT_INTEREST), loan.getEstimatedDebitInterest(), TextFieldType.PERCENTAGE);
+		addInputInfo(I18n.get(I18n.TEXT_UNSCHEDULED_REPAYMENT), loan.getUnscheduledRepayment(), TextFieldType.PERCENTAGE);
 
 		final RedemptionPlanEntry redemption = loan.getRedemptionPlan().get(1);
 		addInfo(I18n.get(I18n.TEXT_ANNUITY_INTEREST), redemption.getInterest(), TextFieldType.CURRENCY);
@@ -54,12 +59,31 @@ public class AnnuityLoanPanel extends LoanPanel<AnnuityLoan> {
 		addChart(LoanChartFactory.createAnnuityPlanChart(loan));
 	}
 
+	/**
+	 * @see de.sambalmueslie.loan_calculator.frontend.panel.LoanPanel#handleValueChanged()
+	 */
+	@Override
+	protected void handleValueChanged() {
+		final long loanId = getLoan().getId();
+		final String name = getLoan().getName();
+		final double amount = getInfoValue(I18n.get(I18n.TEXT_AMOUNT));
+		final LocalDate startDate = getInfoValue(I18n.get(I18n.TEXT_START_DATE));
+		final double paymentRate = getInfoValue(I18n.get(I18n.TEXT_PAYMENT_RATE));
+		final double fixedDebitInterest = getInfoValue(I18n.get(I18n.TEXT_FIXED_DEBIT_INTEREST));
+		final int fixedInterestPeriod = getInfoValue(I18n.get(I18n.TEXT_FIXED_INTEREST_PERIOD));
+		final double estimatedDebitInterest = getInfoValue(I18n.get(I18n.TEXT_ESTIMATED_DEBIT_INTEREST));
+		final double unscheduledRepayment = getInfoValue(I18n.get(I18n.TEXT_UNSCHEDULED_REPAYMENT));
+		final AnnuityLoanSettings settings = new AnnuityLoanSettings(name, amount, startDate, paymentRate, fixedDebitInterest, fixedInterestPeriod,
+				estimatedDebitInterest, unscheduledRepayment);
+		actionListener.requestUpdateAnnuityLoan(loanId, settings);
+	}
+
 	@Override
 	protected void update() {
 		final AnnuityLoan loan = getLoan();
 		updateInfo(I18n.get(I18n.TEXT_PAYMENT_RATE), loan.getPaymentRate());
 		updateInfo(I18n.get(I18n.TEXT_FIXED_DEBIT_INTEREST), loan.getFixedDebitInterest());
-		updateInfo(I18n.get(I18n.TEXT_FIXED_INTEREST_PERIOD), String.format("%d", loan.getFixedInterestPeriod()));
+		updateInfo(I18n.get(I18n.TEXT_FIXED_INTEREST_PERIOD), loan.getFixedInterestPeriod());
 		updateInfo(I18n.get(I18n.TEXT_ESTIMATED_DEBIT_INTEREST), loan.getEstimatedDebitInterest());
 		updateInfo(I18n.get(I18n.TEXT_UNSCHEDULED_REPAYMENT), loan.getUnscheduledRepayment());
 
@@ -86,4 +110,7 @@ public class AnnuityLoanPanel extends LoanPanel<AnnuityLoan> {
 
 		addChart(LoanChartFactory.createAnnuityPlanChart(loan));
 	}
+
+	/** the {@link LoanActionListener}. */
+	private final LoanActionListener actionListener;
 }

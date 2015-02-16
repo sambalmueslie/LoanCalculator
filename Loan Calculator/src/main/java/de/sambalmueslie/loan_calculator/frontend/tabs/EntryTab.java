@@ -68,11 +68,11 @@ public class EntryTab extends Tab {
 	private Node getContent(final BusinessObject entry) {
 		if (entry instanceof AnnuityLoan) {
 			final AnnuityLoan annuityLoan = (AnnuityLoan) entry;
-			return new AnnuityLoanPanel(annuityLoan);
+			return new AnnuityLoanPanel(annuityLoan, actionListener);
 		}
 		if (entry instanceof BuildingLoanAgreement) {
 			final BuildingLoanAgreement buildingLoanAgreement = (BuildingLoanAgreement) entry;
-			return new BuildingLoanAgreementPanel(buildingLoanAgreement);
+			return new BuildingLoanAgreementPanel(buildingLoanAgreement, actionListener);
 		}
 		if (entry instanceof Founding) {
 			final Founding founding = (Founding) entry;

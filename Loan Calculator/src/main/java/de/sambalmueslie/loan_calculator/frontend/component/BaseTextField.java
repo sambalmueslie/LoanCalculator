@@ -39,6 +39,10 @@ public abstract class BaseTextField<T> extends TextField {
 		return result;
 	}
 
+	public void setChangeListener(final TextFieldChangeListener listener) {
+		this.listener = listener;
+	}
+
 	/**
 	 * Set the value.
 	 *
@@ -50,6 +54,8 @@ public abstract class BaseTextField<T> extends TextField {
 		final String text = format(value);
 		if (text.equals(getText())) return;
 		setText(text);
+		if (listener == null) return;
+		listener.valueChanged();
 	}
 
 	/**
@@ -81,6 +87,9 @@ public abstract class BaseTextField<T> extends TextField {
 			setValue(value);
 		}
 	}
+
+	/** the {@link TextFieldChangeListener}. */
+	private TextFieldChangeListener listener;
 
 	/** the value. */
 	private T value;

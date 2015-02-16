@@ -1,6 +1,3 @@
-/**
- *
- */
 package de.sambalmueslie.loan_calculator.frontend.panel;
 
 import java.util.HashMap;
@@ -18,13 +15,12 @@ import de.sambalmueslie.loan_calculator.frontend.component.*;
  * @author sambalmueslie 2015
  */
 class InfoPanel extends TilePane {
-
 	/**
 	 * Constructor.
 	 */
 	InfoPanel() {
 		getStyleClass().add(Constants.CLASS_PANEL_BORDER);
-		setPrefColumns(2);
+		setPrefColumns(1);
 	}
 
 	/**
@@ -80,12 +76,9 @@ class InfoPanel extends TilePane {
 			return new PercentageTextField();
 		case NUMBER:
 			return new NumberTextField();
-		case DATE:
-			return new DateTextField();
 		}
 	}
 
 	/** the current {@link BaseTextField}s. */
 	private final Map<String, BaseTextField<?>> textFields = new HashMap<>();
-
 }
