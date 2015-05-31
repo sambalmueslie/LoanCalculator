@@ -159,7 +159,9 @@ public abstract class LoanPanel<T extends Loan> extends VBox {
 	@SuppressWarnings("unchecked")
 	protected <S> void updateInfo(final String name, final S value) {
 		final BaseTextField<S> textField = (BaseTextField<S>) textFields.get(name);
-		if (textField == null) return;
+		if (textField == null) {
+			return;
+		}
 		textField.setValue(value);
 	}
 

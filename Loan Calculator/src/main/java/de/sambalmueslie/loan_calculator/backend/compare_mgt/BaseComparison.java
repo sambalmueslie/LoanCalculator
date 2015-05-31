@@ -58,7 +58,9 @@ public class BaseComparison<T extends BusinessObject> extends BaseBusinessObject
 	 *            the element
 	 */
 	public final void add(final T element) {
-		if (element == null) return;
+		if (element == null) {
+			return;
+		}
 		elements.add(element);
 		notifyChanged();
 		element.register(changeHandler);
@@ -87,7 +89,9 @@ public class BaseComparison<T extends BusinessObject> extends BaseBusinessObject
 	 *            the element
 	 */
 	public final void remove(final T element) {
-		if (element == null) return;
+		if (element == null) {
+			return;
+		}
 		elements.remove(element);
 		notifyChanged();
 		element.unregister(changeHandler);

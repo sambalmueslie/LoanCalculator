@@ -9,6 +9,7 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import de.sambalmueslie.loan_calculator.backend.common.BusinessObject;
+import de.sambalmueslie.loan_calculator.backend.compare_mgt.Comparison;
 import de.sambalmueslie.loan_calculator.backend.founding_mgt.Founding;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.Loan;
 import de.sambalmueslie.loan_calculator.frontend.external.ViewActionListener;

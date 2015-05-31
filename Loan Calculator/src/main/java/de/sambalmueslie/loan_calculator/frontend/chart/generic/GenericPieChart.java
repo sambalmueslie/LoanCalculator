@@ -53,7 +53,9 @@ public class GenericPieChart<T extends BusinessObject, R extends BusinessObject>
 	 *            the entry
 	 */
 	public void setData(final T entry) {
-		if (entry == null) return;
+		if (entry == null) {
+			return;
+		}
 		final ObservableList<PieChart.Data> data = FXCollections.observableArrayList();
 		for (final R d : dataGetterFunction.apply(entry)) {
 			final String name = d.getName();

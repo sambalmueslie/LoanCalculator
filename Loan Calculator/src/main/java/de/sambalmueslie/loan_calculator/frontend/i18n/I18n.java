@@ -202,7 +202,9 @@ public class I18n {
 	 */
 	private String getString(final String key) {
 		final String value = messages.getString(key);
-		if (value == null) return "";
+		if (value == null) {
+			return "";
+		}
 		return value;
 	}
 

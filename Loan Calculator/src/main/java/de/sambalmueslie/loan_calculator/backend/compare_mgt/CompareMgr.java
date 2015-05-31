@@ -119,7 +119,9 @@ public class CompareMgr extends BaseBusinessObjectMgr<Comparison<?>> {
 			logger.debug("Handle request to remove comparison " + comparisonId);
 		}
 		final Comparison<?> comparison = get(comparisonId);
-		if (comparison == null) return;
+		if (comparison == null) {
+			return;
+		}
 		remove(comparison);
 	}
 
@@ -144,7 +146,9 @@ public class CompareMgr extends BaseBusinessObjectMgr<Comparison<?>> {
 	@SuppressWarnings("unchecked")
 	private <N extends BusinessObject> void comparisonAddEntry(final long comparisonId, final N entry, final Class<N> type) {
 		final Comparison<?> comparison = get(comparisonId);
-		if (comparison == null || !comparison.getType().equals(type)) return;
+		if (comparison == null || !comparison.getType().equals(type)) {
+			return;
+		}
 
 		final BaseComparison<N> bc = (BaseComparison<N>) comparison;
 		bc.add(entry);
@@ -163,7 +167,9 @@ public class CompareMgr extends BaseBusinessObjectMgr<Comparison<?>> {
 	@SuppressWarnings("unchecked")
 	private <N extends BusinessObject> void comparisonRemoveEntry(final long comparisonId, final N entry, final Class<N> type) {
 		final Comparison<?> comparison = get(comparisonId);
-		if (comparison == null || !comparison.getType().equals(type)) return;
+		if (comparison == null || !comparison.getType().equals(type)) {
+			return;
+		}
 
 		final BaseComparison<N> bc = (BaseComparison<N>) comparison;
 		bc.remove(entry);

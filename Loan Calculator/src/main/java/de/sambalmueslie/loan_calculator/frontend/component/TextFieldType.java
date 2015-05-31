@@ -11,12 +11,12 @@ package de.sambalmueslie.loan_calculator.frontend.component;
 public enum TextFieldType {
 	/** a currency type. */
 	CURRENCY,
+	/** a timestamp type. */
+	DATE,
 	/** a number. */
 	NUMBER,
 	/** a percentage type. */
 	PERCENTAGE,
 	/** the simple text type. */
-	TEXT,
-	/** a timestamp type. */
-	DATE
+	TEXT
 }

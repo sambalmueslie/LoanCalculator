@@ -209,7 +209,9 @@ public class BaseModel implements Model {
 	@Override
 	public Loan getLoan(final long id) {
 		final Loan loan = annuityLoanMgr.get(id);
-		if (loan != null) return loan;
+		if (loan != null) {
+			return loan;
+		}
 		return buildingLoanAgreementMgr.get(id);
 	}
 

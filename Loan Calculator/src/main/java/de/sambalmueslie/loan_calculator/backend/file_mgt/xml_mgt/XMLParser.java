@@ -239,7 +239,9 @@ public class XMLParser {
 	 * @return the {@link LocalDate}
 	 */
 	private LocalDate parse(final String value) {
-		if (value == null) return null;
+		if (value == null) {
+			return null;
+		}
 		return LocalDate.parse(value);
 	}
 
@@ -263,8 +265,9 @@ public class XMLParser {
 		final double estimatedDebitInterest = xmlAnnuityLoan.getEstimatedDebitInterest();
 		final LocalDate startDate = parse(xmlAnnuityLoan.getStartDate());
 		final double unscheduledRepayment = xmlAnnuityLoan.getUnscheduledRepayment();
-		final AnnuityLoanSettings settings = new AnnuityLoanSettings(name, amount, startDate, paymentRate, fixedDebitInterest, fixedInterestPeriod,
-				estimatedDebitInterest, unscheduledRepayment);
+		final AnnuityLoanSettings settings =
+				new AnnuityLoanSettings(name, amount, startDate, paymentRate, fixedDebitInterest, fixedInterestPeriod, estimatedDebitInterest,
+						unscheduledRepayment);
 		return new BaseAnnuityLoan(id, settings);
 	}
 
@@ -291,8 +294,9 @@ public class XMLParser {
 		final double contribution = xmlBuildingLoanAgreement.getContribution();
 		final double aquisitonFee = xmlBuildingLoanAgreement.getAquisitonFee();
 		final LocalDate startDate = parse(xmlBuildingLoanAgreement.getStartDate());
-		final BuildingLoanAgreementSettings settings = new BuildingLoanAgreementSettings(name, amount, startDate, creditInterest, regularSavingAmount,
-				minimumSavings, savingDuration, savingPhaseInterest, debitInterest, contribution, aquisitonFee);
+		final BuildingLoanAgreementSettings settings =
+				new BuildingLoanAgreementSettings(name, amount, startDate, creditInterest, regularSavingAmount, minimumSavings, savingDuration,
+						savingPhaseInterest, debitInterest, contribution, aquisitonFee);
 		return new BaseBuildingLoanAgreement(id, settings);
 	}
 

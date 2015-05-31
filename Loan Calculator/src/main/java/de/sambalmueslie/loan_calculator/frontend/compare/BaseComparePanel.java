@@ -131,7 +131,9 @@ public abstract class BaseComparePanel<T extends BusinessObject> extends BorderP
 	 */
 	private boolean isDragValid(final long entryId) {
 		final T entry = get(entryId);
-		if (entry == null) return false;
+		if (entry == null) {
+			return false;
+		}
 		return getComparison().getElements().stream().noneMatch(f -> f.getId() == entryId);
 	}
 

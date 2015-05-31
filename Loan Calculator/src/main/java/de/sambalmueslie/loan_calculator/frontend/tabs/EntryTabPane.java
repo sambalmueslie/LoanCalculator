@@ -109,7 +109,9 @@ public class EntryTabPane extends TabPane {
 
 	public void show(final BusinessObject entry) {
 		for (final Tab tab : getTabs()) {
-			if (((EntryTab) tab).getEntry().equals(entry)) return;
+			if (((EntryTab) tab).getEntry().equals(entry)) {
+				return;
+			}
 		}
 		add(entry);
 	}

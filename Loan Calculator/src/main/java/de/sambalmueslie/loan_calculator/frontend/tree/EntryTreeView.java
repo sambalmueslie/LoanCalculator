@@ -38,7 +38,9 @@ class EntryTreeView extends TreeView<EntryTreeContent> {
 	 */
 	void addChild(final BusinessObject parent, final BusinessObject entry, final EntryTreeContentType type) {
 		final TreeItem<EntryTreeContent> parentItem = find(parent, getRoot());
-		if (parentItem == null) return;
+		if (parentItem == null) {
+			return;
+		}
 		parentItem.getChildren().add(new TreeItem<EntryTreeContent>(new EntryTreeContent(entry, type)));
 	}
 
@@ -108,7 +110,9 @@ class EntryTreeView extends TreeView<EntryTreeContent> {
 	 */
 	void update(final BusinessObject entry, final EntryTreeContentType type) {
 		final TreeItem<EntryTreeContent> item = find(entry, getRoot());
-		if (item == null) return;
+		if (item == null) {
+			return;
+		}
 		item.setValue(new EntryTreeContent(entry, type));
 	}
 
@@ -127,7 +131,9 @@ class EntryTreeView extends TreeView<EntryTreeContent> {
 	void updateWithChildren(final BusinessObject entry, final EntryTreeContentType type, final Collection<? extends BusinessObject> children,
 			final EntryTreeContentType childType) {
 		final TreeItem<EntryTreeContent> rootItem = find(entry, getRoot());
-		if (rootItem == null) return;
+		if (rootItem == null) {
+			return;
+		}
 		rootItem.setValue(new EntryTreeContent(entry, type));
 		rootItem.getChildren().clear();
 		children.stream().map(c -> new TreeItem<>(new EntryTreeContent(c, childType))).forEach(rootItem.getChildren()::add);
@@ -159,10 +165,14 @@ class EntryTreeView extends TreeView<EntryTreeContent> {
 	 */
 	private TreeItem<EntryTreeContent> find(final BusinessObject entry, final TreeItem<EntryTreeContent> parent) {
 		final Optional<TreeItem<EntryTreeContent>> optional = parent.getChildren().stream().filter(children -> equals(entry, children)).findAny();
-		if (optional.isPresent()) return optional.get();
+		if (optional.isPresent()) {
+			return optional.get();
+		}
 		for (final TreeItem<EntryTreeContent> children : parent.getChildren()) {
 			final TreeItem<EntryTreeContent> result = find(entry, children);
-			if (result != null) return result;
+			if (result != null) {
+				return result;
+			}
 		}
 		return null;
 	}

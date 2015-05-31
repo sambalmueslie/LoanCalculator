@@ -13,7 +13,7 @@ package de.sambalmueslie.loan_calculator.backend.common;
 public interface BusinessObjectMgr<T extends BusinessObject> {
 	/**
 	 * Register.
-	 * 
+	 *
 	 * @param listener
 	 *            the {@link BusinessObjectModelListener}.
 	 */
@@ -21,7 +21,7 @@ public interface BusinessObjectMgr<T extends BusinessObject> {
 
 	/**
 	 * Unregister.
-	 * 
+	 *
 	 * @param listener
 	 *            the {@link BusinessObjectModelListener}.
 	 */

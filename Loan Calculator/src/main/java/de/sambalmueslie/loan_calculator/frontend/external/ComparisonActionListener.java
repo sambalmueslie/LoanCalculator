@@ -3,6 +3,7 @@
  */
 package de.sambalmueslie.loan_calculator.frontend.external;
 
+import de.sambalmueslie.loan_calculator.backend.compare_mgt.Comparison;
 import de.sambalmueslie.loan_calculator.backend.founding_mgt.Founding;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.Loan;
 

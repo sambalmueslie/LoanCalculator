@@ -94,8 +94,8 @@ class ComparePanelLoan extends BaseComparePanel<Loan> {
 		final Function<Loan, RedemptionPlanEntry> dataGetterFunction = (l -> l.getRedemptionPlan().getEntries().get(1));
 		final SeriesDefinition<RedemptionPlanEntry, Double> sd1 = new SeriesDefinition<>(I18n.get(I18n.TEXT_INTEREST), RedemptionPlanEntry::getInterest);
 		final SeriesDefinition<RedemptionPlanEntry, Double> sd2 = new SeriesDefinition<>(I18n.get(I18n.TEXT_REDEMPTION), RedemptionPlanEntry::getRedemption);
-		final GenericAnnuityChart<Loan, RedemptionPlanEntry, Double> chart = new GenericAnnuityChart<>(I18n.get(I18n.ANNUITY_PLAN_CHART_TITLE),
-				dataGetterFunction, loans, sd1, sd2);
+		final GenericAnnuityChart<Loan, RedemptionPlanEntry, Double> chart =
+				new GenericAnnuityChart<>(I18n.get(I18n.ANNUITY_PLAN_CHART_TITLE), dataGetterFunction, loans, sd1, sd2);
 		comparePane.getChildren().add(chart);
 		setTop(comparePane);
 
@@ -143,19 +143,19 @@ class ComparePanelLoan extends BaseComparePanel<Loan> {
 		detailsPane.add(title, 0, 0, 2, 1);
 
 		final RedemptionPlan redemptionPlan = loan.getRedemptionPlan();
-		final LineChartSeriesDefinition<RedemptionPlan, RedemptionPlanEntry> s1 = new LineChartSeriesDefinition<>(I18n.get(I18n.TEXT_RESIDUAL_DEBT),
-				RedemptionPlanEntry::getResidualDebt, RedemptionPlan::getEntries);
+		final LineChartSeriesDefinition<RedemptionPlan, RedemptionPlanEntry> s1 =
+				new LineChartSeriesDefinition<>(I18n.get(I18n.TEXT_RESIDUAL_DEBT), RedemptionPlanEntry::getResidualDebt, RedemptionPlan::getEntries);
 		final GenericLineChart<RedemptionPlan, RedemptionPlanEntry> residualDebtChart = new GenericLineChart<>(I18n.get(I18n.REDEMPTION_PLAN_CHART_TITLE), s1);
 		residualDebtChart.setLegendVisible(false);
 		residualDebtChart.add(redemptionPlan);
 		detailsPane.add(residualDebtChart, 0, 1);
 
-		final LineChartSeriesDefinition<RedemptionPlan, RedemptionPlanEntry> s3 = new LineChartSeriesDefinition<>(I18n.get(I18n.TEXT_INTEREST),
-				RedemptionPlanEntry::getInterest, RedemptionPlan::getEntries);
-		final LineChartSeriesDefinition<RedemptionPlan, RedemptionPlanEntry> s4 = new LineChartSeriesDefinition<>(I18n.get(I18n.TEXT_REDEMPTION),
-				RedemptionPlanEntry::getRedemption, RedemptionPlan::getEntries);
-		final GenericStackedBarChart<RedemptionPlan, RedemptionPlanEntry> annuityPlanChart = new GenericStackedBarChart<>(
-				I18n.get(I18n.ANNUITY_PLAN_CHART_TITLE), true, s3, s4);
+		final LineChartSeriesDefinition<RedemptionPlan, RedemptionPlanEntry> s3 =
+				new LineChartSeriesDefinition<>(I18n.get(I18n.TEXT_INTEREST), RedemptionPlanEntry::getInterest, RedemptionPlan::getEntries);
+		final LineChartSeriesDefinition<RedemptionPlan, RedemptionPlanEntry> s4 =
+				new LineChartSeriesDefinition<>(I18n.get(I18n.TEXT_REDEMPTION), RedemptionPlanEntry::getRedemption, RedemptionPlan::getEntries);
+		final GenericStackedBarChart<RedemptionPlan, RedemptionPlanEntry> annuityPlanChart =
+				new GenericStackedBarChart<>(I18n.get(I18n.ANNUITY_PLAN_CHART_TITLE), true, s3, s4);
 		annuityPlanChart.add(redemptionPlan);
 		detailsPane.add(annuityPlanChart, 0, 2);
 

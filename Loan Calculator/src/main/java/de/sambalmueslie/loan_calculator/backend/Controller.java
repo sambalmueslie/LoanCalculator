@@ -85,7 +85,9 @@ public class Controller {
 		}
 
 		final Founding founding = foundingMgr.get(foundingId);
-		if (founding == null) return null;
+		if (founding == null) {
+			return null;
+		}
 		return compareMgr.add(founding);
 	}
 
@@ -97,7 +99,9 @@ public class Controller {
 			logger.debug("Handle request to add comparison loan " + loanId);
 		}
 		final Loan loan = getLoan(loanId);
-		if (loan == null) return null;
+		if (loan == null) {
+			return null;
+		}
 		return compareMgr.add(loan);
 	}
 
@@ -120,7 +124,9 @@ public class Controller {
 		}
 
 		final Founding founding = foundingMgr.get(foundingId);
-		if (founding == null) return;
+		if (founding == null) {
+			return;
+		}
 		compareMgr.comparisonAdd(comparisonId, founding);
 	}
 
@@ -132,7 +138,9 @@ public class Controller {
 			logger.debug("Handle request to add comparison loan " + comparisonId + ", " + loanId);
 		}
 		final Loan loan = getLoan(loanId);
-		if (loan == null) return;
+		if (loan == null) {
+			return;
+		}
 		compareMgr.comparisonAdd(comparisonId, loan);
 
 	}
@@ -146,7 +154,9 @@ public class Controller {
 		}
 
 		final Founding founding = foundingMgr.get(foundingId);
-		if (founding == null) return;
+		if (founding == null) {
+			return;
+		}
 		compareMgr.comparisonRemove(comparisonId, founding);
 
 	}
@@ -159,7 +169,9 @@ public class Controller {
 			logger.debug("Handle request to remove comparison loan " + comparisonId + ", " + loanId);
 		}
 		final Loan loan = getLoan(loanId);
-		if (loan == null) return;
+		if (loan == null) {
+			return;
+		}
 		compareMgr.comparisonRemove(comparisonId, loan);
 	}
 
@@ -171,7 +183,9 @@ public class Controller {
 			logger.debug("Handle request to create new file.");
 		}
 		if (fileController.hasUnsavedChanges()) {
-			if (!view.showDialogRefuseUnsavedChanges()) return;
+			if (!view.showDialogRefuseUnsavedChanges()) {
+				return;
+			}
 		}
 
 		annuityLoanMgr = new AnnuityLoanMgr();
@@ -191,7 +205,9 @@ public class Controller {
 			logger.debug("Handle request to open a file.");
 		}
 		if (fileController.hasUnsavedChanges()) {
-			if (!view.showDialogRefuseUnsavedChanges()) return;
+			if (!view.showDialogRefuseUnsavedChanges()) {
+				return;
+			}
 		}
 		final Path path = view.ShowDialogOpenFile();
 		try {
@@ -247,7 +263,9 @@ public class Controller {
 			logger.debug("Handle request to founding add loan " + foundingId + ", " + loanId);
 		}
 		final Loan loan = getLoan(loanId);
-		if (loan == null) return;
+		if (loan == null) {
+			return;
+		}
 		foundingMgr.addLoan(foundingId, loan);
 	}
 
@@ -259,7 +277,9 @@ public class Controller {
 			logger.debug("Handle request to founding remove loan " + foundingId + ", " + loanId);
 		}
 		final Loan loan = getLoan(loanId);
-		if (loan == null) return;
+		if (loan == null) {
+			return;
+		}
 		foundingMgr.removeLoan(foundingId, loan);
 	}
 
@@ -271,7 +291,9 @@ public class Controller {
 			logger.debug("Handle request exit the programm.");
 		}
 		if (fileController.hasUnsavedChanges()) {
-			if (!view.showDialogRefuseUnsavedChanges()) return;
+			if (!view.showDialogRefuseUnsavedChanges()) {
+				return;
+			}
 		}
 		System.exit(0);
 	}
@@ -334,7 +356,9 @@ public class Controller {
 
 	private Loan getLoan(final long loanId) {
 		final Loan loan = annuityLoanMgr.get(loanId);
-		if (loan != null) return loan;
+		if (loan != null) {
+			return loan;
+		}
 		return buildingLoanAgreementMgr.get(loanId);
 	}
 

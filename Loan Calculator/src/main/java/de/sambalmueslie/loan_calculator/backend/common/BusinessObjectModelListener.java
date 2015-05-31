@@ -5,7 +5,7 @@ package de.sambalmueslie.loan_calculator.backend.common;
 
 /**
  * The listener for a {@link BusinessObjectModel}.
- * 
+ *
  * @author sambalmueslie 2015
  */
 public interface BusinessObjectModelListener<T extends BusinessObject> {

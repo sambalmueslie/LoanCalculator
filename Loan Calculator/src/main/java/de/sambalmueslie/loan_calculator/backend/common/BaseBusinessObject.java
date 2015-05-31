@@ -48,7 +48,9 @@ public abstract class BaseBusinessObject implements BusinessObject {
 	@Override
 	@SuppressWarnings("unchecked")
 	public final void register(final BusinessObjectChangeListener<?> listener) {
-		if (listener == null || listeners.contains(listener)) return;
+		if (listener == null || listeners.contains(listener)) {
+			return;
+		}
 		listeners.add((BusinessObjectChangeListener<BusinessObject>) listener);
 	}
 
@@ -57,7 +59,9 @@ public abstract class BaseBusinessObject implements BusinessObject {
 	 */
 	@Override
 	public final void unregister(final BusinessObjectChangeListener<?> listener) {
-		if (listener == null) return;
+		if (listener == null) {
+			return;
+		}
 		listeners.remove(listener);
 	}
 

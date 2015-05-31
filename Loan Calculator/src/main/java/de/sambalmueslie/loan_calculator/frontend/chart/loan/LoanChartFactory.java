@@ -53,15 +53,15 @@ public class LoanChartFactory {
 		final Function<T, Collection<RedemptionPlanEntry>> dataGetter = t -> t.getRedemptionPlan().getEntries();
 
 		final Function<RedemptionPlanEntry, Number> interestGetter = RedemptionPlanEntry::getInterest;
-		final LineChartSeriesDefinition<T, RedemptionPlanEntry> interest = new LineChartSeriesDefinition<>(I18n.get(I18n.TEXT_INTEREST), interestGetter,
-				dataGetter);
+		final LineChartSeriesDefinition<T, RedemptionPlanEntry> interest =
+				new LineChartSeriesDefinition<>(I18n.get(I18n.TEXT_INTEREST), interestGetter, dataGetter);
 
 		final Function<RedemptionPlanEntry, Number> redemptionGetter = RedemptionPlanEntry::getRedemption;
-		final LineChartSeriesDefinition<T, RedemptionPlanEntry> redemption = new LineChartSeriesDefinition<>(I18n.get(I18n.TEXT_REDEMPTION), redemptionGetter,
-				dataGetter);
+		final LineChartSeriesDefinition<T, RedemptionPlanEntry> redemption =
+				new LineChartSeriesDefinition<>(I18n.get(I18n.TEXT_REDEMPTION), redemptionGetter, dataGetter);
 
-		final GenericStackedBarChart<T, RedemptionPlanEntry> annuityPlanChart = new GenericStackedBarChart<>(I18n.get(I18n.ANNUITY_PLAN_CHART_TITLE), true,
-				interest, redemption);
+		final GenericStackedBarChart<T, RedemptionPlanEntry> annuityPlanChart =
+				new GenericStackedBarChart<>(I18n.get(I18n.ANNUITY_PLAN_CHART_TITLE), true, interest, redemption);
 		annuityPlanChart.add(entry);
 		return annuityPlanChart;
 	}

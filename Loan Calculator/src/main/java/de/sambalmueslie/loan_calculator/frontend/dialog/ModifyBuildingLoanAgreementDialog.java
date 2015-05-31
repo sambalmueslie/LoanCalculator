@@ -46,8 +46,8 @@ public class ModifyBuildingLoanAgreementDialog extends Dialog<ButtonType> {
 	 * Constructor.
 	 */
 	public ModifyBuildingLoanAgreementDialog(final BuildingLoanAgreement loan) {
-		final String dialogTitle = (loan == null) ? I18n.get(I18n.BUILDING_LOAN_AGREEMENT_DIALOG_TITLE_NEW) : I18n
-				.get(I18n.BUILDING_LOAN_AGREEMENT_DIALOG_TITLE_UPDATE);
+		final String dialogTitle =
+				(loan == null) ? I18n.get(I18n.BUILDING_LOAN_AGREEMENT_DIALOG_TITLE_NEW) : I18n.get(I18n.BUILDING_LOAN_AGREEMENT_DIALOG_TITLE_UPDATE);
 		setTitle(dialogTitle);
 
 		if (loan != null) {

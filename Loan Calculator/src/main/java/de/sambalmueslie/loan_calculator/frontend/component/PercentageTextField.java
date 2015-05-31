@@ -65,7 +65,9 @@ public class PercentageTextField extends BaseTextField<Double> {
 	@Override
 	protected Double parse(final String value) {
 		final Matcher m = pattern.matcher(value);
-		if (!m.find()) return new Double(-1);
+		if (!m.find()) {
+			return new Double(-1);
+		}
 		final String rawValue = m.group(1);
 		final String text = rawValue.replace(".", "").replace(",", ".");
 		return Double.parseDouble(text);

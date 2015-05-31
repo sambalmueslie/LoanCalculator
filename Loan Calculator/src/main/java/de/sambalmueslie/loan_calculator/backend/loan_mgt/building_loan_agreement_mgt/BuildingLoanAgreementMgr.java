@@ -21,7 +21,9 @@ public class BuildingLoanAgreementMgr extends BaseBusinessObjectMgr<BuildingLoan
 		if (logger.isDebugEnabled()) {
 			logger.debug("Handle request to add building loan agreement " + settings);
 		}
-		if (!isInputValid(settings)) return null;
+		if (!isInputValid(settings)) {
+			return null;
+		}
 		final BaseBuildingLoanAgreement baseBuildingLoanAgreement = new BaseBuildingLoanAgreement(createNewId(), settings);
 		add(baseBuildingLoanAgreement);
 		return baseBuildingLoanAgreement;
@@ -32,7 +34,9 @@ public class BuildingLoanAgreementMgr extends BaseBusinessObjectMgr<BuildingLoan
 			logger.debug("Handle request to remove loan " + loanId);
 		}
 		final BuildingLoanAgreement loan = get(loanId);
-		if (loan == null) return;
+		if (loan == null) {
+			return;
+		}
 		remove(loan);
 	}
 
@@ -40,26 +44,52 @@ public class BuildingLoanAgreementMgr extends BaseBusinessObjectMgr<BuildingLoan
 		if (logger.isDebugEnabled()) {
 			logger.debug("Handle request to update building loan agreement " + loanId + ", " + settings);
 		}
-		if (!isInputValid(settings)) return null;
+		if (!isInputValid(settings)) {
+			return null;
+		}
 		final BuildingLoanAgreement loan = get(loanId);
-		if (loan == null) return null;
+		if (loan == null) {
+			return null;
+		}
 		final BaseBuildingLoanAgreement buildingLoanAgreement = (BaseBuildingLoanAgreement) loan;
 		buildingLoanAgreement.update(settings);
 		return buildingLoanAgreement;
 	}
 
 	private boolean isInputValid(final BuildingLoanAgreementSettings settings) {
-		if (settings.getName() == null || settings.getName().isEmpty()) return false;
-		if (settings.getAmount() <= 0) return false;
-		if (settings.getCreditInterest() <= 0 || settings.getCreditInterest() >= 100) return false;
-		if (settings.getRegularSavingAmount() <= 0 || settings.getRegularSavingAmount() >= 100) return false;
-		if (settings.getMinimumSavings() <= 0 || settings.getMinimumSavings() >= 100) return false;
-		if (settings.getSavingDuration() < 0) return false;
-		if (settings.getSavingPhaseInterest() <= 0 || settings.getSavingPhaseInterest() >= 100) return false;
-		if (settings.getDebitInterest() <= 0 || settings.getDebitInterest() >= 100) return false;
-		if (settings.getContribution() <= 0 || settings.getContribution() >= 100) return false;
-		if (settings.getAquisitonFee() < 0 || settings.getAquisitonFee() >= 100) return false;
-		if (settings.getStartDate() == null) return false;
+		if (settings.getName() == null || settings.getName().isEmpty()) {
+			return false;
+		}
+		if (settings.getAmount() <= 0) {
+			return false;
+		}
+		if (settings.getCreditInterest() <= 0 || settings.getCreditInterest() >= 100) {
+			return false;
+		}
+		if (settings.getRegularSavingAmount() <= 0 || settings.getRegularSavingAmount() >= 100) {
+			return false;
+		}
+		if (settings.getMinimumSavings() <= 0 || settings.getMinimumSavings() >= 100) {
+			return false;
+		}
+		if (settings.getSavingDuration() < 0) {
+			return false;
+		}
+		if (settings.getSavingPhaseInterest() <= 0 || settings.getSavingPhaseInterest() >= 100) {
+			return false;
+		}
+		if (settings.getDebitInterest() <= 0 || settings.getDebitInterest() >= 100) {
+			return false;
+		}
+		if (settings.getContribution() <= 0 || settings.getContribution() >= 100) {
+			return false;
+		}
+		if (settings.getAquisitonFee() < 0 || settings.getAquisitonFee() >= 100) {
+			return false;
+		}
+		if (settings.getStartDate() == null) {
+			return false;
+		}
 		return true;
 	}
 

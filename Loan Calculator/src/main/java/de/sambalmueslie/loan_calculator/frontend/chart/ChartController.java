@@ -31,7 +31,9 @@ public class ChartController<T extends BusinessObject> implements Chart<T> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void add(final T entry) {
-		if (entry == null || entries.containsKey(entry.getId())) return;
+		if (entry == null || entries.containsKey(entry.getId())) {
+			return;
+		}
 		entries.put(entry.getId(), entry);
 		entry.register(e -> update((T) e));
 		chart.add(entry);
@@ -51,7 +53,9 @@ public class ChartController<T extends BusinessObject> implements Chart<T> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void remove(final T entry) {
-		if (entry == null || !entries.containsKey(entry.getId())) return;
+		if (entry == null || !entries.containsKey(entry.getId())) {
+			return;
+		}
 		entries.remove(entry.getId());
 		entry.unregister(e -> update((T) e));
 		chart.remove(entry);

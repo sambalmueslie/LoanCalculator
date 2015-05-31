@@ -5,6 +5,8 @@ package de.sambalmueslie.loan_calculator.backend.file_mgt.xml_mgt.data;
 
 import java.util.Set;
 
+import de.sambalmueslie.loan_calculator.backend.compare_mgt.Comparison;
+
 /**
  * The xml {@link Comparison}.
  *

@@ -67,7 +67,9 @@ public class FoundingMgr extends BaseBusinessObjectMgr<Founding> {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Handle request to add founding " + name + ", " + bankName);
 		}
-		if (!isInputValid(name, bankName)) return null;
+		if (!isInputValid(name, bankName)) {
+			return null;
+		}
 		final BaseFounding founding = new BaseFounding(createNewId(), name, bankName);
 		add(founding);
 		return founding;
@@ -78,7 +80,9 @@ public class FoundingMgr extends BaseBusinessObjectMgr<Founding> {
 			logger.debug("Handle request to founding add loan " + foundingId + ", " + loan.getId());
 		}
 		final BaseFounding founding = (BaseFounding) get(foundingId);
-		if (founding == null || loan == null) return;
+		if (founding == null || loan == null) {
+			return;
+		}
 		founding.add(loan);
 		// remove from other foundings
 		getAll().stream().filter(f -> f.getLoans().contains(loan)).filter(f -> f != founding).forEach(f -> ((BaseFounding) f).remove(loan));
@@ -89,7 +93,9 @@ public class FoundingMgr extends BaseBusinessObjectMgr<Founding> {
 			logger.debug("Handle request to remove founding " + foundingId);
 		}
 		final Founding founding = get(foundingId);
-		if (founding == null) return;
+		if (founding == null) {
+			return;
+		}
 		remove(founding);
 		removeAssociatedLoans(founding);
 	}
@@ -99,7 +105,9 @@ public class FoundingMgr extends BaseBusinessObjectMgr<Founding> {
 			logger.debug("Handle request to founding remove loan " + foundingId + ", " + loan.getId());
 		}
 		final BaseFounding founding = (BaseFounding) get(foundingId);
-		if (founding == null || loan == null) return;
+		if (founding == null || loan == null) {
+			return;
+		}
 		founding.remove(loan);
 	}
 
@@ -107,9 +115,13 @@ public class FoundingMgr extends BaseBusinessObjectMgr<Founding> {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Handle request to update founding " + foundingId + ", " + name + ", " + bankName);
 		}
-		if (!isInputValid(name, bankName)) return;
+		if (!isInputValid(name, bankName)) {
+			return;
+		}
 		final BaseFounding founding = (BaseFounding) get(foundingId);
-		if (founding == null) return;
+		if (founding == null) {
+			return;
+		}
 		founding.update(name, bankName);
 	}
 
@@ -124,8 +136,12 @@ public class FoundingMgr extends BaseBusinessObjectMgr<Founding> {
 	}
 
 	private boolean isInputValid(final String name, final String bankName) {
-		if (name == null || name.isEmpty()) return false;
-		if (bankName == null || bankName.isEmpty()) return false;
+		if (name == null || name.isEmpty()) {
+			return false;
+		}
+		if (bankName == null || bankName.isEmpty()) {
+			return false;
+		}
 		return true;
 	}
 

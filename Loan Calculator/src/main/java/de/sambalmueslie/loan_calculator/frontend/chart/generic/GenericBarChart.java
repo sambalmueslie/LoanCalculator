@@ -52,7 +52,9 @@ public class GenericBarChart<T extends BusinessObject> extends BarChart<String, 
 	 */
 	@SuppressWarnings("unchecked")
 	public void add(final T entry) {
-		if (entry == null) return;
+		if (entry == null) {
+			return;
+		}
 		final String name = entry.getName();
 		final Number value = function.apply(entry);
 

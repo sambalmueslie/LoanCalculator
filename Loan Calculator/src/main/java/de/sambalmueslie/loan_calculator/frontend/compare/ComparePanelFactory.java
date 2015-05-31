@@ -25,8 +25,12 @@ public final class ComparePanelFactory {
 	 */
 	@SuppressWarnings("unchecked")
 	public static ComparePanel<?> createComparePanel(final Comparison<?> comparison, final ViewActionListener actionListener, final Model model) {
-		if (comparison.getType().equals(Founding.class)) return new ComparePanelFounding((Comparison<Founding>) comparison, actionListener, model);
-		if (comparison.getType().equals(Loan.class)) return new ComparePanelLoan((Comparison<Loan>) comparison, actionListener, model);
+		if (comparison.getType().equals(Founding.class)) {
+			return new ComparePanelFounding((Comparison<Founding>) comparison, actionListener, model);
+		}
+		if (comparison.getType().equals(Loan.class)) {
+			return new ComparePanelLoan((Comparison<Loan>) comparison, actionListener, model);
+		}
 		return null;
 	}
 

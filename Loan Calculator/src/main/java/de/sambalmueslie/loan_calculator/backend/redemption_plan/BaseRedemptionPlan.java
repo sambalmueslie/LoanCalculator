@@ -70,7 +70,7 @@ public abstract class BaseRedemptionPlan implements RedemptionPlan {
 
 	/**
 	 * Add a {@link RedemptionPlanEntry} at a specified position.
-	 * 
+	 *
 	 * @param entry
 	 *            the entry
 	 * @param index

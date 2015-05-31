@@ -141,20 +141,20 @@ class ComparePanelFounding extends BaseComparePanel<Founding> {
 		detailsPane.add(new RedemptionPlanChart(founding), 0, 1);
 		detailsPane.add(new AnnuityPlanChart(founding), 0, 2);
 
-		final GenericPieChart<Founding, Loan> totalAmountChart = new GenericPieChart<>(Founding::getLoans, Loan::getAmount, I18n.get(I18n.TEXT_TOTAL_AMOUNT),
-				founding);
+		final GenericPieChart<Founding, Loan> totalAmountChart =
+				new GenericPieChart<>(Founding::getLoans, Loan::getAmount, I18n.get(I18n.TEXT_TOTAL_AMOUNT), founding);
 		detailsPane.add(totalAmountChart, 0, 3);
 
-		final GenericPieChart<Founding, Loan> totalPaymentChart = new GenericPieChart<>(Founding::getLoans, l -> l.getRedemptionPlan().getTotalPayment(),
-				I18n.get(I18n.TEXT_TOTAL_PAYMENT), founding);
+		final GenericPieChart<Founding, Loan> totalPaymentChart =
+				new GenericPieChart<>(Founding::getLoans, l -> l.getRedemptionPlan().getTotalPayment(), I18n.get(I18n.TEXT_TOTAL_PAYMENT), founding);
 		detailsPane.add(totalPaymentChart, 0, 4);
 
-		final GenericPieChart<Founding, Loan> totalInterestChart = new GenericPieChart<>(Founding::getLoans, l -> l.getRedemptionPlan().getTotalInterest(),
-				I18n.get(I18n.TEXT_TOTAL_INTEREST), founding);
+		final GenericPieChart<Founding, Loan> totalInterestChart =
+				new GenericPieChart<>(Founding::getLoans, l -> l.getRedemptionPlan().getTotalInterest(), I18n.get(I18n.TEXT_TOTAL_INTEREST), founding);
 		detailsPane.add(totalInterestChart, 0, 5);
 
-		final GenericPieChart<Founding, Loan> riskCapitalChart = new GenericPieChart<>(Founding::getLoans, l -> l.getRedemptionPlan().getRiskCapital(),
-				I18n.get(I18n.TEXT_RISK_CAPITAL), founding);
+		final GenericPieChart<Founding, Loan> riskCapitalChart =
+				new GenericPieChart<>(Founding::getLoans, l -> l.getRedemptionPlan().getRiskCapital(), I18n.get(I18n.TEXT_RISK_CAPITAL), founding);
 		detailsPane.add(riskCapitalChart, 0, 6);
 
 		return detailsPane;

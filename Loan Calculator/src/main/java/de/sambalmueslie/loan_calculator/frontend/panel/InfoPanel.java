@@ -54,7 +54,9 @@ class InfoPanel extends TilePane {
 	@SuppressWarnings("unchecked")
 	<T> void update(final String name, final T value) {
 		final BaseTextField<T> textField = (BaseTextField<T>) textFields.get(name);
-		if (textField == null) return;
+		if (textField == null) {
+			return;
+		}
 		textField.setValue(value);
 	}
 

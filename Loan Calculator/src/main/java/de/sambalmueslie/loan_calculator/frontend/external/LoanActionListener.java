@@ -6,7 +6,6 @@ package de.sambalmueslie.loan_calculator.frontend.external;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.annuity_loan_mgt.AnnuityLoanSettings;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.building_loan_agreement_mgt.BuildingLoanAgreementSettings;
 
-
 /**
  * The loan action listener.
  *

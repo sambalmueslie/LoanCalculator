@@ -73,8 +73,9 @@ public class BuildingLoanAgreementPanel extends LoanPanel<BuildingLoanAgreement>
 		final double contribution = getInfoValue(I18n.get(I18n.TEXT_CONTRIBUTION));
 		final double aquisitonFee = getInfoValue(I18n.get(I18n.TEXT_AQUISITION_FEE));
 
-		final BuildingLoanAgreementSettings settings = new BuildingLoanAgreementSettings(name, amount, startDate, creditInterest, regularSavingAmount,
-				minimumSavings, savingDuration, savingPhaseInterest, debitInterest, contribution, aquisitonFee);
+		final BuildingLoanAgreementSettings settings =
+				new BuildingLoanAgreementSettings(name, amount, startDate, creditInterest, regularSavingAmount, minimumSavings, savingDuration,
+						savingPhaseInterest, debitInterest, contribution, aquisitonFee);
 		actionListener.requestUpdateBuildingLoanAgreement(loanId, settings);
 	}
 
@@ -114,12 +115,14 @@ public class BuildingLoanAgreementPanel extends LoanPanel<BuildingLoanAgreement>
 	 */
 	private void addRedemptionPlanChart() {
 		final BuildingLoanAgreement buildingLoanAgreement = getLoan();
-		final LineChartSeriesDefinition<BuildingLoanAgreement, RedemptionPlanEntry> s1 = new LineChartSeriesDefinition<>(I18n.get(I18n.TEXT_RESIDUAL_DEBT),
-				RedemptionPlanEntry::getResidualDebt, t -> t.getRedemptionPlan().getEntries());
-		final LineChartSeriesDefinition<BuildingLoanAgreement, RedemptionPlanEntry> s2 = new LineChartSeriesDefinition<>(I18n.get(I18n.TEXT_SAVINGS),
-				RedemptionPlanEntry::getResidualDebt, t -> t.getSavingRedemptionPlan().getEntries());
-		final GenericLineChart<BuildingLoanAgreement, RedemptionPlanEntry> planChart = new GenericLineChart<>(I18n.get(I18n.REDEMPTION_PLAN_CHART_TITLE), s1,
-				s2);
+		final LineChartSeriesDefinition<BuildingLoanAgreement, RedemptionPlanEntry> s1 =
+				new LineChartSeriesDefinition<>(I18n.get(I18n.TEXT_RESIDUAL_DEBT), RedemptionPlanEntry::getResidualDebt, t -> t.getRedemptionPlan()
+						.getEntries());
+		final LineChartSeriesDefinition<BuildingLoanAgreement, RedemptionPlanEntry> s2 =
+				new LineChartSeriesDefinition<>(I18n.get(I18n.TEXT_SAVINGS), RedemptionPlanEntry::getResidualDebt, t -> t.getSavingRedemptionPlan()
+						.getEntries());
+		final GenericLineChart<BuildingLoanAgreement, RedemptionPlanEntry> planChart =
+				new GenericLineChart<>(I18n.get(I18n.REDEMPTION_PLAN_CHART_TITLE), s1, s2);
 		planChart.add(buildingLoanAgreement);
 		addChart(planChart);
 	}

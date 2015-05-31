@@ -3,7 +3,6 @@
  */
 package de.sambalmueslie.loan_calculator.frontend.external;
 
-
 /**
  * The view action listener.
  *

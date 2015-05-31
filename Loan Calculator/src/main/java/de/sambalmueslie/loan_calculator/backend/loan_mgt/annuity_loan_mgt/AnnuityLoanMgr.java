@@ -22,7 +22,9 @@ public class AnnuityLoanMgr extends BaseBusinessObjectMgr<AnnuityLoan> {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Handle request to add loan " + settings);
 		}
-		if (!isInputValid(settings)) return null;
+		if (!isInputValid(settings)) {
+			return null;
+		}
 		final AnnuityLoan annuityLoan = new BaseAnnuityLoan(createNewId(), settings);
 		add(annuityLoan);
 		return annuityLoan;
@@ -33,7 +35,9 @@ public class AnnuityLoanMgr extends BaseBusinessObjectMgr<AnnuityLoan> {
 			logger.debug("Handle request to remove loan " + loanId);
 		}
 		final AnnuityLoan loan = get(loanId);
-		if (loan == null) return;
+		if (loan == null) {
+			return;
+		}
 		remove(loan);
 	}
 
@@ -41,23 +45,43 @@ public class AnnuityLoanMgr extends BaseBusinessObjectMgr<AnnuityLoan> {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Handle request to update loan " + loanId + ", " + settings);
 		}
-		if (!isInputValid(settings)) return null;
+		if (!isInputValid(settings)) {
+			return null;
+		}
 		final AnnuityLoan loan = get(loanId);
-		if (loan == null) return null;
+		if (loan == null) {
+			return null;
+		}
 		final BaseAnnuityLoan annuityLoan = (BaseAnnuityLoan) loan;
 		annuityLoan.update(settings);
 		return annuityLoan;
 	}
 
 	private boolean isInputValid(final AnnuityLoanSettings settings) {
-		if (settings.getName() == null || settings.getName().isEmpty()) return false;
-		if (settings.getAmount() <= 0) return false;
-		if (settings.getPaymentRate() <= 0 || settings.getPaymentRate() >= 100) return false;
-		if (settings.getFixedDebitInterest() < 0 || settings.getFixedDebitInterest() >= 100) return false;
-		if (settings.getFixedInterestPeriod() < 0) return false;
-		if (settings.getEstimatedDebitInterest() < 0 || settings.getEstimatedDebitInterest() >= 100) return false;
-		if (settings.getStartDate() == null) return false;
-		if (settings.getUnscheduledRepayment() < 0 || settings.getUnscheduledRepayment() >= 100) return false;
+		if (settings.getName() == null || settings.getName().isEmpty()) {
+			return false;
+		}
+		if (settings.getAmount() <= 0) {
+			return false;
+		}
+		if (settings.getPaymentRate() <= 0 || settings.getPaymentRate() >= 100) {
+			return false;
+		}
+		if (settings.getFixedDebitInterest() < 0 || settings.getFixedDebitInterest() >= 100) {
+			return false;
+		}
+		if (settings.getFixedInterestPeriod() < 0) {
+			return false;
+		}
+		if (settings.getEstimatedDebitInterest() < 0 || settings.getEstimatedDebitInterest() >= 100) {
+			return false;
+		}
+		if (settings.getStartDate() == null) {
+			return false;
+		}
+		if (settings.getUnscheduledRepayment() < 0 || settings.getUnscheduledRepayment() >= 100) {
+			return false;
+		}
 		return true;
 	}
 

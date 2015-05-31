@@ -41,7 +41,9 @@ class BaseBusinessObjectModel<T extends BusinessObject> implements BusinessObjec
 	 */
 	@Override
 	public final void register(final BusinessObjectModelListener<T> listener) {
-		if (listener == null || listeners.contains(listener)) return;
+		if (listener == null || listeners.contains(listener)) {
+			return;
+		}
 		listeners.add(listener);
 	}
 
@@ -50,7 +52,9 @@ class BaseBusinessObjectModel<T extends BusinessObject> implements BusinessObjec
 	 */
 	@Override
 	public final void unregister(final BusinessObjectModelListener<T> listener) {
-		if (listener == null) return;
+		if (listener == null) {
+			return;
+		}
 		listeners.remove(listener);
 	}
 
@@ -61,7 +65,9 @@ class BaseBusinessObjectModel<T extends BusinessObject> implements BusinessObjec
 	 *            the value
 	 */
 	void add(final T businessObject) {
-		if (businessObject == null) return;
+		if (businessObject == null) {
+			return;
+		}
 		final long id = businessObject.getId();
 		values.put(id, businessObject);
 		notifyBusinessObjectAdded(businessObject);
@@ -74,9 +80,13 @@ class BaseBusinessObjectModel<T extends BusinessObject> implements BusinessObjec
 	 *            the value
 	 */
 	void remove(final T businessObject) {
-		if (businessObject == null) return;
+		if (businessObject == null) {
+			return;
+		}
 		final long id = businessObject.getId();
-		if (!values.containsKey(id)) return;
+		if (!values.containsKey(id)) {
+			return;
+		}
 		values.remove(id);
 		notifyBusinessObjectRemoved(businessObject);
 	}
