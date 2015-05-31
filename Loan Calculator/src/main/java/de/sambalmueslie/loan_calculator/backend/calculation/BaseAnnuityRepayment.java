@@ -8,7 +8,7 @@ import de.sambalmueslie.loan_calculator.backend.redemption_plan.RedemptionPlan;
 public class BaseAnnuityRepayment implements AnnuityRepayment {
 
 	/** the max iterations. */
-	private static final int MAX_ITERATIONS = 150;
+	static final int MAX_ITERATIONS = 150;
 
 	/**
 	 * Constructor.
@@ -27,7 +27,7 @@ public class BaseAnnuityRepayment implements AnnuityRepayment {
 		this.debitInterest = debitInterest;
 		this.paymentRate = paymentRate;
 		this.periods = (periods > 0) ? periods : MAX_ITERATIONS;
-		calculate();
+		calculateRepaymentPlan();
 	}
 
 	/**
@@ -73,26 +73,49 @@ public class BaseAnnuityRepayment implements AnnuityRepayment {
 	/**
 	 * Calculate the repayment.
 	 */
-	private void calculate() {
+	private void calculateRepaymentPlan() {
 		repaymentPlan = new RepaymentPlan();
 
 		double residualDebt = amount;
-		double totalInterest = 0;
 		final double annuity = amount * (paymentRate + debitInterest) / 100;
 		repaymentPlan.add(residualDebt);
 
 		for (int i = 0; residualDebt > 0 && i < MAX_ITERATIONS && i < periods; i++) {
-			final double interest = residualDebt * debitInterest;
-			totalInterest += interest;
-
-			final double redemption = annuity - interest;
-			residualDebt -= (redemption >= residualDebt) ? residualDebt : redemption;
-
-			repaymentPlan.add(residualDebt, interest, redemption);
+			residualDebt = calculateYear(residualDebt, annuity);
 		}
-		final double totalPayment = totalInterest + getAmount();
-		repaymentPlan.setResult(totalInterest, totalPayment);
 
+		final double totalPayment = repaymentPlan.getTotalInterest() + getAmount();
+		repaymentPlan.setResult(residualDebt, totalPayment);
+
+	}
+
+	/**
+	 * Calculate a year.
+	 *
+	 * @param residualDebt
+	 *            the residual debt at the beginning of the year
+	 * @param annuity
+	 *            the annuity
+	 * @return the residual debt at the end of the year
+	 */
+	private double calculateYear(double residualDebt, final double annuity) {
+		double yearInterestTotal = 0;
+		double yearRedemptionTotal = 0;
+		for (int i = 0; i < 12; i++) {
+			final double interest = residualDebt * debitInterest / (100 * 12);
+			yearInterestTotal += interest;
+			final double redemption = (annuity / 12) - interest;
+			if (redemption < (residualDebt - 10)) {
+				yearRedemptionTotal += redemption;
+				residualDebt -= redemption;
+			} else {
+				yearRedemptionTotal += residualDebt;
+				residualDebt = 0;
+			}
+		}
+
+		repaymentPlan.add(residualDebt, yearInterestTotal, yearRedemptionTotal);
+		return residualDebt;
 	}
 
 	/** the amount */

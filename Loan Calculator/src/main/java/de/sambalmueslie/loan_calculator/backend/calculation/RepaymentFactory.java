@@ -3,7 +3,7 @@ package de.sambalmueslie.loan_calculator.backend.calculation;
 /**
  * The repayment factory.
  */
-public class RepaymentFactory {
+public final class RepaymentFactory {
 
 	/**
 	 * Create a new {@link AnnuityRepayment}.
@@ -35,5 +35,12 @@ public class RepaymentFactory {
 	 */
 	public static AnnuityRepayment createAnnuityRepayment(final double amount, final double debitInterest, final double paymentRate, final int periods) {
 		return new BaseAnnuityRepayment(amount, debitInterest, paymentRate, periods);
+	}
+
+	/**
+	 * Constructor.
+	 */
+	private RepaymentFactory() {
+		// intentionally left empty
 	}
 }

@@ -106,22 +106,30 @@ public class BaseAnnuityLoan extends BaseLoan implements AnnuityLoan {
 		fixedInterestPeriod = settings.getFixedInterestPeriod();
 		estimatedDebitInterest = settings.getEstimatedDebitInterest();
 		unscheduledRepayment = settings.getUnscheduledRepayment();
-		calculateValues();
+		calculateRepayment();
 	}
 
+	/**
+	 * Calcualte the repayment.
+	 */
 	private void calculateRepayment() {
 		// first the fixed annuity plan
 		final AnnuityRepayment fixed = RepaymentFactory.createAnnuityRepayment(getAmount(), fixedDebitInterest, paymentRate, fixedInterestPeriod);
 		final RedemptionPlan fixedPlan = fixed.getRedemptionPlan();
-		// get the remaining amount
-		final double remainingAmount = fixedPlan.getEntries().get(fixedPlan.getEntries().size() - 1).getResidualDebt();
 		// now the risk annuity plan
+		final double remainingAmount = fixedPlan.getRiskCapital();
 		final AnnuityRepayment risk = RepaymentFactory.createAnnuityRepayment(remainingAmount, estimatedDebitInterest, paymentRate);
 		final RedemptionPlan riskPlan = risk.getRedemptionPlan();
 
 		redemptionPlan = new LoanRedemptionPlan();
 		redemptionPlan.addResult(fixedPlan, false, 0);
+		redemptionPlan.addResult(riskPlan, true, fixedInterestPeriod + 1);
 
+		final LocalDate startDate = getStartDate();
+		final LocalDate endDate = startDate.plus(redemptionPlan.getTerm(), ChronoUnit.YEARS);
+		setEndDate(endDate);
+
+		notifyChanged();
 	}
 
 	/**

@@ -29,20 +29,20 @@ public class RepaymentPlan extends BaseRedemptionPlan {
 	 *            the redemption
 	 */
 	void add(final double residualDebt, final double interest, final double redemption) {
+		setTotalInterest(interest + getTotalInterest());
 		add(new BaseRedemptionPlanEntry(residualDebt, interest, redemption));
 	}
 
 	/**
 	 * Set the calculation result.
 	 *
-	 * @param totalInterest
-	 *            the total interest
+	 * @param riskCaptial
+	 *            the residual debt
 	 * @param totalPayment
 	 *            the total payment
 	 */
-	void setResult(final double totalInterest, final double totalPayment) {
-		setRiskCapital(0);
-		setTotalInterest(totalInterest);
+	void setResult(final double riskCaptial, final double totalPayment) {
+		setRiskCapital(riskCaptial);
 		setTotalPayment(totalPayment);
 	}
 
