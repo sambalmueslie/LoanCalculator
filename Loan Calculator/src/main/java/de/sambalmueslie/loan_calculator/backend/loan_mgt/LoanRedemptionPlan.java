@@ -36,7 +36,7 @@ public class LoanRedemptionPlan extends BaseRedemptionPlan {
 		}
 
 		addValue(this::setTotalInterest, this::getTotalInterest, plan.getTotalInterest());
-		addValue(this::setTotalPayment, this::getTotalPayment, plan.getTotalInterest());
+		addValue(this::setTotalPayment, this::getTotalPayment, plan.getTotalPayment());
 	}
 
 	/**
