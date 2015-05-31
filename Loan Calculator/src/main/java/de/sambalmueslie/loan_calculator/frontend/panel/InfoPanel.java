@@ -78,6 +78,8 @@ class InfoPanel extends TilePane {
 			return new PercentageTextField();
 		case NUMBER:
 			return new NumberTextField();
+		case DATE:
+			return new DateTextField();
 		}
 	}
 

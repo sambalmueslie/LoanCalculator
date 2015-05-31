@@ -13,7 +13,6 @@ import de.sambalmueslie.loan_calculator.backend.calculation.AnnuityRepayment;
 import de.sambalmueslie.loan_calculator.backend.calculation.RepaymentFactory;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.BaseLoan;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.LoanRedemptionPlan;
-import de.sambalmueslie.loan_calculator.backend.redemption_plan.BaseRedemptionPlanEntry;
 import de.sambalmueslie.loan_calculator.backend.redemption_plan.RedemptionPlan;
 
 /**
@@ -113,69 +112,21 @@ public class BaseAnnuityLoan extends BaseLoan implements AnnuityLoan {
 	 * Calcualte the repayment.
 	 */
 	private void calculateRepayment() {
+		final double payment = paymentRate + unscheduledRepayment;
 		// first the fixed annuity plan
-		final AnnuityRepayment fixed = RepaymentFactory.createAnnuityRepayment(getAmount(), fixedDebitInterest, paymentRate, fixedInterestPeriod);
+		final AnnuityRepayment fixed = RepaymentFactory.createAnnuityRepayment(getAmount(), fixedDebitInterest, payment, fixedInterestPeriod);
 		final RedemptionPlan fixedPlan = fixed.getRedemptionPlan();
 		// now the risk annuity plan
 		final double remainingAmount = fixedPlan.getRiskCapital();
-		final AnnuityRepayment risk = RepaymentFactory.createAnnuityRepayment(remainingAmount, estimatedDebitInterest, paymentRate);
+		final double fixedAnnuity = getAmount() * (payment + fixedDebitInterest) / 100;
+		final double remainingAnnuity = remainingAmount * (payment + estimatedDebitInterest) / 100;
+		final double remainingPayment = (remainingAnnuity < fixedAnnuity) ? (fixedAnnuity / remainingAmount) * 100 - estimatedDebitInterest : payment;
+		final AnnuityRepayment risk = RepaymentFactory.createAnnuityRepayment(remainingAmount, estimatedDebitInterest, remainingPayment);
 		final RedemptionPlan riskPlan = risk.getRedemptionPlan();
 
 		redemptionPlan = new LoanRedemptionPlan();
 		redemptionPlan.addResult(fixedPlan, false, 0);
 		redemptionPlan.addResult(riskPlan, true, fixedInterestPeriod + 1);
-
-		final LocalDate startDate = getStartDate();
-		final LocalDate endDate = startDate.plus(redemptionPlan.getTerm(), ChronoUnit.YEARS);
-		setEndDate(endDate);
-
-		notifyChanged();
-	}
-
-	/**
-	 * Calculate the values.
-	 */
-	private void calculateValues() {
-		redemptionPlan = new LoanRedemptionPlan();
-
-		double residualDebt = getAmount();
-		double totalInterest = 0;
-		double riskCapital = 0;
-		final double repayment = getAmount() * unscheduledRepayment / 100;
-		double annuity = getAmount() * (paymentRate + fixedDebitInterest) / 100;
-		redemptionPlan.add(new BaseRedemptionPlanEntry(residualDebt));
-
-		for (int i = 0; residualDebt > 0; i++) {
-			if (i == fixedInterestPeriod) {
-				annuity = residualDebt * (paymentRate + estimatedDebitInterest) / 100;
-			}
-			final boolean noRisk = i < fixedInterestPeriod;
-			final double debitInterest = (noRisk ? fixedDebitInterest : estimatedDebitInterest) / 100;
-			final double interest = residualDebt * debitInterest;
-			totalInterest += interest;
-
-			final double redemption = annuity - interest + repayment;
-			if (redemption >= residualDebt) {
-				riskCapital += (noRisk) ? 0 : residualDebt;
-				residualDebt = 0;
-			} else {
-				residualDebt -= redemption;
-				riskCapital += (noRisk) ? 0 : redemption;
-			}
-
-			if (redemption <= 0) {
-				throw new IllegalStateException("Redemption is getting below zero for " + i);
-			}
-
-			redemptionPlan.add(new BaseRedemptionPlanEntry(residualDebt, interest, redemption));
-
-		}
-
-		final double totalPayment = totalInterest + getAmount();
-
-		redemptionPlan.setTotalInterest(totalInterest);
-		redemptionPlan.setRiskCapital(riskCapital);
-		redemptionPlan.setTotalPayment(totalPayment);
 
 		final LocalDate startDate = getStartDate();
 		final LocalDate endDate = startDate.plus(redemptionPlan.getTerm(), ChronoUnit.YEARS);

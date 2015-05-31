@@ -366,13 +366,13 @@ public class Controller {
 	 * Create some example data.
 	 */
 	private void setupExampleData() {
-		final Loan l1 = handleRequestAdd(new AnnuityLoanSettings("2,5% komplett fest", 100000, LocalDate.now(), 3.0, 2.5, 100, 2.5, 5.0));
-		final Loan l2 = handleRequestAdd(new AnnuityLoanSettings("2,5% 10 Jahre fest", 100000, LocalDate.now(), 3.0, 2.5, 10, 5.0, 5.0));
-		final Loan l3 = handleRequestAdd(new AnnuityLoanSettings("2,5% 15 Jahre fest", 100000, LocalDate.now(), 3.0, 2.5, 15, 5.0, 5.0));
+		final Loan l1 = handleRequestAdd(new AnnuityLoanSettings("2,5% komplett fest", 100000, LocalDate.now(), 3.0, 2.5, 100, 2.5, 1.0));
+		final Loan l2 = handleRequestAdd(new AnnuityLoanSettings("2,5% 10 Jahre fest", 100000, LocalDate.now(), 3.0, 2.5, 10, 5.0, 1.0));
+		final Loan l3 = handleRequestAdd(new AnnuityLoanSettings("2,5% 15 Jahre fest", 100000, LocalDate.now(), 3.0, 2.5, 15, 5.0, 1.0));
 
-		handleRequestAdd(new AnnuityLoanSettings("5,0% komplett fest", 100000, LocalDate.now(), 3.0, 5.0, 100, 5.0, 5.0));
-		handleRequestAdd(new AnnuityLoanSettings("5,0% 10 Jahre fest", 100000, LocalDate.now(), 3.0, 5.0, 10, 7.5, 5.0));
-		handleRequestAdd(new AnnuityLoanSettings("5,0% 15 Jahre fest", 100000, LocalDate.now(), 3.0, 5.0, 15, 7.5, 5.0));
+		handleRequestAdd(new AnnuityLoanSettings("5,0% komplett fest", 100000, LocalDate.now(), 3.0, 5.0, 100, 5.0, 1.0));
+		handleRequestAdd(new AnnuityLoanSettings("5,0% 10 Jahre fest", 100000, LocalDate.now(), 3.0, 5.0, 10, 7.5, 1.0));
+		handleRequestAdd(new AnnuityLoanSettings("5,0% 15 Jahre fest", 100000, LocalDate.now(), 3.0, 5.0, 15, 7.5, 1.0));
 
 		final Founding f1 = handleRequestAddFounding("Test founding 1", "Testbank");
 		final long f1Id = f1.getId();
@@ -380,9 +380,9 @@ public class Controller {
 		handleRequestFoundingAddLoan(f1Id, l2.getId());
 		handleRequestFoundingAddLoan(f1Id, l3.getId());
 
-		final Loan l4 = handleRequestAdd(new AnnuityLoanSettings("3,0% komplett fest", 100000, LocalDate.now(), 3.0, 3.0, 100, 3.0, 5.0));
-		final Loan l5 = handleRequestAdd(new AnnuityLoanSettings("3,0% 10 Jahre fest", 100000, LocalDate.now(), 3.0, 3.0, 10, 5.0, 5.0));
-		final Loan l6 = handleRequestAdd(new AnnuityLoanSettings("3,0% 15 Jahre fest", 100000, LocalDate.now(), 3.0, 3.0, 15, 5.0, 5.0));
+		final Loan l4 = handleRequestAdd(new AnnuityLoanSettings("3,0% komplett fest", 100000, LocalDate.now(), 3.0, 3.0, 100, 3.0, 1.0));
+		final Loan l5 = handleRequestAdd(new AnnuityLoanSettings("3,0% 10 Jahre fest", 100000, LocalDate.now(), 3.0, 3.0, 10, 5.0, 1.0));
+		final Loan l6 = handleRequestAdd(new AnnuityLoanSettings("3,0% 15 Jahre fest", 100000, LocalDate.now(), 3.0, 3.0, 15, 5.0, 1.0));
 
 		final Founding f2 = handleRequestAddFounding("Test founding 2", "Testbank");
 		final long f2Id = f2.getId();
