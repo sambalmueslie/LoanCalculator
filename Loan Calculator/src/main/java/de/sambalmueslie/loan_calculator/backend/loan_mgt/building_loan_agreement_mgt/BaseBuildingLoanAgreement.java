@@ -244,7 +244,7 @@ public class BaseBuildingLoanAgreement extends BaseLoan implements BuildingLoanA
 	private double regularSavingAmount;
 	/** the saving duration (spardauer). */
 	private int savingDuration;
-	/** the interest to pay for getting the money, while beeing in saving phase (zins für uebergangsdarlehen). */
+	/** the interest to pay for getting the money, while beeing in saving phase (zins fuer uebergangsdarlehen). */
 	private double savingPhaseInterest;
 	/** the saving {@link LoanRedemptionPlan}. */
 	private LoanRedemptionPlan savingPhasePlan;

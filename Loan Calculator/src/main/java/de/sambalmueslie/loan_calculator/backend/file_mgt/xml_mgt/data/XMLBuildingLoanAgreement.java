@@ -210,7 +210,7 @@ public class XMLBuildingLoanAgreement {
 	private double regularSavingAmount;
 	/** the saving duration (spardauer). */
 	private int savingDuration;
-	/** the interest to pay for getting the money, while beeing in saving phase (zins für uebergangsdarlehen). */
+	/** the interest to pay for getting the money, while beeing in saving phase (zins fuer uebergangsdarlehen). */
 	private double savingPhaseInterest;
 	/** the start date. */
 	private String startDate;

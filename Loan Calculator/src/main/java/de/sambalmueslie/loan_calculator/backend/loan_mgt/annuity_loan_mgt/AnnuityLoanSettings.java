@@ -98,6 +98,6 @@ public class AnnuityLoanSettings extends LoanSettings {
 	private final int fixedInterestPeriod;
 	/** the payment rate (Tilgung in Prozent). */
 	private final double paymentRate;
-	/** the unscheduled repayment per year (jährliche sondertilgung). */
+	/** the unscheduled repayment per year (jaehrliche sondertilgung). */
 	private final double unscheduledRepayment;
 }

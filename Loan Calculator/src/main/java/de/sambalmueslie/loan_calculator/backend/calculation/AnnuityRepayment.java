@@ -1,7 +1,7 @@
 package de.sambalmueslie.loan_calculator.backend.calculation;
 
 /**
- * The annuity {@link Repayment} (annuitätentilgung).
+ * The annuity {@link Repayment} (annuitaetentilgung).
  */
 public interface AnnuityRepayment extends Repayment {
 	/**

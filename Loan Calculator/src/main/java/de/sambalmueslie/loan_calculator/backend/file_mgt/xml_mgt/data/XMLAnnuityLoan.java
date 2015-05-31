@@ -159,6 +159,6 @@ public class XMLAnnuityLoan {
 	private double paymentRate;
 	/** the start date. */
 	private String startDate;
-	/** the unscheduled repayment per year (jährliche sondertilgung). */
+	/** the unscheduled repayment per year (jaehrliche sondertilgung). */
 	private double unscheduledRepayment;
 }

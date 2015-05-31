@@ -48,7 +48,7 @@ public interface BuildingLoanAgreement extends Loan {
 	int getSavingDuration();
 
 	/**
-	 * @return the interest to pay for getting the money, while beeing in saving phase (zins für uebergangsdarlehen).
+	 * @return the interest to pay for getting the money, while beeing in saving phase (zins fuer uebergangsdarlehen).
 	 */
 	double getSavingPhaseInterest();
 

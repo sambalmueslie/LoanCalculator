@@ -194,7 +194,7 @@ public class BaseAnnuityLoan extends BaseLoan implements AnnuityLoan {
 	private double paymentRate;
 	/** the {@link LoanRedemptionPlan}. */
 	private LoanRedemptionPlan redemptionPlan;
-	/** the unscheduled repayment (sondertilgung jährlich). */
+	/** the unscheduled repayment (sondertilgung jaehrlich). */
 	private double unscheduledRepayment;
 
 }

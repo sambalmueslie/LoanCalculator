@@ -135,7 +135,7 @@ public class BuildingLoanAgreementSettings extends LoanSettings {
 	private final double regularSavingAmount;
 	/** the saving duration (spardauer). */
 	private final int savingDuration;
-	/** the interest to pay for getting the money, while beeing in saving phase (zins für uebergangsdarlehen). */
+	/** the interest to pay for getting the money, while beeing in saving phase (zins fuer uebergangsdarlehen). */
 	private final double savingPhaseInterest;
 
 }
