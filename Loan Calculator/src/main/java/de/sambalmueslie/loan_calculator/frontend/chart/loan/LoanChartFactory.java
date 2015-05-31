@@ -7,9 +7,9 @@ import java.util.Collection;
 import java.util.function.Function;
 
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.Loan;
-import de.sambalmueslie.loan_calculator.backend.loan_mgt.RedemptionPlanEntry;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.annuity_loan_mgt.AnnuityLoan;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.building_loan_agreement_mgt.BuildingLoanAgreement;
+import de.sambalmueslie.loan_calculator.backend.redemption_plan.RedemptionPlanEntry;
 import de.sambalmueslie.loan_calculator.frontend.chart.LineChartSeriesDefinition;
 import de.sambalmueslie.loan_calculator.frontend.chart.generic.GenericStackedBarChart;
 import de.sambalmueslie.loan_calculator.frontend.i18n.I18n;
@@ -50,7 +50,7 @@ public class LoanChartFactory {
 	 * @return the chart
 	 */
 	private static final <T extends Loan> GenericStackedBarChart<T, RedemptionPlanEntry> createLoanAnnuityPlanChart(final T entry) {
-		final Function<T, Collection<RedemptionPlanEntry>> dataGetter = T::getRedemptionPlan;
+		final Function<T, Collection<RedemptionPlanEntry>> dataGetter = t -> t.getRedemptionPlan().getEntries();
 
 		final Function<RedemptionPlanEntry, Number> interestGetter = RedemptionPlanEntry::getInterest;
 		final LineChartSeriesDefinition<T, RedemptionPlanEntry> interest = new LineChartSeriesDefinition<>(I18n.get(I18n.TEXT_INTEREST), interestGetter,

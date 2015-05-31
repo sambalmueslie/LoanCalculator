@@ -20,8 +20,8 @@ import javafx.scene.layout.TilePane;
 import de.sambalmueslie.loan_calculator.backend.compare_mgt.Comparison;
 import de.sambalmueslie.loan_calculator.backend.founding_mgt.Founding;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.Loan;
-import de.sambalmueslie.loan_calculator.backend.loan_mgt.RedemptionPlanEntry;
 import de.sambalmueslie.loan_calculator.backend.model.Model;
+import de.sambalmueslie.loan_calculator.backend.redemption_plan.RedemptionPlanEntry;
 import de.sambalmueslie.loan_calculator.frontend.chart.SeriesDefinition;
 import de.sambalmueslie.loan_calculator.frontend.chart.founding.AnnuityPlanChart;
 import de.sambalmueslie.loan_calculator.frontend.chart.founding.RedemptionPlanChart;
@@ -145,15 +145,15 @@ class ComparePanelFounding extends BaseComparePanel<Founding> {
 				founding);
 		detailsPane.add(totalAmountChart, 0, 3);
 
-		final GenericPieChart<Founding, Loan> totalPaymentChart = new GenericPieChart<>(Founding::getLoans, Loan::getTotalPayment,
+		final GenericPieChart<Founding, Loan> totalPaymentChart = new GenericPieChart<>(Founding::getLoans, l -> l.getRedemptionPlan().getTotalPayment(),
 				I18n.get(I18n.TEXT_TOTAL_PAYMENT), founding);
 		detailsPane.add(totalPaymentChart, 0, 4);
 
-		final GenericPieChart<Founding, Loan> totalInterestChart = new GenericPieChart<>(Founding::getLoans, Loan::getTotalInterest,
+		final GenericPieChart<Founding, Loan> totalInterestChart = new GenericPieChart<>(Founding::getLoans, l -> l.getRedemptionPlan().getTotalInterest(),
 				I18n.get(I18n.TEXT_TOTAL_INTEREST), founding);
 		detailsPane.add(totalInterestChart, 0, 5);
 
-		final GenericPieChart<Founding, Loan> riskCapitalChart = new GenericPieChart<>(Founding::getLoans, Loan::getRiskCapital,
+		final GenericPieChart<Founding, Loan> riskCapitalChart = new GenericPieChart<>(Founding::getLoans, l -> l.getRedemptionPlan().getRiskCapital(),
 				I18n.get(I18n.TEXT_RISK_CAPITAL), founding);
 		detailsPane.add(riskCapitalChart, 0, 6);
 

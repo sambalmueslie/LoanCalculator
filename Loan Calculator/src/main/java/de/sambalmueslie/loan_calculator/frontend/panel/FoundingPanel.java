@@ -67,7 +67,7 @@ public class FoundingPanel extends BorderPane {
 		chartPane.getChildren().add(new RedemptionPlanChart(founding));
 		chartPane.getChildren().add(new AnnuityPlanChart(founding));
 		chartPane.getChildren().add(addPieChartFunction(I18n.get(I18n.TEXT_TOTAL_AMOUNT), Loan::getAmount));
-		chartPane.getChildren().add(addPieChartFunction(I18n.get(I18n.TEXT_TOTAL_INTEREST), Loan::getTotalInterest));
+		chartPane.getChildren().add(addPieChartFunction(I18n.get(I18n.TEXT_TOTAL_INTEREST), l -> l.getRedemptionPlan().getTotalInterest()));
 
 		setCenter(chartPane);
 

@@ -9,7 +9,6 @@ import javafx.geometry.Side;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.StackedBarChart;
-import de.sambalmueslie.loan_calculator.backend.common.BusinessObject;
 import de.sambalmueslie.loan_calculator.frontend.chart.LineChartSeriesDefinition;
 
 /**
@@ -17,7 +16,7 @@ import de.sambalmueslie.loan_calculator.frontend.chart.LineChartSeriesDefinition
  *
  * @author sambalmueslie 2015
  */
-public class GenericStackedBarChart<ENTRY extends BusinessObject, DATA> extends StackedBarChart<String, Number> {
+public class GenericStackedBarChart<ENTRY, DATA> extends StackedBarChart<String, Number> {
 
 	/**
 	 * Constructor.
@@ -70,7 +69,9 @@ public class GenericStackedBarChart<ENTRY extends BusinessObject, DATA> extends 
 	 *            the entry
 	 */
 	public void add(final ENTRY entry) {
-		if (entry == null) return;
+		if (entry == null) {
+			return;
+		}
 
 		for (final LineChartSeriesDefinition<ENTRY, DATA> definition : seriesDefinitions) {
 			final List<DATA> datas = new LinkedList<>(definition.getDataGetterFunction().apply(entry));

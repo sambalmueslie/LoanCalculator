@@ -8,7 +8,7 @@ import java.util.List;
 
 import de.sambalmueslie.loan_calculator.backend.common.BusinessObject;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.Loan;
-import de.sambalmueslie.loan_calculator.backend.loan_mgt.RedemptionPlanEntry;
+import de.sambalmueslie.loan_calculator.backend.redemption_plan.RedemptionPlanEntry;
 
 /**
  * A founding, group several loans together.
@@ -27,6 +27,11 @@ public interface Founding extends BusinessObject {
 	String getBankName();
 
 	/**
+	 * @return the end {@link LocalDate}.
+	 */
+	LocalDate getEndDate();
+
+	/**
 	 * @return the {@link Loan}s of the founding.
 	 */
 	List<Loan> getLoans();
@@ -42,6 +47,11 @@ public interface Founding extends BusinessObject {
 	double getRiskCapital();
 
 	/**
+	 * @return the start {@link LocalDate}.
+	 */
+	LocalDate getStartDate();
+
+	/**
 	 * @return the term in months.
 	 */
 	int getTerm();
@@ -55,15 +65,5 @@ public interface Founding extends BusinessObject {
 	 * @return the total payment (interest and amount).
 	 */
 	double getTotalPayment();
-
-	/**
-	 * @return the end {@link LocalDate}.
-	 */
-	LocalDate getEndDate();
-
-	/**
-	 * @return the start {@link LocalDate}.
-	 */
-	LocalDate getStartDate();
 
 }

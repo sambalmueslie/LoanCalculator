@@ -7,9 +7,10 @@ import java.time.LocalDate;
 import java.util.*;
 
 import de.sambalmueslie.loan_calculator.backend.common.BaseBusinessObject;
-import de.sambalmueslie.loan_calculator.backend.loan_mgt.BaseRedemptionPlanEntry;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.Loan;
-import de.sambalmueslie.loan_calculator.backend.loan_mgt.RedemptionPlanEntry;
+import de.sambalmueslie.loan_calculator.backend.redemption_plan.BaseRedemptionPlanEntry;
+import de.sambalmueslie.loan_calculator.backend.redemption_plan.RedemptionPlan;
+import de.sambalmueslie.loan_calculator.backend.redemption_plan.RedemptionPlanEntry;
 
 /**
  * A base {@link Founding}.
@@ -40,7 +41,9 @@ public class BaseFounding extends BaseBusinessObject implements Founding {
 	 *            the loan
 	 */
 	public void add(final Loan loan) {
-		if (loan == null || loans.containsKey(loan.getId())) return;
+		if (loan == null || loans.containsKey(loan.getId())) {
+			return;
+		}
 		loans.put(loan.getId(), loan);
 		loan.register(l -> updated((Loan) l));
 		update();
@@ -79,7 +82,7 @@ public class BaseFounding extends BaseBusinessObject implements Founding {
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.model.founding.Founding#getRedemptionPlan()
+	 * @see de.sambalmueslie.loan_calculator.model.founding.Founding#getEntries()
 	 */
 	@Override
 	public List<RedemptionPlanEntry> getRedemptionPlan() {
@@ -133,7 +136,9 @@ public class BaseFounding extends BaseBusinessObject implements Founding {
 	 *            the loan to remove
 	 */
 	void remove(final Loan loan) {
-		if (loan == null || !loans.containsKey(loan.getId())) return;
+		if (loan == null || !loans.containsKey(loan.getId())) {
+			return;
+		}
 		loan.unregister(l -> updated((Loan) l));
 		loans.remove(loan.getId());
 		update();
@@ -166,13 +171,14 @@ public class BaseFounding extends BaseBusinessObject implements Founding {
 
 		for (final Loan loan : loans.values()) {
 			amount += loan.getAmount();
-			totalInterest += loan.getTotalInterest();
-			term = Integer.max(term, loan.getTerm());
-			totalPayment += loan.getTotalPayment();
-			riskCapital += loan.getRiskCapital();
-			final List<RedemptionPlanEntry> loanRedPlan = loan.getRedemptionPlan();
-			for (int i = 0; i < loanRedPlan.size(); i++) {
-				final RedemptionPlanEntry e1 = loanRedPlan.get(i);
+			final RedemptionPlan loanRedPlan = loan.getRedemptionPlan();
+			totalInterest += loanRedPlan.getTotalInterest();
+			term = Integer.max(term, loanRedPlan.getTerm());
+			totalPayment += loanRedPlan.getTotalPayment();
+			riskCapital += loanRedPlan.getRiskCapital();
+			final List<RedemptionPlanEntry> loanRedPlanEntries = loanRedPlan.getEntries();
+			for (int i = 0; i < loanRedPlanEntries.size(); i++) {
+				final RedemptionPlanEntry e1 = loanRedPlanEntries.get(i);
 				if (i >= redemptionPlan.size()) {
 					final double interest = e1.getInterest();
 					final double redemption = e1.getRedemption();

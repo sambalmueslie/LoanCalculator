@@ -3,10 +3,8 @@
  */
 package de.sambalmueslie.loan_calculator.backend.loan_mgt.building_loan_agreement_mgt;
 
-import java.util.List;
-
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.Loan;
-import de.sambalmueslie.loan_calculator.backend.loan_mgt.RedemptionPlanEntry;
+import de.sambalmueslie.loan_calculator.backend.redemption_plan.RedemptionPlan;
 
 /**
  * A building loan agreement.
@@ -57,5 +55,6 @@ public interface BuildingLoanAgreement extends Loan {
 	/**
 	 * @return the saving phase plan.
 	 */
-	List<RedemptionPlanEntry> getSavingPhasePlan();
+	RedemptionPlan getSavingRedemptionPlan();
+
 }

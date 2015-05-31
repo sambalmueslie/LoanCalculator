@@ -5,16 +5,14 @@ package de.sambalmueslie.loan_calculator.backend.loan_mgt.annuity_loan_mgt;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.BaseLoan;
-import de.sambalmueslie.loan_calculator.backend.loan_mgt.BaseRedemptionPlanEntry;
-import de.sambalmueslie.loan_calculator.backend.loan_mgt.RedemptionPlanEntry;
+import de.sambalmueslie.loan_calculator.backend.loan_mgt.LoanRedemptionPlan;
+import de.sambalmueslie.loan_calculator.backend.redemption_plan.BaseRedemptionPlanEntry;
+import de.sambalmueslie.loan_calculator.backend.redemption_plan.RedemptionPlan;
 
 /**
  * A annuity loan.
@@ -72,40 +70,8 @@ public class BaseAnnuityLoan extends BaseLoan implements AnnuityLoan {
 	 * @see de.sambalmueslie.loan_calculator.backend.loan_mgt.Loan#getRedemptionPlan()
 	 */
 	@Override
-	public List<RedemptionPlanEntry> getRedemptionPlan() {
-		return Collections.unmodifiableList(redemptionPlan);
-	}
-
-	/**
-	 * @see de.sambalmueslie.loan_calculator.model.loan.Loan#getRiskCapital()
-	 */
-	@Override
-	public double getRiskCapital() {
-		return riskCapital;
-	}
-
-	/**
-	 * @see de.sambalmueslie.loan_calculator.model.loan.Loan#getTerm()
-	 */
-	@Override
-	public int getTerm() {
-		return term;
-	}
-
-	/**
-	 * @see de.sambalmueslie.loan_calculator.model.loan.Loan#getTotalInterest()
-	 */
-	@Override
-	public double getTotalInterest() {
-		return totalInterest;
-	}
-
-	/**
-	 * @see de.sambalmueslie.loan_calculator.model.loan.Loan#getTotalPayment()
-	 */
-	@Override
-	public double getTotalPayment() {
-		return totalPayment;
+	public RedemptionPlan getRedemptionPlan() {
+		return redemptionPlan;
 	}
 
 	/**
@@ -145,16 +111,19 @@ public class BaseAnnuityLoan extends BaseLoan implements AnnuityLoan {
 	 * Calculate the values.
 	 */
 	private void calculateValues() {
-		redemptionPlan = new LinkedList<>();
+		redemptionPlan = new LoanRedemptionPlan();
 
 		double residualDebt = getAmount();
-		totalInterest = 0;
-		riskCapital = 0;
+		double totalInterest = 0;
+		double riskCapital = 0;
 		final double repayment = getAmount() * unscheduledRepayment / 100;
-		final double annuity = getAmount() * (paymentRate + fixedDebitInterest) / 100;
+		double annuity = getAmount() * (paymentRate + fixedDebitInterest) / 100;
 		redemptionPlan.add(new BaseRedemptionPlanEntry(residualDebt));
 
 		for (int i = 0; residualDebt > 0; i++) {
+			if (i == fixedInterestPeriod) {
+				annuity = residualDebt * (paymentRate + estimatedDebitInterest) / 100;
+			}
 			final boolean noRisk = i < fixedInterestPeriod;
 			final double debitInterest = (noRisk ? fixedDebitInterest : estimatedDebitInterest) / 100;
 			final double interest = residualDebt * debitInterest;
@@ -169,15 +138,22 @@ public class BaseAnnuityLoan extends BaseLoan implements AnnuityLoan {
 				riskCapital += (noRisk) ? 0 : redemption;
 			}
 
+			if (redemption <= 0) {
+				throw new IllegalStateException("Redemption is getting below zero for " + i);
+			}
+
 			redemptionPlan.add(new BaseRedemptionPlanEntry(residualDebt, interest, redemption));
 
 		}
 
-		term = redemptionPlan.size() - 1;
-		totalPayment = totalInterest + getAmount();
+		final double totalPayment = totalInterest + getAmount();
+
+		redemptionPlan.setTotalInterest(totalInterest);
+		redemptionPlan.setRiskCapital(riskCapital);
+		redemptionPlan.setTotalPayment(totalPayment);
 
 		final LocalDate startDate = getStartDate();
-		final LocalDate endDate = startDate.plus(getTerm(), ChronoUnit.YEARS);
+		final LocalDate endDate = startDate.plus(redemptionPlan.getTerm(), ChronoUnit.YEARS);
 		setEndDate(endDate);
 
 		notifyChanged();
@@ -191,16 +167,8 @@ public class BaseAnnuityLoan extends BaseLoan implements AnnuityLoan {
 	private int fixedInterestPeriod;
 	/** the payment rate (Tilgung in Prozent). */
 	private double paymentRate;
-	/** the redemption plan. */
-	private List<RedemptionPlanEntry> redemptionPlan;
-	/** the risk capital.. */
-	private double riskCapital;
-	/** the term (Laufzeit). */
-	private int term;
-	/** the total interest (Zins). */
-	private double totalInterest;
-	/** the total payment (Zins + Finanzmittel). */
-	private double totalPayment;
+	/** the {@link LoanRedemptionPlan}. */
+	private LoanRedemptionPlan redemptionPlan;
 	/** the unscheduled repayment (sondertilgung jährlich). */
 	private double unscheduledRepayment;
 

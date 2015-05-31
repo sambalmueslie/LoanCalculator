@@ -5,16 +5,14 @@ package de.sambalmueslie.loan_calculator.backend.loan_mgt.building_loan_agreemen
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.BaseLoan;
-import de.sambalmueslie.loan_calculator.backend.loan_mgt.BaseRedemptionPlanEntry;
-import de.sambalmueslie.loan_calculator.backend.loan_mgt.RedemptionPlanEntry;
+import de.sambalmueslie.loan_calculator.backend.loan_mgt.LoanRedemptionPlan;
+import de.sambalmueslie.loan_calculator.backend.redemption_plan.BaseRedemptionPlanEntry;
+import de.sambalmueslie.loan_calculator.backend.redemption_plan.RedemptionPlan;
 
 /**
  * @author sambalmueslie 2015
@@ -95,11 +93,11 @@ public class BaseBuildingLoanAgreement extends BaseLoan implements BuildingLoanA
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.model.loan.Loan#getRedemptionPlan()
+	 * @see de.sambalmueslie.loan_calculator.backend.loan_mgt.Loan#getRedemptionPlan()
 	 */
 	@Override
-	public List<RedemptionPlanEntry> getRedemptionPlan() {
-		return Collections.unmodifiableList(redemptionPlan);
+	public RedemptionPlan getRedemptionPlan() {
+		return redemptionPlan;
 	}
 
 	/**
@@ -108,14 +106,6 @@ public class BaseBuildingLoanAgreement extends BaseLoan implements BuildingLoanA
 	@Override
 	public double getRegularSavingAmount() {
 		return regularSavingAmount;
-	}
-
-	/**
-	 * @see de.sambalmueslie.loan_calculator.model.loan.Loan#getRiskCapital()
-	 */
-	@Override
-	public double getRiskCapital() {
-		return 0;
 	}
 
 	/**
@@ -135,35 +125,11 @@ public class BaseBuildingLoanAgreement extends BaseLoan implements BuildingLoanA
 	}
 
 	/**
-	 * @see de.sambalmueslie.loan_calculator.model.loan.BuildingLoanAgreement#getSavingPhasePlan()
+	 * @see de.sambalmueslie.loan_calculator.backend.loan_mgt.building_loan_agreement_mgt.BuildingLoanAgreement#getSavingRedemptionPlan()
 	 */
 	@Override
-	public List<RedemptionPlanEntry> getSavingPhasePlan() {
-		return Collections.unmodifiableList(savingPhasePlan);
-	}
-
-	/**
-	 * @see de.sambalmueslie.loan_calculator.model.loan.Loan#getTerm()
-	 */
-	@Override
-	public int getTerm() {
-		return term;
-	}
-
-	/**
-	 * @see de.sambalmueslie.loan_calculator.model.loan.Loan#getTotalInterest()
-	 */
-	@Override
-	public double getTotalInterest() {
-		return totalInterest;
-	}
-
-	/**
-	 * @see de.sambalmueslie.loan_calculator.model.loan.Loan#getTotalPayment()
-	 */
-	@Override
-	public double getTotalPayment() {
-		return totalPayment;
+	public RedemptionPlan getSavingRedemptionPlan() {
+		return savingPhasePlan;
 	}
 
 	/**
@@ -215,9 +181,9 @@ public class BaseBuildingLoanAgreement extends BaseLoan implements BuildingLoanA
 	 * Calculate the values.
 	 */
 	private void calculateValues() {
-		redemptionPlan = new LinkedList<>();
-		savingPhasePlan = new LinkedList<>();
-		totalInterest = 0;
+		redemptionPlan = new LoanRedemptionPlan();
+		savingPhasePlan = new LoanRedemptionPlan();
+		double totalInterest = 0;
 
 		// sparphase (saving phase)
 		double savedAmount = 0;
@@ -251,11 +217,12 @@ public class BaseBuildingLoanAgreement extends BaseLoan implements BuildingLoanA
 		}
 
 		totalInterest += getAmount() * aquisitonFee / 100;
-		term = redemptionPlan.size() - 1;
-		totalPayment = totalInterest + getAmount();
+		final double totalPayment = totalInterest + getAmount();
+		redemptionPlan.setTotalPayment(totalPayment);
+		redemptionPlan.setTotalInterest(totalInterest);
 
 		final LocalDate startDate = getStartDate();
-		final LocalDate endDate = startDate.plus(getTerm(), ChronoUnit.YEARS);
+		final LocalDate endDate = startDate.plus(redemptionPlan.getTerm(), ChronoUnit.YEARS);
 		setEndDate(endDate);
 
 		notifyChanged();
@@ -271,21 +238,15 @@ public class BaseBuildingLoanAgreement extends BaseLoan implements BuildingLoanA
 	private double debitInterest;
 	/** the minimum savings (mindestsparguthaben in prozent) */
 	private double minimumSavings;
-	/** the redemption plan. */
-	private List<RedemptionPlanEntry> redemptionPlan;
+	/** the {@link LoanRedemptionPlan}. */
+	private LoanRedemptionPlan redemptionPlan;
 	/** the regular saving amount. (monatlicher regelsparbetrag in promille) */
 	private double regularSavingAmount;
 	/** the saving duration (spardauer). */
 	private int savingDuration;
 	/** the interest to pay for getting the money, while beeing in saving phase (zins für uebergangsdarlehen). */
 	private double savingPhaseInterest;
-	/** the redemption plan. */
-	private List<RedemptionPlanEntry> savingPhasePlan;
-	/** the term (Laufzeit). */
-	private int term;
-	/** the total interest (Zins). */
-	private double totalInterest;
-	/** the total payment (Zins + Finanzmittel). */
-	private double totalPayment;
+	/** the saving {@link LoanRedemptionPlan}. */
+	private LoanRedemptionPlan savingPhasePlan;
 
 }

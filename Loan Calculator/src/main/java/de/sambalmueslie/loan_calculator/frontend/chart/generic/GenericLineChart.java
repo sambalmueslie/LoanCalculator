@@ -15,7 +15,6 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Side;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
-import de.sambalmueslie.loan_calculator.backend.common.BusinessObject;
 import de.sambalmueslie.loan_calculator.frontend.chart.LineChartSeriesDefinition;
 
 /**
@@ -23,7 +22,7 @@ import de.sambalmueslie.loan_calculator.frontend.chart.LineChartSeriesDefinition
  *
  * @author sambalmueslie 2015
  */
-public class GenericLineChart<ENTRY extends BusinessObject, DATA> extends LineChart<Number, Number> {
+public class GenericLineChart<ENTRY, DATA> extends LineChart<Number, Number> {
 
 	/**
 	 * Constructor.
@@ -50,7 +49,9 @@ public class GenericLineChart<ENTRY extends BusinessObject, DATA> extends LineCh
 	 *            the entry
 	 */
 	public void add(final ENTRY entry) {
-		if (entry == null) return;
+		if (entry == null) {
+			return;
+		}
 		for (final LineChartSeriesDefinition<ENTRY, DATA> definition : seriesDefinitions) {
 			final ObservableList<Data<Number, Number>> data = FXCollections.observableArrayList();
 			final Function<ENTRY, Collection<DATA>> dataGetterFunction = definition.getDataGetterFunction();

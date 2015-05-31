@@ -9,7 +9,8 @@ import java.time.LocalDate;
 
 import org.junit.Test;
 
-import de.sambalmueslie.loan_calculator.backend.loan_mgt.RedemptionPlanEntry;
+import de.sambalmueslie.loan_calculator.backend.redemption_plan.RedemptionPlan;
+import de.sambalmueslie.loan_calculator.backend.redemption_plan.RedemptionPlanEntry;
 
 /**
  * @author sambalmueslie 2015
@@ -24,14 +25,15 @@ public class AnnuityLoanTestCase {
 		final AnnuityLoanSettings settings = new AnnuityLoanSettings("Name", 100000, LocalDate.now(), 3.00, 2.00, 50, 5.00, 0.00);
 		final AnnuityLoan loan = new BaseAnnuityLoan(0, settings);
 
-		final RedemptionPlanEntry entry = loan.getRedemptionPlan().get(1);
+		final RedemptionPlan redemptionPlan = loan.getRedemptionPlan();
+		final RedemptionPlanEntry entry = redemptionPlan.getEntries().get(1);
 		assertEquals(2000, entry.getInterest(), 0.001);
 		assertEquals(3000, entry.getRedemption(), 0.001);
 
 		assertEquals(100000, loan.getAmount(), 0.001);
-		assertEquals(128987.28, loan.getTotalPayment(), 0.01);
-		assertEquals(28987.28, loan.getTotalInterest(), 0.01);
-		assertEquals(26, loan.getTerm());
+		assertEquals(128987.28, redemptionPlan.getTotalPayment(), 0.01);
+		assertEquals(28987.28, redemptionPlan.getTotalInterest(), 0.01);
+		assertEquals(26, redemptionPlan.getTerm());
 	}
 
 	/**
@@ -49,15 +51,16 @@ public class AnnuityLoanTestCase {
 		assertEquals(settings.getEstimatedDebitInterest(), loan.getEstimatedDebitInterest(), 0.01);
 
 		// check first redemption
-		final RedemptionPlanEntry redemption = loan.getRedemptionPlan().get(1);
+		final RedemptionPlan redemptionPlan = loan.getRedemptionPlan();
+		final RedemptionPlanEntry redemption = redemptionPlan.getEntries().get(1);
 		assertEquals(settings.getAmount() * settings.getPaymentRate() / 100, redemption.getRedemption(), 0.01);
 		assertEquals(settings.getAmount() * settings.getFixedDebitInterest() / 100, redemption.getInterest(), 0.01);
 
 		// check annuity
-		final double annuity = settings.getAmount() * (settings.getPaymentRate() + settings.getFixedDebitInterest()) / 100;
-		for (int i = 1; i < loan.getRedemptionPlan().size(); i++) {
-			final RedemptionPlanEntry r = loan.getRedemptionPlan().get(i);
-			assertEquals(annuity, r.getInterest() + r.getRedemption(), 0.01);
+		final double annuityFixed = settings.getAmount() * (settings.getPaymentRate() + settings.getFixedDebitInterest()) / 100;
+		for (int i = 1; i < settings.getFixedInterestPeriod(); i++) {
+			final RedemptionPlanEntry r = redemptionPlan.getEntries().get(i);
+			assertEquals(annuityFixed, r.getInterest() + r.getRedemption(), 0.01);
 		}
 
 	}

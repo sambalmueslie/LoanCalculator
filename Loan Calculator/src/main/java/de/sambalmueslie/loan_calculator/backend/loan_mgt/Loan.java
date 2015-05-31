@@ -4,9 +4,9 @@
 package de.sambalmueslie.loan_calculator.backend.loan_mgt;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import de.sambalmueslie.loan_calculator.backend.common.BusinessObject;
+import de.sambalmueslie.loan_calculator.backend.redemption_plan.RedemptionPlan;
 
 /**
  * A loan.
@@ -14,6 +14,7 @@ import de.sambalmueslie.loan_calculator.backend.common.BusinessObject;
  * @author sambalmueslie 2015
  */
 public interface Loan extends BusinessObject {
+
 	/**
 	 * @return the amount of the loan (kredit).
 	 */
@@ -25,14 +26,9 @@ public interface Loan extends BusinessObject {
 	LocalDate getEndDate();
 
 	/**
-	 * @return the redemption plan.
+	 * @return the {@link RedemptionPlan}.
 	 */
-	List<RedemptionPlanEntry> getRedemptionPlan();
-
-	/**
-	 * @return the risk capital of not fixed interest.
-	 */
-	double getRiskCapital();
+	RedemptionPlan getRedemptionPlan();
 
 	/**
 	 * @return the {@link LoanSettings}.
@@ -44,18 +40,4 @@ public interface Loan extends BusinessObject {
 	 */
 	LocalDate getStartDate();
 
-	/**
-	 * @return the term in months.
-	 */
-	int getTerm();
-
-	/**
-	 * @return the total interest to pay.
-	 */
-	double getTotalInterest();
-
-	/**
-	 * @return the total payment (interest and amount).
-	 */
-	double getTotalPayment();
 }

@@ -4,7 +4,7 @@
 package de.sambalmueslie.loan_calculator.frontend.chart.founding;
 
 import de.sambalmueslie.loan_calculator.backend.founding_mgt.Founding;
-import de.sambalmueslie.loan_calculator.backend.loan_mgt.RedemptionPlanEntry;
+import de.sambalmueslie.loan_calculator.backend.redemption_plan.RedemptionPlanEntry;
 import de.sambalmueslie.loan_calculator.frontend.chart.LineChartSeriesDefinition;
 import de.sambalmueslie.loan_calculator.frontend.chart.generic.GenericStackedBarChart;
 import de.sambalmueslie.loan_calculator.frontend.i18n.I18n;
