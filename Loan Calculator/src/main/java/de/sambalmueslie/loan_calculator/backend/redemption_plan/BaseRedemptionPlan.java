@@ -64,8 +64,32 @@ public abstract class BaseRedemptionPlan implements RedemptionPlan {
 	 * @param entry
 	 *            the entry
 	 */
-	protected void addRedemptionPlanEntry(final RedemptionPlanEntry entry) {
+	protected void add(final RedemptionPlanEntry entry) {
 		entries.add(entry);
+	}
+
+	/**
+	 * Add a {@link RedemptionPlanEntry} at a specified position.
+	 * 
+	 * @param entry
+	 *            the entry
+	 * @param index
+	 *            the index
+	 */
+	protected void add(final RedemptionPlanEntry entry, final int index) {
+		if (index == entries.size()) {
+			entries.add(entry);
+		} else if (index > entries.size()) {
+			// TODO fill the gap
+			throw new IllegalArgumentException("cannot handle index gaps.");
+		} else {
+			final RedemptionPlanEntry current = entries.get(index);
+			final RedemptionPlanEntry result =
+					new BaseRedemptionPlanEntry(current.getResidualDebt() + entry.getResidualDebt(), current.getInterest() + entry.getInterest(),
+							current.getRedemption() + entry.getRedemption());
+			entries.remove(index);
+			entries.add(index, result);
+		}
 	}
 
 	/**

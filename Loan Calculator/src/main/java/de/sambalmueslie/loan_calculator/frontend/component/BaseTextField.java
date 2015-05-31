@@ -22,6 +22,10 @@ public abstract class BaseTextField<T> extends TextField {
 		focusedProperty().addListener((ChangeListener<Boolean>) (value, oldVal, newVal) -> {
 			if (newVal == false) {
 				validate(getText());
+				if (listener == null) {
+					return;
+				}
+				listener.valueChanged();
 			}
 		});
 	}
@@ -52,10 +56,10 @@ public abstract class BaseTextField<T> extends TextField {
 	public final void setValue(final T value) {
 		this.value = value;
 		final String text = format(value);
-		if (text.equals(getText())) return;
+		if (text.equals(getText())) {
+			return;
+		}
 		setText(text);
-		if (listener == null) return;
-		listener.valueChanged();
 	}
 
 	/**

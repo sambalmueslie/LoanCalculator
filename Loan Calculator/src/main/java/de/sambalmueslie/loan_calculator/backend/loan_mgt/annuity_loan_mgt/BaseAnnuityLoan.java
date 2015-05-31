@@ -9,6 +9,8 @@ import java.time.temporal.ChronoUnit;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import de.sambalmueslie.loan_calculator.backend.calculation.AnnuityRepayment;
+import de.sambalmueslie.loan_calculator.backend.calculation.RepaymentFactory;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.BaseLoan;
 import de.sambalmueslie.loan_calculator.backend.loan_mgt.LoanRedemptionPlan;
 import de.sambalmueslie.loan_calculator.backend.redemption_plan.BaseRedemptionPlanEntry;
@@ -105,6 +107,21 @@ public class BaseAnnuityLoan extends BaseLoan implements AnnuityLoan {
 		estimatedDebitInterest = settings.getEstimatedDebitInterest();
 		unscheduledRepayment = settings.getUnscheduledRepayment();
 		calculateValues();
+	}
+
+	private void calculateRepayment() {
+		// first the fixed annuity plan
+		final AnnuityRepayment fixed = RepaymentFactory.createAnnuityRepayment(getAmount(), fixedDebitInterest, paymentRate, fixedInterestPeriod);
+		final RedemptionPlan fixedPlan = fixed.getRedemptionPlan();
+		// get the remaining amount
+		final double remainingAmount = fixedPlan.getEntries().get(fixedPlan.getEntries().size() - 1).getResidualDebt();
+		// now the risk annuity plan
+		final AnnuityRepayment risk = RepaymentFactory.createAnnuityRepayment(remainingAmount, estimatedDebitInterest, paymentRate);
+		final RedemptionPlan riskPlan = risk.getRedemptionPlan();
+
+		redemptionPlan = new LoanRedemptionPlan();
+		redemptionPlan.addResult(fixedPlan, false, 0);
+
 	}
 
 	/**
